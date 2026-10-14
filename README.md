@@ -46,4 +46,4 @@ Detalhes e convenções em [NOTES.md](NOTES.md).
 
 ## Licença
 
-A definir pelo autor antes da publicação.
+[MIT](LICENSE): uso, cópia, modificação e distribuição livres, inclusive para fins comerciais, mantendo o aviso de copyright. Projeto aberto e educacional.

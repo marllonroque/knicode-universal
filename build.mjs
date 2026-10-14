@@ -78,9 +78,17 @@ const pwaHead = (f) => { const p = f === "index.html" ? "" : "../"; return `<lin
 `; };
 const pwaTail = (f) => `<script>if("serviceWorker"in navigator&&/^https?:$/.test(location.protocol)){addEventListener("load",function(){navigator.serviceWorker.register("${f === "index.html" ? "" : "../"}sw.js").catch(function(){})})}</script>\n`;
 
+// Teclado do celular: todo textarea/input de texto recebe autocapitalize, autocorrect, spellcheck e autocomplete desligados
+const MOBILE = [["autocapitalize", "none"], ["autocorrect", "off"], ["spellcheck", "false"], ["autocomplete", "off"]];
+const addMobileAttrs = (src) => src.replace(/<(textarea|input)\b([^>]*)>/g, (m, tag, attrs) => {
+  if (/\btype\s*=\s*["']?(checkbox|radio|button|submit|hidden)/i.test(attrs)) return m;
+  const extra = MOBILE.filter(([n]) => !new RegExp("\\b" + n + "\\s*=", "i").test(attrs)).map(([n, v]) => ` ${n}="${v}"`).join("");
+  return `<${tag}${attrs}${extra}>`;
+});
+
 const built = [];
 for (const f of readdirSync(join(root, "fonte")).filter(n => n.endsWith(".html"))) {
-  const html = readFileSync(join(root, "fonte", f), "utf8")
+  const html = addMobileAttrs(readFileSync(join(root, "fonte", f), "utf8"))
     .replace('<link rel="stylesheet" href="../assets/estilo.css">', () => guard(f) + pwaHead(f) + `<style>\n${css}\n</style>`)
     .replace(/<script src="\.\.\/assets\/(\w+)\.js"><\/script>/g, (_, n) => `<script>\n${readJs(n)}\n</script>`)
     .replace("</body>", () => pwaTail(f) + "</body>");

@@ -138,18 +138,21 @@ document.addEventListener("DOMContentLoaded",()=>{
 
   /* Executar e editar */
   $$(".runner").forEach(r=>{
-    const ta=$("textarea",r),out=$(".out",r),fb=$(".fb",r),orig=ta.value,chk=r.dataset.check;
+    const ta=$("textarea",r),out=$(".out",r),orig=ta.value,chk=r.dataset.check;let fb=$(".fb",r);if(!fb){fb=document.createElement("div");fb.className="fb";out.after(fb)}
     $(".run",r).onclick=async()=>{
       out.textContent="Executando… (na primeira vez o Python é carregado e leva alguns segundos)";
       if(fb){fb.className="fb";fb.innerHTML=""}
       try{
-        const {out:o,err}=await runPython(ta.value);
+        const T=C()&&C().tolerancia,fx=T?T.corrigirMaiusculas(ta.value):{code:ta.value,trocas:[]};
+        if(fx.trocas.length)ta.value=fx.code;   // mostra o código já corrigido para o aluno aprender
+        const {out:o,err}=await runPython(fx.code);
+        const aviso=fx.trocas.length?`<div class="alert-case">${esc(T.MSG_CASE_RUN.replace("{nomes}",[...new Set(fx.trocas)].map(n=>"“"+n+"”").join(" e ")))}</div>`:"";
         out.innerHTML=(o.length?esc(o.join("\n")):"<i>(o programa não mostrou nada)</i>")+(err?`\n<span class="errline">Mensagem do Python: ${esc(err)}</span>`:"");
         if(chk&&window.checks[chk]){
           const res=window.checks[chk](o,err,ta.value);
-          fb.className="fb "+(res.ok?"ok":"bad");fb.innerHTML=res.msg;
+          fb.className="fb "+(res.ok?"ok":"bad");fb.innerHTML=res.msg+aviso;
           if(res.ok){evid(r,true);markDone(r.dataset.key)}
-        }else if(!err)markDone(r.dataset.key);
+        }else{if(aviso){fb.className="fb";fb.innerHTML=aviso}if(!err)markDone(r.dataset.key)}
       }catch(e){out.textContent=e.message}
     };
     const rs=$(".reset",r);if(rs)rs.onclick=()=>{ta.value=orig;out.textContent="";if(fb){fb.className="fb";fb.innerHTML=""}};
@@ -158,14 +161,14 @@ document.addEventListener("DOMContentLoaded",()=>{
   /* Respostas curtas com conferência */
   $$(".quest").forEach(q=>{
     $(".chk",q).onclick=()=>{
-      let ok=0,tot=0;const msgs=[];
+      let ok=0,tot=0,caps=false;const msgs=[];
       $$("input.q",q).forEach((i,idx)=>{
-        tot++;const acc=i.dataset.answer.split("|").map(norm),v=norm(i.value),good=acc.includes(v);
+        tot++;const T=C()&&C().tolerancia,aceitas=i.dataset.answer.split("|"),c=T?T.conferir(i.value,aceitas,i.dataset.unwrap==="print"):{ok:aceitas.map(norm).includes(norm(i.value)),capitalizado:false},good=c.ok,v=norm(i.value);if(c.capitalizado)caps=true;
         i.classList.toggle("good",good);i.classList.toggle("wrong",!good&&v!=="");
         if(good)ok++;else msgs.push(`<b>${i.dataset.label||"Item "+(idx+1)}:</b> ${v?`você escreveu “${esc(i.value)}”. `:"sem resposta. "}${i.dataset.why||""}`);
       });
       const fb=$(".fb",q);fb.className="fb "+(ok===tot?"ok":"bad");
-      fb.innerHTML=ok===tot?(q.dataset.ok||"Tudo certo."):`${ok} de ${tot}.<br>`+msgs.join("<br>");
+      fb.innerHTML=(ok===tot?(q.dataset.ok||"Tudo certo."):`${ok} de ${tot}.<br>`+msgs.join("<br>"))+(ok===tot&&caps&&C()&&C().tolerancia?`<div class="alert-case">${esc(C().tolerancia.MSG_CASE_QUIZ)}</div>`:"");
       if(ok===tot){evid(q,true);markDone(q.dataset.key)}
     };
   });
@@ -196,6 +199,10 @@ document.addEventListener("DOMContentLoaded",()=>{
       else btn.textContent=`Preciso de outra dica (${n}/${items.length})`;
     };
   });
+
+  /* Teclado do celular: sem maiúscula automática nem autocorreção em campos de texto e de código (o build também grava isso no HTML) */
+  $$("textarea,input").forEach(e=>{const t=(e.getAttribute("type")||"text").toLowerCase();if(["checkbox","radio","button","submit","hidden"].includes(t))return;
+    e.setAttribute("autocapitalize","none");e.setAttribute("autocorrect","off");e.setAttribute("spellcheck","false");e.setAttribute("autocomplete","off")});
 
   /* Restaura o progresso salvo desta aula (sem registrar de novo) */
   if(LESSON&&C()){const info=C().lessonInfo(LESSON);if(info)info.keys.forEach(k=>markDone(k,true))}

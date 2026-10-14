@@ -1,6 +1,6 @@
 /* Service worker do KNICode. O build (build.mjs) preenche a versão e a lista de arquivos abaixo e grava o resultado em sw.js na raiz.
    Papel: guardar o curso no aparelho para abrir offline. Não guarda dados do aluno (o progresso fica no localStorage da página). */
-const VERSION = "862f87dbf8";
+const VERSION = "beba207e20";
 const CORE = "knicode-core-" + VERSION;      // páginas e ícones do curso; recriado a cada versão nova
 const EXT = "knicode-ext-v1";                // Python (Pyodide) e fontes, vindos de CDN; sobrevive às versões
 const PRECACHE = ["./","manifest.webmanifest","icon.png","icon-192.png","icon-maskable-512.png","apple-touch-icon.png","lessons/0001-o-computador-segue-instrucoes.html","index.html","lessons/recuperacao-0001.html"];

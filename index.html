@@ -162,6 +162,7 @@ pre.annot .ln.on{background:rgba(255,102,0,.13);box-shadow:inset 2px 0 0 var(--n
 .fb.ok{background:rgba(61,255,139,.08);color:#9dffc4;border-color:rgba(61,255,139,.55)}
 .fb.bad{background:rgba(255,77,109,.09);color:#ffb0bf;border-color:rgba(255,77,109,.55)}
 .fb b{color:inherit}
+.alert-case{margin-top:.6rem;padding:.65rem .85rem;border:1px solid var(--neon);border-left:4px solid var(--neon);border-radius:var(--r);background:rgba(255,102,0,.1);color:#ffd9a8;font:.88rem/1.55 var(--sans);box-shadow:var(--glow)}
 table{border-collapse:collapse;margin:1rem 0;width:100%;font-size:.94rem;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 th,td{border-bottom:1px solid var(--line-soft);padding:.55rem .75rem;text-align:left;color:#fff}
 tr:last-child td{border-bottom:0}
@@ -519,13 +520,39 @@ footer p{margin:.4rem 0;color:var(--fg)}
     };
   }
 
-  const api = { COURSE, T, createEngine, memoryStorage, browserStorage, KEY };
+  /* ===== Tolerância ao teclado do celular: o corretor automático põe maiúscula em "print" ===== */
+  const normT = (s) => String(s == null ? "" : s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
+  // Troca Print( por print( e Input( por input( só no código, nunca dentro de textos entre aspas. Sem lookbehind (iPhones antigos não suportam).
+  function corrigirMaiusculas(code) {
+    const partes = String(code).split(/("[^"\n]*"|'[^'\n]*')/), trocas = [];
+    for (let i = 0; i < partes.length; i += 2)   // posições pares = código; ímpares = textos entre aspas
+      partes[i] = partes[i].replace(/(^|[^\w.])(Print|Input)(\s*)\(/g, (m, antes, nome, esp) => { trocas.push(nome); return antes + nome.toLowerCase() + esp + "("; });
+    return { code: partes.join(""), trocas };
+  }
+  // Lê a resposta de um quiz: aceita o texto puro ou o comando que o produz, por exemplo print("Valor: 500")
+  function lerResposta(raw) {
+    let v = String(raw == null ? "" : raw).trim(), capitalizado = false;
+    const m = v.match(/^(print|input)(\s*)\(\s*([\s\S]*?)\s*\)$/i);
+    if (m) { capitalizado = m[1] !== m[1].toLowerCase(); v = m[3].trim().replace(/^["'“”‘’]+|["'“”‘’]+$/g, "").trim(); }
+    return { texto: v, capitalizado };
+  }
+  // Compara com o gabarito ignorando maiúsculas, espaços extras e acentos nos dois lados (digitado e gabarito).
+  function conferir(raw, aceitas, desembrulhar) {
+    const r = desembrulhar ? lerResposta(raw) : { texto: String(raw == null ? "" : raw), capitalizado: false };
+    const ok = aceitas.map(normT).includes(normT(r.texto));
+    return { ok, capitalizado: ok && r.capitalizado };   // o alerta educativo só aparece quando a resposta está certa
+  }
+  const MSG_CASE_QUIZ = "✅ Resposta correta! Mas atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas) e o correto é usar 'print' com p minúsculo. O seu celular capitalizou a letra automaticamente, mas o sistema ajustou para você continuar!";
+  const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
+  const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
+
+  const api = { COURSE, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
   let ls = null; try { ls = root.localStorage; ls.getItem(KEY); } catch (e) { ls = null; }
   const engine = createEngine(ls ? browserStorage(ls) : memoryStorage());
-  root.Curso = Object.assign({ course: COURSE }, engine);
+  root.Curso = Object.assign({ course: COURSE, tolerancia }, engine);
 
   const $ = (s, r) => (r || document).querySelector(s), $$ = (s, r) => [...(r || document).querySelectorAll(s)];
   const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -816,18 +843,21 @@ document.addEventListener("DOMContentLoaded",()=>{
 
   /* Executar e editar */
   $$(".runner").forEach(r=>{
-    const ta=$("textarea",r),out=$(".out",r),fb=$(".fb",r),orig=ta.value,chk=r.dataset.check;
+    const ta=$("textarea",r),out=$(".out",r),orig=ta.value,chk=r.dataset.check;let fb=$(".fb",r);if(!fb){fb=document.createElement("div");fb.className="fb";out.after(fb)}
     $(".run",r).onclick=async()=>{
       out.textContent="Executando… (na primeira vez o Python é carregado e leva alguns segundos)";
       if(fb){fb.className="fb";fb.innerHTML=""}
       try{
-        const {out:o,err}=await runPython(ta.value);
+        const T=C()&&C().tolerancia,fx=T?T.corrigirMaiusculas(ta.value):{code:ta.value,trocas:[]};
+        if(fx.trocas.length)ta.value=fx.code;   // mostra o código já corrigido para o aluno aprender
+        const {out:o,err}=await runPython(fx.code);
+        const aviso=fx.trocas.length?`<div class="alert-case">${esc(T.MSG_CASE_RUN.replace("{nomes}",[...new Set(fx.trocas)].map(n=>"“"+n+"”").join(" e ")))}</div>`:"";
         out.innerHTML=(o.length?esc(o.join("\n")):"<i>(o programa não mostrou nada)</i>")+(err?`\n<span class="errline">Mensagem do Python: ${esc(err)}</span>`:"");
         if(chk&&window.checks[chk]){
           const res=window.checks[chk](o,err,ta.value);
-          fb.className="fb "+(res.ok?"ok":"bad");fb.innerHTML=res.msg;
+          fb.className="fb "+(res.ok?"ok":"bad");fb.innerHTML=res.msg+aviso;
           if(res.ok){evid(r,true);markDone(r.dataset.key)}
-        }else if(!err)markDone(r.dataset.key);
+        }else{if(aviso){fb.className="fb";fb.innerHTML=aviso}if(!err)markDone(r.dataset.key)}
       }catch(e){out.textContent=e.message}
     };
     const rs=$(".reset",r);if(rs)rs.onclick=()=>{ta.value=orig;out.textContent="";if(fb){fb.className="fb";fb.innerHTML=""}};
@@ -836,14 +866,14 @@ document.addEventListener("DOMContentLoaded",()=>{
   /* Respostas curtas com conferência */
   $$(".quest").forEach(q=>{
     $(".chk",q).onclick=()=>{
-      let ok=0,tot=0;const msgs=[];
+      let ok=0,tot=0,caps=false;const msgs=[];
       $$("input.q",q).forEach((i,idx)=>{
-        tot++;const acc=i.dataset.answer.split("|").map(norm),v=norm(i.value),good=acc.includes(v);
+        tot++;const T=C()&&C().tolerancia,aceitas=i.dataset.answer.split("|"),c=T?T.conferir(i.value,aceitas,i.dataset.unwrap==="print"):{ok:aceitas.map(norm).includes(norm(i.value)),capitalizado:false},good=c.ok,v=norm(i.value);if(c.capitalizado)caps=true;
         i.classList.toggle("good",good);i.classList.toggle("wrong",!good&&v!=="");
         if(good)ok++;else msgs.push(`<b>${i.dataset.label||"Item "+(idx+1)}:</b> ${v?`você escreveu “${esc(i.value)}”. `:"sem resposta. "}${i.dataset.why||""}`);
       });
       const fb=$(".fb",q);fb.className="fb "+(ok===tot?"ok":"bad");
-      fb.innerHTML=ok===tot?(q.dataset.ok||"Tudo certo."):`${ok} de ${tot}.<br>`+msgs.join("<br>");
+      fb.innerHTML=(ok===tot?(q.dataset.ok||"Tudo certo."):`${ok} de ${tot}.<br>`+msgs.join("<br>"))+(ok===tot&&caps&&C()&&C().tolerancia?`<div class="alert-case">${esc(C().tolerancia.MSG_CASE_QUIZ)}</div>`:"");
       if(ok===tot){evid(q,true);markDone(q.dataset.key)}
     };
   });
@@ -874,6 +904,10 @@ document.addEventListener("DOMContentLoaded",()=>{
       else btn.textContent=`Preciso de outra dica (${n}/${items.length})`;
     };
   });
+
+  /* Teclado do celular: sem maiúscula automática nem autocorreção em campos de texto e de código (o build também grava isso no HTML) */
+  $$("textarea,input").forEach(e=>{const t=(e.getAttribute("type")||"text").toLowerCase();if(["checkbox","radio","button","submit","hidden"].includes(t))return;
+    e.setAttribute("autocapitalize","none");e.setAttribute("autocorrect","off");e.setAttribute("spellcheck","false");e.setAttribute("autocomplete","off")});
 
   /* Restaura o progresso salvo desta aula (sem registrar de novo) */
   if(LESSON&&C()){const info=C().lessonInfo(LESSON);if(info)info.keys.forEach(k=>markDone(k,true))}

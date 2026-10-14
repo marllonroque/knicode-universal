@@ -100,7 +100,7 @@ eq("progresso geral começa em 0", E.snapshot().overall, 0);
 
 // 11. Guarda de entrada: abrir = painel; link interno, recarregar e voltar = ficam
 import vm from "node:vm";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 const guardSrc = readFileSync(new URL("./assets/guarda.js", import.meta.url), "utf8").replaceAll("__HOME__", JSON.stringify("../index.html"));
 function runGuard({ protocol = "file:", type = "navigate", flag = false, storageThrows = false }) {
   const store = flag ? { "curso.interno": "1" } : {}; let redirected = null;
@@ -159,6 +159,33 @@ W.setOnline(false);
 eq("sw: Python offline vem do cache (curso roda sem internet depois da 1ª vez)", (await W.fetch(py)).body, "net:" + py);
 eq("sw: POST não é interceptado", await W.fetch("http://site/index.html", { method: "POST", mode: "navigate" }), "nao-tratado");
 eq("sw: outro domínio (YouTube) não é interceptado", await W.fetch("https://www.youtube.com/watch?v=31llNGKWDdo", { mode: "navigate" }), "nao-tratado");
+
+// 13. Tolerância ao teclado do celular
+const TOL = require("./assets/curso.js").tolerancia;
+const fx = c => { const r = TOL.corrigirMaiusculas(c); return [r.code, r.trocas]; };
+eq("celular: Print( vira print(", fx('Print("oi")'), ['print("oi")', ["Print"]]);
+eq("celular: texto entre aspas não é alterado", fx('print("Print(x)")'), ['print("Print(x)")', []]);
+eq("celular: código com maiúscula e texto igual na mesma linha", fx('Print("Print(1)")'), ['print("Print(1)")', ["Print"]]);
+eq("celular: Print ( com espaço e Input( em várias linhas", fx('Print ("a")\nInput("n")'), ['print ("a")\ninput("n")', ["Print", "Input"]]);
+eq("celular: aspas simples", fx("x = Input('Nome')"), ["x = input('Nome')", ["Input"]]);
+eq("celular: myPrint( e obj.Print( não são o comando", fx("myPrint(1)\nobj.Print(2)"), ["myPrint(1)\nobj.Print(2)", []]);
+eq("celular: print minúsculo passa intacto", fx('print("ok")'), ['print("ok")', []]);
+const ac = ["valor: 500", "valor:500"], cf = (r, un = true) => { const x = TOL.conferir(r, ac, un); return [x.ok, x.capitalizado]; };
+eq("quiz: texto exato certo", cf("Valor: 500"), [true, false]);
+eq("quiz: ignora maiúsculas e espaços extras (gabarito e resposta)", cf("  VALOR:   500  "), [true, false]);
+eq("quiz: aceita o comando que produz o texto", cf('print("Valor: 500")'), [true, false]);
+eq("quiz: Print( maiúsculo certo aceita E sinaliza alerta", cf('Print("Valor: 500")'), [true, true]);
+eq("quiz: Print( sem aspas certo aceita E sinaliza alerta", cf("Print(Valor: 500)"), [true, true]);
+eq("quiz: resposta errada com Print( não mostra alerta", cf('Print("Fim")'), [false, false]);
+eq("quiz: resposta errada simples", cf("Fim"), [false, false]);
+eq("quiz: sem desembrulhar, o comando não vale como texto", cf('print("Valor: 500")', false), [false, false]);
+eq("quiz: mensagem do alerta é exatamente a combinada", TOL.MSG_CASE_QUIZ, "✅ Resposta correta! Mas atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas) e o correto é usar 'print' com p minúsculo. O seu celular capitalizou a letra automaticamente, mas o sistema ajustou para você continuar!");
+// o build grava os atributos no HTML de todo campo de texto, sem duplicar
+const paginas = ["index.html", ...readdirSync(new URL("./lessons/", import.meta.url)).filter(n => n.endsWith(".html")).map(n => "lessons/" + n)];
+const tags = paginas.flatMap(p => [...readFileSync(new URL("./" + p, import.meta.url), "utf8").matchAll(/<(?:textarea|input)\b[^>]*>/g)].map(m => m[0]));
+const ruim = tags.filter(tg => !(/autocapitalize="none"/.test(tg) && /autocorrect="off"/.test(tg) && /spellcheck="false"/.test(tg) && /autocomplete="off"/.test(tg)));
+const dup = tags.filter(tg => ["autocapitalize", "autocorrect", "spellcheck", "autocomplete"].some(n => (tg.match(new RegExp("\\b" + n + "=", "g")) || []).length > 1));
+eq("build: todo textarea/input tem autocapitalize, autocorrect, spellcheck e autocomplete", [tags.length > 0, ruim.length, dup.length], [true, 0, 0]);
 
 console.log(fails ? `\n${fails} FALHA(S)` : "\nTodos os testes passaram.");
 process.exit(fails ? 1 : 0);

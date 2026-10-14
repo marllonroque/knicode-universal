@@ -150,13 +150,39 @@
     };
   }
 
-  const api = { COURSE, T, createEngine, memoryStorage, browserStorage, KEY };
+  /* ===== Tolerância ao teclado do celular: o corretor automático põe maiúscula em "print" ===== */
+  const normT = (s) => String(s == null ? "" : s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
+  // Troca Print( por print( e Input( por input( só no código, nunca dentro de textos entre aspas. Sem lookbehind (iPhones antigos não suportam).
+  function corrigirMaiusculas(code) {
+    const partes = String(code).split(/("[^"\n]*"|'[^'\n]*')/), trocas = [];
+    for (let i = 0; i < partes.length; i += 2)   // posições pares = código; ímpares = textos entre aspas
+      partes[i] = partes[i].replace(/(^|[^\w.])(Print|Input)(\s*)\(/g, (m, antes, nome, esp) => { trocas.push(nome); return antes + nome.toLowerCase() + esp + "("; });
+    return { code: partes.join(""), trocas };
+  }
+  // Lê a resposta de um quiz: aceita o texto puro ou o comando que o produz, por exemplo print("Valor: 500")
+  function lerResposta(raw) {
+    let v = String(raw == null ? "" : raw).trim(), capitalizado = false;
+    const m = v.match(/^(print|input)(\s*)\(\s*([\s\S]*?)\s*\)$/i);
+    if (m) { capitalizado = m[1] !== m[1].toLowerCase(); v = m[3].trim().replace(/^["'“”‘’]+|["'“”‘’]+$/g, "").trim(); }
+    return { texto: v, capitalizado };
+  }
+  // Compara com o gabarito ignorando maiúsculas, espaços extras e acentos nos dois lados (digitado e gabarito).
+  function conferir(raw, aceitas, desembrulhar) {
+    const r = desembrulhar ? lerResposta(raw) : { texto: String(raw == null ? "" : raw), capitalizado: false };
+    const ok = aceitas.map(normT).includes(normT(r.texto));
+    return { ok, capitalizado: ok && r.capitalizado };   // o alerta educativo só aparece quando a resposta está certa
+  }
+  const MSG_CASE_QUIZ = "✅ Resposta correta! Mas atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas) e o correto é usar 'print' com p minúsculo. O seu celular capitalizou a letra automaticamente, mas o sistema ajustou para você continuar!";
+  const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
+  const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
+
+  const api = { COURSE, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
   let ls = null; try { ls = root.localStorage; ls.getItem(KEY); } catch (e) { ls = null; }
   const engine = createEngine(ls ? browserStorage(ls) : memoryStorage());
-  root.Curso = Object.assign({ course: COURSE }, engine);
+  root.Curso = Object.assign({ course: COURSE, tolerancia }, engine);
 
   const $ = (s, r) => (r || document).querySelector(s), $$ = (s, r) => [...(r || document).querySelectorAll(s)];
   const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

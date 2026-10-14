@@ -68,9 +68,9 @@ print("Fim")</textarea></div>
     <button class="run">Executar</button><button class="ghost reset">Restaurar</button>
     <div class="out">O resultado aparece aqui.</div>
   </div>
-  <p><strong>Antes de testar,</strong> pense: se eu trocar a ordem das duas primeiras linhas, qual aparece primeiro na tela?</p>
+  <p><strong>Antes de testar,</strong> responda: se invertermos a ordem das duas primeiras linhas, qual será a <strong>primeira linha exibida na tela</strong>? Digite o texto exato que vai aparecer (sem aspas e sem <code>print</code>). Exemplo do formato: <code>Olá mundo</code></p>
   <div class="quest" data-key="q1" data-concept="programa" data-level="exec" data-ok="Certo. Ordem das linhas = ordem do resultado.">
-    <input class="q" data-answer="valor: 500|valor 500|valor|valor:500" data-label="Primeiro a aparecer" data-why="O computador executa de cima para baixo. Se “Valor: 500” passa a ser a primeira linha, ele é executado primeiro. Teste trocando no programa acima." placeholder="o que aparece primeiro?">
+    <input class="q" data-answer="valor: 500|valor:500" data-unwrap="print" data-label="Primeira linha na tela" data-why="Digite o texto exato da primeira linha que aparece na tela, sem aspas. O computador executa de cima para baixo: se “Valor: 500” passa a ser a primeira linha, ele é executado primeiro. Teste trocando no programa acima." placeholder="texto exato da primeira linha">
     <button class="chk">Conferir</button><div class="fb"></div>
   </div>
 </section>

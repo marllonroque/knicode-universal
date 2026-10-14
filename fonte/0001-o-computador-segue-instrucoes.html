@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aula 1: O computador segue instruções</title>
+<meta name="curso-aula" content="0001">
+<link rel="stylesheet" href="../assets/estilo.css">
+</head>
+<body>
+
+<header class="hero"><div class="hero-in">
+  <div class="crumb">Módulo 1 · Primeiros passos · Aula 1</div>
+  <h1>O computador segue instruções, uma linha por vez</h1>
+  <p>Hoje você escreve e roda seus primeiros programas. Não precisa instalar nada e não precisa saber nada de programação.</p>
+  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="goal"><b>Ao final desta aula você consegue:</b>
+    <ul>
+      <li>Explicar o que é um programa, com suas palavras.</li>
+      <li>Escrever um programa de duas linhas que mostra informações de um pedido.</li>
+      <li>Ler uma mensagem de erro e corrigir o problema.</li>
+    </ul>
+  </div>
+</div></header>
+
+<main>
+
+<!-- 0 -->
+<section class="card">
+  <h2><span class="num">0</span>Aquecimento <span class="mins">2 min</span></h2>
+  <p>Ainda não há aula anterior para recuperar, então vamos ativar o que você já sabe. Responda sem pesquisar:</p>
+  <p><strong>Como você explicaria a um colega novo, passo a passo, como conferir se um pedido está pronto para ser enviado ao cliente?</strong></p>
+  <div class="open" data-key="aq" data-min="20">
+    <textarea class="ans" placeholder="Passo 1... Passo 2..."></textarea>
+    <button class="reg">Registrar</button>
+    <div class="fb"></div>
+    <div class="callout model model"><span class="tag">Para comparar</span>
+      Você acabou de escrever uma lista de instruções em ordem, que alguém segue sem pensar por conta própria. É exatamente isso que é um programa: o computador não adivinha nada, ele só segue a lista, do início ao fim.</div>
+  </div>
+</section>
+
+<!-- 1 -->
+<section class="card">
+  <h2><span class="num">1</span>Veja um programa <span class="mins">3 min</span></h2>
+  <p>Este é um programa de três linhas, escrito em <strong>Python</strong> (uma das linguagens que usamos para dar instruções ao computador). <strong>Clique em cada linha</strong> para ver o que ela faz.</p>
+  <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>programa.py</span></div>
+<pre class="annot" data-key="an1"><span class="ln" data-note="<b>print</b> significa “mostrar na tela”. O que fica entre parênteses é o que será mostrado. Aqui, o texto <i>Pedido 1042 recebido</i>.">print("Pedido 1042 recebido")</span><span class="ln" data-note="Outra instrução <b>print</b>. O texto vem entre <b>aspas</b>; elas avisam “isto é texto, mostre do jeito que está”. As aspas em si não aparecem na tela.">print("Valor: 500")</span><span class="ln" data-note="O computador chegou à última linha. Ele executou as três <b>de cima para baixo, na ordem em que estão escritas</b>.">print("Fim")</span></pre>
+    <div class="annot-note"><em>Clique numa linha acima.</em></div>
+  </div>
+  <div class="callout term"><span class="tag">Palavras novas</span>
+    <dl>
+      <dt>Programa</dt><dd>uma lista de instruções que o computador segue em ordem.</dd>
+      <dt>Executar (ou rodar)</dt><dd>mandar o computador seguir essa lista.</dd>
+      <dt>print</dt><dd>a instrução que mostra algo na tela.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="card">
+  <h2><span class="num">2</span>Rode você mesmo <span class="mins">4 min</span></h2>
+  <p>Clique em <strong>Executar</strong>. O resultado aparece na caixa embaixo. Depois <strong>mude o texto</strong> de uma linha e rode de novo, só para ver o que acontece. Você não consegue quebrar nada.</p>
+  <div class="runner" data-key="run1">
+    <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>programa.py (pode editar)</span></div>
+<textarea spellcheck="false">print("Pedido 1042 recebido")
+print("Valor: 500")
+print("Fim")</textarea></div>
+    <button class="run">Executar</button><button class="ghost reset">Restaurar</button>
+    <div class="out">O resultado aparece aqui.</div>
+  </div>
+  <p><strong>Antes de testar,</strong> pense: se eu trocar a ordem das duas primeiras linhas, qual aparece primeiro na tela?</p>
+  <div class="quest" data-key="q1" data-concept="programa" data-level="exec" data-ok="Certo. Ordem das linhas = ordem do resultado.">
+    <input class="q" data-answer="valor: 500|valor 500|valor|valor:500" data-label="Primeiro a aparecer" data-why="O computador executa de cima para baixo. Se “Valor: 500” passa a ser a primeira linha, ele é executado primeiro. Teste trocando no programa acima." placeholder="o que aparece primeiro?">
+    <button class="chk">Conferir</button><div class="fb"></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="card">
+  <h2><span class="num">3</span>Descubra o que as aspas fazem <span class="mins">5 min</span></h2>
+  <p>Três programas pequenos e o que cada um mostra na tela. Repare no que muda de um para o outro.</p>
+  <table>
+    <tr><th>Programa</th><th>O que aparece</th></tr>
+    <tr><td><code>print("2 + 3")</code></td><td><code>2 + 3</code></td></tr>
+    <tr><td><code>print(2 + 3)</code></td><td><code>5</code></td></tr>
+    <tr><td><code>print("Total:", 2 + 3)</code></td><td><code>Total: 5</code></td></tr>
+  </table>
+  <p><strong>O que as aspas mudam? Em qual dos dois primeiros o computador fez a conta, e como você percebe?</strong></p>
+  <div class="open" data-key="d1" data-min="15" data-concept="aspas_calculo" data-level="comp">
+    <textarea class="ans"></textarea>
+    <div class="hints">
+      <div class="hint callout warn"><span class="tag">Dica 1</span>Os dois primeiros programas só diferem nas aspas. Em qual deles o resultado é um número que você não escreveu?</div>
+      <div class="hint callout warn"><span class="tag">Dica 2</span>Olhe o terceiro: tem texto entre aspas e uma conta sem aspas, separados por vírgula. Cada parte foi tratada de um jeito.</div>
+      <button class="ghost nexthint">Preciso de uma dica</button>
+    </div>
+    <button class="reg">Registrar e ver a explicação</button>
+    <div class="fb"></div>
+    <div class="callout model"><span class="tag">Explicação</span>
+      <b>Entre aspas, é texto:</b> o computador mostra exatamente o que está lá, sem interpretar (“2 + 3”). <b>Sem aspas, ele calcula</b> (5). Você pode misturar os dois separando com vírgula (“Total:” é texto, <code>2 + 3</code> vira 5). Essa regra vale para o resto do curso.</div>
+  </div>
+  <p>Agora você prevê. O que aparece na tela em cada caso? <em>(Digite exatamente o que apareceria.)</em></p>
+  <div class="quest" data-key="q2" data-concept="aspas_calculo,print_aspas" data-level="exec" data-ok="Os três certos. Você aplicou a regra em casos novos.">
+    <div class="pred"><code>print("10 - 4")</code><input class="q" data-answer="10 - 4|10-4" data-label="Caso 1" data-why="Entre aspas é texto: aparece igual, sem calcular."></div>
+    <div class="pred"><code>print(10 - 4)</code><input class="q" data-answer="6" data-label="Caso 2" data-why="Sem aspas o computador calcula: 10 - 4 = 6."></div>
+    <div class="pred"><code>print("Subtotal:", 10 - 4)</code><input class="q" data-answer="subtotal: 6|subtotal 6|subtotal:6" data-label="Caso 3" data-why="O texto aparece como está e a conta é calculada: Subtotal: 6."></div>
+    <button class="chk">Conferir</button><div class="fb"></div>
+  </div>
+  <p>Quer confirmar com o computador? Rode os três:</p>
+  <div class="runner" data-key="run2">
+    <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>teste.py</span></div>
+<textarea spellcheck="false">print("10 - 4")
+print(10 - 4)
+print("Subtotal:", 10 - 4)</textarea></div>
+    <button class="run">Executar</button>
+    <div class="out"></div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="card">
+  <h2><span class="num">4</span>Conserte o erro <span class="mins">4 min</span></h2>
+  <p>Todo mundo que programa vê erros o tempo todo, inclusive a IA que gera código. O importante é <strong>ler a mensagem</strong>. Este programa tem um defeito. Execute e leia a mensagem do Python na caixa vermelha.</p>
+  <div class="runner" data-key="fix" data-check="fix1" data-concept="ler_erro" data-level="exec">
+    <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>com_defeito.py</span></div>
+<textarea spellcheck="false">print("Pedido 1042 recebido)</textarea></div>
+    <button class="run">Executar</button><button class="ghost reset">Restaurar</button>
+    <div class="out"></div><div class="fb"></div>
+  </div>
+  <div class="callout term"><span class="tag">Como ler a mensagem</span>
+    A palavra no começo (<b>SyntaxError</b>) diz o tipo do problema: o Python não entendeu como a linha foi escrita. O resto explica onde. Quando não entender a mensagem, copie e pergunte ao Claude (ou a quem te acompanha).</div>
+</section>
+
+<!-- 5 -->
+<section class="card">
+  <h2><span class="num">5</span>Escreva o seu <span class="mins">4 min</span></h2>
+  <p>Escreva um programa de <strong>duas linhas</strong> que mostre, nesta ordem:</p>
+  <p><code>Pedido 2001</code> e depois <code>Valor: 750</code></p>
+  <div class="callout term"><span class="tag">Dica de leitura</span>Linhas começadas por <code>#</code> são comentários: o Python ignora, servem para humanos.</div>
+  <div class="runner" data-key="write" data-check="write1" data-concept="print_aspas" data-level="exec">
+    <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>meu_programa.py</span></div>
+<textarea spellcheck="false"># Escreva suas duas linhas abaixo
+
+</textarea></div>
+    <button class="run">Executar e conferir</button>
+    <div class="out"></div><div class="fb"></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="card">
+  <h2><span class="num">6</span>E se vazar? <span class="mins">2 min</span></h2>
+  <div class="callout sec"><span class="tag">Segurança e privacidade</span>
+    Tudo que um programa <b>mostra</b> pode ser visto por quem estiver olhando a tela, gravado num arquivo ou enviado por e-mail. Nos exemplos usamos só o número do pedido e o valor.<br><br>
+    <b>Se o programa mostrasse também o nome completo e o CPF do cliente, qual seria o risco? E para conferir se o pedido está pronto, esses dados seriam necessários?</b></div>
+  <div class="open" data-key="sec" data-min="20" data-concept="privacidade" data-level="comp">
+    <textarea class="ans"></textarea>
+    <button class="reg">Registrar e comparar</button>
+    <div class="fb"></div>
+    <div class="callout model"><span class="tag">Análise</span>
+      Nome completo e CPF identificam uma pessoa (são dados pessoais, protegidos por leis como a LGPD, no Brasil). Se vazassem, o dano seria difícil de reverter. Conferir um pedido normalmente exige só número, valor e situação. A prática de mostrar e guardar <b>apenas o necessário</b> chama-se <b>minimização</b>; vamos usá-la o curso inteiro.</div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="card">
+  <h2><span class="num">7</span>Para fechar <span class="mins">1 min</span></h2>
+  <p><strong>Sem olhar acima, em uma ou duas frases:</strong> o que é um programa e para que servem as aspas no <code>print</code>?</p>
+  <div class="open" data-key="end" data-min="25" data-concept="programa,print_aspas" data-level="comp">
+    <textarea class="ans"></textarea>
+    <button class="reg">Registrar</button>
+    <div class="fb"></div>
+    <div class="callout model"><span class="tag">Resposta de referência</span>
+      Programa é uma lista de instruções que o computador executa em ordem, de cima para baixo. As aspas dizem que o conteúdo é texto, mostrado exatamente como está; sem aspas, o Python tenta calcular.</div>
+  </div>
+  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Em que ordem o computador executa as linhas? (2) O que muda entre <code>print("5 + 1")</code> e <code>print(5 + 1)</code>? (3) Por que nos exemplos não aparece o nome do cliente? <a href="recuperacao-0001.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+</section>
+
+<!-- 8 -->
+<section class="card">
+  <h2><span class="num">▶</span>Vídeo opcional <span class="mins">27 min</span></h2>
+  <p>Um vídeo não substitui a prática; ele só ajuda a ver outra pessoa fazendo. Este é opcional e só entra no curso depois de ser conferido (veja a conferência abaixo).</p>
+  <div class="video">
+    <div class="v-tag">Vídeo · português</div>
+    <div class="v-title"><a href="https://www.youtube.com/watch?v=31llNGKWDdo">Curso Python #04 - Primeiros comandos em Python3</a></div>
+    <div class="v-meta">Canal <b>Curso em Vídeo</b> (Gustavo Guanabara) · 27 min · publicado em 2017 · gratuito</div>
+    <p><b>Quando assistir:</b> depois da <b>Aula 2</b>, não hoje. Ele ensina o <code>print()</code> (tema desta aula) e também <code>input()</code> e variáveis (tema da próxima). Se quiser, divida em dois dias. A playlist completa do curso fica em <a href="https://www.youtube.com/playlist?list=PLHz_AreHm4dlKP6QQCekuIPky1CiwmdI6">Curso de Python 3 - Mundo 1: Fundamentos</a>.</p>
+    <div class="v-rule">
+      <b>Regra para qualquer vídeo do curso</b>
+      <ol>
+        <li><b>Antes:</b> escreva em uma frase o que você espera aprender.</li>
+        <li><b>Durante:</b> pause quando a pessoa do vídeo escrever código e tente prever o que vai aparecer.</li>
+        <li><b>Depois, sem rever o vídeo:</b> escreva do que lembra e refaça no editor da aula 1 um dos programas que você viu.</li>
+      </ol>
+    </div>
+    <div class="open" data-min="15">
+      <textarea class="ans" placeholder="Antes de assistir: o que espero aprender?"></textarea>
+      <button class="reg">Registrar</button>
+      <div class="fb"></div>
+    </div>
+    <details class="v-check"><summary>O que foi conferido neste vídeo (13/10/2026)</summary>
+      <p><b>Conferido no YouTube:</b> título, canal oficial Curso em Vídeo, duração de 27 min, vídeo disponível, data de 2017 e descrição, que diz cobrir <code>print()</code>, <code>input()</code> e variáveis, com exercícios resolvidos.</p>
+      <p><b>Não conferido:</b> eu não assisti ao vídeo, então não sei em que minuto cada assunto aparece. Por ser de 2017, a tela do editor pode ser diferente da sua. Um resumo de terceiros diz que ele usa o IDLE no Windows; não confirmei isso.</p>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Leitura opcional (5 min):</strong> <a href="https://docs.python.org/3/tutorial/introduction.html#using-python-as-a-calculator">Tutorial oficial de Python: números e texto</a>. Está em inglês; leia só os exemplos e compare com o que você fez.</p>
+  <p><strong>Ficou alguma dúvida?</strong> Pergunte ao Claude (ou a quem te acompanha) qualquer coisa que ficou nebulosa, inclusive o “por quê?” de qualquer passo.</p>
+  <p><a href="../PLANO.md">Trilha do curso</a> · <a href="../RESOURCES.md">Recursos</a></p>
+</footer>
+
+</main>
+
+<script>
+window.checks={
+  fix1:(out,err)=>{
+    if(!err&&out.length===1&&out[0]==="Pedido 1042 recebido")return{ok:true,msg:"<b>Consertado.</b> O erro era a aspa que faltava no fim. Todo texto precisa de aspas abrindo <u>e</u> fechando."};
+    if(err&&/SyntaxError|unterminated/i.test(err))return{ok:false,msg:"Ainda há um erro de escrita. Releia a mensagem: ela fala em texto (<i>string</i>) sem terminar. Olhe o fim da linha: o texto está com as aspas completas?"};
+    if(err)return{ok:false,msg:"Surgiu outro erro: "+err+". Compare com o programa original e mude só o necessário."};
+    return{ok:false,msg:"O programa rodou, mas o resultado deve ser exatamente <code>Pedido 1042 recebido</code>. Confira o texto."};
+  },
+  write1:(out,err,code)=>{
+    const want=["Pedido 2001","Valor: 750"];
+    if(!err&&out.length===2&&out[0]===want[0]&&out[1]===want[1])return{ok:true,msg:"<b>Perfeito.</b> Duas instruções, na ordem certa, com o texto exato. Você escreveu seu primeiro programa."};
+    if(err)return{ok:false,msg:"O Python não entendeu uma linha: <b>"+err+"</b>. Os erros mais comuns: aspa faltando, parêntese faltando, ou <code>print</code> escrito diferente."};
+    if(out.length===0)return{ok:false,msg:"Nada apareceu. Use <code>print(\"...\")</code> para mostrar cada informação."};
+    if(out.length!==2)return{ok:false,msg:"Apareceram "+out.length+" linha(s); eram esperadas 2, uma para cada informação."};
+    const swapped=out[0]===want[1]&&out[1]===want[0];
+    return{ok:false,msg:swapped?"As duas linhas estão certas, mas na <b>ordem trocada</b>. O computador segue a ordem em que você escreveu.":
+      "Apareceu <code>"+out.join(" | ")+"</code>, mas esperado <code>"+want.join(" | ")+"</code>. Confira maiúsculas, espaços e dois-pontos."};
+  }
+};
+</script>
+<script src="../assets/curso.js"></script>
+<script src="../assets/aula.js"></script>
+</body>
+</html>

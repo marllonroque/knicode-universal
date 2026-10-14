@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recuperação da aula 1</title>
+<meta name="curso-recuperacao" content="0001">
+<link rel="stylesheet" href="../assets/estilo.css">
+</head>
+<body>
+
+<header class="hero"><div class="hero-in">
+  <div class="crumb">Módulo 1 · Aula 1 · Recuperação</div>
+  <h1>Recuperação: o que ficou da aula 1</h1>
+  <p>Responda sem consultar a aula, de memória. Não vale pesquisar. Acertando 2 de 3, a próxima aula é liberada.</p>
+  <div class="chips"><span class="chip">3 perguntas</span><span class="chip">mínimo: 2 certas</span><span class="chip">sem consulta</span></div>
+</div></header>
+
+<main>
+<section class="card">
+  <h2><span class="num">?</span>Três perguntas <span class="mins">5 min</span></h2>
+  <p>Escreva com suas palavras. A correção procura as ideias principais; se a sua resposta estava certa com outras palavras, você pode contestar depois e contar como certa.</p>
+
+  <div class="recovery" data-lesson="0001">
+    <div class="rq">
+      <p><b>1.</b> Em que ordem o computador executa as linhas de um programa?</p>
+      <textarea class="ans" data-concept="programa" data-regex="(cima (para|pra) baixo|na ordem|em ordem|uma depois da outra|uma apos a outra|sequencia);;" data-not-regex="baixo (para|pra) cima" data-model="De cima para baixo, na ordem em que as linhas estão escritas."></textarea>
+    </div>
+    <div class="rq">
+      <p><b>2.</b> O que muda entre <code>print("5 + 1")</code> e <code>print(5 + 1)</code>?</p>
+      <textarea class="ans" data-concept="aspas_calculo" data-regex="(6|calcul|soma|resultado);;(5 ?\+ ?1|texto|aspas|igual|como esta|literal)" data-model="Com aspas é texto e aparece exatamente como escrito (5 + 1). Sem aspas o Python calcula e mostra 6."></textarea>
+    </div>
+    <div class="rq">
+      <p><b>3.</b> Por que, nos exemplos, não aparece o nome do cliente?</p>
+      <textarea class="ans" data-concept="privacidade" data-regex="(pessoal|sensivel|identific|vaz|necessari|precis|minimiz|lgpd|privacidade|cpf|exposi|proteg)" data-model="Porque conferir um pedido só precisa de número, valor e situação. Nome completo e CPF identificam a pessoa (dados pessoais); se vazassem, o dano seria grande. Mostrar só o necessário é minimização."></textarea>
+    </div>
+    <button class="rq-check" type="button">Conferir</button>
+    <button class="rq-submit" type="button">Registrar o resultado</button>
+    <div class="rq-result"></div>
+  </div>
+</section>
+
+<footer>
+  <p>O resultado fica salvo neste navegador e atualiza o painel. A conferência por palavras-chave é um filtro simples: o que vale de verdade é você conseguir explicar com as suas palavras.</p>
+  <p><a href="0001-o-computador-segue-instrucoes.html">Voltar à aula 1</a> · <a href="../index.html">Painel do curso</a></p>
+</footer>
+</main>
+
+<script src="../assets/curso.js"></script>
+<script src="../assets/aula.js"></script>
+</body>
+</html>

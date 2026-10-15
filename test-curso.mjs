@@ -187,5 +187,39 @@ const ruim = tags.filter(tg => !(/autocapitalize="none"/.test(tg) && /autocorrec
 const dup = tags.filter(tg => ["autocapitalize", "autocorrect", "spellcheck", "autocomplete"].some(n => (tg.match(new RegExp("\\b" + n + "=", "g")) || []).length > 1));
 eq("build: todo textarea/input tem autocapitalize, autocorrect, spellcheck e autocomplete", [tags.length > 0, ruim.length, dup.length], [true, 0, 0]);
 
+// 14. Currículo aberto (fonte única), painel gerado e limpeza de dados pessoais
+{
+  const { CURRICULO, PARTES } = require("./assets/curso.js");
+  const sem = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const lerTxt = p => readFileSync(new URL("./" + p, import.meta.url), "utf8");
+  eq("currículo: o motor usa o mesmo currículo (um módulo por linha)", COURSE.modules.length, CURRICULO.length);
+  eq("currículo: trilha densa (mais de 20 módulos)", CURRICULO.length > 20, true);
+  eq("currículo: ids sequenciais m01, m02, ...", COURSE.modules.every((m, i) => m.id === "m" + String(i + 1).padStart(2, "0") && m.n === i + 1), true);
+  eq("currículo: todo módulo tem título, descrição, exercício e critério, e uma parte válida",
+    CURRICULO.every(m => m.titulo && m.desc && m.exercicio && m.criterio && Number.isInteger(m.parte) && m.parte >= 0 && m.parte < PARTES.length), true);
+  eq("currículo: títulos únicos", new Set(CURRICULO.map(m => m.titulo)).size, CURRICULO.length);
+  const tudo = sem(CURRICULO.map(m => m.titulo + " " + m.desc).join(" "));
+  eq("currículo: cobre ágil, prompts, Chat, Artifacts, Projects, Claude Code, agentes, API, Python, hospedagem, segurança e LGPD",
+    ["agil", "prompts", "claude chat", "artifacts", "claude projects", "claude code", "agentes", "api da anthropic", "funcoes", "hospedagem", "seguranca", "lgpd", "vibe coding"].map(k => tudo.includes(k)), Array(13).fill(true));
+  eq("currículo: ferramentas que mudam rápido pedem conferência da fonte oficial",
+    CURRICULO.filter(m => /claude|skills|mcp|agentes|api da anthropic|hospedagem|seguranca|lgpd/.test(sem(m.titulo))).every(m => m.verificar), true);
+  eq("currículo: Módulo 1 usa a metáfora do robô que passa café", sem(CURRICULO[0].desc).includes("robo") && sem(CURRICULO[0].desc).includes("cafe"), true);
+  const idx = lerTxt("index.html");
+  eq("painel: um cartão por módulo, 1 em andamento e o resto bloqueado",
+    [(idx.match(/<article class="mod /g) || []).length, (idx.match(/<article class="mod run"/g) || []).length, (idx.match(/<article class="mod lock"/g) || []).length], [CURRICULO.length, 1, CURRICULO.length - 1]);
+  eq("painel: um título por parte", (idx.match(/<h2 class="parte">/g) || []).length, PARTES.length);
+  eq("painel: o contador começa em 0 / N", idx.includes(`0 / ${CURRICULO.length}</div>`), true);
+  const mat = lerTxt("CURRICULO.md");
+  eq("matriz curricular: lista todos os módulos", CURRICULO.every(m => mat.includes(m.titulo)), true);
+  const aula = lerTxt("lessons/0001-o-computador-segue-instrucoes.html");
+  eq("aula 1: metáfora do robô de café, sem os exemplos antigos", [/robô/.test(aula), /café/.test(aula), /Pedido 1042/.test(aula)], [true, true, false]);
+  eq("aula 1: enunciado do quiz com exemplo de formato neutro (Olá Mundo)", /Exemplo do formato: <code>Olá Mundo<\/code>/.test(aula), true);
+  // varredura de dados pessoais e de empresa em tudo que é texto do projeto
+  const termos = /hospital|adventista|manaus|faturamento|convenio|paciente|prontuario|glosa|green paperless|ciclo de receita|ham\.org/;
+  const arquivos = ["index.html", "CURRICULO.md", "README.md", "PLANO.md", "RESOURCES.md", "NOTES.md", "assets/curso.js", "assets/aula.js", "fonte/index.html",
+    ...readdirSync(new URL("./lessons/", import.meta.url)).map(n => "lessons/" + n), ...readdirSync(new URL("./fonte/", import.meta.url)).map(n => "fonte/" + n)];
+  eq("privacidade: nenhum nome de empresa, hospital ou termo do trabalho no projeto", arquivos.filter(f => termos.test(sem(lerTxt(f)))), []);
+}
+
 console.log(fails ? `\n${fails} FALHA(S)` : "\nTodos os testes passaram.");
 process.exit(fails ? 1 : 0);

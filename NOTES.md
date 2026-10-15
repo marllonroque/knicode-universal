@@ -4,6 +4,12 @@
 - Escrever em `fonte/` e rodar `node build.mjs`. O build embute `assets/estilo.css` e os scripts em cada página (arquivos únicos, funcionam em qualquer navegador), injeta a guarda de entrada, as metatags do PWA e o registro do service worker, e gera `sw.js`. Nunca editar `lessons/`, `index.html` (raiz) nem `sw.js` à mão.
 - Rodar `node test-curso.mjs` depois de qualquer mudança nas regras de progresso, na guarda ou no service worker.
 
+## Currículo (fonte única)
+- A trilha vive em `CURRICULO` e `CONCEITOS` dentro de `assets/curso.js`. Dali saem o motor de progresso, os cartões do painel (`fonte/index.html` tem o marcador `<!--MODULOS-->`, trocado pelo build) e `CURRICULO.md`. Para criar ou editar um módulo, mexer só lá e rodar `node build.mjs`.
+- A trilha é aberta (sem limite de módulos). Módulos de ferramentas que mudam rápido levam `verificar: true` (aparecem como "fonte oficial a conferir").
+- O Cowork (Módulo 17) e o conteúdo de Claude Chat, Artifacts e Projects ainda não têm fonte oficial verificada neste projeto: localizar e confirmar antes de escrever aulas, sem afirmar nada de memória.
+- Exemplos sempre de domínio público: robô que passa café, tarefas da semana, carrinho de compras, finanças pessoais, gerenciador de tarefas.
+
 ## Público e tom
 - Iniciante absoluto. Não pressupor nada: nem `print`, aspas, indentação, `:`, símbolos de comparação, "executar".
 - Um conceito novo por aula (~25 min). Degraus: ler e prever, mudar uma coisa, completar, só então escrever.

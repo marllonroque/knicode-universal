@@ -4,6 +4,7 @@
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { createHash } from "node:crypto";
+import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 
 const root = dirname(fileURLToPath(import.meta.url));
@@ -86,9 +87,36 @@ const addMobileAttrs = (src) => src.replace(/<(textarea|input)\b([^>]*)>/g, (m, 
   return `<${tag}${attrs}${extra}>`;
 });
 
+// Painel e matriz curricular saem do mesmo currículo (assets/curso.js): uma fonte só, sem risco de ficarem diferentes.
+const { COURSE, CURRICULO, PARTES } = createRequire(import.meta.url)("./assets/curso.js");
+const pad2 = (n) => String(n).padStart(2, "0");
+const tempo = (m) => [m.aulas ? `${m.aulas} aulas de ~30 min` : null, m.h1 ? (m.aulas ? `+ ${m.h1} h` : `${m.h1} sessões de 1 h`) : null].filter(Boolean);
+const painelModulos = () => PARTES.map((parte, pi) => {
+  const cards = CURRICULO.map((m, i) => ({ m, i })).filter(x => x.m.parte === pi).map(({ m, i }) => {
+    const first = i === 0, cls = first ? "run" : "lock", st = first ? "[EM ANDAMENTO]" : "[BLOQUEADO]";
+    const meta = [...tempo(m).map(t => `<span>${t}</span>`), m.verificar ? '<span class="conf">fonte oficial a conferir</span>' : ""].join("");
+    const go = first ? `\n        <a class="go" href="${COURSE.lessons[0].file}">▶ continuar: aula 1</a>` : "";
+    return `    <article class="mod ${cls}">
+      <div class="mod-bar"><i></i><i></i><i></i><span>modulo_${pad2(i + 1)}.${m.ext}</span><b class="st ${cls}">${st}</b></div>
+      <div class="mod-body"><h3>${pad2(i + 1)} · ${m.titulo}</h3><p>${m.desc}</p>
+        <div class="meta">${meta}</div>${go}</div>
+    </article>`;
+  }).join("\n");
+  return `  <h2 class="parte">Parte ${pi + 1} · ${parte}</h2>\n  <div class="mods">\n${cards}\n  </div>`;
+}).join("\n\n");
+writeFileSync(join(root, "CURRICULO.md"), `# Matriz curricular do KNICode
+
+Gerado pelo build a partir de \`assets/curso.js\`. Não editar à mão: para mudar um módulo, edite o currículo e rode \`node build.mjs\`.
+
+A trilha é **aberta**: não há limite de módulos. Ferramentas marcadas com "conferir" têm conteúdo que muda com frequência; antes de cada aula, ele é confirmado na documentação oficial (veja \`RESOURCES.md\`).
+
+${PARTES.map((parte, pi) => `## Parte ${pi + 1}: ${parte}\n\n` + CURRICULO.map((m, i) => ({ m, i })).filter(x => x.m.parte === pi).map(({ m, i }) =>
+  `### Módulo ${pad2(i + 1)}: ${m.titulo}\n\n${m.desc}\n\n- **Tempo:** ${tempo(m).join(" ")}\n- **Exercício:** ${m.exercicio}\n- **Ao final consegue:** ${m.criterio}${m.verificar ? "\n- **Atenção:** conferir a documentação oficial antes das aulas." : ""}\n`).join("\n")).join("\n")}`);
+console.log("ok CURRICULO.md,", CURRICULO.length, "módulos");
+
 const built = [];
 for (const f of readdirSync(join(root, "fonte")).filter(n => n.endsWith(".html"))) {
-  const html = addMobileAttrs(readFileSync(join(root, "fonte", f), "utf8"))
+  const html = addMobileAttrs(readFileSync(join(root, "fonte", f), "utf8").replace("<!--MODULOS-->", () => painelModulos()))
     .replace('<link rel="stylesheet" href="../assets/estilo.css">', () => guard(f) + pwaHead(f) + `<style>\n${css}\n</style>`)
     .replace(/<script src="\.\.\/assets\/(\w+)\.js"><\/script>/g, (_, n) => `<script>\n${readJs(n)}\n</script>`)
     .replace("</body>", () => pwaTail(f) + "</body>");

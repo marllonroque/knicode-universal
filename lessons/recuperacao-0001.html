@@ -284,6 +284,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
 .mod .go:hover{background:var(--neon);border-color:var(--neon);color:#000;box-shadow:0 0 14px rgba(255,102,0,.8),0 0 34px rgba(255,102,0,.55);text-shadow:none;transform:translateX(2px)}
 .mod .go.off{pointer-events:none;background:transparent;color:var(--fg);border-style:dashed;box-shadow:none}
 .mod.par{border-style:dashed}
+.parte{margin:2.2rem 0 .9rem;padding-bottom:.45rem;border-bottom:1px solid var(--line-soft);font:700 .8rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--brick)}
+.parte:first-of-type{margin-top:1.4rem}
+.mod .meta span.conf{color:var(--amber);border-color:rgba(255,183,0,.45)}
 .mod-extra{margin-top:.6rem}
 .mp-track{height:6px;background:rgba(224,90,38,.15);border-radius:1px;overflow:hidden}
 .mp-track i{display:block;height:100%;background:repeating-linear-gradient(90deg,var(--neon) 0 7px,transparent 7px 9px);transition:width .6s}
@@ -314,16 +317,16 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
   <div class="recovery" data-lesson="0001">
     <div class="rq">
-      <p><b>1.</b> Em que ordem o computador executa as linhas de um programa?</p>
-      <textarea class="ans" data-concept="programa" data-regex="(cima (para|pra) baixo|na ordem|em ordem|uma depois da outra|uma apos a outra|sequencia);;" data-not-regex="baixo (para|pra) cima" data-model="De cima para baixo, na ordem em que as linhas estão escritas." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
+      <p><b>1.</b> Um robô recebe uma lista de passos escrita num programa. Em que ordem ele executa os passos?</p>
+      <textarea class="ans" data-concept="programa" data-regex="(cima (para|pra) baixo|na ordem|em ordem|uma depois da outra|uma apos a outra|sequencia);;" data-not-regex="baixo (para|pra) cima" data-model="De cima para baixo, na ordem em que os passos estão escritos." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     </div>
     <div class="rq">
       <p><b>2.</b> O que muda entre <code>print("5 + 1")</code> e <code>print(5 + 1)</code>?</p>
       <textarea class="ans" data-concept="aspas_calculo" data-regex="(6|calcul|soma|resultado);;(5 ?\+ ?1|texto|aspas|igual|como esta|literal)" data-model="Com aspas é texto e aparece exatamente como escrito (5 + 1). Sem aspas o Python calcula e mostra 6." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     </div>
     <div class="rq">
-      <p><b>3.</b> Por que, nos exemplos, não aparece o nome do cliente?</p>
-      <textarea class="ans" data-concept="privacidade" data-regex="(pessoal|sensivel|identific|vaz|necessari|precis|minimiz|lgpd|privacidade|cpf|exposi|proteg)" data-model="Porque conferir um pedido só precisa de número, valor e situação. Nome completo e CPF identificam a pessoa (dados pessoais); se vazassem, o dano seria grande. Mostrar só o necessário é minimização." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
+      <p><b>3.</b> Por que um app de pedidos de café não deveria mostrar o nome completo e o CPF do cliente na tela de preparo?</p>
+      <textarea class="ans" data-concept="privacidade" data-regex="(pessoal|sensivel|identific|vaz|necessari|precis|minimiz|lgpd|privacidade|cpf|exposi|proteg)" data-model="Porque preparar um café só precisa do pedido (tipo e tamanho). Nome completo e CPF identificam a pessoa (dados pessoais); se vazassem, o dano seria grande. Mostrar só o necessário é minimização." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     </div>
     <button class="rq-check" type="button">Conferir</button>
     <button class="rq-submit" type="button">Registrar o resultado</button>
@@ -354,20 +357,49 @@ footer p{margin:.4rem 0;color:var(--fg)}
   const T = { ret: 0.6, almost: 0.8, recoveryPass: 2, retentionDays: 3, offsets: [1, 3, 7, 14, 30] };
 
   const mod = (id, n, title, concepts, final, transfer) => ({ id, n, title, concepts: concepts || [], final, transfer });
-  // Trilha pública. Só o Módulo 1 tem conceitos definidos por enquanto; os demais recebem conceitos quando suas aulas forem criadas.
+
+  /* ===== CURRÍCULO: fonte única da trilha (aberta, sem limite de módulos) =====
+     Alimenta o motor de progresso, o painel (index.html), CURRICULO.md e os testes. Para criar um módulo, acrescente uma linha aqui
+     (e, quando houver aulas, os conceitos em CONCEITOS). "verificar": o conteúdo depende de ferramenta que muda; conferir na documentação oficial. */
+  const PARTES = ["Lógica e Python","Gestão de projetos e mentalidade ágil","Vibe coding e engenharia de prompts","Ecossistema Claude","No ar, com segurança","Projetos e carreira"];
+  const CURRICULO = [
+    {"parte":0,"ext":"py","titulo":"Primeiros passos: algoritmos e Python","desc":"Um robô que passa café: o que é um algoritmo, print, texto e aspas, variáveis, tipos e entrada de dados.","aulas":8,"h1":1,"exercicio":"Um robô de café que monta o pedido na tela.","criterio":"Prever a saída de um programa curto, corrigir um erro e escrever um programa pequeno do zero.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
+    {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
+    {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
+    {"parte":2,"ext":"prompt","titulo":"Engenharia de prompts: fundamentos","desc":"Como pedir bem: objetivo, contexto, exemplos e formato da resposta.","aulas":8,"h1":0,"exercicio":"Reescrever pedidos vagos até obter respostas úteis e verificáveis.","criterio":"Escrever pedidos claros e reconhecer quando uma resposta não serve.","verificar":false},
+    {"parte":2,"ext":"prompt","titulo":"Engenharia de prompts avançada","desc":"Dividir tarefas, encadear passos, dar papéis e restrições, pedir verificação e avaliar respostas com testes.","aulas":8,"h1":1,"exercicio":"Montar uma cadeia de prompts que gera e testa uma pequena função.","criterio":"Projetar prompts em etapas e medir se melhoraram, em vez de confiar na impressão.","verificar":false},
+    {"parte":2,"ext":"prompt","titulo":"Vibe coding com responsabilidade","desc":"O ciclo: especificar, gerar, ler, testar e ajustar. Quando confiar, quando desconfiar e como não aceitar código às cegas.","aulas":8,"h1":2,"exercicio":"Construir uma ferramenta pequena pedindo à IA, lendo cada trecho e escrevendo os testes.","criterio":"Dirigir a IA com especificações claras e rejeitar código que não passa na revisão.","verificar":false},
+    {"parte":3,"ext":"claude","titulo":"Claude Chat","desc":"Conversar com método: pedir, iterar, verificar respostas e conhecer os limites.","aulas":6,"h1":0,"exercicio":"Resolver um problema do dia a dia em uma conversa guiada e checar o resultado.","criterio":"Usar o chat para aprender e produzir, conferindo as respostas por conta própria.","verificar":true},
+    {"parte":3,"ext":"claude","titulo":"Claude Artifacts","desc":"Criar e refinar páginas e ferramentas interativas direto na conversa, e revisar o código gerado.","aulas":8,"h1":1,"exercicio":"Um conversor ou calculadora simples feito com Artifacts.","criterio":"Pedir, revisar e ajustar um artifact até ele fazer o que foi especificado.","verificar":true},
+    {"parte":3,"ext":"claude","titulo":"Claude Projects","desc":"Organizar conhecimento e instruções persistentes para trabalhar num assunto ao longo do tempo.","aulas":6,"h1":0,"exercicio":"Montar um Projeto de estudo com instruções e materiais.","criterio":"Estruturar um Projeto que dê respostas consistentes para um assunto.","verificar":true},
+    {"parte":3,"ext":"code","titulo":"Claude Code","desc":"Programar com um assistente no terminal: pedir, revisar mudanças, rodar testes e versionar.","aulas":10,"h1":2,"exercicio":"Construir e melhorar um pequeno programa, com testes, revisando cada mudança.","criterio":"Dirigir o Claude Code com especificações claras e aceitar só o que passa na revisão.","verificar":true},
+    {"parte":3,"ext":"mcp","titulo":"Skills, MCP e conectores","desc":"Estender o Claude com instruções reutilizáveis e ligações a ferramentas e dados, com cuidado nas permissões.","aulas":8,"h1":0,"exercicio":"Criar uma skill simples e avaliar os riscos de uma conexão.","criterio":"Estender o Claude de forma útil e segura.","verificar":true},
+    {"parte":3,"ext":"agent","titulo":"Agentes e orquestração (Cowork)","desc":"Workflow x agente, subagentes e orquestração de várias tarefas; inclui ferramentas como o Cowork (conferir na documentação oficial).","aulas":8,"h1":1,"exercicio":"Desenhar um fluxo com várias etapas e definir limites e permissões de cada agente.","criterio":"Explicar quando usar um agente, como orquestrar e quais cuidados ele exige.","verificar":true},
+    {"parte":3,"ext":"api","titulo":"API da Anthropic","desc":"Chamar o Claude por código, enviar mensagens, usar ferramentas e controlar custos.","aulas":8,"h1":1,"exercicio":"Um programa que usa a API para uma tarefa pequena e útil.","criterio":"Fazer uma chamada à API, tratar erros e limitar o que o programa pode fazer.","verificar":true},
+    {"parte":4,"ext":"git","titulo":"Git e GitHub","desc":"Versionar o trabalho: commits, branches, desfazer erros e publicar um repositório.","aulas":8,"h1":1,"exercicio":"Versionar um projeto e publicá-lo, com um README claro.","criterio":"Usar o Git no dia a dia sem medo de perder trabalho.","verificar":false},
+    {"parte":4,"ext":"cloud","titulo":"Hospedagem na nuvem","desc":"Colocar um site no ar: hospedagem estática, deploy automático a cada alteração, endereço e app instalável (PWA).","aulas":6,"h1":1,"exercicio":"Publicar um projeto do curso e abri-lo no celular.","criterio":"Publicar, atualizar e reverter um site com segurança.","verificar":true},
+    {"parte":4,"ext":"sec","titulo":"Segurança de dados para quem constrói","desc":"Segredos e chaves, validação de entrada, injeção, dependências, o que nunca colar numa IA e riscos comuns (OWASP).","aulas":8,"h1":0,"exercicio":"Revisar com um checklist um código gerado pela IA.","criterio":"Identificar riscos básicos e priorizar o que corrigir.","verificar":true},
+    {"parte":4,"ext":"lgpd","titulo":"LGPD para desenvolvedores","desc":"Fundamentos: dado pessoal e sensível, bases legais, minimização, direitos do titular e incidentes. Noções de GDPR.","aulas":6,"h1":0,"exercicio":"Mapear quais dados um app coleta e justificar cada campo.","criterio":"Dizer, para cada dado, se é necessário, por que, quem acessa e por quanto tempo.","verificar":true},
+    {"parte":5,"ext":"final","titulo":"Projeto integrador","desc":"Um app de finanças pessoais (ou gerenciador de tarefas) do plano ao ar, com vibe coding responsável de ponta a ponta.","aulas":0,"h1":8,"exercicio":"Planejar, construir, testar, proteger e publicar o app.","criterio":"Um app seu, funcional, testado, seguro e publicado, que você explica sem consultar.","verificar":false},
+    {"parte":5,"ext":"final","titulo":"Portfólio e próximos passos","desc":"Documentar, apresentar o trabalho e traçar caminhos de estudo e de carreira com honestidade.","aulas":4,"h1":1,"exercicio":"README, demonstração e plano de estudos dos próximos três meses.","criterio":"Apresentar seus projetos de forma clara e saber o que estudar a seguir.","verificar":false}
+  ];
+  // Conceitos centrais por módulo (só o Módulo 1 tem aulas por enquanto; os demais ganham conceitos quando suas aulas forem criadas).
+  const CONCEITOS = {
+    m01: [
+      ["programa", "Algoritmo e programa: instruções exatas, em ordem"], ["print_aspas", "print e texto entre aspas"],
+      ["aspas_calculo", "Aspas x cálculo"], ["ler_erro", "Ler uma mensagem de erro"],
+      ["variaveis", "Variáveis"], ["tipos", "Número x texto (tipos)"], ["entrada", "Entrada de dados (input)"],
+      ["privacidade", "Privacidade: usar só o dado necessário"]
+    ].map(([id, name]) => ({ id, name }))
+  };
+  const FINAL = { m01: ["Mini-projeto: robô de café que monta o pedido", "Aplicar os mesmos conceitos a organizar as tarefas da semana"] };
   const COURSE = {
-    modules: [
-      mod("m01", 1, "Primeiros passos em código", [
-        ["programa", "Programa = instruções em ordem"], ["print_aspas", "print e texto entre aspas"],
-        ["aspas_calculo", "Aspas x cálculo"], ["ler_erro", "Ler uma mensagem de erro"],
-        ["variaveis", "Variáveis"], ["tipos", "Número x texto (tipos)"], ["entrada", "Entrada de dados (input)"],
-        ["privacidade", "Privacidade: usar só o dado necessário"]
-      ].map(([id, name]) => ({ id, name })), "Mini-projeto: ficha de cadastro no terminal", "Resolver um problema novo com os mesmos conceitos"),
-      mod("m02", 2, "Lógica de decisão"), mod("m03", 3, "Funções"), mod("m04", 4, "Listas, laços e dicionários"),
-      mod("m05", 5, "Erros, testes e depuração"), mod("m06", 6, "Engenharia de prompts"), mod("m07", 7, "Claude: Projetos e Artifacts"),
-      mod("m08", 8, "Segurança e privacidade com IA"), mod("m09", 9, "Claude Code"), mod("m10", 10, "Skills, MCP e conectores"),
-      mod("m11", 11, "API da Anthropic e agentes"), mod("m12", 12, "Projeto final")
-    ],
+    modules: CURRICULO.map((m, i) => { const id = "m" + String(i + 1).padStart(2, "0"); return mod(id, i + 1, m.titulo, CONCEITOS[id], (FINAL[id] || [])[0], (FINAL[id] || [])[1]); }),
     // Aulas já construídas (atualizar a cada aula nova)
     lessons: [{ id: "0001", n: 1, module: "m01", file: "lessons/0001-o-computador-segue-instrucoes.html", recovery: "lessons/recuperacao-0001.html" }]
   };
@@ -516,7 +548,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia };
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */

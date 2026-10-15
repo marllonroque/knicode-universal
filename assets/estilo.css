@@ -249,6 +249,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
 .mod .go:hover{background:var(--neon);border-color:var(--neon);color:#000;box-shadow:0 0 14px rgba(255,102,0,.8),0 0 34px rgba(255,102,0,.55);text-shadow:none;transform:translateX(2px)}
 .mod .go.off{pointer-events:none;background:transparent;color:var(--fg);border-style:dashed;box-shadow:none}
 .mod.par{border-style:dashed}
+.parte{margin:2.2rem 0 .9rem;padding-bottom:.45rem;border-bottom:1px solid var(--line-soft);font:700 .8rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--brick)}
+.parte:first-of-type{margin-top:1.4rem}
+.mod .meta span.conf{color:var(--amber);border-color:rgba(255,183,0,.45)}
 .mod-extra{margin-top:.6rem}
 .mp-track{height:6px;background:rgba(224,90,38,.15);border-radius:1px;overflow:hidden}
 .mp-track i{display:block;height:100%;background:repeating-linear-gradient(90deg,var(--neon) 0 7px,transparent 7px 9px);transition:width .6s}

@@ -1,0 +1,12 @@
+{
+  "name": "knicode-universal",
+  "private": true,
+  "description": "KNICode: curso aberto de programação e IA",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node test-curso.mjs && node test-conteudo.mjs"
+  },
+  "devDependencies": {
+    "pyodide": "0.26.4"
+  }
+}

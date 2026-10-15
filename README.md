@@ -10,7 +10,7 @@ Formação aberta, interativa e gratuita para quem parte do **zero absoluto** e 
 - Dados sempre fictícios. Privacidade e segurança entram desde a primeira aula.
 - Honestidade: o curso entrega práticas profissionais e projetos reais; não promete emprego nem certificação.
 
-Hoje existe a **aula 1** do Módulo 1. As próximas são criadas aos poucos.
+Estão prontas as **66 aulas das Partes 1 e 2** (Módulos 1 a 8): Python do zero (variáveis, decisões, repetições, funções, listas e dicionários, erros e testes) e mentalidade ágil até o plano de um produto. Cada aula termina com quiz, e cada módulo, com exercício final e problema novo. As Partes 3 a 5 vêm depois.
 
 ## Como usar
 

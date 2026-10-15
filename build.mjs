@@ -5,6 +5,8 @@ import { readFileSync, writeFileSync, readdirSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { createHash } from "node:crypto";
 import { createRequire } from "node:module";
+import { AULAS, META } from "./conteudo/index.mjs";
+import { renderAula, renderRecuperacao, idModulo } from "./conteudo/modelo.mjs";
 import { fileURLToPath } from "node:url";
 
 const root = dirname(fileURLToPath(import.meta.url));
@@ -87,15 +89,30 @@ const addMobileAttrs = (src) => src.replace(/<(textarea|input)\b([^>]*)>/g, (m, 
   return `<${tag}${attrs}${extra}>`;
 });
 
+// Conteúdo das aulas (conteudo/): o motor de progresso precisa só dos conceitos, dos exercícios finais e da lista de aulas.
+const req = createRequire(import.meta.url);
+{
+  const conceitos = {}, finais = {};
+  for (const a of AULAS) {
+    const m = idModulo(a.modulo); conceitos[m] = conceitos[m] || [];
+    for (const [id, name] of a.conceitos || []) if (!conceitos[m].some((c) => c.id === id)) conceitos[m].push({ id, name });
+  }
+  for (const [n, mt] of Object.entries(META)) finais[idModulo(+n)] = [mt.final, mt.transfer];
+  const aulas = AULAS.map((a) => ({ id: a.id, n: a.n, module: idModulo(a.modulo), file: "lessons/" + a.arquivo, recovery: "lessons/recuperacao-" + a.id + ".html", titulo: a.titulo }));
+  writeFileSync(join(root, "assets", "conteudo.js"), "/* GERADO por build.mjs a partir de conteudo/. Não editar à mão. */\n(typeof window !== \"undefined\" ? window : globalThis).KNI_CONTEUDO = " + JSON.stringify({ conceitos, finais, aulas }) + ";\n");
+  req("./assets/conteudo.js");
+}
+
 // Painel e matriz curricular saem do mesmo currículo (assets/curso.js): uma fonte só, sem risco de ficarem diferentes.
-const { COURSE, CURRICULO, PARTES } = createRequire(import.meta.url)("./assets/curso.js");
+const { COURSE, CURRICULO, PARTES } = req("./assets/curso.js");
 const pad2 = (n) => String(n).padStart(2, "0");
 const tempo = (m) => [m.aulas ? `${m.aulas} aulas de ~30 min` : null, m.h1 ? (m.aulas ? `+ ${m.h1} h` : `${m.h1} sessões de 1 h`) : null].filter(Boolean);
 const painelModulos = () => PARTES.map((parte, pi) => {
   const cards = CURRICULO.map((m, i) => ({ m, i })).filter(x => x.m.parte === pi).map(({ m, i }) => {
     const first = i === 0, cls = first ? "run" : "lock", st = first ? "[EM ANDAMENTO]" : "[BLOQUEADO]";
     const meta = [...tempo(m).map(t => `<span>${t}</span>`), m.verificar ? '<span class="conf">fonte oficial a conferir</span>' : ""].join("");
-    const go = first ? `\n        <a class="go" href="${COURSE.lessons[0].file}">▶ continuar: aula 1</a>` : "";
+    const aulasMod = COURSE.lessons.filter((l) => l.module === idModulo(i + 1));
+    const go = aulasMod.length ? `\n        <a class="go" href="${aulasMod[0].file}">▶ continuar: aula 1</a>` : "";
     return `    <article class="mod ${cls}">
       <div class="mod-bar"><i></i><i></i><i></i><span>modulo_${pad2(i + 1)}.${m.ext}</span><b class="st ${cls}">${st}</b></div>
       <div class="mod-body"><h3>${pad2(i + 1)} · ${m.titulo}</h3><p>${m.desc}</p>
@@ -111,14 +128,20 @@ Gerado pelo build a partir de \`assets/curso.js\`. Não editar à mão: para mud
 A trilha é **aberta**: não há limite de módulos. Ferramentas marcadas com "conferir" têm conteúdo que muda com frequência; antes de cada aula, ele é confirmado na documentação oficial (veja \`RESOURCES.md\`).
 
 ${PARTES.map((parte, pi) => `## Parte ${pi + 1}: ${parte}\n\n` + CURRICULO.map((m, i) => ({ m, i })).filter(x => x.m.parte === pi).map(({ m, i }) =>
-  `### Módulo ${pad2(i + 1)}: ${m.titulo}\n\n${m.desc}\n\n- **Tempo:** ${tempo(m).join(" ")}\n- **Exercício:** ${m.exercicio}\n- **Ao final consegue:** ${m.criterio}${m.verificar ? "\n- **Atenção:** conferir a documentação oficial antes das aulas." : ""}\n`).join("\n")).join("\n")}`);
+  `### Módulo ${pad2(i + 1)}: ${m.titulo}\n\n${m.desc}\n\n- **Tempo:** ${tempo(m).join(" ")}\n- **Exercício:** ${m.exercicio}\n- **Ao final consegue:** ${m.criterio}${COURSE.lessons.filter((l) => l.module === idModulo(i + 1)).length ? `\n- **Aulas prontas (${COURSE.lessons.filter((l) => l.module === idModulo(i + 1)).length} de ${m.aulas || "?"}):** ` + COURSE.lessons.filter((l) => l.module === idModulo(i + 1)).map((l) => `${l.n}. ${l.titulo}`).join("; ") : ""}${m.verificar ? "\n- **Atenção:** conferir a documentação oficial antes das aulas." : ""}\n`).join("\n")).join("\n")}`);
 console.log("ok CURRICULO.md,", CURRICULO.length, "módulos");
 
+const fontes = readdirSync(join(root, "fonte")).filter((n) => n.endsWith(".html")).map((f) => ({ f, src: readFileSync(join(root, "fonte", f), "utf8") }));
+AULAS.forEach((a, i) => {
+  if (a.manual) return;
+  const ctx = { modulo: CURRICULO[a.modulo - 1], anterior: AULAS[i - 1], proxima: AULAS[i + 1] };
+  fontes.push({ f: a.arquivo, src: renderAula(a, ctx) }, { f: "recuperacao-" + a.id + ".html", src: renderRecuperacao(a, ctx) });
+});
 const built = [];
-for (const f of readdirSync(join(root, "fonte")).filter(n => n.endsWith(".html"))) {
-  const html = addMobileAttrs(readFileSync(join(root, "fonte", f), "utf8").replace("<!--MODULOS-->", () => painelModulos()))
+for (const { f, src } of fontes) {
+  const html = addMobileAttrs(src.replace("<!--MODULOS-->", () => painelModulos()))
     .replace('<link rel="stylesheet" href="../assets/estilo.css">', () => guard(f) + pwaHead(f) + `<style>\n${css}\n</style>`)
-    .replace(/<script src="\.\.\/assets\/(\w+)\.js"><\/script>/g, (_, n) => `<script>\n${readJs(n)}\n</script>`)
+    .replace(/<script src="\.\.\/assets\/([\w-]+)\.js"><\/script>/g, (_, n) => (n === "curso" ? ["conteudo", "verifica", "curso"] : [n]).map((x) => `<script>\n${readJs(x)}\n</script>`).join("\n"))
     .replace("</body>", () => pwaTail(f) + "</body>");
   // O painel inicial vai para a raiz do curso; as aulas, para lessons/
   const rel = f === "index.html" ? "index.html" : `lessons/${f}`;

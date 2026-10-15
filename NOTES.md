@@ -38,3 +38,8 @@
 - Ícone: urso robô (`assets/knicode-original.png`, 1254x1254), com versões 192, 512, maskable e iPhone.
 - Instalar exige https (ou localhost). Android/Chrome: menu ⋮ → Instalar app. iPhone/Safari: Compartilhar → Adicionar à Tela de Início.
 - O service worker guarda as páginas e, depois da primeira vez, o Python (Pyodide) e as fontes vindos de CDN, para funcionar offline.
+
+## Estado do conteúdo (Partes 1 e 2)
+- Módulos 1 a 6 (Python) têm todo exemplo, previsão, correção e solução executados em `test-conteudo.mjs` com o mesmo código de verificação do navegador (Pyodide).
+- Módulos 7 e 8 (ágil e plano) não têm código na maior parte; a aula 0063 liga critérios de aceite a `assert`. Fontes conferidas: Manifesto Ágil (agilemanifesto.org/iso/ptbr/manifesto.html), Guia do Scrum (scrumguides.org), LGPD (Lei 13.709/2018) e Guia do Kanban (kanbanguides.org). Ainda vale reler essas fontes antes de publicar para o público.
+- Recuperação de cada aula usa palavras-chave tolerantes; se um aluno escrever certo de outro jeito, a autoavaliação continua disponível.

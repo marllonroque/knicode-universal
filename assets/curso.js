@@ -46,7 +46,7 @@
     {"parte":5,"ext":"final","titulo":"Portfólio e próximos passos","desc":"Documentar, apresentar o trabalho e traçar caminhos de estudo e de carreira com honestidade.","aulas":4,"h1":1,"exercicio":"README, demonstração e plano de estudos dos próximos três meses.","criterio":"Apresentar seus projetos de forma clara e saber o que estudar a seguir.","verificar":false}
   ];
   // Conceitos centrais por módulo (só o Módulo 1 tem aulas por enquanto; os demais ganham conceitos quando suas aulas forem criadas).
-  const CONCEITOS = {
+  const CONCEITOS_PADRAO = {
     m01: [
       ["programa", "Algoritmo e programa: instruções exatas, em ordem"], ["print_aspas", "print e texto entre aspas"],
       ["aspas_calculo", "Aspas x cálculo"], ["ler_erro", "Ler uma mensagem de erro"],
@@ -54,11 +54,14 @@
       ["privacidade", "Privacidade: usar só o dado necessário"]
     ].map(([id, name]) => ({ id, name }))
   };
-  const FINAL = { m01: ["Mini-projeto: robô de café que monta o pedido", "Aplicar os mesmos conceitos a organizar as tarefas da semana"] };
+  const FINAL_PADRAO = { m01: ["Mini-projeto: robô de café que monta o pedido", "Aplicar os mesmos conceitos a organizar as tarefas da semana"] };
+  // O conteúdo das aulas (conceitos, exercícios finais e lista de aulas) vem de assets/conteudo.js, gerado pelo build a partir de conteudo/.
+  const CT = root.KNI_CONTEUDO || {};
+  const CONCEITOS = CT.conceitos || CONCEITOS_PADRAO, FINAL = CT.finais || FINAL_PADRAO;
   const COURSE = {
     modules: CURRICULO.map((m, i) => { const id = "m" + String(i + 1).padStart(2, "0"); return mod(id, i + 1, m.titulo, CONCEITOS[id], (FINAL[id] || [])[0], (FINAL[id] || [])[1]); }),
     // Aulas já construídas (atualizar a cada aula nova)
-    lessons: [{ id: "0001", n: 1, module: "m01", file: "lessons/0001-o-computador-segue-instrucoes.html", recovery: "lessons/recuperacao-0001.html" }]
+    lessons: CT.aulas || [{ id: "0001", n: 1, module: "m01", file: "lessons/0001-o-computador-segue-instrucoes.html", recovery: "lessons/recuperacao-0001.html" }]
   };
 
   const fresh = () => ({ v: 1, shift: 0, lessons: {}, concepts: {}, modules: {} });

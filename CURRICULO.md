@@ -13,6 +13,7 @@ Um robô que passa café: o que é um algoritmo, print, texto e aspas, variávei
 - **Tempo:** 8 aulas de ~30 min + 1 h
 - **Exercício:** Um robô de café que monta o pedido na tela.
 - **Ao final consegue:** Prever a saída de um programa curto, corrigir um erro e escrever um programa pequeno do zero.
+- **Aulas prontas (8 de 8):** 1. Ensinando um robô a passar café: seu primeiro algoritmo; 2. O robô ganha memória: variáveis; 3. Números e texto não são a mesma coisa: tipos; 4. Contas com Python: operadores; 5. Falando com o robô: perguntas com input(); 6. Montando frases: f-strings e valores bonitos; 7. Quando o robô trava: ler erros e deixar comentários; 8. Mini-projeto: o robô anota o pedido
 
 ### Módulo 02: Decisões: conferir antes de agir
 
@@ -21,6 +22,7 @@ O robô confere se há água e se ela está quente: comparações, if, else, eli
 - **Tempo:** 8 aulas de ~30 min
 - **Exercício:** Regras de desconto de uma loja virtual simples.
 - **Ao final consegue:** Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.
+- **Aulas prontas (8 de 8):** 1. Verdadeiro ou falso: comparações; 2. Decidindo com if: só faz se for verdade; 3. Dois caminhos: else; 4. Vários caminhos: elif e a ordem das regras; 5. Combinando condições: and, or, not; 6. Limites: o erro de um único valor; 7. Validando o que a pessoa digita; 8. Mini-projeto: o robô confere e decide
 
 ### Módulo 03: Repetições: fazer de novo sem copiar
 
@@ -29,6 +31,7 @@ Organizar as tarefas da semana: for, while, contadores e acumuladores.
 - **Tempo:** 8 aulas de ~30 min + 1 h
 - **Exercício:** Percorrer os dias da semana e somar horas de estudo.
 - **Ao final consegue:** Ler e escrever laços sem pular nem repetir itens por engano.
+- **Aulas prontas (8 de 8):** 1. Por que repetir? O for e o range; 2. Contando do jeito que você quer: início, fim e passo; 3. Somando e contando: acumuladores; 4. Repetir até acontecer: o while; 5. Parar e pular: break e continue; 6. Perguntar até acertar: laços de validação; 7. Padrões de laço: maior, menor e contagem; 8. Mini-projeto: organizando a semana
 
 ### Módulo 04: Funções: receitas com nome
 
@@ -37,6 +40,7 @@ Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar
 - **Tempo:** 8 aulas de ~30 min + 1 h
 - **Exercício:** Transformar os exercícios anteriores em funções reutilizáveis.
 - **Ao final consegue:** Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.
+- **Aulas prontas (8 de 8):** 1. Receitas com nome: definir e chamar funções; 2. Funções com informações: parâmetros; 3. Devolver resultados: return; 4. Valores padrão e argumentos nomeados; 5. Funções que respondem sim ou não; 6. Cada função no seu quadrado: variáveis locais; 7. Funções que usam funções (e deixam recados); 8. Mini-projeto: o caixa com funções
 
 ### Módulo 05: Listas e dicionários
 
@@ -45,6 +49,7 @@ Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e
 - **Tempo:** 10 aulas de ~30 min + 1 h
 - **Exercício:** Um carrinho de e-commerce com total e desconto.
 - **Ao final consegue:** Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.
+- **Aulas prontas (10 de 10):** 1. Muitos valores numa só variável: listas; 2. A fila anda: adicionar, remover e atender; 3. Passar por cada item: percorrer listas; 4. Ranking: ordenar, somar e pegar um pedaço; 5. Cada informação com seu rótulo: dicionários; 6. Alterar fichas: acrescentar, trocar e checar chaves; 7. Passar por todas as fichas: percorrer dicionários; 8. O carrinho de compras: lista de dicionários; 9. Filtrar e resumir: listas novas a partir de listas; 10. Mini-projeto: o carrinho de compras
 
 ### Módulo 06: Erros, testes e depuração
 
@@ -53,6 +58,7 @@ Ler mensagens de erro, escrever testes simples e provar que um código funciona,
 - **Tempo:** 8 aulas de ~30 min
 - **Exercício:** Corrigir um script com defeitos plantados e escrever testes que os revelam.
 - **Ao final consegue:** Transformar uma regra em casos de teste e usá-los para conferir código gerado.
+- **Aulas prontas (8 de 8):** 1. O erro é uma mensagem, não uma bronca; 2. Os erros mais comuns e o que cada um quer dizer; 3. Quando não há erro, mas o resultado está errado; 4. O programa se confere sozinho: assert; 5. Que casos testar: normal, limite e esquisito; 6. Prever o erro e responder: try e except; 7. Não confie, confira: testando o código que a IA escreveu; 8. Mini-projeto: consertar o caixa e provar com testes
 
 ## Parte 2: Gestão de projetos e mentalidade ágil
 
@@ -63,6 +69,7 @@ Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e 
 - **Tempo:** 8 aulas de ~30 min
 - **Exercício:** Montar e priorizar o backlog de um gerenciador de tarefas pessoal.
 - **Ao final consegue:** Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.
+- **Aulas prontas (8 de 8):** 1. Ver o trabalho: o quadro kanban; 2. A lista do que falta: o backlog; 3. O que primeiro? Valor e esforço; 4. Entregar pouco, cedo: a primeira versão (MVP); 5. Trabalhar em ciclos curtos; 6. O que é “pronto” de verdade?; 7. Olhar para trás para melhorar: a retrospectiva; 8. Mini-projeto: o backlog do gerenciador de tarefas
 
 ### Módulo 08: Do problema ao plano
 
@@ -71,6 +78,7 @@ Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de
 - **Tempo:** 8 aulas de ~30 min + 1 h
 - **Exercício:** Escrever o plano de um app de finanças pessoais, pronto para ser construído.
 - **Ao final consegue:** Escrever critérios de aceite que um teste consegue verificar.
+- **Aulas prontas (8 de 8):** 1. Antes da solução, o problema; 2. O que o sistema precisa: requisitos; 3. Contar o que a pessoa quer: histórias de usuário; 4. Como saber que a história ficou pronta: critérios de aceite; 5. Do critério ao teste: provando de verdade; 6. O que fica de fora: escopo; 7. O que pode dar errado e que dados guardar; 8. Mini-projeto: o plano do app de finanças pessoais
 
 ## Parte 3: Vibe coding e engenharia de prompts
 

@@ -162,6 +162,21 @@ pre.annot .ln.on{background:rgba(255,102,0,.13);box-shadow:inset 2px 0 0 var(--n
 .fb.ok{background:rgba(61,255,139,.08);color:#9dffc4;border-color:rgba(61,255,139,.55)}
 .fb.bad{background:rgba(255,77,109,.09);color:#ffb0bf;border-color:rgba(255,77,109,.55)}
 .fb b{color:inherit}
+.out .errhelp{color:var(--fg);font-weight:400}
+.entradas-box{margin:.5rem 0;font:.85rem var(--sans);color:var(--fg)}
+.entradas-box .lab{display:block;font:700 .7rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--brick);margin-bottom:.25rem}
+.entradas-box code{background:transparent;border:0;padding:0}
+textarea.entradas{width:100%;font:13.5px/1.6 var(--mono);padding:.5rem .7rem;border:1px solid var(--line);border-radius:var(--r);background:rgba(12,12,14,.8);color:#ffc58a;resize:vertical}
+textarea.entradas:focus{outline:none;border-color:var(--neon);box-shadow:var(--glow)}
+.hintbox{margin:.6rem 0}
+.mcq{margin:1rem 0;padding:.8rem 1rem;border:1px solid var(--line-soft);border-radius:var(--r);background:rgba(12,12,14,.35)}
+.mcq .mcq-q{margin:.1rem 0 .6rem;color:#fff;font-weight:600}
+.mcq .opt{display:block;width:100%;text-align:left;margin:.35rem 0;font:600 .86rem var(--sans);letter-spacing:0;padding:.55rem .8rem;background:rgba(224,90,38,.08);border:1px solid var(--line)}
+.mcq .opt:hover:not(:disabled){background:rgba(255,102,0,.18);border-color:var(--neon);color:#fff;box-shadow:var(--glow)}
+.mcq .opt.good{background:rgba(61,255,139,.12);border-color:var(--ok);color:#9dffc4;opacity:1}
+.mcq .opt.wrong{background:rgba(255,77,109,.1);border-color:var(--bad);color:#ffb0bf;text-decoration:line-through;opacity:.8}
+.mcq .opt:disabled{cursor:default}
+.mcq .porque{display:none}
 .alert-case{margin-top:.6rem;padding:.65rem .85rem;border:1px solid var(--neon);border-left:4px solid var(--neon);border-radius:var(--r);background:rgba(255,102,0,.1);color:#ffd9a8;font:.88rem/1.55 var(--sans);box-shadow:var(--glow)}
 table{border-collapse:collapse;margin:1rem 0;width:100%;font-size:.94rem;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 th,td{border-bottom:1px solid var(--line-soft);padding:.55rem .75rem;text-align:left;color:#fff}
@@ -280,6 +295,8 @@ footer p{margin:.4rem 0;color:var(--fg)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 @media print{.done-banner,body::before,body::after,.robot,.progress,.toc,button,.fb{display:none}body{background:#fff;color:#000}section.card{box-shadow:none}}
 
+.fonte{font-size:.82rem;opacity:.8;margin-top:.4rem}
+
 </style>
 </head>
 <body>
@@ -311,27 +328,32 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <article class="mod lock">
       <div class="mod-bar"><i></i><i></i><i></i><span>modulo_02.py</span><b class="st lock">[BLOQUEADO]</b></div>
       <div class="mod-body"><h3>02 · Decisões: conferir antes de agir</h3><p>O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.</p>
-        <div class="meta"><span>8 aulas de ~30 min</span></div></div>
+        <div class="meta"><span>8 aulas de ~30 min</span></div>
+        <a class="go" href="lessons/0009-comparacoes.html">▶ continuar: aula 1</a></div>
     </article>
     <article class="mod lock">
       <div class="mod-bar"><i></i><i></i><i></i><span>modulo_03.py</span><b class="st lock">[BLOQUEADO]</b></div>
       <div class="mod-body"><h3>03 · Repetições: fazer de novo sem copiar</h3><p>Organizar as tarefas da semana: for, while, contadores e acumuladores.</p>
-        <div class="meta"><span>8 aulas de ~30 min</span><span>+ 1 h</span></div></div>
+        <div class="meta"><span>8 aulas de ~30 min</span><span>+ 1 h</span></div>
+        <a class="go" href="lessons/0017-for.html">▶ continuar: aula 1</a></div>
     </article>
     <article class="mod lock">
       <div class="mod-bar"><i></i><i></i><i></i><span>modulo_04.py</span><b class="st lock">[BLOQUEADO]</b></div>
       <div class="mod-body"><h3>04 · Funções: receitas com nome</h3><p>Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.</p>
-        <div class="meta"><span>8 aulas de ~30 min</span><span>+ 1 h</span></div></div>
+        <div class="meta"><span>8 aulas de ~30 min</span><span>+ 1 h</span></div>
+        <a class="go" href="lessons/0025-def.html">▶ continuar: aula 1</a></div>
     </article>
     <article class="mod lock">
       <div class="mod-bar"><i></i><i></i><i></i><span>modulo_05.py</span><b class="st lock">[BLOQUEADO]</b></div>
       <div class="mod-body"><h3>05 · Listas e dicionários</h3><p>Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.</p>
-        <div class="meta"><span>10 aulas de ~30 min</span><span>+ 1 h</span></div></div>
+        <div class="meta"><span>10 aulas de ~30 min</span><span>+ 1 h</span></div>
+        <a class="go" href="lessons/0033-listas.html">▶ continuar: aula 1</a></div>
     </article>
     <article class="mod lock">
       <div class="mod-bar"><i></i><i></i><i></i><span>modulo_06.py</span><b class="st lock">[BLOQUEADO]</b></div>
       <div class="mod-body"><h3>06 · Erros, testes e depuração</h3><p>Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.</p>
-        <div class="meta"><span>8 aulas de ~30 min</span></div></div>
+        <div class="meta"><span>8 aulas de ~30 min</span></div>
+        <a class="go" href="lessons/0043-ler-o-erro.html">▶ continuar: aula 1</a></div>
     </article>
   </div>
 
@@ -340,12 +362,14 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <article class="mod lock">
       <div class="mod-bar"><i></i><i></i><i></i><span>modulo_07.agil</span><b class="st lock">[BLOQUEADO]</b></div>
       <div class="mod-body"><h3>07 · Mentalidade ágil e gestão de processos</h3><p>Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.</p>
-        <div class="meta"><span>8 aulas de ~30 min</span></div></div>
+        <div class="meta"><span>8 aulas de ~30 min</span></div>
+        <a class="go" href="lessons/0051-quadro-kanban.html">▶ continuar: aula 1</a></div>
     </article>
     <article class="mod lock">
       <div class="mod-bar"><i></i><i></i><i></i><span>modulo_08.agil</span><b class="st lock">[BLOQUEADO]</b></div>
       <div class="mod-body"><h3>08 · Do problema ao plano</h3><p>Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.</p>
-        <div class="meta"><span>8 aulas de ~30 min</span><span>+ 1 h</span></div></div>
+        <div class="meta"><span>8 aulas de ~30 min</span><span>+ 1 h</span></div>
+        <a class="go" href="lessons/0059-problema-e-usuario.html">▶ continuar: aula 1</a></div>
     </article>
   </div>
 
@@ -452,6 +476,158 @@ footer p{margin:.4rem 0;color:var(--fg)}
 </div>
 
 <script>
+/* GERADO por build.mjs a partir de conteudo/. Não editar à mão. */
+(typeof window !== "undefined" ? window : globalThis).KNI_CONTEUDO = {"conceitos":{"m01":[{"id":"programa","name":"Algoritmo e programa: instruções exatas, em ordem"},{"id":"print_aspas","name":"print e texto entre aspas"},{"id":"aspas_calculo","name":"Aspas x cálculo"},{"id":"ler_erro","name":"Ler uma mensagem de erro"},{"id":"privacidade","name":"Privacidade: usar só o dado necessário"},{"id":"variaveis","name":"Variáveis: dar nome a um valor"},{"id":"tipos","name":"Número x texto (tipos)"},{"id":"operadores","name":"Operadores aritméticos e ordem das contas"},{"id":"entrada","name":"Entrada de dados (input)"},{"id":"formatacao","name":"f-strings e formatação de números"},{"id":"comentarios","name":"Comentários no código"}],"m02":[{"id":"comparacao","name":"Comparações: perguntas de verdadeiro ou falso"},{"id":"if_basico","name":"Decidir com if"},{"id":"else_caminhos","name":"else: o segundo caminho"},{"id":"elif_ordem","name":"elif e a ordem das regras"},{"id":"logica","name":"Combinar condições: and, or, not"},{"id":"limites","name":"Limites e casos de borda"},{"id":"validacao","name":"Validar entradas antes de confiar"}],"m03":[{"id":"for_range","name":"Repetir com for e range"},{"id":"range_passos","name":"range com início, fim e passo"},{"id":"acumulador","name":"Acumuladores: soma e contagem"},{"id":"while_laco","name":"Repetir enquanto: o while"},{"id":"break_continue","name":"break e continue"},{"id":"laco_validacao","name":"Perguntar até a entrada ser válida"},{"id":"padroes_lacos","name":"Padrões: maior, menor e contagem condicional"}],"m04":[{"id":"funcao_def","name":"Definir e chamar funções"},{"id":"funcao_parametros","name":"Parâmetros e argumentos"},{"id":"funcao_return","name":"return: devolver um resultado"},{"id":"funcao_padrao","name":"Valores padrão e argumentos nomeados"},{"id":"funcao_bool","name":"Funções que devolvem verdadeiro ou falso"},{"id":"escopo","name":"Variáveis locais e escopo"},{"id":"funcao_composicao","name":"Funções que chamam funções"}],"m05":[{"id":"lista_basica","name":"Listas: criar e ler pela posição"},{"id":"lista_metodos","name":"Mudar listas: append, remove, pop e in"},{"id":"lista_percorrer","name":"Percorrer listas com for"},{"id":"lista_ordenar","name":"sorted, max, min, sum e fatias"},{"id":"dict_basico","name":"Dicionários: chave e valor"},{"id":"dict_mudar","name":"Mudar dicionários e checar chaves"},{"id":"dict_percorrer","name":"Percorrer dicionários: items e values"},{"id":"lista_dicts","name":"Lista de dicionários (registros)"},{"id":"filtrar_resumir","name":"Filtrar e resumir listas"}],"m06":[{"id":"erro_ler","name":"Ler a mensagem de erro"},{"id":"erro_tipos","name":"Tipos de erro comuns"},{"id":"depurar_print","name":"Depurar espiando valores"},{"id":"assert_teste","name":"Testar com assert"},{"id":"casos_teste","name":"Escolher casos de teste"},{"id":"try_except","name":"try e except"},{"id":"conferir_ia","name":"Conferir código gerado"}],"m07":[{"id":"kanban","name":"Quadro kanban e limite de trabalho em andamento"},{"id":"backlog","name":"Backlog: lista ordenada"},{"id":"priorizar","name":"Priorizar por valor e esforço"},{"id":"mvp","name":"Menor versão que já ajuda (MVP)"},{"id":"ciclo","name":"Ciclos curtos com tempo fixo"},{"id":"pronto","name":"Definição de pronto"},{"id":"retro","name":"Retrospectiva: inspecionar e adaptar"}],"m08":[{"id":"problema","name":"Descrever o problema e o usuário"},{"id":"requisitos","name":"Requisitos funcionais e não funcionais"},{"id":"historia","name":"Histórias de usuário"},{"id":"aceite","name":"Critérios de aceite"},{"id":"aceite_teste","name":"Critério de aceite como teste"},{"id":"escopo","name":"Escopo e fora do escopo"},{"id":"riscos_dados","name":"Riscos e minimização de dados"}]},"finais":{"m01":["Mini-projeto: o robô anota o pedido de café","Aplicar os mesmos conceitos a organizar as horas de estudo da semana"],"m02":["Mini-projeto: o robô confere e decide se pode passar o café","Aplicar as mesmas decisões ao desconto de uma loja virtual"],"m03":["Mini-projeto: organizar as horas de estudo da semana","Aplicar as repetições ao caixa de uma cafeteria"],"m04":["Mini-projeto: o caixa da cafeteria com funções","Aplicar funções ao controle de estoque"],"m05":["Mini-projeto: o carrinho de compras com total e desconto","Aplicar dicionários a usuários e permissões"],"m06":["Mini-projeto: consertar o script do caixa e provar com testes","Testar uma função de reajuste de preço"],"m07":["Mini-projeto: o backlog do gerenciador de tarefas","Planejar um evento em ciclos curtos"],"m08":["Mini-projeto: o plano do app de finanças pessoais","Planejar um app de empréstimo de livros"]},"aulas":[{"id":"0001","n":1,"module":"m01","file":"lessons/0001-o-computador-segue-instrucoes.html","recovery":"lessons/recuperacao-0001.html","titulo":"Ensinando um robô a passar café: seu primeiro algoritmo"},{"id":"0002","n":2,"module":"m01","file":"lessons/0002-variaveis.html","recovery":"lessons/recuperacao-0002.html","titulo":"O robô ganha memória: variáveis"},{"id":"0003","n":3,"module":"m01","file":"lessons/0003-tipos.html","recovery":"lessons/recuperacao-0003.html","titulo":"Números e texto não são a mesma coisa: tipos"},{"id":"0004","n":4,"module":"m01","file":"lessons/0004-operadores.html","recovery":"lessons/recuperacao-0004.html","titulo":"Contas com Python: operadores"},{"id":"0005","n":5,"module":"m01","file":"lessons/0005-entrada.html","recovery":"lessons/recuperacao-0005.html","titulo":"Falando com o robô: perguntas com input()"},{"id":"0006","n":6,"module":"m01","file":"lessons/0006-formatacao.html","recovery":"lessons/recuperacao-0006.html","titulo":"Montando frases: f-strings e valores bonitos"},{"id":"0007","n":7,"module":"m01","file":"lessons/0007-erros-e-comentarios.html","recovery":"lessons/recuperacao-0007.html","titulo":"Quando o robô trava: ler erros e deixar comentários"},{"id":"0008","n":8,"module":"m01","file":"lessons/0008-mini-projeto.html","recovery":"lessons/recuperacao-0008.html","titulo":"Mini-projeto: o robô anota o pedido"},{"id":"0009","n":1,"module":"m02","file":"lessons/0009-comparacoes.html","recovery":"lessons/recuperacao-0009.html","titulo":"Verdadeiro ou falso: comparações"},{"id":"0010","n":2,"module":"m02","file":"lessons/0010-if.html","recovery":"lessons/recuperacao-0010.html","titulo":"Decidindo com if: só faz se for verdade"},{"id":"0011","n":3,"module":"m02","file":"lessons/0011-else.html","recovery":"lessons/recuperacao-0011.html","titulo":"Dois caminhos: else"},{"id":"0012","n":4,"module":"m02","file":"lessons/0012-elif.html","recovery":"lessons/recuperacao-0012.html","titulo":"Vários caminhos: elif e a ordem das regras"},{"id":"0013","n":5,"module":"m02","file":"lessons/0013-logica.html","recovery":"lessons/recuperacao-0013.html","titulo":"Combinando condições: and, or, not"},{"id":"0014","n":6,"module":"m02","file":"lessons/0014-limites.html","recovery":"lessons/recuperacao-0014.html","titulo":"Limites: o erro de um único valor"},{"id":"0015","n":7,"module":"m02","file":"lessons/0015-validacao.html","recovery":"lessons/recuperacao-0015.html","titulo":"Validando o que a pessoa digita"},{"id":"0016","n":8,"module":"m02","file":"lessons/0016-mini-projeto.html","recovery":"lessons/recuperacao-0016.html","titulo":"Mini-projeto: o robô confere e decide"},{"id":"0017","n":1,"module":"m03","file":"lessons/0017-for.html","recovery":"lessons/recuperacao-0017.html","titulo":"Por que repetir? O for e o range"},{"id":"0018","n":2,"module":"m03","file":"lessons/0018-range-passos.html","recovery":"lessons/recuperacao-0018.html","titulo":"Contando do jeito que você quer: início, fim e passo"},{"id":"0019","n":3,"module":"m03","file":"lessons/0019-acumuladores.html","recovery":"lessons/recuperacao-0019.html","titulo":"Somando e contando: acumuladores"},{"id":"0020","n":4,"module":"m03","file":"lessons/0020-while.html","recovery":"lessons/recuperacao-0020.html","titulo":"Repetir até acontecer: o while"},{"id":"0021","n":5,"module":"m03","file":"lessons/0021-break-continue.html","recovery":"lessons/recuperacao-0021.html","titulo":"Parar e pular: break e continue"},{"id":"0022","n":6,"module":"m03","file":"lessons/0022-perguntar-ate-acertar.html","recovery":"lessons/recuperacao-0022.html","titulo":"Perguntar até acertar: laços de validação"},{"id":"0023","n":7,"module":"m03","file":"lessons/0023-padroes.html","recovery":"lessons/recuperacao-0023.html","titulo":"Padrões de laço: maior, menor e contagem"},{"id":"0024","n":8,"module":"m03","file":"lessons/0024-mini-projeto.html","recovery":"lessons/recuperacao-0024.html","titulo":"Mini-projeto: organizando a semana"},{"id":"0025","n":1,"module":"m04","file":"lessons/0025-def.html","recovery":"lessons/recuperacao-0025.html","titulo":"Receitas com nome: definir e chamar funções"},{"id":"0026","n":2,"module":"m04","file":"lessons/0026-parametros.html","recovery":"lessons/recuperacao-0026.html","titulo":"Funções com informações: parâmetros"},{"id":"0027","n":3,"module":"m04","file":"lessons/0027-return.html","recovery":"lessons/recuperacao-0027.html","titulo":"Devolver resultados: return"},{"id":"0028","n":4,"module":"m04","file":"lessons/0028-padrao-nomeados.html","recovery":"lessons/recuperacao-0028.html","titulo":"Valores padrão e argumentos nomeados"},{"id":"0029","n":5,"module":"m04","file":"lessons/0029-funcoes-que-decidem.html","recovery":"lessons/recuperacao-0029.html","titulo":"Funções que respondem sim ou não"},{"id":"0030","n":6,"module":"m04","file":"lessons/0030-escopo.html","recovery":"lessons/recuperacao-0030.html","titulo":"Cada função no seu quadrado: variáveis locais"},{"id":"0031","n":7,"module":"m04","file":"lessons/0031-composicao.html","recovery":"lessons/recuperacao-0031.html","titulo":"Funções que usam funções (e deixam recados)"},{"id":"0032","n":8,"module":"m04","file":"lessons/0032-mini-projeto.html","recovery":"lessons/recuperacao-0032.html","titulo":"Mini-projeto: o caixa com funções"},{"id":"0033","n":1,"module":"m05","file":"lessons/0033-listas.html","recovery":"lessons/recuperacao-0033.html","titulo":"Muitos valores numa só variável: listas"},{"id":"0034","n":2,"module":"m05","file":"lessons/0034-mudando-listas.html","recovery":"lessons/recuperacao-0034.html","titulo":"A fila anda: adicionar, remover e atender"},{"id":"0035","n":3,"module":"m05","file":"lessons/0035-percorrer-listas.html","recovery":"lessons/recuperacao-0035.html","titulo":"Passar por cada item: percorrer listas"},{"id":"0036","n":4,"module":"m05","file":"lessons/0036-ordenar-fatias.html","recovery":"lessons/recuperacao-0036.html","titulo":"Ranking: ordenar, somar e pegar um pedaço"},{"id":"0037","n":5,"module":"m05","file":"lessons/0037-dicionarios.html","recovery":"lessons/recuperacao-0037.html","titulo":"Cada informação com seu rótulo: dicionários"},{"id":"0038","n":6,"module":"m05","file":"lessons/0038-mudando-dicionarios.html","recovery":"lessons/recuperacao-0038.html","titulo":"Alterar fichas: acrescentar, trocar e checar chaves"},{"id":"0039","n":7,"module":"m05","file":"lessons/0039-percorrer-dicionarios.html","recovery":"lessons/recuperacao-0039.html","titulo":"Passar por todas as fichas: percorrer dicionários"},{"id":"0040","n":8,"module":"m05","file":"lessons/0040-lista-de-dicionarios.html","recovery":"lessons/recuperacao-0040.html","titulo":"O carrinho de compras: lista de dicionários"},{"id":"0041","n":9,"module":"m05","file":"lessons/0041-filtrar-resumir.html","recovery":"lessons/recuperacao-0041.html","titulo":"Filtrar e resumir: listas novas a partir de listas"},{"id":"0042","n":10,"module":"m05","file":"lessons/0042-mini-projeto.html","recovery":"lessons/recuperacao-0042.html","titulo":"Mini-projeto: o carrinho de compras"},{"id":"0043","n":1,"module":"m06","file":"lessons/0043-ler-o-erro.html","recovery":"lessons/recuperacao-0043.html","titulo":"O erro é uma mensagem, não uma bronca"},{"id":"0044","n":2,"module":"m06","file":"lessons/0044-tipos-de-erro.html","recovery":"lessons/recuperacao-0044.html","titulo":"Os erros mais comuns e o que cada um quer dizer"},{"id":"0045","n":3,"module":"m06","file":"lessons/0045-depurar-com-print.html","recovery":"lessons/recuperacao-0045.html","titulo":"Quando não há erro, mas o resultado está errado"},{"id":"0046","n":4,"module":"m06","file":"lessons/0046-testes-com-assert.html","recovery":"lessons/recuperacao-0046.html","titulo":"O programa se confere sozinho: assert"},{"id":"0047","n":5,"module":"m06","file":"lessons/0047-casos-de-teste.html","recovery":"lessons/recuperacao-0047.html","titulo":"Que casos testar: normal, limite e esquisito"},{"id":"0048","n":6,"module":"m06","file":"lessons/0048-try-except.html","recovery":"lessons/recuperacao-0048.html","titulo":"Prever o erro e responder: try e except"},{"id":"0049","n":7,"module":"m06","file":"lessons/0049-conferir-codigo-da-ia.html","recovery":"lessons/recuperacao-0049.html","titulo":"Não confie, confira: testando o código que a IA escreveu"},{"id":"0050","n":8,"module":"m06","file":"lessons/0050-mini-projeto.html","recovery":"lessons/recuperacao-0050.html","titulo":"Mini-projeto: consertar o caixa e provar com testes"},{"id":"0051","n":1,"module":"m07","file":"lessons/0051-quadro-kanban.html","recovery":"lessons/recuperacao-0051.html","titulo":"Ver o trabalho: o quadro kanban"},{"id":"0052","n":2,"module":"m07","file":"lessons/0052-backlog.html","recovery":"lessons/recuperacao-0052.html","titulo":"A lista do que falta: o backlog"},{"id":"0053","n":3,"module":"m07","file":"lessons/0053-priorizar.html","recovery":"lessons/recuperacao-0053.html","titulo":"O que primeiro? Valor e esforço"},{"id":"0054","n":4,"module":"m07","file":"lessons/0054-entregas-pequenas-mvp.html","recovery":"lessons/recuperacao-0054.html","titulo":"Entregar pouco, cedo: a primeira versão (MVP)"},{"id":"0055","n":5,"module":"m07","file":"lessons/0055-ciclos-curtos.html","recovery":"lessons/recuperacao-0055.html","titulo":"Trabalhar em ciclos curtos"},{"id":"0056","n":6,"module":"m07","file":"lessons/0056-definicao-de-pronto.html","recovery":"lessons/recuperacao-0056.html","titulo":"O que é “pronto” de verdade?"},{"id":"0057","n":7,"module":"m07","file":"lessons/0057-retrospectiva.html","recovery":"lessons/recuperacao-0057.html","titulo":"Olhar para trás para melhorar: a retrospectiva"},{"id":"0058","n":8,"module":"m07","file":"lessons/0058-mini-projeto.html","recovery":"lessons/recuperacao-0058.html","titulo":"Mini-projeto: o backlog do gerenciador de tarefas"},{"id":"0059","n":1,"module":"m08","file":"lessons/0059-problema-e-usuario.html","recovery":"lessons/recuperacao-0059.html","titulo":"Antes da solução, o problema"},{"id":"0060","n":2,"module":"m08","file":"lessons/0060-requisitos.html","recovery":"lessons/recuperacao-0060.html","titulo":"O que o sistema precisa: requisitos"},{"id":"0061","n":3,"module":"m08","file":"lessons/0061-historias-de-usuario.html","recovery":"lessons/recuperacao-0061.html","titulo":"Contar o que a pessoa quer: histórias de usuário"},{"id":"0062","n":4,"module":"m08","file":"lessons/0062-criterios-de-aceite.html","recovery":"lessons/recuperacao-0062.html","titulo":"Como saber que a história ficou pronta: critérios de aceite"},{"id":"0063","n":5,"module":"m08","file":"lessons/0063-aceite-vira-teste.html","recovery":"lessons/recuperacao-0063.html","titulo":"Do critério ao teste: provando de verdade"},{"id":"0064","n":6,"module":"m08","file":"lessons/0064-escopo.html","recovery":"lessons/recuperacao-0064.html","titulo":"O que fica de fora: escopo"},{"id":"0065","n":7,"module":"m08","file":"lessons/0065-riscos-e-dados.html","recovery":"lessons/recuperacao-0065.html","titulo":"O que pode dar errado e que dados guardar"},{"id":"0066","n":8,"module":"m08","file":"lessons/0066-mini-projeto.html","recovery":"lessons/recuperacao-0066.html","titulo":"Mini-projeto: o plano do app de finanças pessoais"}]};
+
+</script>
+<script>
+/* Verificação de exercícios de Python. O MESMO código roda no navegador (aula.js) e nos testes em Node (test-python.mjs),
+   então o que os testes provam é exatamente o que o aluno vai ver.
+   Um exercício tem uma "spec": { esperado: [linhas da saída], testes: [[expressão, "repr esperado"]], entradas: [...], dica, ok } */
+(function (root) {
+  const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const cod = (s) => `<code>${esc(s)}</code>`;
+
+  /* O input() desta tela lê de uma lista, como se o aluno digitasse; a pergunta aparece na saída, como num terminal. */
+  function preludioEntradas(entradas) {
+    return `__ent = iter(${JSON.stringify((entradas || []).map(String))})
+def input(prompt=""):
+    try:
+        v = next(__ent)
+    except StopIteration:
+        raise EOFError("o programa pediu mais dados do que os fornecidos; digite os valores na caixa de entradas")
+    print(str(prompt) + v)
+    return v
+`;
+  }
+
+  /* Vigia: interrompe o programa depois de muitos passos, para um laço sem fim não travar a página (nem o teste). */
+  function preludioVigia() {
+    return "import sys\n__passos = [0]\ndef __vigia(frame, event, arg):\n    __passos[0] += 1\n    if __passos[0] > 400000:\n        sys.settrace(None)\n        raise RuntimeError('o programa rodou por tempo demais; pode haver um laço sem fim')\n    return __vigia\nsys.settrace(__vigia)\n";
+  }
+
+  /* Avalia cada expressão do teste no mesmo ambiente do código do aluno e compara o repr() com o esperado. */
+  function preludioTestes(testes) {
+    return `import json as __json
+__res = []
+for __expr, __esp in __json.loads(${JSON.stringify(JSON.stringify(testes))}):
+    try:
+        __v = eval(__expr)
+        __res.append([__expr, repr(__v), __esp, repr(__v) == __esp])
+    except Exception as __e:
+        __res.append([__expr, "erro " + type(__e).__name__ + ": " + str(__e), __esp, False])
+__json.dumps(__res)
+`;
+  }
+
+  /* Executa o código do aluno com uma instância do Pyodide (navegador ou Node). Devolve saída, erro, linha do erro e resultado dos testes. */
+  async function executar(py, code, opt) {
+    opt = opt || {};
+    const out = [];
+    py.setStdout({ batched: (s) => out.push(s) });
+    py.setStderr({ batched: (s) => out.push(s) });
+    const g = py.globals.get("dict")();
+    let err = null, linha = null, testes = null;
+    const falha = (e) => {
+      const m = String((e && e.message) || e).trim(), ls = m.split("\n").filter(Boolean);
+      err = ls[ls.length - 1];
+      const ln = [...m.matchAll(/<exec>[^\n]*?line (\d+)/g)];
+      if (ln.length) linha = +ln[ln.length - 1][1];
+    };
+    try { py.runPython(preludioEntradas(opt.entradas), { globals: g }); py.runPython(preludioVigia(), { globals: g }); } catch (e) { falha(e); }
+    if (!err) try { py.runPython(code, { globals: g }); } catch (e) { falha(e); }
+    if (!err && opt.testes && opt.testes.length) try { testes = JSON.parse(py.runPython(preludioTestes(opt.testes), { globals: g })); } catch (e) { falha(e); }
+    try { py.runPython("import sys\nsys.settrace(None)"); } catch (e) { /* sem rastreio ativo */ }
+    g.destroy();
+    return { out, err, linha, testes };
+  }
+
+  const ERROS = {
+    SyntaxError: "o Python não entendeu como a linha foi escrita. Procure aspas, parênteses ou dois-pontos faltando.",
+    IndentationError: "a indentação (os espaços no começo da linha) está errada. As linhas dentro de um bloco usam 4 espaços.",
+    TabError: "há mistura de espaços e tabulações no começo das linhas. Use só espaços.",
+    NameError: "você usou um nome que o Python não conhece. Confira se escreveu igual (maiúsculas e minúsculas contam!) e se criou a variável antes de usá-la.",
+    UnboundLocalError: "você usou uma variável de dentro da função antes de dar um valor a ela.",
+    TypeError: "você misturou tipos que não combinam, como texto com número. Confira se precisa converter com int(), float() ou str().",
+    ValueError: "o valor não pôde ser convertido, ou não faz sentido para essa operação.",
+    ZeroDivisionError: "houve uma divisão por zero. Confira o divisor.",
+    IndexError: "você pediu uma posição que não existe na lista. A primeira posição é a 0.",
+    KeyError: "você pediu uma chave que não existe no dicionário.",
+    AttributeError: "esse objeto não tem esse recurso. Confira o nome do método.",
+    EOFError: "o programa pediu mais dados (input) do que os fornecidos.",
+    AssertionError: "uma verificação (assert) falhou: o resultado não foi o esperado.",
+    RuntimeError: "o programa rodou por tempo demais, provavelmente por um laço sem fim: confira se a condição do while muda a cada volta.",
+    RecursionError: "a função chamou a si mesma sem parar.",
+  };
+  function explicarErro(err) {
+    const tipo = String(err || "").split(":")[0].trim();
+    return ERROS[tipo] || "";
+  }
+
+  const normaliza = (out) => {
+    const l = (out || []).map((s) => String(s).replace(/\s+$/, ""));
+    while (l.length && l[l.length - 1] === "") l.pop();
+    return l;
+  };
+  const semAcento = (s) => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+  /* Decide se o resultado passou na spec e monta o feedback (HTML) para o aluno. */
+  function avaliar(res, spec) {
+    spec = spec || {};
+    const dica = spec.dica ? ` <br><i>Dica:</i> ${esc(spec.dica)}` : "";
+    if (res.err) {
+      const onde = res.linha ? ` (na linha ${res.linha} do seu código)` : "";
+      const em = explicarErro(res.err);
+      return { ok: false, msg: `O Python parou com um erro${onde}: <b>${esc(res.err)}</b>.${em ? " Em português: " + esc(em) : ""}${dica}` };
+    }
+    const problemas = [];
+    if (spec.esperado) {
+      const out = normaliza(res.out), want = spec.esperado.map((s) => String(s).replace(/\s+$/, ""));
+      if (JSON.stringify(out) !== JSON.stringify(want)) {
+        if (!out.length) problemas.push("Nada apareceu na tela. Use " + cod('print(...)') + " para mostrar o resultado.");
+        else if (out.length !== want.length) problemas.push(`Apareceram ${out.length} linha(s); eram esperadas ${want.length}. Apareceu: ${cod(out.join(" | "))}. Esperado: ${cod(want.join(" | "))}.`);
+        else if (JSON.stringify([...out].sort()) === JSON.stringify([...want].sort())) problemas.push("As linhas certas apareceram, mas em <b>ordem trocada</b>. O computador segue a ordem em que você escreveu.");
+        else {
+          const i = out.findIndex((s, k) => s !== want[k]);
+          let d = "";
+          if (out[i].toLowerCase() === want[i].toLowerCase()) d = " Confira as <b>maiúsculas e minúsculas</b>: o Python diferencia “A” de “a”.";
+          else if (semAcento(out[i]) === semAcento(want[i])) d = " Confira os <b>acentos</b>.";
+          else if (out[i].replace(/\s+/g, "") === want[i].replace(/\s+/g, "")) d = " Confira os <b>espaços</b>.";
+          problemas.push(`Na linha ${i + 1} apareceu ${cod(out[i])}, mas o esperado era ${cod(want[i])}.${d}`);
+        }
+      }
+    }
+    if (spec.testes && spec.testes.length) {
+      const t = res.testes || [];
+      const falhos = t.filter((x) => !x[3]);
+      if (falhos.length) problemas.push(`Falhou em ${falhos.length} de ${t.length} teste(s):<br>` + falhos.slice(0, 3).map((x) => `${cod(x[0])} devolveu ${cod(x[1])}, esperado ${cod(x[2])}`).join("<br>") + (falhos.length > 3 ? "<br>…" : ""));
+    }
+    if (problemas.length) return { ok: false, msg: problemas.join("<br>") + dica };
+    return { ok: true, msg: spec.ok || "<b>Passou.</b> O resultado é exatamente o esperado." };
+  }
+
+  /* Um exercício pode ser testado com vários cenários de entrada, cada um com sua saída esperada (essencial para provar um if). */
+  async function executarCenarios(py, code, spec) {
+    const rs = [];
+    for (const c of spec.cenarios) rs.push(await executar(py, code, { entradas: c.entradas, testes: rs.length === 0 ? spec.testes : null }));
+    return rs;
+  }
+  function avaliarCenarios(rs, spec) {
+    for (let i = 0; i < spec.cenarios.length; i++) {
+      const c = spec.cenarios[i];
+      const av = avaliar(rs[i], { esperado: c.esperado, testes: i === 0 ? spec.testes : undefined });
+      if (!av.ok) return { ok: false, msg: ((c.entradas || []).length ? "Com as entradas " + cod(c.entradas.join(" · ")) + ": " : "") + av.msg };
+    }
+    return { ok: true, msg: spec.ok || "<b>Passou nos " + spec.cenarios.length + " cenários.</b> O programa decide certo em todos." };
+  }
+
+  const api = { executarCenarios, avaliarCenarios, preludioEntradas, preludioTestes, executar, avaliar, explicarErro, normaliza };
+  if (typeof module !== "undefined" && module.exports) module.exports = api;
+  else root.Verifica = api;
+})(typeof window !== "undefined" ? window : globalThis);
+
+</script>
+<script>
 /* Motor de progresso do curso + interface (HUD, botão Home, painel, recuperação).
    O motor (createEngine) é puro e testável em Node: node test-curso.mjs
    Estado salvo em localStorage ("knicode.universal.v1"), só no aparelho do aluno. Começa do zero: Módulo 1 aberto, todos os outros bloqueados.
@@ -500,7 +676,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     {"parte":5,"ext":"final","titulo":"Portfólio e próximos passos","desc":"Documentar, apresentar o trabalho e traçar caminhos de estudo e de carreira com honestidade.","aulas":4,"h1":1,"exercicio":"README, demonstração e plano de estudos dos próximos três meses.","criterio":"Apresentar seus projetos de forma clara e saber o que estudar a seguir.","verificar":false}
   ];
   // Conceitos centrais por módulo (só o Módulo 1 tem aulas por enquanto; os demais ganham conceitos quando suas aulas forem criadas).
-  const CONCEITOS = {
+  const CONCEITOS_PADRAO = {
     m01: [
       ["programa", "Algoritmo e programa: instruções exatas, em ordem"], ["print_aspas", "print e texto entre aspas"],
       ["aspas_calculo", "Aspas x cálculo"], ["ler_erro", "Ler uma mensagem de erro"],
@@ -508,11 +684,14 @@ footer p{margin:.4rem 0;color:var(--fg)}
       ["privacidade", "Privacidade: usar só o dado necessário"]
     ].map(([id, name]) => ({ id, name }))
   };
-  const FINAL = { m01: ["Mini-projeto: robô de café que monta o pedido", "Aplicar os mesmos conceitos a organizar as tarefas da semana"] };
+  const FINAL_PADRAO = { m01: ["Mini-projeto: robô de café que monta o pedido", "Aplicar os mesmos conceitos a organizar as tarefas da semana"] };
+  // O conteúdo das aulas (conceitos, exercícios finais e lista de aulas) vem de assets/conteudo.js, gerado pelo build a partir de conteudo/.
+  const CT = root.KNI_CONTEUDO || {};
+  const CONCEITOS = CT.conceitos || CONCEITOS_PADRAO, FINAL = CT.finais || FINAL_PADRAO;
   const COURSE = {
     modules: CURRICULO.map((m, i) => { const id = "m" + String(i + 1).padStart(2, "0"); return mod(id, i + 1, m.titulo, CONCEITOS[id], (FINAL[id] || [])[0], (FINAL[id] || [])[1]); }),
     // Aulas já construídas (atualizar a cada aula nova)
-    lessons: [{ id: "0001", n: 1, module: "m01", file: "lessons/0001-o-computador-segue-instrucoes.html", recovery: "lessons/recuperacao-0001.html" }]
+    lessons: CT.aulas || [{ id: "0001", n: 1, module: "m01", file: "lessons/0001-o-computador-segue-instrucoes.html", recovery: "lessons/recuperacao-0001.html" }]
   };
 
   const fresh = () => ({ v: 1, shift: 0, lessons: {}, concepts: {}, modules: {} });
@@ -880,16 +1059,6 @@ function loadPy(){
   });
   return pyP;
 }
-async function runPython(code){
-  const py=await loadPy(),out=[];
-  py.setStdout({batched:s=>out.push(s)});py.setStderr({batched:s=>out.push(s)});
-  const g=py.globals.get("dict")();let err=null;
-  try{py.runPython(code,{globals:g})}
-  catch(e){err=String(e.message).trim().split("\n").filter(Boolean).slice(-1)[0]}
-  g.destroy();
-  return{out,err};
-}
-
 const ROBOT=`<div class="robot" aria-hidden="true"><svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg">
   <g class="head part">
     <g class="antenna part"><line x1="60" y1="22" x2="60" y2="8" stroke="#e05a26" stroke-width="3" stroke-linecap="round"/><circle class="led" cx="60" cy="6" r="4.5"/></g>
@@ -954,26 +1123,66 @@ document.addEventListener("DOMContentLoaded",()=>{
     });
   });
 
-  /* Executar e editar */
+  /* Executar e editar. Verificação: data-spec (JSON, ver verifica.js) ou window.checks[data-check]. Entradas do input(): data-entradas. */
   $$(".runner").forEach(r=>{
-    const ta=$("textarea",r),out=$(".out",r),orig=ta.value,chk=r.dataset.check;let fb=$(".fb",r);if(!fb){fb=document.createElement("div");fb.className="fb";out.after(fb)}
+    const ta=$(".win textarea",r),out=$(".out",r),orig=ta.value,chk=r.dataset.check;
+    let fb=$(".fb",r);if(!fb){fb=document.createElement("div");fb.className="fb";out.after(fb)}
+    const spec=r.dataset.spec?JSON.parse(r.dataset.spec):null;
+    const ent=r.dataset.entradas?JSON.parse(r.dataset.entradas):null;
+    let entBox=null;
+    if(ent){
+      const b=document.createElement("div");b.className="entradas-box";
+      if(spec)b.innerHTML='<span class="lab">Entradas que o programa recebe, na ordem:</span> <code>'+esc(ent.join("  ·  "))+'</code>';
+      else{b.innerHTML='<label class="lab">Entradas (uma por linha, na ordem em que o programa pergunta):</label><textarea class="entradas" rows="3" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off">'+esc(ent.join("\n"))+'</textarea>';entBox=$("textarea",b)}
+      $(".win",r).after(b);
+    }
+    const lerEntradas=()=>spec?(ent||[]):entBox?entBox.value.split("\n").filter((x,i,l)=>!(x===""&&i===l.length-1)):(ent||[]);
+    let tentativas=0;
+    if(r.dataset.dica){
+      const hb=document.createElement("button");hb.type="button";hb.className="ghost hintbtn";hb.textContent="Preciso de uma dica";
+      const hd=document.createElement("div");hd.className="callout warn hintbox";hd.hidden=true;hd.innerHTML='<span class="tag">Dica</span>'+esc(r.dataset.dica);
+      hb.onclick=()=>{hd.hidden=false;r.dataset.hinted="1";hb.style.display="none"};
+      $(".run",r).after(hb);fb.before(hd);
+    }
     $(".run",r).onclick=async()=>{
       out.textContent="Executando… (na primeira vez o Python é carregado e leva alguns segundos)";
-      if(fb){fb.className="fb";fb.innerHTML=""}
+      fb.className="fb";fb.innerHTML="";
       try{
         const T=C()&&C().tolerancia,fx=T?T.corrigirMaiusculas(ta.value):{code:ta.value,trocas:[]};
         if(fx.trocas.length)ta.value=fx.code;   // mostra o código já corrigido para o aluno aprender
-        const {out:o,err}=await runPython(fx.code);
-        const aviso=fx.trocas.length?`<div class="alert-case">${esc(T.MSG_CASE_RUN.replace("{nomes}",[...new Set(fx.trocas)].map(n=>"“"+n+"”").join(" e ")))}</div>`:"";
-        out.innerHTML=(o.length?esc(o.join("\n")):"<i>(o programa não mostrou nada)</i>")+(err?`\n<span class="errline">Mensagem do Python: ${esc(err)}</span>`:"");
-        if(chk&&window.checks[chk]){
-          const res=window.checks[chk](o,err,ta.value);
-          fb.className="fb "+(res.ok?"ok":"bad");fb.innerHTML=res.msg+aviso;
-          if(res.ok){evid(r,true);markDone(r.dataset.key)}
-        }else{if(aviso){fb.className="fb";fb.innerHTML=aviso}if(!err)markDone(r.dataset.key)}
+        const py=await loadPy();
+        const lista=spec&&spec.cenarios?await window.Verifica.executarCenarios(py,fx.code,spec):[await window.Verifica.executar(py,fx.code,{entradas:lerEntradas(),testes:spec&&spec.testes})];
+        const res=lista[0];
+        const aviso=fx.trocas.length?'<div class="alert-case">'+esc(T.MSG_CASE_RUN.replace("{nomes}",[...new Set(fx.trocas)].map(n=>"“"+n+"”").join(" e ")))+'</div>':"";
+        const fmt=r=>{const em=r.err?window.Verifica.explicarErro(r.err):"";return (r.out.length?esc(r.out.join("\n")):"<i>(o programa não mostrou nada)</i>")+(r.err?'\n<span class="errline">Mensagem do Python: '+esc(r.err)+(r.linha?" (linha "+r.linha+" do seu código)":"")+'</span>'+(em?'\n<span class="errhelp">Em português: '+esc(em)+'</span>':""):"")};
+        out.innerHTML=lista.length>1?lista.map((r,i)=>"<b>Com as entradas: "+esc(((spec.cenarios[i].entradas||[]).join(" · "))||"nenhuma")+"</b>\n"+fmt(r)).join("\n\n"):fmt(res);
+        let r2=null;
+        if(spec)r2=spec.cenarios?window.Verifica.avaliarCenarios(lista,spec):window.Verifica.avaliar(res,spec);
+        else if(chk&&window.checks[chk])r2=window.checks[chk](res.out,res.err,fx.code);
+        if(r2){
+          fb.className="fb "+(r2.ok?"ok":"bad");fb.innerHTML=r2.msg+aviso;
+          if(r2.ok){evid(r,true);markDone(r.dataset.key)}
+          else{tentativas++;if(tentativas>=2&&r.dataset.dica&&!r.dataset.hinted)fb.innerHTML+='<br><i>Travou? Use o botão “Preciso de uma dica”.</i>'}
+        }else{if(aviso){fb.className="fb";fb.innerHTML=aviso}if(!res.err||(r.dataset.erroEsperado&&res.err.indexOf(r.dataset.erroEsperado)===0))markDone(r.dataset.key)}
       }catch(e){out.textContent=e.message}
     };
-    const rs=$(".reset",r);if(rs)rs.onclick=()=>{ta.value=orig;out.textContent="";if(fb){fb.className="fb";fb.innerHTML=""}};
+    const rs=$(".reset",r);if(rs)rs.onclick=()=>{ta.value=orig;if(entBox)entBox.value=ent.join("\n");out.textContent="";fb.className="fb";fb.innerHTML=""};
+  });
+
+  /* Múltipla escolha: acertar de primeira conta como "sozinho"; errar antes conta como "com apoio" */
+  $$(".mcq").forEach(m=>{
+    const opts=$$(".opt",m),fb=$(".fb",m),certa=+m.dataset.correta;
+    opts.forEach((b,i)=>b.onclick=()=>{
+      if(m.dataset.feito)return;
+      if(i===certa){
+        m.dataset.feito="1";b.classList.add("good");opts.forEach(o=>o.disabled=true);
+        fb.className="fb ok";fb.innerHTML="<b>Certo.</b> "+$(".porque",m).innerHTML;
+        evid(m,true);markDone(m.dataset.key);
+      }else{
+        m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
+        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+      }
+    });
   });
 
   /* Respostas curtas com conferência */

@@ -62,16 +62,6 @@ function loadPy(){
   });
   return pyP;
 }
-async function runPython(code){
-  const py=await loadPy(),out=[];
-  py.setStdout({batched:s=>out.push(s)});py.setStderr({batched:s=>out.push(s)});
-  const g=py.globals.get("dict")();let err=null;
-  try{py.runPython(code,{globals:g})}
-  catch(e){err=String(e.message).trim().split("\n").filter(Boolean).slice(-1)[0]}
-  g.destroy();
-  return{out,err};
-}
-
 const ROBOT=`<div class="robot" aria-hidden="true"><svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg">
   <g class="head part">
     <g class="antenna part"><line x1="60" y1="22" x2="60" y2="8" stroke="#e05a26" stroke-width="3" stroke-linecap="round"/><circle class="led" cx="60" cy="6" r="4.5"/></g>
@@ -136,26 +126,66 @@ document.addEventListener("DOMContentLoaded",()=>{
     });
   });
 
-  /* Executar e editar */
+  /* Executar e editar. Verificação: data-spec (JSON, ver verifica.js) ou window.checks[data-check]. Entradas do input(): data-entradas. */
   $$(".runner").forEach(r=>{
-    const ta=$("textarea",r),out=$(".out",r),orig=ta.value,chk=r.dataset.check;let fb=$(".fb",r);if(!fb){fb=document.createElement("div");fb.className="fb";out.after(fb)}
+    const ta=$(".win textarea",r),out=$(".out",r),orig=ta.value,chk=r.dataset.check;
+    let fb=$(".fb",r);if(!fb){fb=document.createElement("div");fb.className="fb";out.after(fb)}
+    const spec=r.dataset.spec?JSON.parse(r.dataset.spec):null;
+    const ent=r.dataset.entradas?JSON.parse(r.dataset.entradas):null;
+    let entBox=null;
+    if(ent){
+      const b=document.createElement("div");b.className="entradas-box";
+      if(spec)b.innerHTML='<span class="lab">Entradas que o programa recebe, na ordem:</span> <code>'+esc(ent.join("  ·  "))+'</code>';
+      else{b.innerHTML='<label class="lab">Entradas (uma por linha, na ordem em que o programa pergunta):</label><textarea class="entradas" rows="3" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off">'+esc(ent.join("\n"))+'</textarea>';entBox=$("textarea",b)}
+      $(".win",r).after(b);
+    }
+    const lerEntradas=()=>spec?(ent||[]):entBox?entBox.value.split("\n").filter((x,i,l)=>!(x===""&&i===l.length-1)):(ent||[]);
+    let tentativas=0;
+    if(r.dataset.dica){
+      const hb=document.createElement("button");hb.type="button";hb.className="ghost hintbtn";hb.textContent="Preciso de uma dica";
+      const hd=document.createElement("div");hd.className="callout warn hintbox";hd.hidden=true;hd.innerHTML='<span class="tag">Dica</span>'+esc(r.dataset.dica);
+      hb.onclick=()=>{hd.hidden=false;r.dataset.hinted="1";hb.style.display="none"};
+      $(".run",r).after(hb);fb.before(hd);
+    }
     $(".run",r).onclick=async()=>{
       out.textContent="Executando… (na primeira vez o Python é carregado e leva alguns segundos)";
-      if(fb){fb.className="fb";fb.innerHTML=""}
+      fb.className="fb";fb.innerHTML="";
       try{
         const T=C()&&C().tolerancia,fx=T?T.corrigirMaiusculas(ta.value):{code:ta.value,trocas:[]};
         if(fx.trocas.length)ta.value=fx.code;   // mostra o código já corrigido para o aluno aprender
-        const {out:o,err}=await runPython(fx.code);
-        const aviso=fx.trocas.length?`<div class="alert-case">${esc(T.MSG_CASE_RUN.replace("{nomes}",[...new Set(fx.trocas)].map(n=>"“"+n+"”").join(" e ")))}</div>`:"";
-        out.innerHTML=(o.length?esc(o.join("\n")):"<i>(o programa não mostrou nada)</i>")+(err?`\n<span class="errline">Mensagem do Python: ${esc(err)}</span>`:"");
-        if(chk&&window.checks[chk]){
-          const res=window.checks[chk](o,err,ta.value);
-          fb.className="fb "+(res.ok?"ok":"bad");fb.innerHTML=res.msg+aviso;
-          if(res.ok){evid(r,true);markDone(r.dataset.key)}
-        }else{if(aviso){fb.className="fb";fb.innerHTML=aviso}if(!err)markDone(r.dataset.key)}
+        const py=await loadPy();
+        const lista=spec&&spec.cenarios?await window.Verifica.executarCenarios(py,fx.code,spec):[await window.Verifica.executar(py,fx.code,{entradas:lerEntradas(),testes:spec&&spec.testes})];
+        const res=lista[0];
+        const aviso=fx.trocas.length?'<div class="alert-case">'+esc(T.MSG_CASE_RUN.replace("{nomes}",[...new Set(fx.trocas)].map(n=>"“"+n+"”").join(" e ")))+'</div>':"";
+        const fmt=r=>{const em=r.err?window.Verifica.explicarErro(r.err):"";return (r.out.length?esc(r.out.join("\n")):"<i>(o programa não mostrou nada)</i>")+(r.err?'\n<span class="errline">Mensagem do Python: '+esc(r.err)+(r.linha?" (linha "+r.linha+" do seu código)":"")+'</span>'+(em?'\n<span class="errhelp">Em português: '+esc(em)+'</span>':""):"")};
+        out.innerHTML=lista.length>1?lista.map((r,i)=>"<b>Com as entradas: "+esc(((spec.cenarios[i].entradas||[]).join(" · "))||"nenhuma")+"</b>\n"+fmt(r)).join("\n\n"):fmt(res);
+        let r2=null;
+        if(spec)r2=spec.cenarios?window.Verifica.avaliarCenarios(lista,spec):window.Verifica.avaliar(res,spec);
+        else if(chk&&window.checks[chk])r2=window.checks[chk](res.out,res.err,fx.code);
+        if(r2){
+          fb.className="fb "+(r2.ok?"ok":"bad");fb.innerHTML=r2.msg+aviso;
+          if(r2.ok){evid(r,true);markDone(r.dataset.key)}
+          else{tentativas++;if(tentativas>=2&&r.dataset.dica&&!r.dataset.hinted)fb.innerHTML+='<br><i>Travou? Use o botão “Preciso de uma dica”.</i>'}
+        }else{if(aviso){fb.className="fb";fb.innerHTML=aviso}if(!res.err||(r.dataset.erroEsperado&&res.err.indexOf(r.dataset.erroEsperado)===0))markDone(r.dataset.key)}
       }catch(e){out.textContent=e.message}
     };
-    const rs=$(".reset",r);if(rs)rs.onclick=()=>{ta.value=orig;out.textContent="";if(fb){fb.className="fb";fb.innerHTML=""}};
+    const rs=$(".reset",r);if(rs)rs.onclick=()=>{ta.value=orig;if(entBox)entBox.value=ent.join("\n");out.textContent="";fb.className="fb";fb.innerHTML=""};
+  });
+
+  /* Múltipla escolha: acertar de primeira conta como "sozinho"; errar antes conta como "com apoio" */
+  $$(".mcq").forEach(m=>{
+    const opts=$$(".opt",m),fb=$(".fb",m),certa=+m.dataset.correta;
+    opts.forEach((b,i)=>b.onclick=()=>{
+      if(m.dataset.feito)return;
+      if(i===certa){
+        m.dataset.feito="1";b.classList.add("good");opts.forEach(o=>o.disabled=true);
+        fb.className="fb ok";fb.innerHTML="<b>Certo.</b> "+$(".porque",m).innerHTML;
+        evid(m,true);markDone(m.dataset.key);
+      }else{
+        m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
+        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+      }
+    });
   });
 
   /* Respostas curtas com conferência */

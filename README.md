@@ -10,7 +10,7 @@ Formação aberta, interativa e gratuita para quem parte do **zero absoluto** e 
 - Dados sempre fictícios. Privacidade e segurança entram desde a primeira aula.
 - Honestidade: o curso entrega práticas profissionais e projetos reais; não promete emprego nem certificação.
 
-Estão prontas as **66 aulas das Partes 1 e 2** (Módulos 1 a 8): Python do zero (variáveis, decisões, repetições, funções, listas e dicionários, erros e testes) e mentalidade ágil até o plano de um produto. Cada aula termina com quiz, e cada módulo, com exercício final e problema novo. As Partes 3 a 5 vêm depois.
+Estão prontas as **128 aulas dos Módulos 1 a 16**: Python do zero até lógica intermediária (laços compostos, leitura de logs, erros e testes), mentalidade ágil e plano de produto, engenharia de prompts, vibe coding responsável e o ecossistema Claude (Chat, Artifacts, Projects, Claude Code, Skills e MCP). Cada aula termina com quiz, e cada módulo, com exercício final e problema novo. As Partes 5 e 6 vêm depois.
 
 ## Como usar
 

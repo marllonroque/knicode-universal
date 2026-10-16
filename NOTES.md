@@ -43,3 +43,9 @@
 - Módulos 1 a 6 (Python) têm todo exemplo, previsão, correção e solução executados em `test-conteudo.mjs` com o mesmo código de verificação do navegador (Pyodide).
 - Módulos 7 e 8 (ágil e plano) não têm código na maior parte; a aula 0063 liga critérios de aceite a `assert`. Fontes conferidas: Manifesto Ágil (agilemanifesto.org/iso/ptbr/manifesto.html), Guia do Scrum (scrumguides.org), LGPD (Lei 13.709/2018) e Guia do Kanban (kanbanguides.org). Ainda vale reler essas fontes antes de publicar para o público.
 - Recuperação de cada aula usa palavras-chave tolerantes; se um aluno escrever certo de outro jeito, a autoavaliação continua disponível.
+
+## Estado do conteúdo (Módulos 9 a 16)
+- Os fatos sobre Chat, Artifacts, Projects, prompts, Claude Code, Skills e MCP foram levantados na documentação oficial em 2026-10-16 e estão em `conteudo/fontes/` (cada fato com [CONFIRMADO] e a URL, ou [NÃO CONFIRMADO]). As aulas só afirmam o confirmado; o resto diz "confira na documentação oficial".
+- Itens que mudam rápido e o aluno deve reconferir: nomes de menus do claude.ai, tipos de artifact, limites de arquivos/projetos, modo de permissão inicial do Claude Code, sintaxe de hooks e do `claude mcp add`, e o uso do `cmd /c npx` no Windows (não confirmado).
+- Regras de precaução e heurísticas inventadas pelo curso (pesos do checklist de risco, custos fictícios nas simulações) estão rotuladas como tais nas aulas.
+- Os exercícios de Python dos Módulos 9 a 16 (laços compostos, logs, `try/except`, asserts) são executados em `test-conteudo.mjs`; os prompts em si não são executados na página.

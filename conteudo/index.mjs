@@ -7,8 +7,16 @@ import m05, { meta as meta05 } from "./modulo-05.mjs";
 import m06, { meta as meta06 } from "./modulo-06.mjs";
 import m07, { meta as meta07 } from "./modulo-07.mjs";
 import m08, { meta as meta08 } from "./modulo-08.mjs";
+import m09, { meta as meta09 } from "./modulo-09.mjs";
+import m10, { meta as meta10 } from "./modulo-10.mjs";
+import m11, { meta as meta11 } from "./modulo-11.mjs";
+import m12, { meta as meta12 } from "./modulo-12.mjs";
+import m13, { meta as meta13 } from "./modulo-13.mjs";
+import m14, { meta as meta14 } from "./modulo-14.mjs";
+import m15, { meta as meta15 } from "./modulo-15.mjs";
+import m16, { meta as meta16 } from "./modulo-16.mjs";
 
-const MODULOS = [[1, m01, meta01], [2, m02, meta02], [3, m03, meta03], [4, m04, meta04], [5, m05, meta05], [6, m06, meta06], [7, m07, meta07], [8, m08, meta08]];
+const MODULOS = [[1, m01, meta01], [2, m02, meta02], [3, m03, meta03], [4, m04, meta04], [5, m05, meta05], [6, m06, meta06], [7, m07, meta07], [8, m08, meta08], [9, m09, meta09], [10, m10, meta10], [11, m11, meta11], [12, m12, meta12], [13, m13, meta13], [14, m14, meta14], [15, m15, meta15], [16, m16, meta16]];
 
 export const META = {};
 export const AULAS = [];

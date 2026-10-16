@@ -89,6 +89,7 @@ Como pedir bem: objetivo, contexto, exemplos e formato da resposta.
 - **Tempo:** 8 aulas de ~30 min
 - **Exercício:** Reescrever pedidos vagos até obter respostas úteis e verificáveis.
 - **Ao final consegue:** Escrever pedidos claros e reconhecer quando uma resposta não serve.
+- **Aulas prontas (8 de 8):** 1. O prompt: o resultado depende do pedido; 2. Contexto: conte a situação, o público e o tom; 3. Formato de saída: diga como quer a resposta; 4. Mostre exemplos: o poder de mostrar em vez de explicar; 5. Restrições: o que a resposta deve e não deve ter; 6. Deixe o Claude perguntar o que falta; 7. Nunca confie sem conferir; 8. Mini-projeto: de pedido vago a pedido bom
 
 ### Módulo 10: Engenharia de prompts avançada
 
@@ -97,6 +98,7 @@ Dividir tarefas, encadear passos, dar papéis e restrições, pedir verificaçã
 - **Tempo:** 8 aulas de ~30 min + 1 h
 - **Exercício:** Montar uma cadeia de prompts que gera e testa uma pequena função.
 - **Ao final consegue:** Projetar prompts em etapas e medir se melhoraram, em vez de confiar na impressão.
+- **Aulas prontas (8 de 8):** 1. Dividir uma tarefa grande em passos pequenos; 2. Encadear: a saída de um passo é a entrada do próximo; 3. Papéis e instruções de sistema; 4. Estruturar o pedido com tags XML; 5. Pedir raciocínio e fechar com formato rígido; 6. Medir, não achar: avaliar prompts com casos de teste; 7. Instruções escondidas em texto colado; 8. Mini-projeto: uma cadeia que gera e testa uma função
 
 ### Módulo 11: Vibe coding com responsabilidade
 
@@ -105,6 +107,7 @@ O ciclo: especificar, gerar, ler, testar e ajustar. Quando confiar, quando desco
 - **Tempo:** 8 aulas de ~30 min + 2 h
 - **Exercício:** Construir uma ferramenta pequena pedindo à IA, lendo cada trecho e escrevendo os testes.
 - **Ao final consegue:** Dirigir a IA com especificações claras e rejeitar código que não passa na revisão.
+- **Aulas prontas (8 de 8):** 1. O ciclo: especificar, gerar, ler, testar, ajustar; 2. Especificar antes de pedir; 3. Ler o código gerado, linha a linha; 4. Testes escritos por você, antes do código; 5. Ler logs para saber o que aconteceu; 6. Tratar erros em vez de escondê-los; 7. Mudanças pequenas, revisão do diff e riscos; 8. Mini-projeto: o analisador de log de pedidos
 
 ## Parte 4: Ecossistema Claude
 
@@ -115,6 +118,7 @@ Conversar com método: pedir, iterar, verificar respostas e conhecer os limites.
 - **Tempo:** 6 aulas de ~30 min
 - **Exercício:** Resolver um problema do dia a dia em uma conversa guiada e checar o resultado.
 - **Ao final consegue:** Usar o chat para aprender e produzir, conferindo as respostas por conta própria.
+- **Aulas prontas (6 de 6):** 1. Começar a conversa e dar contexto; 2. Refinar: pedir mudanças pontuais; 3. Anexar arquivos e imagens; 4. Limites do chat: ele erra com confiança, você confere; 5. Privacidade: o que nunca colar no chat; 6. Mini-projeto: um problema do dia a dia, conversa guiada
 - **Atenção:** conferir a documentação oficial antes das aulas.
 
 ### Módulo 13: Claude Artifacts
@@ -124,6 +128,7 @@ Criar e refinar páginas e ferramentas interativas direto na conversa, e revisar
 - **Tempo:** 8 aulas de ~30 min + 1 h
 - **Exercício:** Um conversor ou calculadora simples feito com Artifacts.
 - **Ao final consegue:** Pedir, revisar e ajustar um artifact até ele fazer o que foi especificado.
+- **Aulas prontas (8 de 8):** 1. O que é um artifact: algo que abre ao lado da conversa; 2. Como pedir: a especificação do que a ferramenta deve fazer; 3. Ajustar aos poucos: uma mudança por vez; 4. Ler o código que o artifact gerou; 5. Testar a ferramenta: normal, limite e inválido; 6. Entradas inválidas: o que a ferramenta faz com “abc”?; 7. Compartilhar com segurança: o que um artifact expõe; 8. Mini-projeto: a calculadora de parcelas
 - **Atenção:** conferir a documentação oficial antes das aulas.
 
 ### Módulo 14: Claude Projects
@@ -133,6 +138,7 @@ Organizar conhecimento e instruções persistentes para trabalhar num assunto ao
 - **Tempo:** 6 aulas de ~30 min
 - **Exercício:** Montar um Projeto de estudo com instruções e materiais.
 - **Ao final consegue:** Estruturar um Projeto que dê respostas consistentes para um assunto.
+- **Aulas prontas (6 de 6):** 1. O que é um Project: um espaço de trabalho com memória própria; 2. Escrever boas instruções: papel, objetivo, formato, regras; 3. Materiais do projeto: o que enviar e o que nunca enviar; 4. Conversas dentro do projeto: o que fica e o que não fica; 5. Compartilhar um projeto com cuidado; 6. Avaliar o projeto com perguntas de teste e fechar o mini-projeto
 - **Atenção:** conferir a documentação oficial antes das aulas.
 
 ### Módulo 15: Claude Code
@@ -142,6 +148,7 @@ Programar com um assistente no terminal: pedir, revisar mudanças, rodar testes 
 - **Tempo:** 10 aulas de ~30 min + 2 h
 - **Exercício:** Construir e melhorar um pequeno programa, com testes, revisando cada mudança.
 - **Ao final consegue:** Dirigir o Claude Code com especificações claras e aceitar só o que passa na revisão.
+- **Aulas prontas (10 de 10):** 1. Claude Code: o que é, como instalar e iniciar; 2. Modos e permissões: o que ele pode fazer sem perguntar; 3. Comandos de barra: o painel de controle da sessão; 4. CLAUDE.md: o manual curto do seu projeto; 5. O fluxo: explorar, planejar, implementar, verificar; 6. Revisar o diff e desfazer com segurança; 7. Rodar os testes e guardar no Git, em passos pequenos; 8. Subagentes e hooks: delegar e garantir; 9. Segurança: injeção de prompt, permissões e segredos; 10. Projeto guiado: o analisador de log de pedidos
 - **Atenção:** conferir a documentação oficial antes das aulas.
 
 ### Módulo 16: Skills, MCP e conectores
@@ -151,6 +158,7 @@ Estender o Claude com instruções reutilizáveis e ligações a ferramentas e d
 - **Tempo:** 8 aulas de ~30 min
 - **Exercício:** Criar uma skill simples e avaliar os riscos de uma conexão.
 - **Ao final consegue:** Estender o Claude de forma útil e segura.
+- **Aulas prontas (8 de 8):** 1. O que é uma skill e como ela é montada; 2. Como o Claude decide usar uma skill; 3. Name, description e os limites de cada lugar; 4. Escrever uma boa skill; 5. MCP: uma tomada padrão para ligar o Claude a ferramentas; 6. Adicionar um servidor MCP e usar conectores; 7. Permissões mínimas e os riscos de uma conexão; 8. Mini-projeto: criar uma skill e avaliar uma conexão
 - **Atenção:** conferir a documentação oficial antes das aulas.
 
 ### Módulo 17: Agentes e orquestração (Cowork)

@@ -642,7 +642,7 @@ __json.dumps(__res)
 <script>
 /* Motor de progresso do curso + interface (HUD, botão Home, painel, recuperação).
    O motor (createEngine) é puro e testável em Node: node test-curso.mjs
-   Estado salvo em localStorage ("knicode.universal.v1"), só no aparelho do aluno. Começa do zero: Módulo 1 aberto, todos os outros bloqueados.
+   Estado salvo em localStorage ("knicode.universal.v1"), só no aparelho do aluno. Começa do zero: todos os módulos acessíveis, nenhum em andamento.
 
    REGRAS:
    - Entre aulas: recuperação sem consulta, mínimo 2 de 3 certas.
@@ -650,10 +650,17 @@ __json.dumps(__res)
    - Status do conceito: Não compreendido, Em aprendizagem, Executa com apoio, Executa sozinho, Retido, Transferido.
    - Módulo concluído: todos os conceitos centrais com compreensão + "Executa sozinho"; >= 60% retidos; transferência aprovada;
      exercício final entregue sem apoio.
-   - "Quase": exercício final sem apoio e >= 80% dos conceitos "Executa sozinho": libera o próximo módulo com "Revisão pendente". */
+   - "Quase": exercício final sem apoio e >= 80% dos conceitos "Executa sozinho": o módulo ganha "Revisão pendente" com os pontos fracos.
+   - Acesso: todo módulo pode ser aberto a qualquer momento, sem concluir o anterior. O estado do módulo só informa o progresso:
+     "open" (ainda não começou), "run" (em andamento: já há atividade registrada) e "done" (concluído). Nada é bloqueado. */
 (function (root) {
   const KEY = "knicode.universal.v1", DAY = 86400000;
   const T = { ret: 0.6, almost: 0.8, recoveryPass: 2, retentionDays: 3, offsets: [1, 3, 7, 14, 30] };
+
+  /* Rótulo do cartão do módulo no painel (usado também pelo build). Nenhum módulo é bloqueado:
+     "open" = ainda não começou; sem aulas publicadas, o módulo aparece como em preparação. */
+  const ROTULOS = { run: "[EM ANDAMENTO]", open: "[DISPONÍVEL]", done: "[CONCLUÍDO]" };
+  const rotulo = (state, temAulas) => (state === "open" && !temAulas ? "[EM PREPARAÇÃO]" : ROTULOS[state]);
 
   const mod = (id, n, title, concepts, final, transfer) => ({ id, n, title, concepts: concepts || [], final, transfer });
 
@@ -752,19 +759,27 @@ __json.dumps(__res)
       return { defined, total: n, comp, solo, ret, transferOk, finalOk, complete, almost, weak, progress, rows };
     }
 
+    /* O aluno já começou este módulo? Vale qualquer evidência de conceito, aula com atividade feita ou final/transferência registrados. */
+    function moduleStarted(s, m, e) {
+      const ms = s.modules[m.id] || {};
+      if (ms.final || ms.transfer) return true;
+      if (e.rows.some(r => r.status !== "Não compreendido" || r.gaps > 0)) return true;
+      return COURSE.lessons.some(l => l.module === m.id && ((s.lessons[l.id] || {}).keys || []).length > 0);
+    }
+
     function snapshot() {
-      const s = storage.load(); const mods = []; let prevOpen = true;
-      COURSE.modules.forEach((m, i) => {
+      const s = storage.load(); const mods = [];
+      COURSE.modules.forEach(m => {
         const e = moduleEval(s, m);
-        const open = i === 0 || prevOpen;
-        const state = e.complete ? "done" : open ? "run" : "lock";
-        const pending = state === "run" && !e.complete && e.almost;
-        mods.push({ id: m.id, n: m.n, title: m.title, state, pending, eval: e });
-        prevOpen = e.complete || (open && e.almost);
+        // Todo módulo é acessível: o estado só informa o progresso (open = não começou, run = em andamento, done = concluído).
+        const state = e.complete ? "done" : moduleStarted(s, m, e) ? "run" : "open";
+        const pending = !e.complete && e.almost;
+        mods.push({ id: m.id, n: m.n, title: m.title, state, accessible: true, pending, eval: e });
       });
       const done = mods.filter(m => m.state === "done").length;
       const running = mods.filter(m => m.state === "run");
-      const current = running.length ? running[running.length - 1].n : COURSE.modules.length;
+      const firstNotDone = mods.find(m => m.state !== "done");
+      const current = running.length ? running[running.length - 1].n : firstNotDone ? firstNotDone.n : COURSE.modules.length;
       const overall = Math.round(mods.reduce((a, m) => a + m.eval.progress, 0) / COURSE.modules.length * 100);
       return { state: s, modules: mods, done, current, overall, nextReview: nextReview(s), built: COURSE.lessons.length };
     }
@@ -850,7 +865,7 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia };
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -892,17 +907,15 @@ __json.dumps(__res)
       else if (k.startsWith("aulas prontas")) v.textContent = snap.built;
       else if (k.startsWith("proxima revisao")) v.textContent = snap.nextReview.label;
     });
-    const L = { run: "[EM ANDAMENTO]", lock: "[BLOQUEADO]", done: "[CONCLUÍDO]" };
     $$(".mod").forEach(card => {
       const m = /^(\d+)/.exec($("h3", card).textContent.trim());
       const info = m ? snap.modules[+m[1] - 1] : null;
-      const parState = snap.modules[1].state === "lock" ? "lock" : "run";     // trilha paralela abre junto com o Módulo 2
-      const state = info ? info.state : parState;
-      card.classList.remove("run", "lock", "done"); card.classList.add(state);
-      const st = $(".st", card); st.className = "st " + state; st.textContent = L[state];
+      const state = info ? info.state : "open";     // todo cartão é acessível; sem módulo numerado não há progresso a mostrar
+      card.classList.remove("run", "lock", "open", "done"); card.classList.add(state);
+      const st = $(".st", card); st.className = "st " + state; st.textContent = rotulo(state, !!$(".go", card));
       $$(".mod-extra", card).forEach(e => e.remove());
       const body = $(".mod-body", card);
-      if (info && info.eval.defined && state !== "lock") {
+      if (info && info.eval.defined) {
         const e = info.eval, pc = Math.round(e.progress * 100);
         let h = `<div class="mod-extra"><div class="mp-track"><i style="width:${pc}%"></i></div><div class="mp-txt">${pc}% das evidências · ${e.solo}/${e.total} executando sozinho · ${e.ret} retidos</div>`;
         if (info.pending) h += `<div class="review-tag">[ REVISÃO PENDENTE ]</div><ul class="weak">${e.weak.map(w => `<li>${esc(w)}</li>`).join("")}</ul>`;
@@ -916,7 +929,7 @@ __json.dumps(__res)
           if (!li || !li.completedAt) { next = { href: l.file }; txt = `▶ continuar: aula ${l.n}`; break; }
           if (!li.recovery.passed) { next = { href: l.recovery }; txt = `▶ recuperação da aula ${l.n}`; break; }
         }
-        if (state === "lock") go.style.display = "none"; else { go.style.display = ""; }
+        go.style.display = "";
         if (next) { go.href = next.href; go.textContent = txt; go.classList.remove("off"); }
         else { go.removeAttribute("href"); go.textContent = `aula ${lsn.length + 1} em preparação`; go.classList.add("off"); }
       }

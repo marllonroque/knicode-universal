@@ -1,7 +1,7 @@
 // Testes das regras de progresso do curso. Uso (na pasta do curso): node test-curso.mjs
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
-const { COURSE, createEngine, memoryStorage } = require("./assets/curso.js");
+const { COURSE, createEngine, memoryStorage, browserStorage, KEY, rotulo } = require("./assets/curso.js");
 
 let fails = 0;
 const eq = (name, got, want) => { const ok = JSON.stringify(got) === JSON.stringify(want); if (!ok) fails++; console.log(`${ok ? "ok  " : "FAIL"} ${name}${ok ? "" : `  got=${JSON.stringify(got)} want=${JSON.stringify(want)}`}`); };
@@ -10,11 +10,12 @@ const states = e => e.snapshot().modules.map(m => m.state).join(",");
 // Limiares proporcionais ao número de conceitos do Módulo 1 (a trilha pode crescer sem quebrar os testes)
 const N = ids.length, NMOD = COURSE.modules.length;
 const needRet = Math.ceil(N * 0.6), needSolo = Math.ceil(N * 0.8);
-const lockedTail = k => Array(NMOD - k).fill("lock").join(",");
+const openTail = k => Array(NMOD - k).fill("open").join(",");
 
 // 1. Estado inicial
 let E = createEngine(memoryStorage());
-eq("inicial: M1 em andamento, resto bloqueado", states(E), "run," + lockedTail(1));
+eq("inicial: nenhum módulo em andamento (nada começou)", states(E), openTail(0));
+eq("inicial: todos os módulos acessíveis, nenhum bloqueado", [E.snapshot().modules.every(m => m.accessible), E.snapshot().modules.some(m => m.state === "lock")], [true, false]);
 eq("inicial: 0 concluídos, atual 1", [E.snapshot().done, E.snapshot().current], [0, 1]);
 
 // 2. Status de conceito
@@ -31,9 +32,9 @@ E = createEngine(memoryStorage());
 ids.forEach(id => { E.evidence(id, "comp"); E.evidence(id, "exec", { sozinho: true }); });
 ids.slice(0, needRet - 1).forEach(id => E.evidence(id, "ret"));   // um a menos que o mínimo de 60% retidos
 E.setTransfer("m01"); E.setFinal("m01", true);
-eq("retidos abaixo de 60%: ainda não conclui, mas 'quase' libera M2 com revisão pendente", [E.snapshot().modules[0].state, E.snapshot().modules[0].pending, E.snapshot().modules[1].state], ["run", true, "run"]);
+eq("retidos abaixo de 60%: ainda não conclui; M1 fica com revisão pendente e M2 segue acessível", [E.snapshot().modules[0].state, E.snapshot().modules[0].pending, E.snapshot().modules[1].state], ["run", true, "open"]);
 E.evidence(ids[needRet - 1], "ret");                          // atinge o mínimo
-eq("retidos >= 60% + transfer + final: M1 concluído, M2 ativo", [states(E), E.snapshot().done, E.snapshot().current], ["done,run," + lockedTail(2), 1, 2]);
+eq("retidos >= 60% + transfer + final: M1 concluído, demais acessíveis, atual = 2", [states(E), E.snapshot().done, E.snapshot().current], ["done," + openTail(1), 1, 2]);
 eq("concluído não tem revisão pendente", E.snapshot().modules[0].pending, false);
 
 // 4. 'Quase' (>= 80% sozinho + final sem apoio, sem transferência/retenção)
@@ -41,25 +42,49 @@ E = createEngine(memoryStorage());
 ids.slice(0, needSolo).forEach(id => { E.evidence(id, "comp"); E.evidence(id, "exec", { sozinho: true }); });  // exatamente o mínimo de 80%
 E.setFinal("m01", true);
 let s = E.snapshot();
-eq("quase: M1 não concluído, M2 liberado, revisão pendente", [s.modules[0].state, s.modules[0].pending, s.modules[1].state, s.done], ["run", true, "run", 0]);
+eq("quase: M1 não concluído, com revisão pendente; M2 acessível; nada concluído", [s.modules[0].state, s.modules[0].pending, s.modules[1].state, s.done], ["run", true, "open", 0]);
 eq("quase: pontos fracos apontam o que falta", s.modules[0].eval.weak.some(w => w.includes(m1.concepts[N - 1].name)) && s.modules[0].eval.weak.some(w => w.startsWith("Transferência")), true);
-eq("quase: M3 continua bloqueado", s.modules[2].state, "lock");
+eq("quase: M3 também acessível", [s.modules[2].state, s.modules[2].accessible], ["open", true]);
 
 // 5. Final com apoio não libera
 E = createEngine(memoryStorage());
 ids.forEach(id => { E.evidence(id, "comp"); E.evidence(id, "exec", { sozinho: true }); });
 E.setFinal("m01", false);
 s = E.snapshot();
-eq("final com apoio: M2 continua bloqueado", [s.modules[0].state, s.modules[1].state], ["run", "lock"]);
+eq("final com apoio: sem revisão pendente; M1 em andamento e M2 acessível", [s.modules[0].state, s.modules[0].pending, s.modules[1].state, s.modules[1].accessible], ["run", false, "open", true]);
 eq("final com apoio aparece nos pontos fracos", s.modules[0].eval.weak.some(w => w.includes("com apoio")), true);
 E.setFinal("m01", true);
-eq("refeito sem apoio: libera M2 (quase)", E.snapshot().modules[1].state, "run");
+eq("refeito sem apoio: M1 fica com revisão pendente (quase)", E.snapshot().modules[0].pending, true);
 
 // 6. Abaixo de 80% sozinho não libera mesmo com final
 E = createEngine(memoryStorage());
 ids.slice(0, needSolo - 1).forEach(id => { E.evidence(id, "comp"); E.evidence(id, "exec", { sozinho: true }); });  // um a menos que o mínimo
 E.setFinal("m01", true);
-eq("abaixo de 80% sozinho + final: M2 bloqueado", E.snapshot().modules[1].state, "lock");
+eq("abaixo de 80% sozinho + final: sem revisão pendente, e M2 segue acessível", [E.snapshot().modules[0].pending, E.snapshot().modules[1].state, E.snapshot().modules[1].accessible], [false, "open", true]);
+
+// 6b. Acesso livre: abrir qualquer módulo não depende dos anteriores, não conclui ninguém e o rótulo nunca diz "bloqueado"
+E = createEngine(memoryStorage());
+E.setFinal("m05", true); E.setTransfer("m05");      // atividade só no Módulo 5, sem nada nos anteriores
+s = E.snapshot();
+eq("acesso livre: M5 em andamento sem os anteriores concluídos; M1 acessível e não começado", [s.modules[4].state, s.modules[4].accessible, s.modules[0].state, s.modules[0].accessible], ["run", true, "open", true]);
+eq("acesso livre: liberar não marca nenhum módulo como concluído", [s.done, s.modules.filter(m => m.state === "done").length], [0, 0]);
+eq("acesso livre: todos os módulos acessíveis, nenhum em estado de bloqueio", [s.modules.every(m => m.accessible), s.modules.some(m => m.state === "lock")], [true, false]);
+eq("acesso livre: o módulo atual acompanha o que foi começado", s.current, 5);
+eq("rótulos do painel: disponível, em andamento, concluído e em preparação (nunca bloqueado)", [rotulo("open", true), rotulo("run", true), rotulo("done", true), rotulo("open", false)], ["[DISPONÍVEL]", "[EM ANDAMENTO]", "[CONCLUÍDO]", "[EM PREPARAÇÃO]"]);
+
+// 6c. Compatibilidade do progresso salvo: mesma chave e mesmo formato; abrir o painel não grava nada
+eq("armazenamento: chave do localStorage preservada", KEY, "knicode.universal.v1");
+const antigo = { v: 1, shift: 0, lessons: { "0001": { keys: ["k1", "k2"], total: 5, completedAt: null, recovery: { best: 0, attempts: 0, passed: false, at: null }, reviews: [] } }, concepts: { programa: { comp: { at: 1 }, exec: { at: 1, sozinho: true } } }, modules: { m01: { final: { at: 1, semApoio: true } } } };
+const memLS = (() => { const d = { [KEY]: JSON.stringify(antigo) }; return { getItem: k => (k in d ? d[k] : null), setItem: (k, v) => { d[k] = v; }, raw: () => d[KEY] }; })();
+const antes = memLS.raw();
+E = createEngine(browserStorage(memLS));
+s = E.snapshot();
+eq("progresso salvo antes da mudança: lido sem perder conceito, aula nem exercício final", [E.conceptStatus("programa"), E.lessonInfo("0001").keys, s.modules[0].eval.finalOk, s.modules[0].state], ["Executa sozinho", ["k1", "k2"], true, "run"]);
+eq("progresso salvo: abrir o painel (snapshot) não regrava o armazenamento", memLS.raw(), antes);
+E.evidence("tipos", "comp");
+const depois = JSON.parse(memLS.raw());
+eq("progresso salvo: gravar de novo preserva o que existia e o formato (v, shift, lessons, concepts, modules)",
+  [Object.keys(depois).sort(), depois.v, depois.lessons["0001"].keys, depois.concepts.programa.exec.sozinho, !!depois.concepts.tipos.comp, depois.modules.m01.final.semApoio], [["concepts", "lessons", "modules", "shift", "v"], 1, ["k1", "k2"], true, true, true]);
 
 // 7. Recuperação entre aulas
 E = createEngine(memoryStorage());
@@ -205,8 +230,11 @@ eq("build: todo textarea/input tem autocapitalize, autocorrect, spellcheck e aut
     CURRICULO.filter(m => /claude|skills|mcp|agentes|api da anthropic|hospedagem|seguranca|lgpd/.test(sem(m.titulo))).every(m => m.verificar), true);
   eq("currículo: Módulo 1 usa a metáfora do robô que passa café", sem(CURRICULO[0].desc).includes("robo") && sem(CURRICULO[0].desc).includes("cafe"), true);
   const idx = lerTxt("index.html");
-  eq("painel: um cartão por módulo, 1 em andamento e o resto bloqueado",
-    [(idx.match(/<article class="mod /g) || []).length, (idx.match(/<article class="mod run"/g) || []).length, (idx.match(/<article class="mod lock"/g) || []).length], [CURRICULO.length, 1, CURRICULO.length - 1]);
+  const contar = (re) => (idx.match(re) || []).length, comAulas = contar(/class="go"/g);
+  eq("painel: um cartão por módulo, todos acessíveis (nenhum bloqueado no HTML inicial)",
+    [contar(/<article class="mod /g), contar(/<article class="mod open"/g), contar(/<article class="mod lock"/g), contar(/<article class="mod run"/g)], [CURRICULO.length, CURRICULO.length, 0, 0]);
+  eq("painel: módulos com aulas aparecem como disponíveis e os demais em preparação", [comAulas > 0, contar(/\[DISPONÍVEL\]<\/b>/g), contar(/\[EM PREPARAÇÃO\]<\/b>/g)], [true, comAulas, CURRICULO.length - comAulas]);
+  eq("painel e aulas: o texto BLOQUEADO não aparece mais em nenhuma página gerada", [/BLOQUEADO/.test(idx), /BLOQUEADO/.test(lerTxt("lessons/0001-o-computador-segue-instrucoes.html")), /BLOQUEADO/.test(lerTxt("lessons/0009-comparacoes.html"))], [false, false, false]);
   eq("painel: um título por parte", (idx.match(/<h2 class="parte">/g) || []).length, PARTES.length);
   eq("painel: o contador começa em 0 / N", idx.includes(`0 / ${CURRICULO.length}</div>`), true);
   const mat = lerTxt("CURRICULO.md");

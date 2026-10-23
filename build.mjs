@@ -104,14 +104,14 @@ const req = createRequire(import.meta.url);
 }
 
 // Painel e matriz curricular saem do mesmo currículo (assets/curso.js): uma fonte só, sem risco de ficarem diferentes.
-const { COURSE, CURRICULO, PARTES } = req("./assets/curso.js");
+const { COURSE, CURRICULO, PARTES, rotulo } = req("./assets/curso.js");
 const pad2 = (n) => String(n).padStart(2, "0");
 const tempo = (m) => [m.aulas ? `${m.aulas} aulas de ~30 min` : null, m.h1 ? (m.aulas ? `+ ${m.h1} h` : `${m.h1} sessões de 1 h`) : null].filter(Boolean);
 const painelModulos = () => PARTES.map((parte, pi) => {
   const cards = CURRICULO.map((m, i) => ({ m, i })).filter(x => x.m.parte === pi).map(({ m, i }) => {
-    const first = i === 0, cls = first ? "run" : "lock", st = first ? "[EM ANDAMENTO]" : "[BLOQUEADO]";
     const meta = [...tempo(m).map(t => `<span>${t}</span>`), m.verificar ? '<span class="conf">fonte oficial a conferir</span>' : ""].join("");
     const aulasMod = COURSE.lessons.filter((l) => l.module === idModulo(i + 1));
+    const cls = "open", st = rotulo(cls, aulasMod.length > 0);   // nenhum módulo é bloqueado; o progresso real é desenhado pelo curso.js
     const go = aulasMod.length ? `\n        <a class="go" href="${aulasMod[0].file}">▶ continuar: aula 1</a>` : "";
     return `    <article class="mod ${cls}">
       <div class="mod-bar"><i></i><i></i><i></i><span>modulo_${pad2(i + 1)}.${m.ext}</span><b class="st ${cls}">${st}</b></div>

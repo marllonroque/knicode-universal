@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 14 · Claude Projects · Aula 1</div>
   <h1>O que é um Project: um espaço de trabalho com memória própria</h1>
   <p>Um chat solto começa do zero. Um Project junta instruções, materiais e conversas num mesmo lugar, para você trabalhar num assunto ao longo do tempo.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Explicar o que é um Project e do que ele é feito.</li>
@@ -355,7 +355,8 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <p>A documentação oficial descreve os <b>Projects</b> como espaços de trabalho <b>autocontidos</b>, com <b>histórico de chats</b> e <b>base de conhecimento</b> próprios.</p>
   <p>As <b>instruções do projeto</b> orientam como o Claude responde (tom, papel) e valem para <b>todos os chats daquele projeto</b>. As “Instructions for Claude” da conta, por outro lado, valem para <b>todas as suas conversas</b>. A distinção entre as duas é uma leitura dos textos da documentação: confira no app como cada uma aparece.</p>
   <p>A <b>base de conhecimento</b> é feita dos documentos, textos e códigos que você envia na página do projeto: eles servem de contexto em todos os chats dele. Os <b>chats do projeto não compartilham contexto entre si</b>, a não ser que a informação esteja na base.</p>
-  <p>A documentação diz que Projects estão disponíveis para todos, inclusive no plano Free (com máximo de 5 projetos). Existe também uma <b>versão beta nova</b> de projetos, liberada em etapas. Limites e regras mudam: reconfira na documentação oficial.</p>
+  <p>O que significa “<b>memória própria</b>”: além de instruções, base e chats, a documentação diz que <b>cada projeto tem a sua memória</b>. Segundo a página oficial lida, dentro de um projeto o Claude usa a memória do projeto junto com a memória da sua conta (não a de outros projetos), e o que é lembrado fica ligado ao projeto, valendo entre os chats dele. Para manter o projeto totalmente separado, existe a opção <b>“Use account memory”</b>, que se desliga nas configurações do projeto. A memória é um recurso à parte (você viu os controles na aula de privacidade do módulo 12) e <b>não substitui</b> a base e as instruções, que são o que você controla com certeza. O que exatamente a memória guarda: confira na documentação oficial.</p>
+  <p>A documentação diz que Projects estão disponíveis para todos, inclusive no plano Free (com máximo de 5 projetos). Existe também uma <b>versão beta nova</b> de projetos (um projeto é uma conversa, com threads paralelas na nuvem), liberada em etapas a partir do Claude Code. Esta aula descreve o modelo <b>clássico</b>, com vários chats por projeto: em <b>contas com o beta, as telas e os nomes podem ser diferentes</b>. Limites e regras mudam: reconfira na documentação oficial.</p>
   <table>
     <tr><th></th><th>Chat solto</th><th>Project</th><th>Instruções da conta</th></tr>
     <tr><td>Vale para</td><td>só aquela conversa</td><td>todos os chats do projeto</td><td>todas as conversas</td></tr>
@@ -365,6 +366,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="callout term"><span class="tag">Palavras novas</span>
     <dl>
       <dt>Project</dt><dd>espaço de trabalho com instruções, materiais e chats próprios.</dd>
+      <dt>Memória própria</dt><dd>a memória que a documentação atribui a cada projeto, separada da dos outros projetos.</dd>
       <dt>Instruções do projeto</dt><dd>orientações que valem para todos os chats do projeto.</dd>
       <dt>Base de conhecimento</dt><dd>os arquivos e textos que você envia como contexto do projeto.</dd>
     </dl>
@@ -378,7 +380,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <p>Responda com um número, sim ou não.</p>
   <div class="quest" data-key="k2" data-concept="pj_o_que" data-level="exec" data-ok="Tudo certo. Você aplicou a regra em casos novos.">
     <div class="pred"><span>No plano Free, qual é o máximo de projetos, segundo a documentação lida? (um número)</span><input class="q" data-answer="5" data-label="Item 1" data-why="A documentação lida diz máximo de 5 no Free. Esse número pode mudar: reconfira." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
-    <div class="pred"><span>Duas conversas do mesmo projeto sabem o que a outra falou? (sim ou não)</span><input class="q" data-answer="não|nao" data-label="Item 2" data-why="Os chats não compartilham contexto entre si, a menos que a informação esteja na base de conhecimento." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
+    <div class="pred"><span>O contexto da conversa de um chat é compartilhado com os outros chats do mesmo projeto? (sim ou não)</span><input class="q" data-answer="não|nao" data-label="Item 2" data-why="Os chats não compartilham contexto entre si, a menos que a informação esteja na base de conhecimento. A memória do projeto é outra coisa (veja o texto acima)." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
     <div class="pred"><span>As instruções do projeto valem para todos os chats dele? (sim ou não)</span><input class="q" data-answer="sim" data-label="Item 3" data-why="Essa é a função das instruções do projeto: orientar todos os chats daquele projeto." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
     <button class="chk">Conferir</button><div class="fb"></div>
   </div>
@@ -474,7 +476,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>É um espaço de trabalho autocontido, com <b>instruções</b>, <b>base de conhecimento</b> e <b>chats</b> próprios. Vale a pena para um <b>assunto de longo prazo</b>, com materiais e regras fixas; para uma pergunta pontual, um chat solto basta. Limites e regras mudam: confira na documentação oficial.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) O que é um Project? (2) Dois chats do mesmo projeto compartilham o que foi dito? (3) Por que não colocar senhas ou extratos reais num projeto? <a href="recuperacao-0105.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “O que é um Project: um espaço de trabalho com memória própria”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0105.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -670,7 +672,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -862,7 +864,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -943,13 +956,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1202,7 +1209,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

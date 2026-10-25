@@ -10,6 +10,8 @@ const AVISO = "Ferramentas mudam: reconfira na documentação oficial.";
 const BASE = "platform.claude.com/docs/en/build-with-claude/prompt-engineering";
 const FONTE_BOAS = `guia oficial de boas práticas de prompts (${BASE}/claude-prompting-best-practices). ${AVISO}`;
 const FONTE_AVALIAR = `como definir critérios de sucesso e avaliações (platform.claude.com/docs/en/test-and-evaluate/develop-tests) e visão geral da engenharia de prompts (${BASE}/overview). ${AVISO}`;
+// Para a recuperação: exige pelo menos DUAS categorias diferentes (cada categoria é um trecho de regex); gera (?=.*A)(?=.*B)|...
+const doisDe = (...cats) => { const alts = []; for (let i = 0; i < cats.length; i++) for (let j = i + 1; j < cats.length; j++) alts.push("(?=.*(?:" + cats[i] + "))(?=.*(?:" + cats[j] + "))"); return "(?:" + alts.join("|") + ")"; };
 const FONTE_INJECAO = `a documentação para desenvolvedores sobre o risco em navegador e agentes (platform.claude.com/docs/en/agents-and-tools/tool-use/browser-use-tool). Aplicar a ideia ao chat é uma extensão razoável, não um artigo específico. Confira na documentação oficial. ${AVISO}`;
 
 // ---------- Aula 75: dividir tarefas ----------
@@ -58,8 +60,13 @@ aulas.push({
     { tipo: "texto", titulo: "A cadeia de prompts", blocos: [
       "**Cadeia de prompts** é uma sequência de pedidos em que a **saída de um vira a entrada do próximo**. Exemplo: passo 1 resume uma avaliação; passo 2 classifica o resumo; passo 3 escreve a resposta ao cliente.",
       "Na prática, você copia a saída (já conferida) do passo 1 e a cola no pedido do passo 2. Programas fazem isso automaticamente, e o esqueleto é um laço: `resultado = passo(resultado)`.",
-      "Aqui os passos serão **funções simuladas**, que fazem o papel do Claude de forma previsível, para você treinar a ideia. Cuidado com o erro mais comum: passar a **entrada original** em todos os passos, e não o resultado do anterior." ],
+      "Aqui os passos serão **funções simuladas**. Atenção: `strip` (tirar espaços) e `upper` (pôr em maiúsculas) **não são prompts**. São funções comuns de Python que só **imitam, de forma previsível**, o que um passo de verdade faria (limpar, destacar, resumir). Você ainda **não chama o Claude** nesta aula: o objetivo é treinar a ideia de ligar um passo ao outro.",
+      "Cuidado com o erro mais comum: passar a **entrada original** em todos os passos, e não o resultado do anterior." ],
       termos: [["Cadeia", "passos ligados, em que a saída de um alimenta o próximo."], ["Função simulada", "função de Python que imita um passo, para treinar sem o Claude."]], fonte: FONTE_BOAS },
+    { tipo: "texto", titulo: "Ferramenta nova: guardar funções numa lista", blocos: [
+      "Em Python, uma função também é um valor: dá para guardá-la numa lista. `[limpar, grito]` é uma lista com duas funções. Repare que os nomes vêm **sem parênteses**: sem parênteses, o nome é a função em si (ela ainda não rodou); com parênteses, como em `limpar(\"  oi  \")`, ela roda.",
+      "Por isso o laço `for passo in [limpar, grito]:` pega uma função de cada vez, e `passo(resultado)` roda a função da vez com o resultado atual. É assim que a cadeia fica numa lista: a ordem da lista é a ordem dos passos." ],
+      termos: [["Função na lista", "guardar funções (sem parênteses) numa lista para rodá-las uma a uma, na ordem."]] },
     { tipo: "prever", texto: "Preveja a saída de cada cadeia.", conceito: "pa_cadeia", itens: [
       { codigo: `def limpar(t):
     return t.strip()
@@ -132,8 +139,8 @@ print(encadear([limpar, primeira_frase, maiusculas], "  Chegou rapido. Embalagem
   ],
   recuperacao: [
     { p: "O que é uma cadeia de prompts?", regex: "(saida);;(entrada|proximo|seguinte)", modelo: "Passos em que a saída de um é a entrada do próximo.", conceito: "pa_cadeia" },
-    { p: "Qual é o erro comum ao montar uma cadeia em código?", regex: "(entrada original|mesma entrada|original|reaproveit|nao usar o resultado|resultado anterior)", modelo: "Usar a entrada original em todos os passos, e não o resultado anterior.", conceito: "pa_cadeia" },
-    { p: "Como proteger dados pessoais numa cadeia?", regex: "(remov|troc|primeiro passo|limpar|anonim|fictici|so o necessario)", modelo: "Removendo ou trocando os dados pessoais no primeiro passo.", conceito: "pa_cadeia" },
+    { p: "Qual é o erro comum ao montar uma cadeia em código?", regex: "((entrada|texto|valor|dado)s? (original|inicial)|mesma entrada|sempre a entrada|reaproveit\\w* a entrada|nao (usar|usa|passar|passa|passam|aproveit\\w*|pass\\w+)( \\w+){0,3} (resultado|saida)|esquec\\w*( \\w+){0,4} (resultado|saida))", naoRegex: "(em vez|ao inves|no lugar) (da|de|a) (a )?entrada|resultado anterior em (cada|todos)", modelo: "Usar a entrada original em todos os passos, e não o resultado anterior.", conceito: "pa_cadeia" },
+    { p: "Como proteger dados pessoais numa cadeia?", regex: "(\\b(remov|troc|apag|delet|exclu|ocult|mascar|substitu|anonim|limp|retir)\\w*|\\btir(a|e|ar|ando)\\b|primeiro passo|fictici|so o necessario|so o que (precisa|for preciso)|minimo)", modelo: "Removendo ou trocando os dados pessoais no primeiro passo.", conceito: "pa_cadeia" },
   ],
 });
 
@@ -151,6 +158,12 @@ aulas.push({
       "**Instruções de sistema** (system prompt) são instruções que valem para a conversa toda, separadas do pedido de cada momento. Elas aparecem quando você usa o Claude por programas (a API). No claude.ai há algo parecido: as **instruções do projeto** orientam o tom e o papel em todos os chats do projeto, e as instruções da conta valem para todas as conversas. Onde ficam essas configurações muda com o tempo: confira na documentação oficial.",
       "Um bom papel é **curto e específico**, diz **o que fazer** e **o que evitar**, e não substitui o pedido: o pedido continua precisando de objetivo, contexto e formato." ],
       termos: [["Papel", "quem o Claude deve ser na tarefa, em uma frase."], ["Instrução de sistema", "regra que vale para a conversa toda, escrita à parte do pedido."], ["Instruções do projeto", "regras de um projeto no Claude, válidas para os chats dele."]], fonte: `${FONTE_BOAS} Sobre projetos e instruções da conta: support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects e support.claude.com/en/articles/10185728-understanding-claude-s-personalization-features.` },
+    { tipo: "texto", titulo: "Duas situações: IA como ferramenta e IA dentro da aplicação", blocos: [
+      "A IA aparece em duas situações diferentes, e vale não confundi-las.",
+      "**1) IA como ferramenta de desenvolvimento.** Você usa o Claude para ajudar a construir algo: pedir uma função, revisar um texto, testar um código. O que você entrega é um programa ou texto seu, e o Claude **não faz parte** dele quando ele roda. Exemplos: pedir uma função de desconto e testá-la antes de usar (a cadeia gerar, extrair e testar da aula 0082) ou usar o Claude Code, uma ferramenta de programação que lê o seu código, edita arquivos e roda comandos.",
+      "**2) IA dentro de uma aplicação.** O programa que você construiu **chama o Claude por programa** (a API) toda vez que roda. Exemplo: um sistema da loja que, a cada avaliação que chega, resume, classifica e responde (a cadeia da aula anterior, feita automaticamente). É aqui que as **instruções de sistema** ficam escritas no código, e as entradas vêm de outras pessoas.",
+      "Os dois casos pedem prompts bons, mas os cuidados mudam. Na situação 1, você confere o que o Claude entregou **antes de usar**. Na situação 2, o programa roda sem ninguém olhar cada resposta, então as proteções (tags, testes, revisão da saída) precisam estar **no próprio programa**." ],
+      termos: [["Ferramenta de desenvolvimento", "o Claude ajuda você a construir; ele não está dentro do que você entrega."], ["Dentro da aplicação", "o seu programa chama o Claude sozinho, enquanto roda."]], fonte: `${FONTE_BOAS} Sobre o Claude Code: code.claude.com/docs/en/overview.` },
     { tipo: "prever", texto: "Responda com uma palavra: **sistema** (vale sempre) ou **pedido** (vale só agora).", conceito: "pa_papeis", itens: [
       { pergunta: "“Você é revisor de textos de uma loja virtual e usa tom simpático.”", rotulo: "Item 1", resposta: ["sistema"], porque: "É papel e regra fixa, valem para todos os textos." },
       { pergunta: "“Revise este texto: ‘A entrega chego ontem’.”", rotulo: "Item 2", resposta: ["pedido"], porque: "É o trabalho do momento." },
@@ -166,9 +179,9 @@ aulas.push({
     { tipo: "fechar", pergunta: "Sem olhar acima: o que é um papel, o que são instruções de sistema e o que nunca colocar nelas?", conceito: "pa_papeis", modelo: "Papel é uma frase que diz quem o Claude deve ser na tarefa (foco e tom). Instruções de sistema são regras que valem para a conversa toda, separadas do pedido. **Nunca** coloque senhas, chaves ou dados pessoais nelas." },
   ],
   recuperacao: [
-    { p: "O que é dar um papel ao Claude?", regex: "(quem|papel|funcao|persona);;(ser|foco|tom|comportamento)", modelo: "Dizer quem ele deve ser na tarefa, o que foca o comportamento e o tom.", conceito: "pa_papeis" },
+    { p: "O que é dar um papel ao Claude?", regex: "(\\bquem\\b|funcao|persona|especialista|profissao|identidade|revisor|tutor);;(\\bser\\b|agir|atuar|atue|comportar|foco|\\btom\\b|\\bfala)", modelo: "Dizer quem ele deve ser na tarefa, o que foca o comportamento e o tom.", conceito: "pa_papeis" },
     { p: "O que diferencia instruções de sistema do pedido do momento?", regex: "(sempre|toda|permanent|fixa|conversa);;(sistema|regra|instruc)", modelo: "As instruções de sistema são regras que valem sempre; o pedido vale só para o momento.", conceito: "pa_papeis" },
-    { p: "O que nunca colocar nas instruções de um assistente?", regex: "(senha|chave|segredo|cartao|pessoais|sensiv)", modelo: "Senhas, chaves ou dados pessoais.", conceito: "pa_papeis" },
+    { p: "O que nunca colocar nas instruções de um assistente?", regex: "(senha|chave|segredo|cartao|pessoais|sensiv|credencia|\\btokens?\\b|\\bcpf|login|confidenc|privad)", modelo: "Senhas, chaves ou dados pessoais.", conceito: "pa_papeis" },
   ],
 });
 
@@ -224,7 +237,7 @@ print("[" + extrair("<nota>4</nota>", "nota") + "]")` },
   recuperacao: [
     { p: "Para que servem as tags XML no pedido?", regex: "(separ|marcar|dividir|organiz|delimit)", modelo: "Para separar instruções, contexto e dados.", conceito: "pa_xml" },
     { p: "Por que pedir a resposta dentro de uma tag?", regex: "(extrair|programa|codigo|pegar|automat)", modelo: "Para extrair só o trecho por código.", conceito: "pa_xml" },
-    { p: "As tags protegem totalmente contra instruções escondidas num texto colado?", regex: "(nao);;(garant|totalmente|protec|sozinh|so)", modelo: "Não, não garantem; é preciso revisar o resultado.", conceito: "pa_xml" },
+    { p: "As tags protegem totalmente contra instruções escondidas num texto colado?", regex: "(nao|nem);;(garant|totalmente|completa|integral|sozinh|\\bso\\b|suficien|cadeado)", naoRegex: "^\\s*sim\\b|nao precisa|dispensa|nao (e )?preciso", modelo: "Não, não garantem; é preciso revisar o resultado.", conceito: "pa_xml" },
   ],
 });
 
@@ -287,7 +300,7 @@ for r in respostas:
   recuperacao: [
     { p: "Por que pedir o raciocínio antes da resposta final?", regex: "(passo|erro|achar|verific|confer|etapa)", modelo: "Para achar erros nos passos antes da resposta final.", conceito: "pa_raciocinio" },
     { p: "Para que serve o try/except ao ler a resposta?", regex: "(erro|falh|quebr|nao parar|molde|formato|tratar)", modelo: "Para tratar o erro quando a resposta sai fora do molde, sem quebrar o programa.", conceito: "pa_raciocinio" },
-    { p: "Por que ainda conferir um resultado bem formatado?", regex: "(errad|certo|conferir|confir|correto|formato nao|errar)", modelo: "Porque o formato certo não garante que o conteúdo esteja certo.", conceito: "pa_raciocinio" },
+    { p: "A última linha veio no molde certo, por exemplo `NOTA: 4`. Dá para confiar no número sem olhar mais nada? Por quê?", regex: "(nao (garant|significa|quer dizer|e prova|prova|basta|e suficien)|nem sempre|pode (estar |ser |vir )?(errad|incorret|falso)|mesmo (assim|bem formatad|com o formato)|conteudo (pode|errado))", naoRegex: "^\\s*sim\\b", modelo: "Não: o formato certo não garante que o conteúdo esteja certo; o número pode estar errado.", conceito: "pa_raciocinio" },
   ],
 });
 
@@ -415,7 +428,7 @@ for prompt in contagem:
   ],
   recuperacao: [
     { p: "O que torna um critério de sucesso bom?", regex: "(mensur|medir|contar|especific|objetiv|numero)", modelo: "Ser específico e mensurável.", conceito: "pa_avaliar" },
-    { p: "Por que usar vários casos de teste e incluir casos de borda?", regex: "(varios|muitos|borda|dificil|sorte|um caso|incomum|falha)", modelo: "Um caso pode ser sorte; os de borda mostram onde o prompt falha.", conceito: "pa_avaliar" },
+    { p: "Por que não basta testar o prompt em uma única mensagem fácil?", regex: "(sorte|coincidenc|acaso|\\bvarios|\\bmuitos|\\bborda|dificil|incomum|esquisit|nao (mostra|representa|cobre|prova)|esconde|revela|onde (ele |o prompt )?falha)", modelo: "Um caso pode ser sorte; os de borda mostram onde o prompt falha.", conceito: "pa_avaliar" },
     { p: "Como montar casos de teste sem expor clientes reais?", regex: "(fictici|inventad|anonim|sem dados|imit)", modelo: "Criando casos fictícios ou anonimizados.", conceito: "pa_avaliar" },
   ],
 });
@@ -482,8 +495,8 @@ for linha in achadas:
   ],
   recuperacao: [
     { p: "O que é prompt injection?", regex: "(orden|ordem|instruc|comando);;(escond|texto|dado|colad|embutid)", modelo: "Ordens escondidas num texto que deveria ser só dado.", conceito: "pa_injecao" },
-    { p: "Cite duas defesas básicas contra instruções escondidas.", regex: "(separ|tag|limitar|confirmac|revis|menor poder|testar)", modelo: "Separar instruções e dados e pedir confirmação humana.", conceito: "pa_injecao" },
-    { p: "Por que um filtro de palavras não basta?", regex: "(reescrev|outras palavras|disfar|alerta|nao garant|mil jeitos|idioma|burlar)", modelo: "Porque o ataque pode ser reescrito de outras formas; o filtro é só um alerta.", conceito: "pa_injecao" },
+    { p: "Cite duas defesas básicas contra instruções escondidas.", regex: doisDe("separ|\\btags?\\b|delimit", "limit|menor poder|menos acesso|sem acesso|permiss|restring|\\bisol", "confirm|humana|aprov|autoriz", "revis|(conferir|ler|verificar|checar) (a |o )?(saida|resultado)", "\\btest|simul|ataque"), modelo: "Separar instruções e dados e pedir confirmação humana.", conceito: "pa_injecao" },
+    { p: "Por que um filtro de palavras não basta?", regex: "(reescrev|outr[ao]s? (palavra|jeito|forma|maneira|modo|idioma|lingua)|de outro (jeito|modo)|disfar|alerta|nao garant|mil jeitos|burl|contorn|dribl|sinonim|variac|escrever diferente|escrito diferente|diferent\\w+ (palavra|jeito|forma)|nao (pega|detecta|barra|cobre|impede) tudo)", modelo: "Porque o ataque pode ser reescrito de outras formas; o filtro é só um alerta.", conceito: "pa_injecao" },
   ],
 });
 
@@ -497,9 +510,15 @@ aulas.push({
     { tipo: "aquecimento", pergunta: "Se um Claude gerasse uma função de desconto para a sua loja, por que você não deveria colocá-la no ar sem testar? Que testes você faria?", modelo: "Porque o código gerado pode **errar** ou nem rodar. Faria testes com **casos normais e de borda** (preço 0, valores altos) e conferiria o resultado de cada um." },
     { tipo: "texto", titulo: "A cadeia completa", blocos: [
       "A cadeia do projeto tem quatro passos: **1) gerar**: um prompt pede a função (com objetivo, formato e restrições, como as aulas anteriores); **2) extrair**: o código vem dentro de uma tag, e o programa o separa do resto; **3) testar**: o programa roda o código com **casos de teste**, tratando erros com `try/except`; **4) relatar**: mostra quantos casos cada versão passou.",
+      "Na aula 0077 vimos duas situações. Esta cadeia (gerar, extrair, testar) é a **situação 1: IA como ferramenta de desenvolvimento**. O Claude ajuda a construir a função, e o que vai para a loja é a função **já testada**, sem o Claude dentro dela. Já a cadeia da aula 0076 (resumir, classificar, responder), quando um programa a executa sozinho a cada mensagem que chega, seria a situação 2: IA dentro da aplicação.",
       "O Claude pode gerar código errado, ou nem sintaticamente correto. Por isso o passo de testar conta **erro como falha** e não deixa o programa quebrar. Nunca rode código desconhecido sem revisar: aqui as versões são **textos fictícios** escritos para a aula.",
+      "Repare que o teste usa `except Exception`, e não um erro específico como na aula 0048 (capturar só o erro esperado). A razão: o código **vem de fora** e pode falhar de qualquer jeito (erro de sintaxe, nome inexistente, divisão por zero), e não dá para prever o tipo. A regra de **não esconder erros** continua valendo: cada erro é **registrado** (guardamos o tipo) e aparece no relatório, em vez de sumir em silêncio.",
       "Se uma versão falha, o passo seguinte da cadeia pode ser **pedir a correção** informando os casos que falharam (cadeia com revisão). Depois, teste de novo." ],
       termos: [["exec", "função do Python que executa um texto como código. Use só com código que você leu e confia."], ["Versão", "cada resposta gerada para a mesma função."]], fonte: FONTE_BOAS },
+    { tipo: "texto", titulo: "Ferramenta nova: `except Exception as e`", blocos: [
+      "Com `except Exception as e:` o programa captura qualquer erro comum e guarda o erro na variável `e`. Para registrar **que tipo** de erro foi, use `type(e).__name__`: ele dá o nome do tipo, como `ZeroDivisionError` ou `SyntaxError`. Assim o erro não some: você guarda o nome numa lista e mostra no relatório.",
+      "Outra novidade: uma função pode devolver **três valores** de uma vez (`return acertos, total, erros`), e quem chama separa os três (`acertos, total, erros = testar(...)`)." ],
+      termos: [["`as e`", "dá o nome `e` ao erro capturado, para você poder usá-lo."], ["`type(e).__name__`", "o nome do tipo do erro, como um texto."]] },
     { tipo: "prever", texto: "Preveja a saída.", conceito: "pa_projeto", itens: [
       { codigo: `codigo = "def dobro(n):\\n    return n * 2"
 escopo = {}
@@ -516,10 +535,14 @@ acertos = 0
 for entrada, esperado in casos:
     if entrada * 2 == esperado:
         acertos = acertos + 1
-print(acertos, "de", len(casos))`, resposta: "2 de 3", pergunta: "O que aparece?", porque: "Os dois primeiros casos batem; o terceiro (5 vezes 2 é 10, não 11) falha." }] },
+print(acertos, "de", len(casos))`, resposta: "2 de 3", pergunta: "O que aparece?", porque: "Os dois primeiros casos batem; o terceiro (5 vezes 2 é 10, não 11) falha." },
+      { codigo: `try:
+    exec("x = 1 / 0", {})
+except Exception as e:
+    print("erro:", type(e).__name__)`, resposta: "erro: ZeroDivisionError", pergunta: "O que aparece?", porque: "Dividir por zero dá `ZeroDivisionError`; o `except` o captura e `type(e).__name__` mostra o nome do tipo." }] },
     { tipo: "descobrir", texto: "Resultado de uma cadeia com 3 versões geradas de `desconto(preco)` (regra: 10% de desconto) e 3 casos.", tabela: { cab: ["Versão", "Caso 100 → 90", "Caso 200 → 180", "Caso 0 → 0", "Placar"], linhas: [["v1: preco * 0.9", "ok", "ok", "ok", "3 de 3"], ["v2: preco - 10", "ok", "falha", "falha", "1 de 3"], ["v3: erro de sintaxe", "falha", "falha", "falha", "0 de 3"]] }, dicas: ["A v2 passa em um caso. Esse caso sozinho aprovaria o código?", "Por que a v3 conta como falha em todos?"],
       pergunta: "O que a v2 ensina sobre testar com poucos casos? Como a v3 deve ser tratada pelo programa?", explicacao: "A v2 passa no caso 100 **por coincidência** (100 − 10 = 100 × 0,9). **Vários casos** revelam o erro. A v3 nem roda: o programa deve **capturar o erro** e contar falha, em vez de parar.", conceito: "pa_projeto" },
-    { tipo: "escrever", titulo: "Exercício final (a dica é opcional)", final: true, minutos: 15, texto: "A função `extrair` já está pronta. Escreva `testar(codigo, casos)`: executa o `codigo` (que define `desconto`), chama `desconto(entrada)` para cada `(entrada, esperado)` e devolve `(acertos, total)`. Resultado que difere de `esperado` por 0.01 ou mais, ou qualquer erro (inclusive ao executar o código), conta como falha. Depois o relatório mostra `nome acertos de total` para cada versão.", arquivo: "cadeia_final.py", dica: "Faça `acertos = 0` e `escopo = {}`. Num `try:`, rode `exec(codigo, escopo)`; no `except Exception:`, devolva `(0, len(casos))`. Depois percorra `casos`, e para cada um use outro `try/except` para chamar `escopo[\"desconto\"](entrada)` e comparar com `abs(r - esperado) < 0.01`.", conceito: ["pa_projeto", "pa_cadeia", "pa_avaliar"],
+    { tipo: "escrever", titulo: "Exercício final (a dica é opcional)", final: true, minutos: 15, texto: "A função `extrair` já está pronta. Escreva `testar(codigo, casos)`: executa o `codigo` (que define `desconto`), chama `desconto(entrada)` para cada `(entrada, esperado)` e devolve três valores: `(acertos, total, erros)`. `acertos` é quantos casos bateram, `total` é quantos casos existem e `erros` é a lista com o **tipo** de cada erro que ocorreu (por exemplo `'SyntaxError'`), ou `[]` se nenhum. Resultado que difere de `esperado` por 0.01 ou mais, ou qualquer erro (inclusive ao executar o código), conta como falha; se o código nem roda, devolva `(0, total, [tipo do erro])`. Depois o relatório mostra `nome acertos de total` e, para cada erro, `erro em nome: tipo`. Entregue a função `testar` completa: os dados e o relatório já estão no código.", arquivo: "cadeia_final.py", dica: "Faça `acertos = 0`, `erros = []` e `escopo = {}`. Num `try:`, rode `exec(codigo, escopo)`; no `except Exception as e:`, guarde `type(e).__name__` em `erros` e devolva `(0, len(casos), erros)`. Depois percorra `casos`, e para cada um use outro `try/except Exception as e` para chamar `escopo[\"desconto\"](entrada)`, comparar com `abs(r - esperado) < 0.01` e, se der erro, guardar o tipo em `erros`.", conceito: ["pa_projeto", "pa_cadeia", "pa_avaliar"],
       inicial: `def extrair(texto, tag):
     abre = "<" + tag + ">"
     fecha = "</" + tag + ">"
@@ -528,8 +551,8 @@ print(acertos, "de", len(casos))`, resposta: "2 de 3", pergunta: "O que aparece?
     return texto.split(abre)[1].split(fecha)[0]
 
 def testar(codigo, casos):
-    # rode o código e conte os acertos; erros contam como falha
-    return 0, len(casos)
+    # rode o código e conte os acertos; todo erro conta como falha E é registrado em erros
+    return 0, len(casos), []
 
 casos = [(100, 90.0), (200, 180.0), (0, 0.0)]
 respostas = {
@@ -538,9 +561,16 @@ respostas = {
     "v3": "<codigo>\\ndef desconto(preco)\\n    return preco\\n</codigo>",
 }
 for nome, texto in respostas.items():
-    acertos, total = testar(extrair(texto, "codigo"), casos)
-    print(nome, acertos, "de", total)`,
-      esperado: ["v1 3 de 3", "v2 1 de 3", "v3 0 de 3"],
+    acertos, total, erros = testar(extrair(texto, "codigo"), casos)
+    print(nome, acertos, "de", total)
+    for tipo in erros:
+        print("erro em", nome + ":", tipo)`,
+      esperado: ["v1 3 de 3", "v2 1 de 3", "v3 0 de 3", "erro em v3: SyntaxError"],
+      testes: [
+        ["testar('def desconto(p):\\n    return p - 10', [(100, 90.0), (200, 180.0)])", "(1, 2, [])"],
+        ["testar('def desconto(p)\\n    return p', [(1, 1.0)])", "(0, 1, ['SyntaxError'])"],
+        ["testar('def desconto(p):\\n    return p / 0', [(1, 1.0), (2, 2.0)])", "(0, 2, ['ZeroDivisionError', 'ZeroDivisionError'])"],
+        ["testar('x = 1', [(1, 1.0)])", "(0, 1, ['KeyError'])"]],
       solucao: `def extrair(texto, tag):
     abre = "<" + tag + ">"
     fecha = "</" + tag + ">"
@@ -550,19 +580,21 @@ for nome, texto in respostas.items():
 
 def testar(codigo, casos):
     acertos = 0
+    erros = []
     escopo = {}
     try:
         exec(codigo, escopo)
-    except Exception:
-        return 0, len(casos)
+    except Exception as e:
+        erros.append(type(e).__name__)
+        return 0, len(casos), erros
     for entrada, esperado in casos:
         try:
             r = escopo["desconto"](entrada)
             if abs(r - esperado) < 0.01:
                 acertos = acertos + 1
-        except Exception:
-            pass
-    return acertos, len(casos)
+        except Exception as e:
+            erros.append(type(e).__name__)
+    return acertos, len(casos), erros
 
 casos = [(100, 90.0), (200, 180.0), (0, 0.0)]
 respostas = {
@@ -571,20 +603,22 @@ respostas = {
     "v3": "<codigo>\\ndef desconto(preco)\\n    return preco\\n</codigo>",
 }
 for nome, texto in respostas.items():
-    acertos, total = testar(extrair(texto, "codigo"), casos)
-    print(nome, acertos, "de", total)` },
+    acertos, total, erros = testar(extrair(texto, "codigo"), casos)
+    print(nome, acertos, "de", total)
+    for tipo in erros:
+        print("erro em", nome + ":", tipo)` },
     { tipo: "aberta", titulo: "Problema novo: outra função", transfer: true, minutos: 10, texto: "Outro contexto, a mesma cadeia. Função: `frete(peso_kg)`, que devolve 15.0 até 1 kg e soma 5.0 por kg adicional (arredondado para cima).", pergunta: "Descreva os 4 passos da cadeia (gerar, extrair, testar, relatar): escreva o prompt do passo 1, liste 4 casos de teste (um de borda) com a resposta esperada e diga o que fazer se uma versão falhar.", minimo: 120, conceito: ["pa_projeto", "pa_cadeia", "pa_avaliar"], modelo: "Passo 1: “Escreva a função Python `frete(peso_kg)`: 15.0 até 1 kg e mais 5.0 por kg adicional (arredonde para cima). Responda só com o código dentro de <codigo>.” Casos: (0.5 → 15.0), (1 → 15.0), (2 → 20.0), **borda**: (1.2 → 20.0). Passo 2: extrair o trecho da tag. Passo 3: rodar com `try/except` e contar acertos. Passo 4: mostrar `versão acertos de total`. Se falhar: enviar o código e os casos que falharam, pedir a correção e testar de novo, **revisando** o código antes de usar." },
     { tipo: "aberta", tag: "sec", titulo: "Rodar código desconhecido", texto: "Alguém recebe uma função de um chat ou de um fórum e usa `exec` para rodá-la no computador onde ficam as senhas e os arquivos da loja, sem ler.", pergunta: "Qual é o risco? Que cuidados tomar?", modelo: "O código pode **apagar arquivos, enviar dados ou instalar coisas**. **Leia antes**, rode em ambiente isolado e **sem acesso** a segredos, e só use código de fonte confiável. O Claude também pode gerar código errado ou inseguro: teste e revise." },
     { tipo: "quiz", itens: [
       { pergunta: "Qual é a ordem da cadeia do projeto?", opcoes: ["Gerar, extrair, testar, relatar", "Testar, gerar, relatar, extrair", "Relatar, testar, gerar, extrair", "Extrair, relatar, gerar, testar"], correta: 0, porque: "Primeiro se gera, depois se extrai o código, testa e relata.", conceito: "pa_projeto" },
       { pergunta: "Como o passo de teste trata um código que dá erro?", opcoes: ["Para o programa", "Conta como falha", "Apaga o caso", "Muda o esperado"], correta: 1, porque: "Com try/except, o erro vira falha, sem quebrar o programa.", conceito: "pa_projeto" },
       { pergunta: "Por que testar com vários casos?", opcoes: ["Para ter mais código pronto", "Para demorar um pouco mais", "Para evitar acerto por sorte", "Para trocar a função gerada"], correta: 2, porque: "Um caso pode passar por coincidência; vários revelam o erro.", conceito: "pa_projeto" }] },
-    { tipo: "fechar", pergunta: "Sem olhar acima: descreva a cadeia que gera e testa uma função e como ela trata os erros.", conceito: "pa_projeto", modelo: "**Gerar** (prompt claro com formato), **extrair** o código da tag, **testar** com vários casos (inclusive de borda), contando erro como falha com `try/except`, e **relatar** o placar de cada versão. Código desconhecido deve ser revisado antes de rodar." },
+    { tipo: "fechar", pergunta: "Sem olhar acima: descreva a cadeia que gera e testa uma função e como ela trata os erros.", conceito: "pa_projeto", modelo: "**Gerar** (prompt claro com formato), **extrair** o código da tag, **testar** com vários casos (inclusive de borda), contando erro como falha com `try/except` (e registrando o tipo do erro), e **relatar** o placar de cada versão. Código desconhecido deve ser revisado antes de rodar." },
   ],
   recuperacao: [
-    { p: "Quais são os passos da cadeia do projeto?", regex: "(gerar);;(extrair);;(testar)", modelo: "Gerar, extrair o código, testar e relatar.", conceito: "pa_projeto" },
-    { p: "Como o teste trata um código que dá erro?", regex: "(falha);;(try|except|erro|captur)", modelo: "O erro é capturado com try/except e contado como falha.", conceito: "pa_projeto" },
-    { p: "Que cuidado ter antes de rodar código gerado ou vindo de fora?", regex: "(ler|revis|isolad|confiav|seguro|teste|cuidado)", modelo: "Ler e revisar antes, e rodar em ambiente isolado.", conceito: "pa_projeto" },
+    { p: "Quais são os passos da cadeia do projeto?", regex: "\\b(ger|pedi|solicit|cri|escrev|produz|prompt);;\\b(extra|separ|isol|peg|tir|recort);;\\b(test|rod|execut|confer|valid|verific)", modelo: "Gerar, extrair o código, testar e relatar.", conceito: "pa_projeto" },
+    { p: "Como o teste trata um código que dá erro?", regex: "(falha);;(nao (para|quebra|interrompe|trava|encerra)|sem (parar|quebrar|travar|interromper)|continua|segue|captur|try|except)", naoRegex: "\\bprograma (para|quebra|trava|interrompe|encerra)\\b", modelo: "O erro é capturado com try/except, contado como falha e registrado, sem parar o programa.", conceito: "pa_projeto" },
+    { p: "Que cuidado ter antes de rodar código gerado ou vindo de fora?", regex: "(\\bler\\b|\\bleia\\b|\\blendo\\b|revis|isolad|isolar|sandbox|sem acesso|(fonte|origem) confiavel|desconhecid)", modelo: "Ler e revisar antes, e rodar em ambiente isolado.", conceito: "pa_projeto" },
   ],
 });
 

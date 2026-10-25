@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 11 · Vibe coding com responsabilidade · Aula 6</div>
   <h1>Tratar erros em vez de escondê-los</h1>
   <p>Linhas defeituosas existem em todo log. try/except evita que o programa pare, mas só ajuda se o erro for contado e mostrado.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 40 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Usar <code>try</code> e <code>except</code> para uma linha malformada.</li>
@@ -353,13 +353,16 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <section class="card">
   <h2><span class="num">1</span>try, except, finally e raise <span class="mins">4 min</span></h2>
   <p>Dentro de <code>try:</code> fica o código que pode falhar. Se falhar, o Python pula para o <code>except</code> do <b>tipo de erro</b> que você escolheu. Escolher o tipo é importante: <code>except ValueError:</code> trata só o que você espera.</p>
-  <p>O <code>finally:</code> roda <b>sempre</b>, com ou sem erro (útil para fechar ou avisar). O <code>raise</code> faz o contrário: <b>provoca</b> um erro de propósito, para que um dado inválido não passe despercebido.</p>
+  <p>Para ver <b>qual</b> foi o erro, escreva <code>except ValueError as e:</code>. O <code>as e</code> guarda o erro numa variável chamada <code>e</code> (o nome é livre), e <code>print(e)</code> mostra a mensagem dele. Se o erro veio de um <code>raise ValueError("negativo")</code>, a mensagem é o texto que você passou: <code>negativo</code>.</p>
+  <p>O <code>raise</code> <b>provoca</b> um erro de propósito, para que um dado inválido não passe despercebido. Já um erro que ninguém captura sobe sozinho e para o programa: não precisa de <code>raise</code> para isso. Dentro de um <code>except</code>, um <code>raise</code> sozinho <b>relança</b> o mesmo erro, por exemplo depois de você registrá-lo.</p>
+  <p>O <code>finally:</code> roda <b>sempre</b>, com ou sem erro. Serve para o que precisa acontecer de qualquer jeito, como fechar um arquivo ou anotar que a tentativa terminou. Nesta aula ele é só apresentado: o centro é o <code>try</code>/<code>except</code>.</p>
   <p>Dois jeitos ruins: <code>except:</code> sem tipo, que captura até erros que você nem imaginava; e <code>except ...: pass</code>, que <b>esconde</b> o erro. Quando uma IA gera um <code>pass</code> dentro de um <code>except</code>, leia com desconfiança.</p>
   <div class="callout term"><span class="tag">Palavras novas</span>
     <dl>
       <dt>try / except</dt><dd>tenta rodar um bloco e, se der o erro indicado, roda outro bloco em vez de parar.</dd>
+      <dt>as e</dt><dd>guarda o erro capturado na variável <code>e</code>, para você mostrar ou registrar a mensagem.</dd>
       <dt>finally</dt><dd>bloco que roda sempre no final, houve erro ou não.</dd>
-      <dt>raise</dt><dd>provoca um erro de propósito, como <code>raise ValueError("valor negativo")</code>.</dd>
+      <dt>raise</dt><dd>provoca um erro de propósito, como <code>raise ValueError("valor negativo")</code>; sozinho dentro de um <code>except</code>, relança o erro capturado.</dd>
     </dl>
   </div>
 </section>
@@ -369,7 +372,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <h2><span class="num">2</span>Veja funcionando <span class="mins">3 min</span></h2>
   <p>Uma função que converte texto em valor e trata o erro em vez de parar.</p>
   <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>ler_valor.py</span></div>
-<pre class="annot" data-key="k2"><span class="ln" data-note="Recebe um texto como &quot;59.90&quot;.">def ler_valor(texto):</span><span class="ln" data-note="Tenta converter.">    try:</span><span class="ln" data-note="Converte para número decimal.">        return float(texto)</span><span class="ln" data-note="Se o texto não for um número (por exemplo, &quot;abc&quot;), cai aqui.">    except ValueError:</span><span class="ln" data-note="Avisa em vez de esconder.">        print("valor inválido:", texto)</span><span class="ln" data-note="Devolve um valor neutro e o programa segue.">        return 0.0</span><span class="ln" data-note="Este bloco roda nos dois casos.">    finally:</span><span class="ln" data-note="Um aviso de que o texto foi conferido, deu certo ou não.">        print("conferido:", texto)</span><span class="ln" data-note="Caminho feliz.">print(ler_valor("59.90"))</span><span class="ln" data-note="Caminho com erro: o programa não para.">print(ler_valor("abc"))</span></pre>
+<pre class="annot" data-key="k2"><span class="ln" data-note="Recebe um texto como &quot;59.90&quot;.">def ler_valor(texto):</span><span class="ln" data-note="Tenta converter.">    try:</span><span class="ln" data-note="Converte para número decimal.">        return float(texto)</span><span class="ln" data-note="Se o texto não for um número (por exemplo, &quot;abc&quot;), cai aqui. O &lt;code&gt;as e&lt;/code&gt; guarda o erro na variável &lt;code&gt;e&lt;/code&gt;.">    except ValueError as e:</span><span class="ln" data-note="Avisa em vez de esconder, mostrando a mensagem do próprio Python.">        print("valor inválido:", e)</span><span class="ln" data-note="Devolve um valor neutro e o programa segue.">        return 0.0</span><span class="ln" data-note="Este bloco roda nos dois casos.">    finally:</span><span class="ln" data-note="Roda com ou sem erro. Num programa real, é onde se fecharia um arquivo; aqui só avisa que a tentativa acabou.">        print("tentativa terminou:", texto)</span><span class="ln" data-note="Caminho feliz.">print(ler_valor("59.90"))</span><span class="ln" data-note="Caminho com erro: o programa não para.">print(ler_valor("abc"))</span></pre>
     <div class="annot-note"><em>Clique numa linha acima.</em></div>
   </div>
 </section>
@@ -523,7 +526,7 @@ print("Soma:", total)</textarea></div>
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar e comparar</button>
     <div class="fb"></div>
-    <div class="callout model"><span class="tag">Para comparar</span>O cliente acha que pagou, e <b>ninguém fica sabendo</b> da falha. O <code>except</code> deveria <b>registrar</b> o erro (tipo, pedido e horário, sem dados do cartão), <b>avisar</b> o cliente e permitir <b>tentar de novo</b>. Erros que o programa não sabe tratar devem <b>subir</b> com <code>raise</code>.</div>
+    <div class="callout model"><span class="tag">Para comparar</span>O cliente acha que pagou, e <b>ninguém fica sabendo</b> da falha. O <code>except</code> deveria <b>registrar</b> o erro (tipo, pedido e horário, sem dados do cartão), <b>avisar</b> o cliente e permitir <b>tentar de novo</b>. Se o programa não sabe resolver o erro, ele não deve ser engolido: depois de registrá-lo, dá para <b>relançá-lo</b> com <code>raise</code>, e o erro sobe em vez de sumir.</div>
   </div>
 </section>
 
@@ -565,9 +568,9 @@ print("Soma:", total)</textarea></div>
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar</button>
     <div class="fb"></div>
-    <div class="callout model"><span class="tag">Resposta de referência</span><b>Tratar</b> é pegar o erro esperado (<code>except ValueError</code>), <b>contar ou registrar</b> e seguir. <b>Esconder</b> é um <code>pass</code> que faz o problema sumir sem aviso. Erros inesperados ou graves devem subir com <code>raise</code>.</div>
+    <div class="callout model"><span class="tag">Resposta de referência</span><b>Tratar</b> é pegar o erro esperado (<code>except ValueError</code>), <b>contar ou registrar</b> e seguir. <b>Esconder</b> é um <code>pass</code> que faz o problema sumir sem aviso. Um erro que ninguém captura sobe sozinho e para o programa; o <code>raise</code> serve para <b>provocar</b> um erro de propósito ou <b>relançar</b> o que foi capturado, nunca para esconder.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Para que serve o try/except? (2) Por que um <code>except</code> com <code>pass</code> é perigoso? (3) O que o <code>raise</code> faz? <a href="recuperacao-0088.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Tratar erros em vez de escondê-los”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0088.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -763,7 +766,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -955,7 +958,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -1036,13 +1050,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1295,7 +1303,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

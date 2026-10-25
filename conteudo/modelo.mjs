@@ -8,6 +8,12 @@ export const idModulo = (n) => "m" + pad2(n);
 
 const TITULOS = { aquecimento: "Aquecimento", exemplo: "Veja funcionando", texto: "A ideia", executar: "Rode você mesmo", prever: "Preveja antes de rodar", descobrir: "Descubra o padrão", corrigir: "Conserte o erro", escrever: "Escreva o seu", aberta: "Pense e responda", quiz: "Quiz final", fechar: "Para fechar" };
 
+// Tempo estimado de cada seção (minutos): o valor de `minutos` da seção, ou o padrão do tipo. É a mesma conta que mostra o "N min" de cada cartão.
+const MIN_PADRAO = { aquecimento: 3, texto: 4, exemplo: 3, executar: 4, prever: 4, descobrir: 5, corrigir: 4, escrever: 5, aberta: 3, quiz: 3, fechar: 2 };
+export const minutosSecao = (s) => s.minutos ?? MIN_PADRAO[s.tipo];
+// Tempo anunciado da aula: a soma dos tempos das seções, arredondada para o múltiplo de 5 mais próximo (é uma estimativa, não uma medição).
+export const minutosAula = (a) => Math.max(5, Math.round(a.secoes.reduce((t, s) => t + minutosSecao(s), 0) / 5) * 5);
+
 export function renderAula(a, ctx) {
   const { modulo, anterior, proxima } = ctx, mid = idModulo(a.modulo);
   let ks = 0, num = 0;
@@ -92,13 +98,13 @@ ${aberta({ pergunta: s.pergunta, minimo: s.minimo || 15, conceito: s.conceito, d
     aberta: (s) => aberta(s),
     quiz: (s) => `  <p>${inline(s.texto || "Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.")}</p>\n${s.itens.map(mcq).join("\n")}`,
     fechar: (s) => `${aberta({ ...s, minimo: s.minimo || 25, botao: "Registrar", rotuloModelo: "Resposta de referência" })}
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> ${a.recuperacao.map((q, i) => `(${i + 1}) ${inline(q.p)}`).join(" ")} <a href="recuperacao-${a.id}.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>`,
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> ${a.recuperacao.length} perguntas de memória sobre “${inline(a.titulo)}”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-${a.id}.html">recuperação</a> (2 de 3 libera a próxima aula).</div>`,
   };
 
   const cards = a.secoes.map((s) => {
     if (!R[s.tipo]) throw new Error(`aula ${a.id}: tipo de seção desconhecido: ${s.tipo}`);
     const n = s.tipo === "aquecimento" ? 0 : ++num;
-    const min = s.minutos ?? { aquecimento: 3, texto: 4, exemplo: 3, executar: 4, prever: 4, descobrir: 5, corrigir: 4, escrever: 5, aberta: 3, quiz: 3, fechar: 2 }[s.tipo];
+    const min = minutosSecao(s);
     return `<!-- ${n} -->
 <section class="card">
   <h2><span class="num">${n}</span>${inline(s.titulo || TITULOS[s.tipo])} <span class="mins">${min} min</span></h2>
@@ -122,7 +128,7 @@ ${R[s.tipo](s)}
   <div class="crumb">Módulo ${a.modulo} · ${esc(modulo.titulo)} · Aula ${a.n}</div>
   <h1>${inline(a.titulo)}</h1>
   <p>${inline(a.resumo)}</p>
-  <div class="chips"><span class="chip">${a.minutos || 25} minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de ${minutosAula(a)} minutos</span>${(a.selos || ["Sem instalar nada", "Você faz, o programa responde"]).map((t) => `<span class="chip">${inline(t)}</span>`).join("")}</div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
 ${a.objetivos.map((o) => `      <li>${inline(o)}</li>`).join("\n")}

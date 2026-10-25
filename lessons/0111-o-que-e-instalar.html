@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 15 · Claude Code · Aula 1</div>
   <h1>Claude Code: o que é, como instalar e iniciar</h1>
   <p>Um assistente que trabalha dentro da sua pasta: lê arquivos, edita e roda comandos. Hoje você aprende a instalar, conferir e abrir a primeira sessão com segurança.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 35 minutos</span><span class="chip">Você vai instalar uma ferramenta</span><span class="chip">Usa o terminal do computador</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Explicar o que o Claude Code faz que um chat comum não faz.</li>
@@ -368,17 +368,34 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 2 -->
 <section class="card">
-  <h2><span class="num">2</span>Instalar, conferir e iniciar <span class="mins">4 min</span></h2>
-  <p>A instalação recomendada é a <b>nativa</b>: ela se atualiza sozinha em segundo plano. O comando muda conforme o terminal em que você está. <b>Copie sempre da página oficial no dia</b>, porque comandos e requisitos mudam.</p>
-  <p>Depois de instalar, <b>abra um terminal novo</b> e rode <code>claude --version</code>. Se algo estranho aparecer, <code>claude doctor</code> mostra um diagnóstico da instalação.</p>
-  <p>Para iniciar: entre na pasta (<code>cd nome-da-pasta</code>) e digite <code>claude</code>. No primeiro uso ele pede login, que acontece no navegador. Numa pasta nova aparece também um <b>diálogo de confiança</b> do workspace: leia antes de aceitar.</p>
+  <h2><span class="num">2</span>Terminal em 5 minutos <span class="mins">4 min</span></h2>
+  <p>Tudo nesta aula (e no módulo) acontece no <b>terminal</b>: uma janela onde você digita um comando e aperta Enter. Como abrir: no <b>Windows</b>, aperte a tecla Windows, digite <code>PowerShell</code> e Enter; no <b>macOS</b>, Cmd+Espaço, digite <code>Terminal</code> e Enter; no <b>Linux</b>, procure “Terminal” no menu de aplicativos (em muitas distribuições, Ctrl+Alt+T).</p>
+  <p>O terminal sempre está <b>dentro de uma pasta</b>. Quatro comandos bastam por enquanto: <code>pwd</code> mostra em que pasta você está (no CMD do Windows, digite só <code>cd</code>); <code>mkdir loja-teste</code> <b>cria</b> uma pasta com esse nome; <code>cd loja-teste</code> <b>entra</b> nela; <code>cd ..</code> <b>volta</b> uma pasta. Treine agora: crie <code>loja-teste</code>, entre nela e rode <code>pwd</code> para ver o caminho terminar em <code>loja-teste</code>.</p>
+  <p>Dois cuidados: o terminal <b>só obedece o que você digita</b>, então copie comandos de fontes que você confia; e, se um comando não for encontrado, a primeira coisa a tentar é <b>fechar o terminal e abrir um novo</b> (veja o PATH abaixo).</p>
+  <div class="callout term"><span class="tag">Palavras novas</span>
+    <dl>
+      <dt>PATH</dt><dd>a lista de pastas onde o terminal procura programas. Um programa recém-instalado só entra nessa lista nos terminais abertos <b>depois</b> da instalação: por isso “terminal novo = PATH atualizado”.</dd>
+      <dt>WSL</dt><dd>um Linux que roda dentro do Windows; só use se você já o tem. Quem não usa WSL segue o caminho do PowerShell.</dd>
+      <dt>npm</dt><dd>o instalador de pacotes do Node.js (outra ferramenta); aparece aqui só como alternativa.</dd>
+      <dt>Script</dt><dd>um arquivo de comandos que o computador executa em sequência.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="card">
+  <h2><span class="num">3</span>Instalar, conferir e iniciar <span class="mins">4 min</span></h2>
+  <p><b>Siga só UMA instalação, a recomendada:</b> a <b>nativa</b> (ela se atualiza sozinha em segundo plano). Use a linha de <code>curl ... | bash</code> se estiver no macOS, Linux ou WSL, e a de <code>irm ... | iex</code> se estiver no Windows PowerShell. A linha do CMD só se você usa o CMD. Homebrew, WinGet e npm são <b>alternativas opcionais</b>; ignore-as se a nativa funcionou. <b>Copie sempre da página oficial no dia</b>, porque comandos e requisitos mudam.</p>
+  <p><b>Cuidado com o que esses comandos fazem:</b> <code>curl ... | bash</code> e <code>irm ... | iex</code> <b>baixam um script da internet e o executam na hora no seu computador</b>. Por isso só se faz isso com o endereço <b>oficial</b>, conferido na página de instalação do Claude Code (<code>claude.ai/install.sh</code> ou <code>claude.ai/install.ps1</code>). Nunca rode uma linha parecida que veio de um fórum, mensagem ou site desconhecido.</p>
+  <p>Depois de instalar, <b>abra um terminal novo</b> e rode <code>claude --version</code>. Se aparecer algo como <code>claude: comando não encontrado</code> (a frase muda conforme o terminal), o programa foi instalado mas o terminal aberto antes não o conhece: feche-o, abra <b>outro</b> e tente de novo. Se ainda falhar, <code>claude doctor</code> mostra um diagnóstico da instalação.</p>
+  <p>Para iniciar: entre na pasta (<code>cd nome-da-pasta</code>, como treinado acima) e digite <code>claude</code>. No primeiro uso ele pede login, que acontece no navegador. Numa pasta nova aparece também um <b>diálogo de confiança</b> do workspace: leia antes de aceitar.</p>
   <p>Atenção no Windows: se o comando do CMD der erro de <code>&amp;&amp;</code>, você está no PowerShell; se o do PowerShell der erro de <code>irm</code>, você está no CMD. O Windows roda o Claude Code nativamente ou no WSL, sem precisar de Administrador. O Git for Windows é opcional (recomendado): com ele o Claude Code usa o Git Bash; sem ele, usa o PowerShell.</p>
   <table>
     <tr><th>Onde você está</th><th>Comando da página oficial (confira lá)</th></tr>
-    <tr><td>macOS, Linux ou WSL</td><td><code>curl -fsSL https://claude.ai/install.sh | bash</code></td></tr>
-    <tr><td>Windows PowerShell</td><td><code>irm https://claude.ai/install.ps1 | iex</code></td></tr>
-    <tr><td>Windows CMD</td><td><code>curl -fsSL https://claude.ai/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</code></td></tr>
-    <tr><td>Alternativas</td><td>Homebrew: <code>brew install --cask claude-code</code>; WinGet: <code>winget install Anthropic.ClaudeCode</code>; npm: <code>npm install -g @anthropic-ai/claude-code</code> (exige Node.js 22 ou superior)</td></tr>
+    <tr><td>macOS, Linux ou WSL (siga esta)</td><td><code>curl -fsSL https://claude.ai/install.sh | bash</code></td></tr>
+    <tr><td>Windows PowerShell (siga esta)</td><td><code>irm https://claude.ai/install.ps1 | iex</code></td></tr>
+    <tr><td>Windows CMD (só se você usa o CMD)</td><td><code>curl -fsSL https://claude.ai/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</code></td></tr>
+    <tr><td>Alternativas (opcionais, pule se a nativa funcionou)</td><td>Homebrew: <code>brew install --cask claude-code</code>; WinGet: <code>winget install Anthropic.ClaudeCode</code>; npm: <code>npm install -g @anthropic-ai/claude-code</code> (exige Node.js 22 ou superior)</td></tr>
   </table>
   <div class="callout term"><span class="tag">Palavras novas</span>
     <dl>
@@ -389,21 +406,21 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <p class="fonte">Fonte: https://code.claude.com/docs/en/setup · https://code.claude.com/docs/en/quickstart. Ferramentas mudam: reconfira na documentação oficial.</p>
 </section>
 
-<!-- 3 -->
+<!-- 4 -->
 <section class="card">
-  <h2><span class="num">3</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
+  <h2><span class="num">4</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
   <p>Responda com o comando, uma palavra ou número.</p>
   <div class="quest" data-key="k2" data-concept="cc_instalar" data-level="exec" data-ok="Tudo certo. Você aplicou a regra em casos novos.">
     <div class="pred"><span>Qual comando confere a versão instalada (num terminal novo)?</span><input class="q" data-answer="claude --version" data-label="Item 1" data-why="&lt;code&gt;claude --version&lt;/code&gt; mostra a versão; &lt;code&gt;claude doctor&lt;/code&gt; faz um diagnóstico." placeholder="comando completo" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
     <div class="pred"><span>O plano gratuito do claude.ai inclui o Claude Code? (sim ou não)</span><input class="q" data-answer="não|nao" data-label="Item 2" data-why="A página de instalação lista Pro, Max, Team, Enterprise ou Console; o gratuito não inclui. Reconfira, pois planos mudam." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
-    <div class="pred"><span>O erro de <code>&amp;&amp;</code> no comando do CMD indica que você está em qual terminal? (powershell ou cmd)</span><input class="q" data-answer="powershell" data-label="Item 3" data-why="O &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; é do CMD; o PowerShell usa o outro comando (&lt;code&gt;irm ... | iex&lt;/code&gt;)." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
+    <div class="pred"><span>Você colou o comando do CMD (o que tem <code>&amp;&amp;</code>) e deu erro de <code>&amp;&amp;</code>. Em qual terminal você está? (powershell ou cmd)</span><input class="q" data-answer="powershell" data-label="Item 3" data-why="O &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; do comando do CMD não é entendido pelo PowerShell; no PowerShell use o outro comando (&lt;code&gt;irm ... | iex&lt;/code&gt;)." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
     <button class="chk">Conferir</button><div class="fb"></div>
   </div>
 </section>
 
-<!-- 4 -->
+<!-- 5 -->
 <section class="card">
-  <h2><span class="num">4</span>Cinco jeitos de abrir o claude <span class="mins">5 min</span></h2>
+  <h2><span class="num">5</span>Cinco jeitos de abrir o claude <span class="mins">5 min</span></h2>
   <p>A documentação mostra formas diferentes de iniciar. Observe a tabela.</p>
   <table>
     <tr><th>Comando</th><th>O que acontece</th></tr>
@@ -427,11 +444,11 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 5 -->
+<!-- 6 -->
 <section class="card">
-  <h2><span class="num">5</span>Faça isto no seu terminal <span class="mins">3 min</span></h2>
-  <p>Roteiro (15 minutos): 1) instale com o comando oficial do seu sistema; 2) abra um terminal <b>novo</b> e rode <code>claude --version</code>; 3) crie uma pasta de prática chamada <code>loja-teste</code> e entre nela; 4) digite <code>claude</code>, faça o login e leia o diálogo de confiança; 5) peça: “explique o que existe nesta pasta” (ela está vazia, é só para ver a primeira resposta); 6) saia com <code>/exit</code> (ou Ctrl+D duas vezes).</p>
-  <p><strong>Escreva: qual versão apareceu, o que o Claude respondeu sobre a pasta vazia e uma dúvida que ficou. Se não puder instalar agora, descreva o que faria em cada passo.</strong></p>
+  <h2><span class="num">6</span>Faça isto no seu terminal <span class="mins">3 min</span></h2>
+  <p>Roteiro (15 minutos): 1) instale com o comando oficial do seu sistema (a instalação nativa); 2) abra um terminal <b>novo</b> e rode <code>claude --version</code>; 3) se ainda não criou, rode <code>mkdir loja-teste</code>, depois <code>cd loja-teste</code> e confirme com <code>pwd</code> (veja “Terminal em 5 minutos”); 4) digite <code>claude</code>, faça o login e leia o diálogo de confiança; 5) peça: “explique o que existe nesta pasta” (ela está vazia, é só para ver a primeira resposta); 6) saia com <code>/exit</code> (ou Ctrl+D duas vezes).</p>
+  <p><strong>Escreva 3 linhas: (1) a versão que apareceu em <code>claude --version</code>; (2) o que o Claude respondeu sobre a pasta vazia; (3) uma dúvida que ficou. Se não puder instalar agora, descreva o que faria em cada passo.</strong></p>
   <div class="open" data-key="k4" data-min="60" data-concept="cc_instalar" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar e comparar</button>
@@ -440,9 +457,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>Em que pasta começar? <span class="mins">3 min</span></h2>
+  <h2><span class="num">7</span>Em que pasta começar? <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Você abre o Claude Code na pasta Documentos, onde estão extratos bancários, planilhas de contas e um arquivo de texto com senhas anotadas.</div>
   <p><strong>Qual é o risco e o que fazer em vez disso?</strong></p>
   <div class="open" data-key="k5" data-min="25">
@@ -453,9 +470,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">7</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">8</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k6" data-correta="0" data-concept="cc_instalar" data-level="exec">
     <p class="mcq-q">Como conferir se a instalação funcionou?</p>
@@ -483,9 +500,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">8</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">9</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: o que é o Claude Code, como conferir a instalação e onde iniciar uma sessão?</strong></p>
   <div class="open" data-key="k9" data-min="25" data-concept="cc_instalar" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -493,7 +510,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>É uma ferramenta agêntica que lê, edita e roda comandos na sua pasta. Instala-se com o comando oficial do seu terminal, confere-se com <code>claude --version</code> num terminal novo e inicia-se com <code>claude</code> numa pasta só do projeto, sem segredos.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Que comando confere a versão do Claude Code instalada? (2) O que o Claude Code faz que um chat comum não faz? (3) Em que tipo de pasta convém iniciar uma sessão? <a href="recuperacao-0111.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Claude Code: o que é, como instalar e iniciar”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0111.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -689,7 +706,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -881,7 +898,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -962,13 +990,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1221,7 +1243,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

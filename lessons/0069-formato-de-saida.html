@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 9 · Engenharia de prompts: fundamentos · Aula 3</div>
   <h1>Formato de saída: diga como quer a resposta</h1>
   <p>Lista, tabela, 3 frases ou um número só: quem define o formato recebe uma resposta pronta para usar e fácil de conferir.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 35 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Pedir um formato de saída (lista, tabela, tamanho).</li>
@@ -366,7 +366,20 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 2 -->
 <section class="card">
-  <h2><span class="num">2</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
+  <h2><span class="num">2</span>Ferramenta nova: <code>.split()</code> e <code>.startswith()</code> <span class="mins">4 min</span></h2>
+  <p><code>.split("\n")</code> corta um texto em pedaços toda vez que encontra o separador e devolve uma <b>lista</b> com os pedaços. Usando <code>\n</code> (a quebra de linha, vista na aula anterior) como separador, cada linha vira um item: <code>"- Pão\n- Leite".split("\n")</code> dá <code>['- Pão', '- Leite']</code>. Já <code>.split()</code> com os parênteses vazios separa nas <b>palavras</b> (nos espaços): <code>"Café forte".split()</code> dá <code>['Café', 'forte']</code>.</p>
+  <p><code>.startswith("- ")</code> pergunta se o texto <b>começa</b> com aquele pedaço e responde <code>True</code> ou <code>False</code>: <code>"- Pão".startswith("- ")</code> dá <code>True</code>. E <code>len(lista)</code> conta os itens da lista, então <code>len(resposta.split("\n"))</code> conta as linhas.</p>
+  <div class="callout term"><span class="tag">Palavras novas</span>
+    <dl>
+      <dt><code>.split(separador)</code></dt><dd>corta o texto no separador e devolve uma lista de pedaços.</dd>
+      <dt><code>.startswith(início)</code></dt><dd>diz <code>True</code> se o texto começa com o início indicado.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="card">
+  <h2><span class="num">3</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
   <p>Preveja o que a função devolve.</p>
   <div class="quest" data-key="k2" data-concept="pf_formato" data-level="exec" data-ok="Tudo certo. Você aplicou a regra em casos novos.">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>programa.py</span></div>
@@ -385,9 +398,9 @@ print(linha.startswith("- "))</pre></div>
   </div>
 </section>
 
-<!-- 3 -->
+<!-- 4 -->
 <section class="card">
-  <h2><span class="num">3</span>Descubra o padrão <span class="mins">5 min</span></h2>
+  <h2><span class="num">4</span>Descubra o padrão <span class="mins">5 min</span></h2>
   <p>O mesmo pedido, com e sem formato.</p>
   <table>
     <tr><th>Pedido</th><th>Resposta esperada</th></tr>
@@ -409,10 +422,10 @@ print(linha.startswith("- "))</pre></div>
   </div>
 </section>
 
-<!-- 4 -->
+<!-- 5 -->
 <section class="card">
-  <h2><span class="num">4</span>Escreva o seu <span class="mins">5 min</span></h2>
-  <p>Escreva <code>tem_tres_itens(resposta)</code>: devolve <code>True</code> se a resposta tiver <b>exatamente 3 linhas</b> começando com <code>- </code> e <code>False</code> caso contrário.</p>
+  <h2><span class="num">5</span>Escreva o seu <span class="mins">5 min</span></h2>
+  <p>Escreva <code>tem_tres_itens(resposta)</code>: devolve <code>True</code> se a resposta tiver <b>exatamente 3 linhas que começam</b> com <code>- </code> (linhas sem hífen não contam) e <code>False</code> caso contrário. Entregue a função completa; os três <code>print</code> de teste já estão no código.</p>
   <div class="runner" data-key="k4" data-spec="{&quot;esperado&quot;:[&quot;True&quot;,&quot;False&quot;,&quot;False&quot;]}" data-dica="Percorra `resposta.split(&quot;\n&quot;)` com `for`, conte as linhas que `startswith(&quot;- &quot;)` e compare o contador com 3." data-concept="pf_formato" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>confere_formato.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">def tem_tres_itens(resposta):
@@ -427,9 +440,9 @@ print(tem_tres_itens("- a\n- b\n- c\n- d"))</textarea></div>
   </div>
 </section>
 
-<!-- 5 -->
+<!-- 6 -->
 <section class="card">
-  <h2><span class="num">5</span>Defina o formato <span class="mins">3 min</span></h2>
+  <h2><span class="num">6</span>Defina o formato <span class="mins">3 min</span></h2>
   <p>Você quer saber os 3 principais cuidados ao comprar um celular usado.</p>
   <p><strong>Escreva o pedido definindo o formato (quantidade, lista ou tabela, tamanho de cada item).</strong></p>
   <div class="open" data-key="k5" data-min="50" data-concept="pf_formato" data-level="comp">
@@ -440,22 +453,22 @@ print(tem_tres_itens("- a\n- b\n- c\n- d"))</textarea></div>
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>Tabela com dados de verdade <span class="mins">3 min</span></h2>
+  <h2><span class="num">7</span>Tabela com dados de verdade <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Para pedir uma tabela de gastos, uma pessoa cola no chat as linhas reais do extrato, com nomes de estabelecimentos e valores.</div>
   <p><strong>O que fazer para ter a mesma tabela sem expor os dados?</strong></p>
   <div class="open" data-key="k6" data-min="25" data-concept="pf_formato" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar e comparar</button>
     <div class="fb"></div>
-    <div class="callout model"><span class="tag">Para comparar</span>Use <b>exemplos fictícios</b> com a mesma forma (“Mercado X, 120,00”) e peça o formato. Depois aplique o modelo, <b>no seu computador</b>, aos dados reais. A Anthropic recomenda cautela com dados financeiros.</div>
+    <div class="callout model"><span class="tag">Para comparar</span>Use <b>exemplos fictícios</b> com a mesma forma (“Mercado X, 120,00”) e peça o formato. Depois aplique a mesma estrutura numa planilha sua, <b>no seu computador</b>, com os dados reais. A Anthropic recomenda cautela com dados financeiros.</div>
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">7</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">8</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k7" data-correta="3" data-concept="pf_formato" data-level="exec">
     <p class="mcq-q">Por que pedir um formato de saída?</p>
@@ -483,9 +496,9 @@ print(tem_tres_itens("- a\n- b\n- c\n- d"))</textarea></div>
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">8</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">9</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: por que dizer o formato da resposta e que formatos você pode pedir?</strong></p>
   <div class="open" data-key="k10" data-min="25" data-concept="pf_formato" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -493,7 +506,7 @@ print(tem_tres_itens("- a\n- b\n- c\n- d"))</textarea></div>
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Porque a resposta já vem pronta e fica fácil de conferir. Dá para pedir <b>lista</b>, <b>tabela</b>, <b>tamanho</b>, <b>campos fixos</b> ou uma <b>resposta curta</b>.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Por que vale pedir um formato de saída? (2) Cite dois formatos que você pode pedir. (3) Como expor menos dados ao pedir uma tabela de gastos? <a href="recuperacao-0069.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Formato de saída: diga como quer a resposta”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0069.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -689,7 +702,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -881,7 +894,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -962,13 +986,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1221,7 +1239,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

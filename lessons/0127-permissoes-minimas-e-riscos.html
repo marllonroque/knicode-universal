@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 16 · Skills, MCP e conectores · Aula 7</div>
   <h1>Permissões mínimas e os riscos de uma conexão</h1>
   <p>Conectar o Claude a um serviço é dar a ele um par de mãos novas. Hoje você aprende os riscos, a regra de dar o mínimo e a de negar por padrão, em código.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 40 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Listar os riscos de conectar servidores de terceiros.</li>
@@ -353,17 +353,17 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <section class="card">
   <h2><span class="num">1</span>Os riscos que a documentação aponta <span class="mins">4 min</span></h2>
   <p><b>Ninguém audita por você.</b> A Anthropic recomenda escrever os seus próprios servidores ou usar de provedores confiáveis. Ela revisa os conectores do Anthropic Directory contra critérios de listagem, mas <b>não faz auditoria de segurança nem gerencia</b> servidor MCP algum. Verifique se <b>confia em cada servidor</b> antes de conectar.</p>
-  <p><b>Injeção de prompt:</b> servidores que buscam conteúdo externo podem expor você a prompt injection. Conectores personalizados <b>não são verificados</b> pela Anthropic; servidores maliciosos podem esconder instruções para o Claude agir sem querer; e os desenvolvedores <b>podem mudar o comportamento</b> das ferramentas depois que você aprovou.</p>
-  <p><b>Escrita em apps externos:</b> a função Research pode chamar ferramentas de conectores <b>sem aprovação a cada uso</b>: desative as que escrevem em apps externos. Revise os pedidos de aprovação e <b>desative as ferramentas desnecessárias</b>.</p>
+  <p><b>Injeção de prompt:</b> servidores que buscam conteúdo externo podem expor você a prompt injection. Conectores personalizados <b>não são verificados</b> pela Anthropic; servidores maliciosos podem esconder instruções para o Claude agir sem querer; e os desenvolvedores <b>podem mudar o comportamento</b> das ferramentas.</p>
+  <p><b>Escrita em apps externos:</b> a função Research pode chamar ferramentas de conectores <b>sem aprovação a cada uso</b>: desative as que escrevem em apps externos. Revise os pedidos de aprovação e <b>desative as ferramentas desnecessárias</b>. (Esses avisos são do suporte dos conectores do claude.ai. No Claude Code, o que a documentação confirma é ligar e desligar o <b>servidor inteiro</b> pelo <code>/mcp</code> e usar as regras de <code>/permissions</code>; se a sua versão deixa desligar uma ferramenta só, <b>confira na tela</b>. Aqui, “desative as ferramentas” é orientação do curso para reduzir o que está aberto.)</p>
   <p><b>Visibilidade:</b> revisar o <code>.mcp.json</code> não mostra todos os servidores carregados (há outros escopos, conectores do claude.ai e plugins): use <code>/mcp</code>, que também liga e desliga cada servidor. Desativar MCPs que você não usa também reduz o gasto de contexto.</p>
   <p><b>Regras de negação</b> em <code>/permissions</code> valem em todos os modos. <b>Princípios do curso:</b> dar o <b>mínimo</b> necessário e <b>negar por padrão</b> (o que não foi liberado de propósito fica fechado).</p>
   <table>
-    <tr><th>Risco</th><th>Exemplo na loja</th><th>O que fazer</th></tr>
+    <tr><th>Risco</th><th>Exemplo na loja</th><th>O que fazer (orientação do curso)</th></tr>
     <tr><td>Servidor de terceiro não verificado</td><td>um conector de avaliações feito por desconhecido</td><td>confiar só em provedores confiáveis; preferir servidor próprio</td></tr>
     <tr><td>Injeção de prompt</td><td>avaliação com ordens escondidas</td><td>tratar retorno como dado; dar só leitura</td></tr>
     <tr><td>Mudança de comportamento</td><td>a ferramenta passa a fazer mais do que fazia</td><td>revisar os pedidos de aprovação; desligar o que não precisa</td></tr>
     <tr><td>Escrita sem você ver</td><td>reembolso emitido numa busca em Research</td><td>desativar ferramentas que escrevem</td></tr>
-    <tr><td>Vazamento de dados</td><td>o servidor remoto recebe os dados que a ferramenta lê ou envia</td><td>nunca ligar dados sensíveis sem necessidade</td></tr>
+    <tr><td>Vazamento de dados (orientação do curso, sem fonte oficial própria)</td><td>o servidor remoto recebe os dados que a ferramenta lê ou envia</td><td>nunca ligar dados sensíveis sem necessidade</td></tr>
   </table>
   <div class="callout term"><span class="tag">Palavras novas</span>
     <dl>
@@ -563,9 +563,9 @@ print(liberadas(permissoes))</textarea></div>
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar</button>
     <div class="fb"></div>
-    <div class="callout model"><span class="tag">Resposta de referência</span>Riscos: servidor não auditado (a Anthropic não audita), injeção de prompt, mudança de comportamento das ferramentas, escrita sem aprovação (Research) e vazamento de dados. Reduzir: confiar em provedores confiáveis, dar o mínimo, negar por padrão, desativar ferramentas que escrevem e conferir com <code>/mcp</code>.</div>
+    <div class="callout model"><span class="tag">Resposta de referência</span>Riscos: servidor não auditado (a Anthropic não audita), injeção de prompt, mudança de comportamento das ferramentas, escrita sem aprovação (Research) e vazamento de dados (este último é orientação do curso). Reduzir: confiar em provedores confiáveis, dar o mínimo, negar por padrão, desativar ferramentas que escrevem e conferir com <code>/mcp</code>.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) A Anthropic audita a segurança de servidores MCP? (2) O que significa “negar por padrão”? (3) Cite um risco de conectores personalizados. <a href="recuperacao-0127.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Permissões mínimas e os riscos de uma conexão”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0127.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -761,7 +761,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -953,7 +953,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -1034,13 +1045,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1293,7 +1298,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 2 · Decisões: conferir antes de agir · Aula 4</div>
   <h1>Vários caminhos: elif e a ordem das regras</h1>
   <p>Quando há mais de dois resultados, o <code>elif</code> encadeia as perguntas. Mas a ordem em que você pergunta pode mudar a resposta.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 40 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Encadear perguntas com <code>if</code>, <code>elif</code> e <code>else</code>.</li>
@@ -437,7 +437,18 @@ else:
 
 <!-- 4 -->
 <section class="card">
-  <h2><span class="num">4</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
+  <h2><span class="num">4</span>Dois <code>if</code> seguidos não são <code>if</code> e <code>elif</code> <span class="mins">4 min</span></h2>
+  <p>Cuidado: “a primeira condição verdadeira vence” só vale quando as perguntas estão <b>encadeadas</b> com <code>elif</code>. Dois <code>if</code> seguidos são duas perguntas independentes: cada um é avaliado do zero, e os dois blocos podem rodar. Veja o que aparece com <code>x = 15</code>:</p>
+  <table>
+    <tr><th>Estrutura</th><th>Com x = 15 aparece</th><th>Por quê</th></tr>
+    <tr><td><code>if x &gt; 5:</code> ... e depois outro <code>if x &gt; 10:</code></td><td><code>maior que 5</code> e <code>maior que 10</code></td><td>cada <code>if</code> é uma pergunta nova: as duas são verdadeiras, então os dois blocos rodam</td></tr>
+    <tr><td><code>if x &gt; 5:</code> ... seguido de <code>elif x &gt; 10:</code></td><td><code>maior que 5</code></td><td>o <code>elif</code> só é perguntado se a anterior foi falsa: a primeira verdadeira vence e o resto é ignorado</td></tr>
+  </table>
+</section>
+
+<!-- 5 -->
+<section class="card">
+  <h2><span class="num">5</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
   <div class="quest" data-key="k6" data-concept="elif_ordem" data-level="exec" data-ok="Tudo certo. Você aplicou a regra em casos novos.">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>programa.py</span></div>
 <pre class="hl">nota = 7
@@ -477,9 +488,9 @@ elif x &gt; 10:
   </div>
 </section>
 
-<!-- 5 -->
+<!-- 6 -->
 <section class="card">
-  <h2><span class="num">5</span>Conserte o erro <span class="mins">4 min</span></h2>
+  <h2><span class="num">6</span>Conserte o erro <span class="mins">4 min</span></h2>
   <p>A loja dá 10% de desconto a partir de 200 e 5% a partir de 100, mas as compras grandes estão ganhando só 5%. Conserte a <b>ordem</b>.</p>
   <div class="runner" data-key="k7" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;250&quot;],&quot;esperado&quot;:[&quot;Compra: 250&quot;,&quot;Desconto: 10&quot;]},{&quot;entradas&quot;:[&quot;150&quot;],&quot;esperado&quot;:[&quot;Compra: 150&quot;,&quot;Desconto: 5&quot;]},{&quot;entradas&quot;:[&quot;50&quot;],&quot;esperado&quot;:[&quot;Compra: 50&quot;,&quot;Desconto: 0&quot;]}]}" data-dica="Pergunte primeiro pela regra mais restrita (200 ou mais)." data-concept="elif_ordem" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>com_defeito.py</span></div>
@@ -496,9 +507,9 @@ print("Desconto:", desconto)</textarea></div>
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>Escreva o seu <span class="mins">5 min</span></h2>
+  <h2><span class="num">7</span>Escreva o seu <span class="mins">5 min</span></h2>
   <p>Peça <code>Estoque: </code> (inteiro) e mostre: <code>Esgotado</code> se for 0, <code>Estoque baixo</code> se for de 1 a 5, e <code>Estoque ok</code> se for maior que 5.</p>
   <div class="runner" data-key="k8" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;0&quot;],&quot;esperado&quot;:[&quot;Estoque: 0&quot;,&quot;Esgotado&quot;]},{&quot;entradas&quot;:[&quot;3&quot;],&quot;esperado&quot;:[&quot;Estoque: 3&quot;,&quot;Estoque baixo&quot;]},{&quot;entradas&quot;:[&quot;5&quot;],&quot;esperado&quot;:[&quot;Estoque: 5&quot;,&quot;Estoque baixo&quot;]},{&quot;entradas&quot;:[&quot;8&quot;],&quot;esperado&quot;:[&quot;Estoque: 8&quot;,&quot;Estoque ok&quot;]}]}" data-dica="`if estoque == 0`, `elif estoque &lt;= 5`, `else`." data-concept="elif_ordem" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>meu_programa.py</span></div>
@@ -510,9 +521,9 @@ print("Desconto:", desconto)</textarea></div>
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">7</span>Negar por padrão <span class="mins">3 min</span></h2>
+  <h2><span class="num">8</span>Negar por padrão <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Um sistema decide o acesso com <code>if perfil == "admin": ... elif perfil == "cliente": ... else: liberar tudo</code>.</div>
   <p><strong>Qual é o perigo desse <code>else</code> final? Qual deveria ser o comportamento padrão?</strong></p>
   <div class="open" data-key="k9" data-min="25">
@@ -523,9 +534,9 @@ print("Desconto:", desconto)</textarea></div>
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">8</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">9</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k10" data-correta="0" data-concept="elif_ordem" data-level="exec">
     <p class="mcq-q">O que o <code>elif</code> significa?</p>
@@ -553,9 +564,9 @@ print("Desconto:", desconto)</textarea></div>
   </div>
 </section>
 
-<!-- 9 -->
+<!-- 10 -->
 <section class="card">
-  <h2><span class="num">9</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">10</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: por que a ordem das perguntas num <code>if/elif/else</code> importa?</strong></p>
   <div class="open" data-key="k13" data-min="25" data-concept="elif_ordem" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -563,7 +574,7 @@ print("Desconto:", desconto)</textarea></div>
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Porque o Python executa só o bloco da <b>primeira</b> condição verdadeira e ignora o resto. Se uma pergunta larga vier antes de uma restrita, ela captura casos que deveriam ser tratados pela restrita.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) O que o <code>elif</code> significa e quando ele é perguntado? (2) Se várias condições de uma cadeia forem verdadeiras, qual bloco roda? (3) Por que o <code>else</code> final de uma regra de acesso não deve liberar tudo? <a href="recuperacao-0012.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Vários caminhos: elif e a ordem das regras”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0012.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -759,7 +770,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -951,7 +962,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -1032,13 +1054,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1291,7 +1307,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

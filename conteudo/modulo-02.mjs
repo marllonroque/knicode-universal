@@ -35,7 +35,8 @@ print(x % 2 == 0)`, resposta: "True", porque: "`4 % 2` é 0 (resto da divisão),
       { codigo: "print(10 // 3 == 3)", resposta: "True", porque: "`10 // 3` é 3 (divisão inteira), igual a 3." },
       { codigo: `idade = 17
 print(idade >= 18)`, resposta: "False", porque: "17 não é maior nem igual a 18." }] },
-    { tipo: "corrigir", texto: "O robô queria guardar se a água está pronta (a partir de 90 graus), mas guardou a própria temperatura. Conserte **uma linha**.", arquivo: "com_defeito.py",
+    { tipo: "texto", titulo: "Guardar não é perguntar: `=` e `==`", blocos: ["Um erro clássico de quem está começando é usar `=` onde se queria `==`. O `=` **guarda** um valor; só o `==` (e os outros operadores de comparação) **pergunta**. Por isso `pronta = temperatura = 90` (uma atribuição encadeada) não compara nada: guarda o número 90 nas duas variáveis, `pronta` e `temperatura`.", "Na próxima aula você vai escrever `if temperatura == 90:`. Se escrever `if temperatura = 90:` (um sinal só), o Python para com `SyntaxError`, porque não dá para guardar um valor onde se espera uma pergunta. Guarde a regra: **guardar é `=`; perguntar é `==`, `>=`, `<`...**"] },
+    { tipo: "corrigir", texto: "O robô queria que `pronta` guardasse `True` ou `False`, a resposta à pergunta “a temperatura é pelo menos 90?”. Mas a linha `pronta = temperatura = 90` não pergunta nada: guarda o número 90 em `pronta` (e ainda muda `temperatura`). Conserte **uma linha** para que `pronta` guarde a resposta da comparação.", arquivo: "com_defeito.py",
       codigo: `temperatura = 95
 pronta = temperatura = 90
 print(pronta)`, esperado: ["True"], dica: "Para **perguntar** (em vez de guardar) use um operador de comparação, não o `=`.", conceito: "comparacao",
@@ -128,7 +129,7 @@ print("Checagem concluída")` },
     { tipo: "quiz", itens: [
       { pergunta: "O que faz o bloco de um `if` rodar?", opcoes: ["A condição ser verdadeira", "A condição ser falsa", "A linha estar sem espaços", "O programa estar no fim"], correta: 0, porque: "O bloco indentado só roda quando a condição é `True`.", conceito: "if_basico" },
       { pergunta: "O que precisa vir depois da condição do `if`?", opcoes: ["Um ponto e vírgula (;)", "Um ponto final (.)", "Dois-pontos (:)", "Uma vírgula (,)"], correta: 2, porque: "Os dois-pontos abrem o bloco do `if`.", conceito: "if_basico" },
-      { pergunta: "Qual linha NÃO pertence ao bloco do `if`?", opcoes: ["A que tem 4 espaços", "A que tem 8 espaços", "A logo abaixo do if", "A que não tem espaços"], correta: 3, porque: "Só as linhas indentadas fazem parte do bloco; a sem espaços roda sempre.", conceito: "if_basico" }] },
+      { pergunta: "Um `if` com condição falsa pula o seu bloco. Qual linha, escrita logo depois dele, **não** é pulada?", opcoes: ["A linha com 4 espaços no começo", "A linha com 8 espaços no começo", "A linha com 6 espaços no começo", "A linha sem espaços no começo"], correta: 3, porque: "Qualquer linha indentada (4, 6 ou 8 espaços) faz parte do bloco e é pulada; só a sem espaços fica fora e roda sempre.", conceito: "if_basico" }] },
     { tipo: "fechar", pergunta: "Sem olhar acima: como o `if` decide quais linhas rodar, e o que as marca como parte da decisão?", conceito: "if_basico", modelo: "O `if` avalia uma condição (`True` ou `False`). Se for verdadeira, roda o **bloco**: as linhas indentadas logo abaixo, depois dos dois-pontos. As linhas sem indentação rodam sempre." },
   ],
   recuperacao: [
@@ -219,7 +220,7 @@ else:
   ],
   recuperacao: [
     { p: "Para que serve o `else`?", regex: "(senao|caso contrario|falsa|false|alternativ|outro caminho)", modelo: "É o caminho alternativo: roda quando a condição do `if` é falsa.", conceito: "else_caminhos" },
-    { p: "Quantos blocos de um `if`/`else` rodam em cada execução?", regex: "(um|1|apenas um|so um|exatamente)", naoRegex: "(dois|2|ambos)", modelo: "Exatamente um: o do `if` ou o do `else`.", conceito: "else_caminhos" },
+    { p: "Quantos blocos de um `if`/`else` rodam em cada execução?", regex: "\\b(um|uma|1)\\b", naoRegex: "(rodam|executam) (os )?(dois|ambos)|(os dois|ambos|dois blocos) (rodam|executam)|ou (os )?(dois|ambos)|\\b2\\b|os dois juntos", modelo: "Exatamente um: o do `if` ou o do `else`.", conceito: "else_caminhos" },
     { p: "Por que não mostrar “senha errada para o usuário lia” ao negar o acesso?", regex: "(existe|conta|pista|atacante|invas|revel|informac|generic)", modelo: "Porque confirma que o usuário existe e ajuda quem tenta invadir; a mensagem deve ser genérica.", conceito: "privacidade" },
   ],
 });
@@ -264,6 +265,7 @@ else:
       execucoes: [{ prefixo: "temperatura = 95", saida: ["morna"] }, { prefixo: "temperatura = 75", saida: ["morna"] }, { prefixo: "temperatura = 40", saida: ["fria"] }], colunas: ["Valor de temperatura", "O que aparece"],
       pergunta: "Por que 95 graus saiu “morna”? O que a ordem das perguntas tem a ver com isso? Como você corrigiria?", dicas: ["95 é pelo menos 60? E o que o Python faz depois que acha uma condição verdadeira?", "A pergunta mais restrita (`>= 90`) deveria vir antes ou depois da mais larga (`>= 60`)?"],
       explicacao: "95 é pelo menos 60, e como esta é a **primeira** pergunta verdadeira, o Python roda “morna” e **ignora o resto**: o `elif temperatura >= 90` nem é lido. A correção é colocar a pergunta mais restrita (90 ou mais) **primeiro**.", conceito: "elif_ordem" },
+    { tipo: "texto", titulo: "Dois `if` seguidos não são `if` e `elif`", blocos: ["Cuidado: “a primeira condição verdadeira vence” só vale quando as perguntas estão **encadeadas** com `elif`. Dois `if` seguidos são duas perguntas independentes: cada um é avaliado do zero, e os dois blocos podem rodar. Veja o que aparece com `x = 15`:"], tabela: { cab: ["Estrutura", "Com x = 15 aparece", "Por quê"], linhas: [["`if x > 5:` ... e depois outro `if x > 10:`", "`maior que 5` e `maior que 10`", "cada `if` é uma pergunta nova: as duas são verdadeiras, então os dois blocos rodam"], ["`if x > 5:` ... seguido de `elif x > 10:`", "`maior que 5`", "o `elif` só é perguntado se a anterior foi falsa: a primeira verdadeira vence e o resto é ignorado"]] } },
     { tipo: "prever", conceito: "elif_ordem", itens: [
       { codigo: `nota = 7
 if nota >= 9:
@@ -328,8 +330,8 @@ else:
   ],
   recuperacao: [
     { p: "O que o `elif` significa e quando ele é perguntado?", regex: "(senao,? se|outra pergunta|outra condicao|encade);;(anterior|falsa|nao foi|so se)", modelo: "“Senão, se”: é perguntado só se as condições anteriores foram falsas.", conceito: "elif_ordem" },
-    { p: "Se várias condições de uma cadeia forem verdadeiras, qual bloco roda?", regex: "(primeir)", modelo: "Só o da primeira condição verdadeira; as outras são ignoradas.", conceito: "elif_ordem" },
-    { p: "Por que o `else` final de uma regra de acesso não deve liberar tudo?", regex: "(negar|padrao|seguro|acesso total|qualquer|novo|inesperad)", modelo: "Porque casos inesperados cairiam nele e ganhariam acesso total; o padrão seguro é negar.", conceito: "elif_ordem" },
+    { p: "Se várias condições de uma cadeia `if`/`elif`/`else` forem verdadeiras, qual bloco roda?", regex: "\\bprimeir[ao]s?\\b", naoRegex: "nao (e |foi |seria )?(o|a) primeir|\\bprimeir[ao]s? e (o |a )?ultim|(roda|rodam|executa|executam) (os )?todos|todos (rodam|executam)", modelo: "Só o da primeira condição verdadeira; as outras são ignoradas.", conceito: "elif_ordem" },
+    { p: "O que o `else` final de uma regra de acesso deve fazer por padrão, quando nenhuma regra reconhece o perfil? Por quê?", regex: "\\bneg(ar|ue|ado|ando|aria|a)\\b|\\brecus|\\bbloque|\\bbarr|\\bproib|nao (liber|permit|de acesso|conced)|sem acesso|acesso negado|nenhum acesso", naoRegex: "nao (deve |pode |deveria )?(negar|bloquear|recusar)|em vez de (negar|bloquear)", modelo: "Negar o acesso: casos inesperados (perfil novo, errado ou vazio) não devem ganhar acesso total; o padrão seguro é negar.", conceito: "elif_ordem" },
   ],
 });
 
@@ -395,9 +397,9 @@ else:
     { tipo: "fechar", pergunta: "Sem olhar acima: qual a diferença entre `and` e `or`?", conceito: "logica", modelo: "`and` é verdadeiro só quando as **duas** condições são verdadeiras; `or` é verdadeiro quando **pelo menos uma** é. `not` inverte o valor." },
   ],
   recuperacao: [
-    { p: "Quando `and` devolve `True`?", regex: "(duas|ambas|todas|as dois)", modelo: "Somente quando as duas condições são verdadeiras.", conceito: "logica" },
-    { p: "Quando `or` devolve `False`?", regex: "(duas|ambas|todas);;(falsa|false)", modelo: "Somente quando as duas condições são falsas.", conceito: "logica" },
-    { p: "Para aceitar só idades de 18 a 65, uso `and` ou `or`? Por quê?", regex: "(and|e );;(duas|ambas|ao mesmo tempo|juntas)", modelo: "`and`: as duas condições (>= 18 e <= 65) precisam valer ao mesmo tempo.", conceito: "logica" },
+    { p: "Quando `and` devolve `True`?", regex: "(\\bduas\\b|\\bambas\\b|\\bambos\\b|\\btodas\\b|\\btodos\\b|\\bdois\\b|\\ba e b\\b);;(verdadeir|true|certa|satisf|atendid|cumprid)", naoRegex: "\\b(so|apenas|somente) (uma|um)\\b|pelo menos (uma|um)|\\buma? d[aeo]s? (duas|dois|condicoes)\\b|(^|[^o] )basta|\\bqualquer (uma|um)", modelo: "Somente quando as duas condições são verdadeiras.", conceito: "logica" },
+    { p: "Quando `or` devolve `False`?", regex: "(\\bduas\\b|\\bambas\\b|\\bambos\\b|\\btodas\\b|\\btodos\\b|\\bdois\\b|\\ba e b\\b|nenhum);;(fals|false|nenhum)", naoRegex: "\\buma? d[aeo]s? (duas|dois|condicoes)\\b[^.]*\\b(fals|false)|pelo menos (uma|um)|\\b(so|apenas|somente) (uma|um)\\b|\\bqualquer (uma|um)|(^|[^o] )basta", modelo: "Somente quando as duas condições são falsas.", conceito: "logica" },
+    { p: "Para aceitar só idades de 18 a 65, uso `and` ou `or`? Por quê?", regex: "(\\band\\b|\\boperador e\\b|\\b(uso|usa|use|usar|usaria|com|com o|pelo|o) e\\b);;(\\bduas\\b|\\bambas\\b|\\bjuntas\\b|simultane\\w*|\\btodas\\b|ao mesmo tempo)", naoRegex: "^(eu )?((uso|usa|use|usar|usaria|com|o|com o) )?(or|ou)\\b", modelo: "`and`: as duas condições (>= 18 e <= 65) precisam valer ao mesmo tempo.", conceito: "logica" },
   ],
 });
 
@@ -463,8 +465,8 @@ else:
     { tipo: "fechar", pergunta: "Sem olhar acima: por que erros de `>` e `>=` são tão fáceis de passar despercebidos e como você os encontra?", conceito: "limites", modelo: "Porque só mudam o resultado no valor exato da borda; com valores comuns as duas regras dão a mesma resposta. Encontra-se testando antes, na borda e depois (por exemplo, 99, 100 e 101)." },
   ],
   recuperacao: [
-    { p: "Qual a diferença entre `>` e `>=`?", regex: "(igual|inclui|incluso);;", modelo: "`>=` aceita o valor igual (inclui a borda); `>` não.", conceito: "limites" },
-    { p: "Quais valores você testaria para uma regra “100 ou mais”?", regex: "99;;100;;101", modelo: "99, 100 e 101: antes, na borda e depois.", conceito: "limites" },
+    { p: "Qual a diferença entre `>` e `>=`?", regex: "(maior ou igual|\\binclu|\\bexclu|\\baceita (o )?(proprio|mesmo|igual|iguais|valor)|\\bnao (inclui|aceita|conta)|\\bconta o (proprio|igual)|estritamente)", naoRegex: "(^| )(e|eh|sao|significa) (exatamente )?(igual (a|ao)|a mesma coisa|equivalente|o mesmo)|mesma coisa|nao (ha|tem) diferenca|nenhuma diferenca|sem diferenca|nao muda nada", modelo: "`>=` aceita o valor igual (inclui a borda); `>` não.", conceito: "limites" },
+    { p: "Quais valores você testaria para uma regra “100 ou mais”?", regex: "^(?=.*\\b99\\b)(?=.*\\b100\\b)(?=.*\\b101\\b)|^(?=.*(antes|abaixo|menor))(?=.*(borda|limite|exat|proprio|igual|\\b100\\b))(?=.*(depois|apos|acima|maior))", modelo: "99, 100 e 101: antes, na borda e depois.", conceito: "limites" },
     { p: "Por que um limite de tentativas protege uma conta?", regex: "(forca bruta|adivinh|muitas tentativas|bloque|tentar varias|milhares)", modelo: "Impede que alguém tente milhares de senhas até acertar.", conceito: "limites" },
   ],
 });
@@ -480,6 +482,7 @@ aulas.push({
     { tipo: "exemplo", arquivo: "validar.py", entradas: ["3"], texto: "Clique em cada linha.",
       codigo: [["qtd_texto = input(\"Quantos cafés? \")", "Lê a resposta como **texto**."], ["if qtd_texto.isdigit():", "`.isdigit()` responde `True` se o texto tem **só dígitos** (0 a 9). “abc”, “-2” e “” dão `False`."], ["    qtd = int(qtd_texto)", "Só aqui, com o texto já conferido, é seguro converter."], ["    print(\"Anotado:\", qtd)", "Caminho de sucesso."], ["else:", "Qualquer outra coisa."], ["    print(\"Digite só números\")", "Mensagem clara, sem travar o programa."]],
       termos: [["Validar", "conferir se um dado é aceitável antes de usá-lo."], ["`.isdigit()`", "pergunta se o texto tem só dígitos."], ["`.strip()` e `.lower()`", "tiram espaços das pontas e deixam o texto em minúsculas."]] },
+    { tipo: "texto", titulo: "Métodos de texto: `.strip()` e `.lower()`", blocos: ["Um texto tem **métodos**: pedidos escritos depois de um ponto, como `texto.isdigit()`, que você acabou de ver. Dois outros vão aparecer nas próximas caixas. Nenhum muda o texto original: cada um devolve uma versão nova."], tabela: { cab: ["Código", "Devolve", "Para que serve"], linhas: [["`\" Lia \".strip()`", "`Lia`", "tira os espaços do começo e do fim do texto (os do meio ficam)"], ["`\"SIM\".lower()`", "`sim`", "deixa todas as letras em minúsculas"], ["`\" Sim \".strip().lower() == \"sim\"`", "`True`", "juntos: comparar o que a pessoa digitou sem se importar com espaços sobrando nem com maiúsculas"]] } },
     { tipo: "executar", texto: "Rode e depois mude a entrada para `abc`, `-2` e deixe em branco.", arquivo: "validar.py (pode editar)", entradas: ["abc"], codigo: `qtd_texto = input("Quantos cafés? ")
 if qtd_texto.isdigit():
     qtd = int(qtd_texto)
@@ -519,6 +522,7 @@ if qtd_texto.isdigit():
     print("Total:", qtd * 4.5)
 else:
     print("Digite só números")` },
+    { tipo: "texto", titulo: "Um `if` dentro de outro (aninhado)", blocos: ["Algumas decisões só fazem sentido **depois** de outra. Por isso um `if` pode ficar **dentro** do bloco de outro `if` ou de um `else`: a linha do `if` de dentro ganha mais 4 espaços de indentação, e o bloco dela, mais 4 ainda (8 no total). O `if` de dentro só é perguntado se o Python chegou naquele bloco. Exemplo em português: “se for maior de idade, **então** pergunte se tem ingresso”.", "Na tabela, o programa decide a entrada num evento. Repare que o `if tem_ingresso` só é lido quando `idade >= 18` foi verdadeira:"], tabela: { cab: ["Linha", "Espaços no começo", "Roda quando"], linhas: [["`if idade >= 18:`", "0", "sempre é perguntada"], ["`if tem_ingresso:`", "4", "só se `idade >= 18` foi verdadeira"], ["`print(\"Pode entrar\")`", "8", "se for maior de idade **e** tiver ingresso"], ["`else:` (do `if tem_ingresso`)", "4", "se for maior de idade **e** não tiver ingresso"], ["`print(\"Compre o ingresso\")`", "8", "mesma condição da linha do `else` acima"], ["`else:` (do `if idade >= 18`)", "0", "se não for maior de idade"], ["`print(\"Só maiores de 18\")`", "4", "mesma condição da linha do `else` acima"]] } },
     { tipo: "escrever", texto: "Peça `Quantos cafés? `. Se não forem só dígitos, mostre `Digite só números`. Se for número, aceite só de **1 a 10**: mostre `Anotado: N` ou `Quantidade inválida`.", arquivo: "meu_programa.py",
       inicial: `qtd_texto = input("Quantos cafés? ")
 # valide: só dígitos, e entre 1 e 10
@@ -532,7 +536,7 @@ else:
         print("Anotado:", qtd)
     else:
         print("Quantidade inválida")` },
-    { tipo: "aberta", tag: "sec", titulo: "Nunca confie na entrada", texto: "Um site limita a quantidade de cafés a 10 usando só um campo na tela. O servidor soma o total com o número que recebe.", pergunta: "Por que o servidor precisa validar a quantidade de novo, mesmo que a tela já limite? O que um atacante poderia fazer?", conceito: "validacao", modelo: "A tela é controlada por quem a usa: alguém pode enviar a quantidade que quiser direto ao servidor (por exemplo, -5 para gerar crédito ou 1 milhão para derrubar o sistema). Por isso o sistema **sempre valida a entrada no seu próprio lado**. A validação da tela é só conforto." },
+    { tipo: "aberta", tag: "sec", titulo: "Nunca confie na entrada", texto: "Um site limita a quantidade de cafés a 10 usando só um campo na tela. O servidor soma o total com o número que recebe. (A **tela** é a parte do site que a pessoa vê e controla, no celular ou no navegador; o **servidor** é o computador da loja, que recebe o pedido e faz as contas, e que só a loja controla.)", pergunta: "Por que o servidor precisa validar a quantidade de novo, mesmo que a tela já limite? O que um atacante poderia fazer?", conceito: "validacao", modelo: "A tela é controlada por quem a usa: alguém pode enviar a quantidade que quiser direto ao servidor (por exemplo, -5 para gerar crédito ou 1 milhão para derrubar o sistema). Por isso o sistema **sempre valida a entrada no seu próprio lado**. A validação da tela é só conforto." },
     { tipo: "quiz", itens: [
       { pergunta: "O que `\"-2\".isdigit()` devolve?", opcoes: ["True, pois é um número", "False, tem um sinal", "2, o valor positivo", "Erro, pois é texto"], correta: 1, porque: "O sinal de menos não é um dígito.", conceito: "validacao" },
       { pergunta: "Por que validar antes de usar `int(...)`?", opcoes: ["Para o código ficar curto", "Para evitar que o programa trave", "Para o texto ficar bonito", "Para somar mais rápido"], correta: 1, porque: "`int(\"abc\")` causa um erro; conferir antes evita travar.", conceito: "validacao" },
@@ -540,7 +544,7 @@ else:
     { tipo: "fechar", pergunta: "Sem olhar acima: por que um programa deve validar o que a pessoa digita, e como?", conceito: "validacao", modelo: "Porque a entrada pode ser vazia, errada ou maliciosa. Valida-se conferindo o tipo (`.isdigit()`), o intervalo (mínimo e máximo) e só então usando o valor. E o sistema sempre valida no seu lado, sem confiar na tela." },
   ],
   recuperacao: [
-    { p: "O que `.isdigit()` pergunta?", regex: "(so|apenas|somente);;(digito|numero)", modelo: "Se o texto é feito só de dígitos (0 a 9).", conceito: "validacao" },
+    { p: "O que `.isdigit()` pergunta?", regex: "\\b(so|apenas|somente|exclusivamente|unicamente|todos|todas|feito|composto|formado)\\b;;(digito|numer|algarismo)", modelo: "Se o texto é feito só de dígitos (0 a 9).", conceito: "validacao" },
     { p: "Por que conferir a entrada antes de chamar `int(...)`?", regex: "(erro|trav|quebr|abc|texto|nao for numero|valueerror)", modelo: "Porque `int(\"abc\")` dá erro e trava o programa; conferindo antes dá para responder com uma mensagem.", conceito: "validacao" },
     { p: "Se a tela já limita a quantidade, por que o servidor valida de novo?", regex: "(tela|navegador|cliente|usuario);;(alter|burl|contorn|enviar direto|controla|nao confi)", modelo: "Porque quem usa controla o que envia e pode burlar a tela; o servidor não confia na entrada.", conceito: "validacao" },
   ],
@@ -573,11 +577,11 @@ elif falta_cafe:
     print("Falta café")
 else:
     print("Pode passar o café")` },
-    { tipo: "escrever", titulo: "Problema novo: o desconto da loja", transfer: true, minutos: 10, texto: "Outro contexto, as mesmas decisões. Peça `Compra: ` (inteiro) e `Cliente VIP (s/n): `. Regras: VIP **e** compra de 100 ou mais: `Desconto: 15%`; só compra de 100 ou mais: `Desconto: 10%`; só VIP: `Desconto: 5%`; nenhum dos dois: `Desconto: 0%`.", arquivo: "loja.py",
+    { tipo: "escrever", titulo: "Problema novo: o desconto da loja", transfer: true, minutos: 10, texto: "Outro contexto, as mesmas decisões. Peça `Compra: ` (inteiro) e `Cliente VIP (s/n): `. A pessoa pode digitar `s` ou `S`, com ou sem espaços sobrando antes ou depois (use `.strip().lower()`, da aula anterior): qualquer um desses conta como VIP, e qualquer outra resposta conta como não VIP. Regras: VIP **e** compra de 100 ou mais: `Desconto: 15%`; só compra de 100 ou mais: `Desconto: 10%`; só VIP: `Desconto: 5%`; nenhum dos dois: `Desconto: 0%`.", arquivo: "loja.py",
       inicial: `# Leia a compra e se é VIP (s ou n), e decida o desconto
-`, cenarios: [{ entradas: ["150", "s"], esperado: ["Compra: 150", "Cliente VIP (s/n): s", "Desconto: 15%"] }, { entradas: ["150", "n"], esperado: ["Compra: 150", "Cliente VIP (s/n): n", "Desconto: 10%"] }, { entradas: ["50", "s"], esperado: ["Compra: 50", "Cliente VIP (s/n): s", "Desconto: 5%"] }, { entradas: ["50", "n"], esperado: ["Compra: 50", "Cliente VIP (s/n): n", "Desconto: 0%"] }, { entradas: ["100", "n"], esperado: ["Compra: 100", "Cliente VIP (s/n): n", "Desconto: 10%"] }], dica: "`vip = input(\"Cliente VIP (s/n): \") == \"s\"` e `grande = compra >= 100`; depois `if vip and grande`, `elif grande`, `elif vip`, `else`.", conceito: ["if_basico", "elif_ordem", "logica", "limites"],
+`, cenarios: [{ entradas: ["150", "s"], esperado: ["Compra: 150", "Cliente VIP (s/n): s", "Desconto: 15%"] }, { entradas: ["150", "n"], esperado: ["Compra: 150", "Cliente VIP (s/n): n", "Desconto: 10%"] }, { entradas: ["50", "s"], esperado: ["Compra: 50", "Cliente VIP (s/n): s", "Desconto: 5%"] }, { entradas: ["50", "n"], esperado: ["Compra: 50", "Cliente VIP (s/n): n", "Desconto: 0%"] }, { entradas: ["100", "n"], esperado: ["Compra: 100", "Cliente VIP (s/n): n", "Desconto: 10%"] }, { entradas: ["120", "S"], esperado: ["Compra: 120", "Cliente VIP (s/n): S", "Desconto: 15%"] }, { entradas: ["40", " S"], esperado: ["Compra: 40", "Cliente VIP (s/n):  S", "Desconto: 5%"] }, { entradas: ["99", "s "], esperado: ["Compra: 99", "Cliente VIP (s/n): s", "Desconto: 5%"] }], dica: "`vip = input(\"Cliente VIP (s/n): \").strip().lower() == \"s\"` e `grande = compra >= 100`; depois `if vip and grande`, `elif grande`, `elif vip`, `else`.", conceito: ["if_basico", "elif_ordem", "logica", "limites"],
       solucao: `compra = int(input("Compra: "))
-vip = input("Cliente VIP (s/n): ") == "s"
+vip = input("Cliente VIP (s/n): ").strip().lower() == "s"
 grande = compra >= 100
 if vip and grande:
     print("Desconto: 15%")
@@ -595,8 +599,8 @@ else:
     { tipo: "fechar", pergunta: "Sem olhar acima: descreva como o seu programa do robô decide, passo a passo.", conceito: "elif_ordem", modelo: "Lê água e café; calcula se faltam; pergunta primeiro pelo caso mais restrito (faltam os dois), depois só água, depois só café, e por último o caso em que tem tudo. Os limites (150 e 15) usam `<`, então 150 e 15 **bastam**." },
   ],
   recuperacao: [
-    { p: "Em que ordem escrever as condições de uma cadeia com `elif`?", regex: "(restrit|especific|mais exigent)", modelo: "Da mais restrita para a mais geral, porque só a primeira verdadeira roda.", conceito: "elif_ordem" },
-    { p: "Como exigir que duas condições sejam verdadeiras ao mesmo tempo?", regex: "(and)", modelo: "Com `and`.", conceito: "logica" },
+    { p: "Em que ordem escrever as condições de uma cadeia com `elif`?", regex: "(restrit|especific|mais exigent)", naoRegex: "(geral|larg\\w*|ampl\\w*|abrang\\w*)\\b[^.]*\\b(para|pra|ate|depois|seguid\\w*|antes d\\w*)\\b[^.]*\\b(restrit|especific|exigent)|(geral|larg\\w*|ampl\\w*)( \\w+){0,2} primeir", modelo: "Da mais restrita para a mais geral, porque só a primeira verdadeira roda.", conceito: "elif_ordem" },
+    { p: "Como exigir que duas condições sejam verdadeiras ao mesmo tempo?", regex: "\\band\\b|\\boperador e\\b|\\bcom (o )?e\\b|\\b(usa|uso|use|usar|usando) (o )?e\\b|\\be logico", modelo: "Com `and`.", conceito: "logica" },
     { p: "Por que o sistema não deve confiar no campo “VIP” preenchido por quem compra?", regex: "(cadastro|consult|proprio|controla|qualquer um|beneficia|mentir|falso)", modelo: "Porque quem compra pode mentir; o sistema deve consultar o cadastro que ele controla.", conceito: "validacao" },
   ],
 });

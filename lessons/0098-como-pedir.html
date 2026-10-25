@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 13 · Claude Artifacts · Aula 2</div>
   <h1>Como pedir: a especificação do que a ferramenta deve fazer</h1>
   <p>Um pedido vago faz o Claude adivinhar. Um pedido com especificação (entradas, saída, regras) quase sempre acerta de primeira.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Escrever um pedido com entradas, saída, regras e um exemplo.</li>
@@ -351,10 +351,11 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 1 -->
 <section class="card">
-  <h2><span class="num">1</span>As seis partes de um bom pedido <span class="mins">4 min</span></h2>
+  <h2><span class="num">1</span>As seis partes de um bom pedido (regra do curso) <span class="mins">4 min</span></h2>
   <p>A documentação oficial de dicas do Claude pede o básico: falar naturalmente, <b>ser específico</b> e <b>refinar</b> com perguntas de acompanhamento. Na prática, especificar uma ferramenta é responder a seis perguntas.</p>
-  <p>A mais poderosa é a do <b>exemplo com números</b>: “100 reais com taxa 5 dão 20 dólares”. Com ele, você tem um caso para <b>conferir</b> o resultado depois (aula 5).</p>
-  <p>Conte também <b>o que fazer com erro</b> (ex.: “se a taxa for zero, avise e não calcule”) e o <b>idioma e o formato</b> da tela. Não coloque senhas, chaves nem dados reais no pedido.</p>
+  <p>Atenção: as <b>seis partes</b> abaixo são uma <b>regra prática deste curso</b>, não uma lista da documentação. Outras aulas usam listas de <b>cinco</b> partes (a especificação de um programa, no módulo 11; as instruções de um projeto, no módulo 14). São listas para situações diferentes, mas todas respondem às mesmas perguntas de fundo: para que serve, o que entra e o que sai, quais as regras, o que evitar e como conferir.</p>
+  <p>A parte mais poderosa é a do <b>exemplo com números</b>: “100 reais com taxa 5 dão 20 dólares”. Com ele, você tem um caso para <b>conferir</b> o resultado depois (aula 5).</p>
+  <p>Conte também <b>o que fazer com erro</b> (ex.: “se a taxa for zero, avise e não calcule”) e o <b>idioma e o formato</b> da tela. Sem essa regra, uma ferramenta feita em JavaScript pode mostrar <code>Infinity</code> (infinito): é assim que o JavaScript responde a uma divisão por zero, sem avisar de nenhum erro. Não coloque senhas, chaves nem dados reais no pedido.</p>
   <table>
     <tr><th>Parte</th><th>Pergunta que responde</th><th>Exemplo (conversor)</th></tr>
     <tr><td>Objetivo</td><td>Para que serve?</td><td>converter reais em dólares</td></tr>
@@ -394,7 +395,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <tr><td>Texto do pedido</td><td>“faz um conversor de moeda”</td><td>“converter reais em dólares: digito valor e taxa; mostre dólares com 2 casas; avise se a taxa for zero”</td></tr>
     <tr><td>Taxa</td><td>fixa dentro do código</td><td>digitada pela pessoa</td></tr>
     <tr><td>Resultado com 100 e taxa 5</td><td>19.35</td><td>20.00</td></tr>
-    <tr><td>Taxa zero</td><td>não havia como testar</td><td>mostra o aviso</td></tr>
+    <tr><td>Taxa zero</td><td>não dá para digitar (a taxa é fixa); se desse, apareceria <code>Infinity</code></td><td>mostra o aviso (sem a regra, apareceria <code>Infinity</code>)</td></tr>
   </table>
   <p><strong>O que o pedido vago deixou o Claude decidir sozinho, e qual foi o custo para você?</strong></p>
   <div class="open" data-key="k3" data-min="15" data-concept="ar_pedir" data-level="comp">
@@ -476,7 +477,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Objetivo, entradas, saída, regras, o que fazer com erro e um <b>exemplo com números</b>. O exemplo calculado à mão é o que permite <b>conferir</b> o resultado. Tudo com dados inventados, sem segredos.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Cite pelo menos três partes de um bom pedido de ferramenta. (2) Para que serve o exemplo com números no pedido? (3) Por que usar dados inventados no pedido? <a href="recuperacao-0098.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Como pedir: a especificação do que a ferramenta deve fazer”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0098.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -672,7 +673,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -864,7 +865,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -945,13 +957,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1204,7 +1210,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

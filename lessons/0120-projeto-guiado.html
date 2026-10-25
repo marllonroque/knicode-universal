@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 15 · Claude Code · Aula 10</div>
   <h1>Projeto guiado: o analisador de log de pedidos</h1>
   <p>Você especifica, manda construir, revisa, testa e melhora um programa pequeno com o Claude Code, e prova a lógica em Python aqui na página.</p>
-  <div class="chips"><span class="chip">50 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 65 minutos</span><span class="chip">Precisa do Claude Code (aula 0111) e do Git (aula 0117)</span><span class="chip">Python aqui na página</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Escrever uma especificação clara e verificável de um programa pequeno.</li>
@@ -352,17 +352,18 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <!-- 1 -->
 <section class="card">
   <h2><span class="num">1</span>O roteiro do projeto (no seu terminal) <span class="mins">4 min</span></h2>
-  <p><b>Especificação.</b> Entrada: <code>pedidos.log</code>, linhas como <code>2026-03-01 09:00:01 INFO pedido=1001 valor=59.90</code>. Saída: um dicionário com <code>niveis</code> (contagem de INFO, WARNING e ERROR), <code>total_info</code> (soma dos <code>valor=</code> das linhas INFO) e <code>ruins</code> (quantas linhas estavam quebradas). Linha ruim: tem menos de 3 campos ou um nível desconhecido. Valor inválido numa linha INFO não soma e não é linha ruim.</p>
+  <p><b>Especificação.</b> Entrada: <code>pedidos.log</code>, linhas como <code>2026-03-01 09:00:01 INFO pedido=1001 valor=59.90</code>. Saída: um dicionário com <code>niveis</code> (contagem de INFO, WARNING e ERROR), <code>total_info</code> (soma dos <code>valor=</code> das linhas INFO) e <code>ruins</code> (quantas linhas estavam quebradas). Linha ruim: tem menos de 3 campos ou um nível desconhecido. Valor ausente ou inválido numa linha INFO não soma e não é linha ruim, mas é <b>contado</b> em <code>valores_invalidos</code> (erro tratado não é erro escondido, como na aula 0088).</p>
+  <p><b>Retomada:</b> este é o mesmo projeto do <b>mini-projeto da aula 0090</b> (Módulo 11), agora conduzido com o Claude Code: a contagem por nível vem da aula 0087 e da 0115, o tratamento de linhas ruins da 0088 e da 0117, e a revisão do diff da 0089 e da 0116.</p>
   <p>Siga os passos abaixo em ordem. Em cada um, <b>leia antes de aprovar</b>. Se algo fugir do pedido, recuse e corrija. Os comandos de barra e as ações são os das aulas anteriores.</p>
   <table>
     <tr><th>Passo</th><th>O que fazer</th></tr>
-    <tr><td>1. Preparar</td><td>crie a pasta <code>analisador-pedidos</code>, rode <code>git init</code> e salve ~8 linhas fictícias em <code>pedidos.log</code> (inclua uma linha quebrada e um <code>valor=abc</code>)</td></tr>
-    <tr><td>2. Abrir</td><td><code>claude</code>; confira o modo na barra de status; <code>/init</code> ou escreva o <code>CLAUDE.md</code> (aula 114)</td></tr>
+    <tr><td>1. Preparar</td><td><code>mkdir analisador-pedidos</code> e <code>cd analisador-pedidos</code>; configure sua identidade e rode <code>git init</code> (aula 0117, “Git em 10 minutos”); salve ~8 linhas fictícias em <code>pedidos.log</code> (inclua uma linha quebrada e um <code>valor=abc</code>)</td></tr>
+    <tr><td>2. Abrir</td><td><code>claude</code>; confira na barra de status que está no modo Manual (aula 0112); <code>/init</code> ou escreva o <code>CLAUDE.md</code> (aula 0114)</td></tr>
     <tr><td>3. Explorar</td><td>peça uma leitura do log, sem alterar nada (modo plano com <code>/plan</code>)</td></tr>
     <tr><td>4. Planejar</td><td>cole a especificação e peça um plano em passos pequenos; recuse o que não pediu</td></tr>
     <tr><td>5. Implementar</td><td>peça o passo 1 (contar níveis); leia o diff e aprove só o que combina com o pedido</td></tr>
     <tr><td>6. Verificar</td><td>peça <code>teste_analisador.py</code> com asserts e a saída completa de <code>python teste_analisador.py</code></td></tr>
-    <tr><td>7. Guardar</td><td><code>/diff</code>; depois um commit pequeno com mensagem clara (aula 117)</td></tr>
+    <tr><td>7. Guardar</td><td><code>/diff</code>; depois um commit pequeno com mensagem clara (aula 0117)</td></tr>
     <tr><td>8. Melhorar</td><td>repita 5 a 7 para: ignorar linhas ruins, somar valores INFO, e um quarto passo à sua escolha (por exemplo, um relatório em texto)</td></tr>
     <tr><td>9. Desfazer</td><td>provoque uma edição ruim e use <code>/rewind</code>; note o que ele não cobriria</td></tr>
   </table>
@@ -378,7 +379,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <!-- 2 -->
 <section class="card">
   <h2><span class="num">2</span>Veja funcionando <span class="mins">3 min</span></h2>
-  <p>A regra de “linha ruim” da especificação, em Python. Clique em cada linha.</p>
+  <p>A regra de “linha ruim” da especificação, em Python (a validação de formato do mini-projeto da aula 0090). Clique em cada linha.</p>
   <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>linha_valida.py</span></div>
 <pre class="annot" data-key="k2"><span class="ln" data-note="Os três níveis aceitos.">NIVEIS = ("INFO", "WARNING", "ERROR")</span><span class="ln" data-note="Responde se a linha segue o formato.">def linha_valida(linha):</span><span class="ln" data-note="Quebra a linha nos espaços.">    partes = linha.split()</span><span class="ln" data-note="Tem pelo menos 3 campos &lt;b&gt;e&lt;/b&gt; o terceiro é um nível conhecido. Se &lt;code&gt;len&lt;/code&gt; for menor que 3, o &lt;code&gt;and&lt;/code&gt; nem olha &lt;code&gt;partes[2]&lt;/code&gt; (que daria erro).">    return len(partes) &gt;= 3 and partes[2] in NIVEIS</span><span class="ln" data-note="Mostra &lt;code&gt;True&lt;/code&gt;.">print(linha_valida("2026-03-01 09:00:01 INFO pedido=1001 valor=59.90"))</span><span class="ln" data-note="Mostra &lt;code&gt;False&lt;/code&gt;: só 1 campo.">print(linha_valida("lixo"))</span><span class="ln" data-note="Mostra &lt;code&gt;False&lt;/code&gt;: linha vazia.">print(linha_valida(""))</span></pre>
     <div class="annot-note"><em>Clique numa linha acima.</em></div>
@@ -396,7 +397,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <p>Sobre o roteiro e a especificação. Responda com uma palavra ou número.</p>
   <div class="quest" data-key="k3" data-concept="cc_projeto" data-level="exec" data-ok="Tudo certo. Você aplicou a regra em casos novos.">
     <div class="pred"><span>Antes de aprovar uma edição, o que você lê? (diff ou resumo)</span><input class="q" data-answer="diff" data-label="Item 1" data-why="O diff mostra o que realmente mudou." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
-    <div class="pred"><span>Uma linha INFO com <code>valor=abc</code> conta como linha ruim, segundo a especificação? (sim ou não)</span><input class="q" data-answer="não|nao" data-label="Item 2" data-why="Ela conta como INFO; só não soma ao total. Linha ruim é a que tem menos de 3 campos ou nível desconhecido." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
+    <div class="pred"><span>Uma linha INFO com <code>valor=abc</code> conta como linha ruim, segundo a especificação? (sim ou não)</span><input class="q" data-answer="não|nao" data-label="Item 2" data-why="Ela conta como INFO; só não soma ao total e entra em &lt;code&gt;valores_invalidos&lt;/code&gt;. Linha ruim é a que tem menos de 3 campos ou nível desconhecido." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
     <div class="pred"><span>Qual comando mostra as mudanças antes do commit?</span><input class="q" data-answer="/diff" data-label="Item 3" data-why="&lt;code&gt;/diff&lt;/code&gt; (ou &lt;code&gt;git diff&lt;/code&gt;) mostra o que mudou." placeholder="comece com /" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
     <button class="chk">Conferir</button><div class="fb"></div>
   </div>
@@ -418,8 +419,8 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <!-- 5 -->
 <section class="card">
   <h2><span class="num">5</span>Exercício final: a análise completa <span class="mins">20 min</span></h2>
-  <p>Escreva <code>analisar(linhas)</code> conforme a especificação: devolve <code>{"niveis": {...}, "total_info": X, "ruins": N}</code>. <code>niveis</code> começa com os três níveis em zero (<code>INFO</code>, <code>WARNING</code>, <code>ERROR</code>, nessa ordem). Linha ruim (menos de 3 campos ou nível desconhecido) soma em <code>ruins</code> e é ignorada. <code>total_info</code> soma os <code>valor=</code> das linhas INFO (valor inválido ou ausente não soma), com <code>round(..., 2)</code>. Os asserts já estão no código; com o log de exemplo deve aparecer o dicionário completo.</p>
-  <div class="runner" data-key="k5" data-spec="{&quot;esperado&quot;:[&quot;{'niveis': {'INFO': 3, 'WARNING': 1, 'ERROR': 1}, 'total_info': 149.9, 'ruins': 2}&quot;],&quot;testes&quot;:[[&quot;analisar(['x'])['ruins']&quot;,&quot;1&quot;],[&quot;analisar(['d h ERROR p'])['niveis']['ERROR']&quot;,&quot;1&quot;],[&quot;analisar(['d h INFO p=1 valor=2.5', 'd h INFO p=2 valor=1'])['total_info']&quot;,&quot;3.5&quot;],[&quot;analisar(['d h DEBUG p=1'])['ruins']&quot;,&quot;1&quot;]]}" data-dica="Em cada linha: `partes = linha.split()`. Se `len(partes) &lt; 3 or partes[2] not in niveis`, some 1 em `ruins` e use `continue`. Senão, some 1 em `niveis[partes[2]]`; se for INFO, tente somar `float(partes[4].split(&quot;=&quot;)[1])` num `try/except (IndexError, ValueError)`." data-concept="cc_projeto,cc_testes_git,cc_fluxo" data-level="exec" data-module-final="m15">
+  <p>Escreva <code>analisar(linhas)</code> conforme a especificação: <b>devolve</b> (<code>return</code>) um dicionário com 4 chaves: <code>"niveis"</code> (os três níveis <code>INFO</code>, <code>WARNING</code> e <code>ERROR</code>, começando em zero), <code>"total_info"</code>, <code>"ruins"</code> e <code>"valores_invalidos"</code>. Linha ruim (menos de 3 campos ou nível desconhecido) soma em <code>ruins</code> e é ignorada. <code>total_info</code> soma os <code>valor=</code> das linhas INFO, com <code>round(..., 2)</code>. Numa linha INFO cujo valor falta ou não é número, o valor não soma e você soma 1 em <code>valores_invalidos</code> (não esconda o erro). Os asserts já estão no código; com o log de exemplo o <code>print</code> do final deve mostrar duas linhas: <code>[('ERROR', 1), ('INFO', 3), ('WARNING', 1)]</code> e <code>149.9 2 1</code> (total, ruins, valores inválidos).</p>
+  <div class="runner" data-key="k5" data-spec="{&quot;esperado&quot;:[&quot;[('ERROR', 1), ('INFO', 3), ('WARNING', 1)]&quot;,&quot;149.9 2 1&quot;],&quot;testes&quot;:[[&quot;analisar(['x'])['ruins']&quot;,&quot;1&quot;],[&quot;analisar(['d h ERROR p'])['niveis']['ERROR']&quot;,&quot;1&quot;],[&quot;analisar(['d h INFO p=1 valor=2.5', 'd h INFO p=2 valor=1'])['total_info']&quot;,&quot;3.5&quot;],[&quot;analisar(['d h DEBUG p=1'])['ruins']&quot;,&quot;1&quot;],[&quot;analisar(['d h INFO p=1 valor=abc'])['valores_invalidos']&quot;,&quot;1&quot;],[&quot;analisar(['d h INFO p=1'])['valores_invalidos']&quot;,&quot;1&quot;],[&quot;analisar(['d h WARNING p=1 estoque'])['valores_invalidos']&quot;,&quot;0&quot;]]}" data-dica="Em cada linha: `partes = linha.split()`. Se `len(partes) &lt; 3 or partes[2] not in niveis`, some 1 em `ruins` e use `continue`. Senão, some 1 em `niveis[partes[2]]`; se for INFO, tente somar `float(partes[4].split(&quot;=&quot;)[1])` num `try/except (IndexError, ValueError)` e, no `except`, some 1 em `valores_invalidos` (nada de `pass`)." data-concept="cc_projeto,cc_testes_git,cc_fluxo" data-level="exec" data-module-final="m15">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>analisador.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">def analisar(linhas):
     # niveis, total_info e ruins, conforme a especificação
@@ -437,8 +438,10 @@ log = [
 resultado = analisar(log)
 assert resultado["niveis"]["INFO"] == 3
 assert resultado["ruins"] == 2
-assert analisar([]) == {"niveis": {"INFO": 0, "WARNING": 0, "ERROR": 0}, "total_info": 0.0, "ruins": 0}
-print(resultado)</textarea></div>
+assert resultado["valores_invalidos"] == 1
+assert analisar([]) == {"niveis": {"INFO": 0, "WARNING": 0, "ERROR": 0}, "total_info": 0.0, "ruins": 0, "valores_invalidos": 0}
+print(sorted(resultado["niveis"].items()))
+print(resultado["total_info"], resultado["ruins"], resultado["valores_invalidos"])</textarea></div>
     <button class="run">Executar e conferir</button>
     <div class="out">O resultado aparece aqui.</div><div class="fb"></div>
   </div>
@@ -447,11 +450,11 @@ print(resultado)</textarea></div>
 <!-- 6 -->
 <section class="card">
   <h2><span class="num">6</span>Problema novo: registro de gastos pessoais <span class="mins">15 min</span></h2>
-  <p>Outro contexto, a mesma disciplina. Um registro de gastos pessoais tem linhas <code>data categoria valor</code>, como <code>2026-03-05 mercado 45.90</code>. Escreva <code>gastos_por_categoria(linhas)</code>, que devolve um dicionário categoria → total (com <code>round(..., 2)</code>), <b>ignorando linhas ruins</b> (campos a mais ou a menos, valor que não é número) com <code>try/except ValueError</code>. Com o exemplo deve aparecer <code>{'mercado': 76.0, 'transporte': 8.5, 'lazer': 25.0}</code>.</p>
-  <div class="runner" data-key="k6" data-spec="{&quot;esperado&quot;:[&quot;{'mercado': 76.0, 'transporte': 8.5, 'lazer': 25.0}&quot;],&quot;testes&quot;:[[&quot;gastos_por_categoria(['d a 1', 'd a 2.5'])&quot;,&quot;{'a': 3.5}&quot;],[&quot;gastos_por_categoria(['lixo'])&quot;,&quot;{}&quot;],[&quot;gastos_por_categoria(['d x abc'])&quot;,&quot;{}&quot;]]}" data-dica="Dentro do `try`, desempacote com `data, categoria, valor = linha.split()` (campos a mais ou a menos dão `ValueError`) e some `float(valor)` usando `totais.get(categoria, 0)`. No `except ValueError`, use `pass`." data-concept="cc_projeto,cc_testes_git" data-level="exec" data-transfer="m15">
+  <p>Outro contexto, a mesma disciplina. Um registro de gastos pessoais tem linhas <code>data categoria valor</code>, como <code>2026-03-05 mercado 45.90</code>. Escreva <code>gastos_por_categoria(linhas)</code>, que <b>devolve uma tupla</b> <code>(totais, linhas_ruins)</code>: <code>totais</code> é o dicionário categoria → total (com <code>round(..., 2)</code>) e <code>linhas_ruins</code> é <b>quantas linhas foram ignoradas</b> (campos a mais ou a menos, ou valor que não é número), tratadas com <code>try/except ValueError</code>. Conte cada linha ignorada: não esconda o erro (aula 0088). O <code>print</code> do final deve mostrar duas linhas com o exemplo: <code>[('lazer', 25.0), ('mercado', 76.0), ('transporte', 8.5)]</code> e <code>2</code>.</p>
+  <div class="runner" data-key="k6" data-spec="{&quot;esperado&quot;:[&quot;[('lazer', 25.0), ('mercado', 76.0), ('transporte', 8.5)]&quot;,&quot;2&quot;],&quot;testes&quot;:[[&quot;gastos_por_categoria(['d a 1', 'd a 2.5'])&quot;,&quot;({'a': 3.5}, 0)&quot;],[&quot;gastos_por_categoria(['lixo'])&quot;,&quot;({}, 1)&quot;],[&quot;gastos_por_categoria(['d x abc'])&quot;,&quot;({}, 1)&quot;]]}" data-dica="Comece com `totais = {}` e `linhas_ruins = 0`. Dentro do `try`, desempacote com `data, categoria, valor = linha.split()` (campos a mais ou a menos dão `ValueError`) e some `float(valor)` usando `totais.get(categoria, 0)`. No `except ValueError`, some 1 em `linhas_ruins` (nada de `pass`). No fim, `return totais, linhas_ruins`." data-concept="cc_projeto,cc_testes_git" data-level="exec" data-transfer="m15">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>gastos.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">def gastos_por_categoria(linhas):
-    # some o valor por categoria; ignore linhas ruins com try/except
+    # some o valor por categoria; conte as linhas ruins com try/except
     pass
 
 gastos = [
@@ -462,8 +465,10 @@ gastos = [
     "2026-03-06 lazer abc",
     "2026-03-07 lazer 25",
 ]
-assert gastos_por_categoria([]) == {}
-print(gastos_por_categoria(gastos))</textarea></div>
+assert gastos_por_categoria([]) == ({}, 0)
+totais, ruins = gastos_por_categoria(gastos)
+print(sorted(totais.items()))
+print(ruins)</textarea></div>
     <button class="run">Executar e conferir</button>
     <div class="out">O resultado aparece aqui.</div><div class="fb"></div>
   </div>
@@ -473,7 +478,7 @@ print(gastos_por_categoria(gastos))</textarea></div>
 <section class="card">
   <h2><span class="num">7</span>Relatório do seu projeto <span class="mins">3 min</span></h2>
   <p>Depois de percorrer o roteiro no terminal.</p>
-  <p><strong>Escreva um relatório curto: que pedidos você fez, o que você recusou ou corrigiu no diff, que testes rodou e qual foi a melhoria do passo 8. Se não puder fazer agora, descreva como faria cada passo.</strong></p>
+  <p><strong>Escreva um relatório de 4 linhas: (1) os pedidos que você fez; (2) o que você recusou ou corrigiu no diff; (3) os testes que rodou; (4) a melhoria do passo 8. Se não puder fazer agora, descreva como faria cada passo.</strong></p>
   <div class="open" data-key="k7" data-min="100" data-concept="cc_projeto" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar e comparar</button>
@@ -535,7 +540,7 @@ print(gastos_por_categoria(gastos))</textarea></div>
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Especificar entrada, saída, regras e como testar; explorar e planejar; implementar em passos pequenos; ler o diff antes de aprovar; rodar os testes e ver a saída; fazer commits pequenos; usar dados fictícios e revisar tudo o que o Claude propuser.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) O que deve conter a especificação que você dá ao Claude? (2) Qual a ordem de um passo do projeto? (3) Por que usar dados fictícios no projeto? <a href="recuperacao-0120.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Projeto guiado: o analisador de log de pedidos”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0120.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -731,7 +736,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -923,7 +928,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -1004,13 +1020,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1263,7 +1273,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

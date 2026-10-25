@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 4 · Funções: receitas com nome · Aula 8</div>
   <h1>Mini-projeto: o caixa com funções</h1>
   <p>Hora de montar um caixa de verdade em funções pequenas e testáveis. Depois, as mesmas peças num problema novo: o controle de estoque.</p>
-  <div class="chips"><span class="chip">40 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 40 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Dividir um problema em funções com <code>return</code>.</li>
@@ -345,7 +345,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar</button>
     <div class="fb"></div>
-    <div class="callout model"><span class="tag">Para comparar</span>Uma boa divisão: <code>preco_item(nome)</code> devolve o preço (e 0.0 se o item não existe), <code>desconto(total)</code> devolve o total já com o desconto, e o programa principal lê o pedido, usa as duas e mostra o resultado. Todas <b>devolvem</b> valores (não só mostram), para poderem ser combinadas e testadas.</div>
+    <div class="callout model"><span class="tag">Para comparar</span>Uma boa divisão: <code>preco_item(nome)</code> devolve o preço (e <code>None</code> se o item não existe), <code>desconto(total)</code> devolve o total já com o desconto, e o programa principal lê o pedido, usa as duas e mostra o resultado. Todas <b>devolvem</b> valores (não só mostram), para poderem ser combinadas e testadas.</div>
   </div>
 </section>
 
@@ -354,16 +354,27 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <h2><span class="num">1</span>Um esqueleto de referência <span class="mins">3 min</span></h2>
   <p>Mesma estrutura (funções que devolvem, programa principal que usa), com outro tema.</p>
   <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>esqueleto.py</span></div>
-<pre class="annot" data-key="k2"><span class="ln" data-note="Devolve o preço de um item.">def preco(nome):</span><span class="ln" data-note="Decide pelo nome.">    if nome == "suco":</span><span class="ln" data-note="Devolve o preço do suco.">        return 6.0</span><span class="ln" data-note="Qualquer outro item: 0.0 (desconhecido).">    return 0.0</span><span class="ln" data-note="O programa principal lê o item.">item = input("Item: ")</span><span class="ln" data-note="E a quantidade.">qtd = int(input("Quantidade: "))</span><span class="ln" data-note="Usa a função e mostra formatado.">print(f"Total: R$ {preco(item) * qtd:.2f}")</span></pre>
+<pre class="annot" data-key="k2"><span class="ln" data-note="Devolve o preço de um item.">def preco(nome):</span><span class="ln" data-note="Decide pelo nome.">    if nome == "suco":</span><span class="ln" data-note="Devolve o preço do suco.">        return 6.0</span><span class="ln" data-note="Qualquer outro item: &lt;code&gt;None&lt;/code&gt; (“não sei o preço”).">    return None</span><span class="ln" data-note="O programa principal lê o item.">item = input("Item: ")</span><span class="ln" data-note="E a quantidade.">qtd = int(input("Quantidade: "))</span><span class="ln" data-note="Guarda o que a função devolveu.">valor = preco(item)</span><span class="ln" data-note="&lt;code&gt;is None&lt;/code&gt; pergunta se a função devolveu &lt;code&gt;None&lt;/code&gt; (item desconhecido).">if valor is None:</span><span class="ln" data-note="Avisa, sem calcular nada.">    print("Item desconhecido")</span><span class="ln" data-note="Senão, o item existe...">else:</span><span class="ln" data-note="...e o total é mostrado formatado.">    print(f"Total: R$ {valor * qtd:.2f}")</span></pre>
     <div class="annot-note"><em>Clique numa linha acima.</em></div>
+  </div>
+  <div class="callout term"><span class="tag">Palavras novas</span>
+    <dl>
+      <dt>is None</dt><dd>pergunta se um valor é exatamente <code>None</code> (e <code>is not None</code> pergunta o contrário).</dd>
+    </dl>
   </div>
 </section>
 
 <!-- 2 -->
 <section class="card">
-  <h2><span class="num">2</span>Exercício final (sem dica) <span class="mins">12 min</span></h2>
-  <p>Defina <code>preco_item(nome)</code> (café <code>"cafe"</code> custa 4.5, pão <code>"pao"</code> custa 3.0, qualquer outro devolve 0.0) e <code>desconto(total)</code> (10% de desconto a partir de 20; senão, o mesmo total). Depois peça <code>Item: </code> e <code>Quantidade: </code> e mostre <code>Total: R$ X.XX</code>; se o item for desconhecido, mostre <code>Item desconhecido</code>.</p>
-  <div class="runner" data-key="k3" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;cafe&quot;,&quot;2&quot;],&quot;esperado&quot;:[&quot;Item: cafe&quot;,&quot;Quantidade: 2&quot;,&quot;Total: R$ 9.00&quot;]},{&quot;entradas&quot;:[&quot;pao&quot;,&quot;10&quot;],&quot;esperado&quot;:[&quot;Item: pao&quot;,&quot;Quantidade: 10&quot;,&quot;Total: R$ 27.00&quot;]},{&quot;entradas&quot;:[&quot;suco&quot;,&quot;1&quot;],&quot;esperado&quot;:[&quot;Item: suco&quot;,&quot;Quantidade: 1&quot;,&quot;Item desconhecido&quot;]}],&quot;testes&quot;:[[&quot;preco_item('cafe')&quot;,&quot;4.5&quot;],[&quot;preco_item('pao')&quot;,&quot;3.0&quot;],[&quot;preco_item('suco')&quot;,&quot;0.0&quot;],[&quot;desconto(10)&quot;,&quot;10&quot;],[&quot;desconto(20)&quot;,&quot;18.0&quot;],[&quot;desconto(30)&quot;,&quot;27.0&quot;]]}" data-dica="As duas funções devolvem valores. No programa principal: `preco = preco_item(item)`; se `preco == 0.0`, avise; senão mostre `desconto(preco * qtd)` com `:.2f`." data-concept="funcao_def,funcao_parametros,funcao_return,funcao_composicao" data-level="exec" data-module-final="m04">
+  <h2><span class="num">2</span>Por que None e não 0.0 para “item desconhecido” <span class="mins">4 min</span></h2>
+  <p>Devolver <code>0.0</code> para um item que não existe mistura duas coisas: “custa zero” (um brinde, por exemplo) e “não sei o preço”. Quem chama não consegue separar as duas. O valor <code>None</code>, que você viu na aula do <code>return</code>, diz só “sem resposta”, então o programa pode testar <code>if valor is None:</code> e tratar o caso à parte.</p>
+</section>
+
+<!-- 3 -->
+<section class="card">
+  <h2><span class="num">3</span>Exercício final (sem dica) <span class="mins">12 min</span></h2>
+  <p>Defina <code>preco_item(nome)</code> (café <code>"cafe"</code> custa 4.5, pão <code>"pao"</code> custa 3.0, qualquer outro devolve <code>None</code>) e <code>desconto(total)</code> (10% de desconto a partir de 20; senão, o mesmo total). Depois peça <code>Item: </code> e <code>Quantidade: </code> e mostre <code>Total: R$ X.XX</code>; se o item for desconhecido, mostre <code>Item desconhecido</code>.</p>
+  <div class="runner" data-key="k3" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;cafe&quot;,&quot;2&quot;],&quot;esperado&quot;:[&quot;Item: cafe&quot;,&quot;Quantidade: 2&quot;,&quot;Total: R$ 9.00&quot;]},{&quot;entradas&quot;:[&quot;pao&quot;,&quot;10&quot;],&quot;esperado&quot;:[&quot;Item: pao&quot;,&quot;Quantidade: 10&quot;,&quot;Total: R$ 27.00&quot;]},{&quot;entradas&quot;:[&quot;suco&quot;,&quot;1&quot;],&quot;esperado&quot;:[&quot;Item: suco&quot;,&quot;Quantidade: 1&quot;,&quot;Item desconhecido&quot;]}],&quot;testes&quot;:[[&quot;preco_item('cafe')&quot;,&quot;4.5&quot;],[&quot;preco_item('pao')&quot;,&quot;3.0&quot;],[&quot;preco_item('suco')&quot;,&quot;None&quot;],[&quot;desconto(10)&quot;,&quot;10&quot;],[&quot;desconto(20)&quot;,&quot;18.0&quot;],[&quot;desconto(30)&quot;,&quot;27.0&quot;]]}" data-dica="As duas funções devolvem valores. No programa principal: `preco = preco_item(item)`; se `preco is None`, avise; senão mostre `desconto(preco * qtd)` com `:.2f`." data-concept="funcao_def,funcao_parametros,funcao_return,funcao_composicao" data-level="exec" data-module-final="m04">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>caixa.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off"># defina preco_item e desconto, depois leia o pedido e mostre o total
 </textarea></div>
@@ -372,9 +383,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 3 -->
+<!-- 4 -->
 <section class="card">
-  <h2><span class="num">3</span>Problema novo: o controle de estoque <span class="mins">10 min</span></h2>
+  <h2><span class="num">4</span>Problema novo: o controle de estoque <span class="mins">10 min</span></h2>
   <p>Outro contexto, as mesmas peças. Defina <code>tem_estoque(pedido, disponivel)</code> (devolve <code>True</code> se há o bastante) e <code>restante(disponivel, pedido)</code> (devolve o que sobra). Depois peça <code>Disponível: </code> e <code>Pedido: </code>: se houver estoque, mostre <code>Venda ok. Restam: N</code>; senão, <code>Estoque insuficiente</code>.</p>
   <div class="runner" data-key="k4" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;5&quot;,&quot;3&quot;],&quot;esperado&quot;:[&quot;Disponível: 5&quot;,&quot;Pedido: 3&quot;,&quot;Venda ok. Restam: 2&quot;]},{&quot;entradas&quot;:[&quot;5&quot;,&quot;6&quot;],&quot;esperado&quot;:[&quot;Disponível: 5&quot;,&quot;Pedido: 6&quot;,&quot;Estoque insuficiente&quot;]},{&quot;entradas&quot;:[&quot;5&quot;,&quot;5&quot;],&quot;esperado&quot;:[&quot;Disponível: 5&quot;,&quot;Pedido: 5&quot;,&quot;Venda ok. Restam: 0&quot;]}],&quot;testes&quot;:[[&quot;tem_estoque(3, 5)&quot;,&quot;True&quot;],[&quot;tem_estoque(5, 5)&quot;,&quot;True&quot;],[&quot;tem_estoque(6, 5)&quot;,&quot;False&quot;],[&quot;restante(10, 3)&quot;,&quot;7&quot;]]}" data-dica="`return disponivel &gt;= pedido` e `return disponivel - pedido`; o programa usa a primeira dentro de um `if`." data-concept="funcao_bool,funcao_return,funcao_composicao" data-level="exec" data-transfer="m04">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>estoque.py</span></div>
@@ -385,9 +396,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 4 -->
+<!-- 5 -->
 <section class="card">
-  <h2><span class="num">4</span>Funções que mexem em dinheiro <span class="mins">3 min</span></h2>
+  <h2><span class="num">5</span>Funções que mexem em dinheiro <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>As funções <code>desconto</code> e <code>preco_item</code> decidem quanto o cliente paga. Se alguém alterar o código delas, o preço muda para todos os pedidos.</div>
   <p><strong>Que cuidados de segurança e qualidade você teria com funções que calculam dinheiro?</strong></p>
   <div class="open" data-key="k5" data-min="25">
@@ -398,9 +409,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 5 -->
+<!-- 6 -->
 <section class="card">
-  <h2><span class="num">5</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">6</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k6" data-correta="0" data-concept="funcao_return" data-level="exec">
     <p class="mcq-q">Por que as funções do caixa devem usar <code>return</code>?</p>
@@ -414,9 +425,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <p class="mcq-q">O que <code>preco_item("suco")</code> devolve no exercício?</p>
     <button type="button" class="opt">4.5, o preço do café</button>
     <button type="button" class="opt">3.0, o preço do pão</button>
-    <button type="button" class="opt">0.0, item desconhecido</button>
-    <button type="button" class="opt">None, sem retorno algum</button>
-    <div class="fb"></div><div class="porque">Qualquer item que não seja café ou pão devolve 0.0.</div>
+    <button type="button" class="opt">None, item desconhecido</button>
+    <button type="button" class="opt">0.0, um preço zerado</button>
+    <div class="fb"></div><div class="porque">Qualquer item que não seja café ou pão devolve <code>None</code>: “sem preço”, diferente de um preço 0.0.</div>
   </div>
   <div class="mcq" data-key="k8" data-correta="0" data-concept="funcao_composicao" data-level="exec">
     <p class="mcq-q">Qual é a vantagem de testar cada função separada?</p>
@@ -428,9 +439,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">7</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: como você dividiu o caixa em funções e por que cada uma devolve um valor?</strong></p>
   <div class="open" data-key="k9" data-min="25" data-concept="funcao_composicao" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -438,7 +449,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Uma função devolve o preço de cada item, outra devolve o total com desconto e o programa principal lê o pedido, usa as duas e mostra o resultado. Todas devolvem valores para serem combinadas e testadas separadamente.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Por que as funções do caixa devolvem valores em vez de só mostrá-los? (2) Quais cuidados ter com funções que calculam dinheiro? (3) Para que serve uma função que devolve <code>True</code> ou <code>False</code> num <code>if</code>? <a href="recuperacao-0032.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Mini-projeto: o caixa com funções”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0032.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -634,7 +645,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -826,7 +837,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -907,13 +929,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1166,7 +1182,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

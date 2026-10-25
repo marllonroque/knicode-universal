@@ -43,8 +43,8 @@ aulas.push({
   ],
   recuperacao: [
     { p: "O que é um prompt?", regex: "(texto|pedido|instrucao|mensagem|pergunta)", modelo: "É o texto (o pedido) que a pessoa envia ao Claude.", conceito: "pf_objetivo" },
-    { p: "Quais são as três partes de um pedido com objetivo claro?", regex: "(acao|verbo);;(assunto|o que|sobre);;(finalidade|para que|objetivo)", modelo: "Ação (verbo), assunto (sobre o quê) e finalidade (para quê).", conceito: "pf_objetivo" },
-    { p: "Por que não colar senhas ou CPF no pedido?", regex: "(sensiv|senha|financ|dados|fictici|risco|cautela)", modelo: "Porque são dados sensíveis; use dados fictícios.", conceito: "pf_objetivo" },
+    { p: "Quais são as três partes de um pedido com objetivo claro?", regex: "\\b(acao|verbo);;(assunto|tema|topico|sobre o que|sobre qual);;(finalidade|para que|proposito|para o que)", modelo: "Ação (verbo), assunto (sobre o quê) e finalidade (para quê).", conceito: "pf_objetivo" },
+    { p: "Por que não colar senhas ou CPF no pedido?", regex: "(sensiv|\\bexpo|vaz|risco|privad|confidenc|perig|pessoais|cautela|golpe)", modelo: "Porque são dados sensíveis e podem ser expostos; use dados fictícios.", conceito: "pf_objetivo" },
   ],
 });
 
@@ -61,6 +61,9 @@ aulas.push({
       "**Público** é quem vai ler. **Tom** é o jeito de falar: formal, simples, amigável, direto. Dizer “para clientes de uma loja virtual, em tom simpático e curto” já elimina muitos erros.",
       "Cuidado com o excesso: contexto serve para **orientar**, não para despejar tudo o que você sabe. Inclua só o que muda a resposta." ],
       termos: [["Contexto", "a situação por trás do pedido."], ["Público", "a pessoa que vai ler a resposta."], ["Tom", "o jeito de falar do texto."]], fonte: FONTE_BOAS },
+    { tipo: "texto", titulo: "Ferramenta nova: `\\n`, a quebra de linha", blocos: [
+      "Dentro de um texto de Python, a marca `\\n` (barra invertida e a letra n) significa “quebre a linha aqui”. O Python a entende como uma quebra de linha, e ela não aparece escrita na tela. Exemplo: `print(\"A\\nB\")` mostra `A` numa linha e `B` na linha de baixo.",
+      "O `+` junta textos. Então `\"Objetivo: \" + objetivo + \"\\nPúblico: \" + publico` monta **duas linhas**: uma de objetivo e outra de público. É isso que as atividades a seguir usam." ] },
     { tipo: "prever", texto: "Veja uma função que monta o pedido a partir de partes. Preveja a **segunda linha** da saída.", conceito: "pf_contexto", itens: [
       { codigo: `def montar(objetivo, publico):
     return "Objetivo: " + objetivo + "\\nPúblico: " + publico
@@ -70,7 +73,7 @@ print(montar("explicar juros", "criança de 10 anos"))`, linha: 1, resposta: "P�
 print(len(partes))`, resposta: "3", pergunta: "O que aparece?", porque: "A lista tem 3 itens." }] },
     { tipo: "descobrir", texto: "O mesmo objetivo, com contextos diferentes.", tabela: { cab: ["Pedido", "Resposta esperada"], linhas: [["Explique o que é o boleto.", "Definição geral, sem foco em ninguém."], ["Explique o que é o boleto para quem nunca comprou online, em tom simples, em 3 frases.", "Texto curto, palavras do dia a dia, sem termos técnicos."], ["Explique o que é o boleto para o FAQ da minha loja virtual, em tom simpático.", "Texto no estilo de perguntas frequentes, com cara de loja."]] }, dicas: ["O que mudou entre a primeira e a segunda linha?", "Compare o que cada pedido diz sobre quem lê."],
       pergunta: "O que o contexto e o público mudaram na resposta esperada?", explicacao: "Mudaram o **vocabulário**, o **tamanho** e o **estilo**. O assunto era o mesmo; o contexto disse **onde** a resposta aparece e **quem** lê.", conceito: "pf_contexto" },
-    { tipo: "corrigir", texto: "A função deveria montar as três linhas (`Objetivo`, `Contexto`, `Público`), mas esqueceu o contexto. Conserte a função.", arquivo: "montar_prompt.py", dica: "Falta uma linha entre objetivo e público, usando `contexto`.", conceito: "pf_contexto",
+    { tipo: "corrigir", texto: "A função deveria montar as três linhas (`Objetivo`, `Contexto`, `Público`), mas esqueceu o contexto. Conserte a função.", arquivo: "montar_prompt.py", dica: "Falta uma linha entre objetivo e público, usando `contexto`. Copie o jeito das outras: junte com `+` um texto que começa com `\"\\nContexto: \"`, e depois a variável `contexto`.", conceito: "pf_contexto",
       codigo: `def montar_prompt(objetivo, contexto, publico):
     return "Objetivo: " + objetivo + "\\nPúblico: " + publico
 
@@ -89,9 +92,9 @@ print(montar_prompt("Explicar juros compostos", "App de finanças para iniciante
     { tipo: "fechar", pergunta: "Sem olhar acima: o que são contexto, público e tom, e por que incluí-los?", conceito: "pf_contexto", modelo: "Contexto é a situação do pedido; público, quem vai ler; tom, o jeito de falar. Incluí-los evita que o Claude adivinhe e deixa a resposta pronta para o uso real." },
   ],
   recuperacao: [
-    { p: "Para que serve dizer o público de uma resposta?", regex: "(ler|leitor|quem|linguagem|nivel|vocabulario|ajust)", modelo: "Para ajustar a linguagem e o nível de detalhe a quem vai ler.", conceito: "pf_contexto" },
-    { p: "O que é o tom de um texto?", regex: "(jeito|estilo|forma|formal|simpatic|falar)", modelo: "É o jeito de falar do texto: formal, simpático, direto.", conceito: "pf_contexto" },
-    { p: "Por que não colar dados de clientes como contexto?", regex: "(sensiv|pessoa|expoe|privacidade|fictici|resum|dados)", modelo: "Porque expõe dados pessoais; resuma e use dados fictícios.", conceito: "pf_contexto" },
+    { p: "Para que serve dizer o público de uma resposta?", regex: "(\\bler\\b|\\bleitor|\\bquem\\b|linguagem|nivel|vocabulario|\\bajust|adapt|\\bpara quem)", modelo: "Para ajustar a linguagem e o nível de detalhe a quem vai ler.", conceito: "pf_contexto" },
+    { p: "O que é o tom de um texto?", regex: "\\b(jeito|estilo|forma|maneira|modo)\\b;;(falar|fala|escrev|dizer|formal|simpatic|direto|amigavel|linguagem|texto|escrita)", modelo: "É o jeito de falar do texto: formal, simpático, direto.", conceito: "pf_contexto" },
+    { p: "Por que não colar dados de clientes como contexto?", regex: "(sensiv|pessoais|\\bexpo|privacidade|\\bvaz|confidenc|identific|perig|risco)", modelo: "Porque expõe dados pessoais; resuma e use dados fictícios.", conceito: "pf_contexto" },
   ],
 });
 
@@ -108,6 +111,10 @@ aulas.push({
       "Formatos úteis: **lista** (um item por linha), **tabela** (colunas definidas), **tamanho** (3 frases, até 50 palavras), **campos fixos** (`Nome:` e `Preço:`) e **resposta curta** (só um número).",
       "Um formato claro também permite **conferir por código**: contar linhas, ver se o campo existe, checar se é número." ],
       termos: [["Formato de saída", "o jeito como a resposta deve vir: lista, tabela, tamanho, campos."], ["Campos fixos", "linhas com nomes combinados, como `Nome:` e `Preço:`."]], fonte: FONTE_BOAS },
+    { tipo: "texto", titulo: "Ferramenta nova: `.split()` e `.startswith()`", blocos: [
+      "`.split(\"\\n\")` corta um texto em pedaços toda vez que encontra o separador e devolve uma **lista** com os pedaços. Usando `\\n` (a quebra de linha, vista na aula anterior) como separador, cada linha vira um item: `\"- Pão\\n- Leite\".split(\"\\n\")` dá `['- Pão', '- Leite']`. Já `.split()` com os parênteses vazios separa nas **palavras** (nos espaços): `\"Café forte\".split()` dá `['Café', 'forte']`.",
+      "`.startswith(\"- \")` pergunta se o texto **começa** com aquele pedaço e responde `True` ou `False`: `\"- Pão\".startswith(\"- \")` dá `True`. E `len(lista)` conta os itens da lista, então `len(resposta.split(\"\\n\"))` conta as linhas." ],
+      termos: [["`.split(separador)`", "corta o texto no separador e devolve uma lista de pedaços."], ["`.startswith(início)`", "diz `True` se o texto começa com o início indicado."]] },
     { tipo: "prever", texto: "Preveja o que a função devolve.", conceito: "pf_formato", itens: [
       { codigo: `resposta = "- Pão\\n- Leite\\n- Café"
 print(len(resposta.split("\\n")))`, resposta: "3", pergunta: "O que aparece?", porque: "`split(\"\\n\")` separa por linha: 3 linhas." },
@@ -117,7 +124,7 @@ print(linha.startswith("- "))`, resposta: "True", pergunta: "O que aparece?", po
 print(linha.startswith("- "))`, resposta: "False", pergunta: "O que aparece?", porque: "Não começa com hífen e espaço." }] },
     { tipo: "descobrir", texto: "O mesmo pedido, com e sem formato.", tabela: { cab: ["Pedido", "Resposta esperada"], linhas: [["Sugira nomes para minha loja de plantas.", "Parágrafo longo com explicações misturadas."], ["Sugira 5 nomes para minha loja de plantas, em lista, um por linha, só os nomes.", "5 linhas, cada uma com um nome."], ["Sugira 5 nomes e responda em tabela com as colunas Nome e Motivo (até 8 palavras).", "Tabela de 5 linhas e 2 colunas."]] }, dicas: ["Conte quantas linhas você esperaria em cada resposta.", "Qual das respostas dá para conferir em 5 segundos?"],
       pergunta: "Como o formato ajuda a conferir se o Claude fez o que você pediu?", explicacao: "Com o formato combinado, você sabe **o que contar**: 5 linhas, 2 colunas, até 8 palavras. Se a resposta não bate, você percebe na hora.", conceito: "pf_formato" },
-    { tipo: "escrever", texto: "Escreva `tem_tres_itens(resposta)`: devolve `True` se a resposta tiver **exatamente 3 linhas** começando com `- ` e `False` caso contrário.", arquivo: "confere_formato.py", dica: "Percorra `resposta.split(\"\\n\")` com `for`, conte as linhas que `startswith(\"- \")` e compare o contador com 3.", conceito: "pf_formato",
+    { tipo: "escrever", texto: "Escreva `tem_tres_itens(resposta)`: devolve `True` se a resposta tiver **exatamente 3 linhas que começam** com `- ` (linhas sem hífen não contam) e `False` caso contrário. Entregue a função completa; os três `print` de teste já estão no código.", arquivo: "confere_formato.py", dica: "Percorra `resposta.split(\"\\n\")` com `for`, conte as linhas que `startswith(\"- \")` e compare o contador com 3.", conceito: "pf_formato",
       inicial: `def tem_tres_itens(resposta):
     # conte as linhas que começam com "- " e devolva True se forem 3
     return False
@@ -137,7 +144,7 @@ print(tem_tres_itens("- Pão\\n- Leite\\n- Café"))
 print(tem_tres_itens("Pão, leite e café"))
 print(tem_tres_itens("- a\\n- b\\n- c\\n- d"))` },
     { tipo: "aberta", titulo: "Defina o formato", texto: "Você quer saber os 3 principais cuidados ao comprar um celular usado.", pergunta: "Escreva o pedido definindo o formato (quantidade, lista ou tabela, tamanho de cada item).", minimo: 50, conceito: "pf_formato", modelo: "Exemplo: “Liste os 3 principais cuidados ao comprar um celular usado, um por linha, começando com hífen, cada um com até 12 palavras.”" },
-    { tipo: "aberta", tag: "sec", titulo: "Tabela com dados de verdade", texto: "Para pedir uma tabela de gastos, uma pessoa cola no chat as linhas reais do extrato, com nomes de estabelecimentos e valores.", pergunta: "O que fazer para ter a mesma tabela sem expor os dados?", modelo: "Use **exemplos fictícios** com a mesma forma (“Mercado X, 120,00”) e peça o formato. Depois aplique o modelo, **no seu computador**, aos dados reais. A Anthropic recomenda cautela com dados financeiros.", conceito: "pf_formato" },
+    { tipo: "aberta", tag: "sec", titulo: "Tabela com dados de verdade", texto: "Para pedir uma tabela de gastos, uma pessoa cola no chat as linhas reais do extrato, com nomes de estabelecimentos e valores.", pergunta: "O que fazer para ter a mesma tabela sem expor os dados?", modelo: "Use **exemplos fictícios** com a mesma forma (“Mercado X, 120,00”) e peça o formato. Depois aplique a mesma estrutura numa planilha sua, **no seu computador**, com os dados reais. A Anthropic recomenda cautela com dados financeiros.", conceito: "pf_formato" },
     { tipo: "quiz", itens: [
       { pergunta: "Por que pedir um formato de saída?", opcoes: ["Para a resposta vir mais bonita", "Para a resposta ser mais longa", "Para o Claude pensar menos", "Para usar e conferir fácil"], correta: 3, porque: "O formato deixa a resposta pronta para o uso e fácil de conferir.", conceito: "pf_formato" },
       { pergunta: "Qual pedido define melhor o formato?", opcoes: ["Responda bem e rápido", "Liste 3 itens, um por linha", "Escreva bastante texto", "Seja criativo e original"], correta: 1, porque: "Diz quantidade e como organizar.", conceito: "pf_formato" },
@@ -146,7 +153,7 @@ print(tem_tres_itens("- a\\n- b\\n- c\\n- d"))` },
   ],
   recuperacao: [
     { p: "Por que vale pedir um formato de saída?", regex: "(conferir|usar|pronta|facil|verific|organiz)", modelo: "Porque a resposta vem pronta para usar e é fácil de conferir.", conceito: "pf_formato" },
-    { p: "Cite dois formatos que você pode pedir.", regex: "(lista|tabela|tamanho|frases|campos|curta|numero)", modelo: "Lista e tabela (também tamanho, campos fixos).", conceito: "pf_formato" },
+    { p: "Cite dois formatos que você pode pedir.", regex: "\\b(listas?|tabelas?|tamanho|frases?|campos?|curta|numero|topicos|json|paragrafos?)\\b.*\\b(?!\\1\\b)(listas?|tabelas?|tamanho|frases?|campos?|curta|numero|topicos|json|paragrafos?)\\b", modelo: "Lista e tabela (também tamanho, campos fixos).", conceito: "pf_formato" },
     { p: "Como expor menos dados ao pedir uma tabela de gastos?", regex: "(fictici|exemplo|inventad|sem dados|nao colar|nao cole)", modelo: "Usando exemplos fictícios com a mesma forma.", conceito: "pf_formato" },
   ],
 });
@@ -164,6 +171,10 @@ aulas.push({
       "O guia oficial recomenda exemplos **relevantes** (parecidos com o uso real), **variados** (inclua casos diferentes e até um de borda) e **bem estruturados**, envolvidos em marcas como `<example>`. Ele sugere de 3 a 5 exemplos.",
       "Cuidado: se todos os exemplos forem parecidos, o Claude aprende só aquele jeito. E exemplos errados ensinam o erro." ],
       termos: [["Few-shot", "pedir com poucos exemplos de entrada e saída."], ["Caso de borda", "um caso difícil ou incomum, como uma avaliação neutra."], ["Tag", "marca entre sinais de menor e maior, como `<example>`, para separar partes do pedido."]], fonte: FONTE_BOAS },
+    { tipo: "texto", titulo: "Ferramenta nova: lista de pares e `.join()`", blocos: [
+      "Uma **lista de pares** é uma lista em que cada item tem dois valores entre parênteses: `exemplos = [(\"Chegou rápido\", \"positivo\"), (\"Veio quebrado\", \"negativo\")]`. Cada `(entrada, saida)` é um **par**. No laço `for entrada, saida in exemplos:`, a cada volta o Python separa o par nas duas variáveis, como no `for item, qtd in estoque.items()` que você já usou.",
+      "`\"\\n\".join(linhas)` faz o contrário de `.split()`: junta uma lista de textos num texto só, colocando uma quebra de linha (`\\n`) entre eles. `\"\\n\".join([\"a\", \"b\"])` vira duas linhas: `a` e `b`. E o `.append` (da aula de listas) acrescenta um item no fim de uma lista." ],
+      termos: [["Par", "dois valores juntos entre parênteses, como `(\"Veio quebrado\", \"negativo\")`."], ["`.join(lista)`", "junta os textos da lista num só, com o texto antes do ponto entre eles."]] },
     { tipo: "prever", texto: "Preveja a saída.", conceito: "pf_exemplos", itens: [
       { codigo: `exemplos = [("Chegou rápido", "positivo"), ("Veio quebrado", "negativo")]
 for entrada, saida in exemplos:
@@ -200,7 +211,7 @@ print(montar_few_shot(exemplos, "Produto ok"))` },
     { tipo: "fechar", pergunta: "Sem olhar acima: o que é pedir com exemplos e o que fazer para escolhê-los bem?", conceito: "pf_exemplos", modelo: "É incluir no pedido pares de entrada e saída para o Claude copiar o padrão. Escolha exemplos **corretos, variados** (com um caso de borda) e **parecidos com o uso real**, separados por marcas como `<example>`." },
   ],
   recuperacao: [
-    { p: "O que é pedir com exemplos (few-shot)?", regex: "(exemplo);;(entrada|saida|padrao|par)", modelo: "É incluir exemplos de entrada e saída no pedido para o Claude copiar o padrão.", conceito: "pf_exemplos" },
+    { p: "O que é pedir com exemplos (few-shot)?", regex: "(exemplo);;(entrada|saida|padrao|\\bpares?\\b)", modelo: "É incluir exemplos de entrada e saída no pedido para o Claude copiar o padrão.", conceito: "pf_exemplos" },
     { p: "Como devem ser os exemplos que você escolhe?", regex: "(variad|diferent|diverso|relevant|parecid|corret)", modelo: "Corretos, variados e parecidos com o uso real.", conceito: "pf_exemplos" },
     { p: "Como criar exemplos sem expor clientes reais?", regex: "(fictici|inventad|troc|anonim|sem dados)", modelo: "Criando exemplos fictícios que imitam os reais.", conceito: "pf_exemplos" },
   ],
@@ -219,7 +230,7 @@ aulas.push({
       "O guia oficial orienta ser claro e direto e dizer **o que fazer**: em vez de só “não use jargão”, escreva “use palavras do dia a dia, como numa conversa”. Explicar o **motivo** da restrição também ajuda o Claude a seguir a regra em casos que você não previu.",
       "Restrições servem para conferir: se a regra é mensurável, um programa pequeno diz se a resposta passou." ],
       termos: [["Restrição", "um limite que a resposta precisa respeitar."], ["Mensurável", "que dá para medir ou contar, como número de palavras."]], fonte: FONTE_BOAS },
-    { tipo: "prever", texto: "Preveja a saída.", conceito: "pf_restricoes", itens: [
+    { tipo: "prever", texto: "Preveja a saída. Lembrete: `.split()` sem nada nos parênteses separa o texto nas palavras (aula anterior), e `len` conta os itens da lista.", conceito: "pf_restricoes", itens: [
       { codigo: `texto = "Café forte e aromático"
 print(len(texto.split()))`, resposta: "4", pergunta: "O que aparece?", porque: "`split()` separa por espaços: 4 palavras." },
       { codigo: `texto = "Garantia de cura total"
@@ -228,28 +239,30 @@ print("garantia" in texto.lower())`, resposta: "True", pergunta: "O que aparece?
 print("milagre" in proibidas)`, resposta: "True", pergunta: "O que aparece?", porque: "“milagre” é um item da lista." }] },
     { tipo: "descobrir", texto: "Duas versões da mesma restrição.", tabela: { cab: ["Restrição", "Dá para conferir?"], linhas: [["Seja breve e não exagere.", "Não: “breve” e “exagere” não têm medida."], ["Use até 20 palavras e não prometa resultados (evite “garantido” e “milagre”).", "Sim: contar palavras e procurar as duas palavras."], ["Use só as informações abaixo; se faltar algo, diga que não sabe.", "Sim: comparar com as informações enviadas."]] }, dicas: ["Pergunte: eu consigo contar ou procurar isso na resposta?", "Qual restrição um programa simples verificaria?"],
       pergunta: "O que torna uma restrição boa de verdade?", explicacao: "Ser **mensurável** e dizer **o que fazer**. Assim você (ou um programa) confere se foi cumprida. Restrições vagas não podem ser conferidas.", conceito: "pf_restricoes" },
-    { tipo: "escrever", texto: "Escreva `respeita(resposta, max_palavras, proibidas)`: devolve `True` se a resposta tem no máximo `max_palavras` palavras **e** nenhuma das palavras proibidas (sem diferenciar maiúsculas de minúsculas).", arquivo: "confere_restricoes.py", dica: "Compare `len(resposta.split())` com `max_palavras`, depois percorra `proibidas` com `for` e veja se `p in resposta.lower()`.", conceito: "pf_restricoes",
+    { tipo: "escrever", texto: "Escreva `respeita(resposta, max_palavras, proibidas)`: devolve `True` se a resposta tem no máximo `max_palavras` palavras **e** nenhuma das palavras proibidas (sem diferenciar maiúsculas de minúsculas, tanto na resposta quanto na lista `proibidas`). Entregue a função completa; os três `print` de teste já estão no código.", arquivo: "confere_restricoes.py", dica: "Compare `len(resposta.split())` com `max_palavras`, depois percorra `proibidas` com `for` e veja se `p.lower() in resposta.lower()` (as duas pontas em minúsculas).", conceito: "pf_restricoes",
       inicial: `def respeita(resposta, max_palavras, proibidas):
     # confira o tamanho e as palavras proibidas
     return False
 
 print(respeita("Café forte e aromático", 5, ["milagre"]))
 print(respeita("Café MILAGRE da manhã", 5, ["milagre"]))
-print(respeita("Café forte e aromático da serra", 5, ["milagre"]))`,
-      esperado: ["True", "False", "False"],
+print(respeita("Café forte e aromático da serra", 5, ["milagre"]))
+print(respeita("Café milagre da manhã", 5, ["MILAGRE"]))`,
+      esperado: ["True", "False", "False", "False"],
       solucao: `def respeita(resposta, max_palavras, proibidas):
     if len(resposta.split()) > max_palavras:
         return False
     for p in proibidas:
-        if p in resposta.lower():
+        if p.lower() in resposta.lower():
             return False
     return True
 
 print(respeita("Café forte e aromático", 5, ["milagre"]))
 print(respeita("Café MILAGRE da manhã", 5, ["milagre"]))
-print(respeita("Café forte e aromático da serra", 5, ["milagre"]))` },
+print(respeita("Café forte e aromático da serra", 5, ["milagre"]))
+print(respeita("Café milagre da manhã", 5, ["MILAGRE"]))` },
     { tipo: "aberta", titulo: "Escreva as restrições", texto: "Você quer um texto curto para anunciar um tênis na sua loja virtual (fictícia).", pergunta: "Escreva o pedido com pelo menos três restrições mensuráveis ou verificáveis, e explique o motivo de uma delas.", minimo: 80, conceito: "pf_restricoes", modelo: "Exemplo: “Escreva um anúncio do tênis Corrida Leve (fictício) com até 30 palavras, usando só as informações abaixo e sem prometer resultados, como ‘o mais confortável do mundo’, porque não posso garantir isso ao cliente.” Tem tamanho, fonte permitida e proibição com motivo." },
-    { tipo: "aberta", tag: "sec", titulo: "Restrição que protege", texto: "Você pede ao Claude um resumo de uma conversa com cliente e quer garantir que o resumo não traga dados pessoais.", pergunta: "Que restrição você escreveria? Basta confiar que ele obedeceu?", modelo: "Escreva: “não inclua nomes, telefones nem endereços; troque por ‘o cliente’”. **Não basta confiar**: confira o resultado (leia, ou procure números e nomes) antes de usar ou compartilhar." },
+    { tipo: "aberta", tag: "sec", titulo: "Restrição que protege", texto: "Você pede ao Claude um resumo de uma conversa com cliente e quer garantir que o resumo não traga dados pessoais. Atenção: para resumir, a conversa **já foi enviada** com os nomes dentro. A restrição “não inclua nomes” só controla a **saída**; ela não desfaz o que foi enviado na entrada.", pergunta: "Que restrição você escreveria? Basta confiar que ele obedeceu? E o que fazer com os dados que já estariam na entrada?", modelo: "Escreva: “não inclua nomes, telefones nem endereços; troque por ‘o cliente’”. **Não basta confiar**: confira o resultado (leia, ou procure números e nomes) antes de usar ou compartilhar. E, para proteger de verdade, **tire os nomes e telefones antes de enviar** a conversa (troque por “o cliente”): a restrição na saída não apaga o que já foi para o chat." },
     { tipo: "quiz", itens: [
       { pergunta: "Qual restrição dá para conferir?", opcoes: ["Seja mais ou menos curto", "Escreva bonito e leve", "Use até 20 palavras", "Faça algo bem original"], correta: 2, porque: "Contar palavras é mensurável.", conceito: "pf_restricoes" },
       { pergunta: "Por que explicar o motivo da restrição?", opcoes: ["Para ajudar a seguir a regra", "Para alongar o pedido", "Para o Claude se desculpar", "Para evitar conferência"], correta: 0, porque: "O motivo ajuda o Claude a acertar em casos não previstos.", conceito: "pf_restricoes" },
@@ -257,9 +270,9 @@ print(respeita("Café forte e aromático da serra", 5, ["milagre"]))` },
     { tipo: "fechar", pergunta: "Sem olhar acima: o que faz uma restrição ser boa?", conceito: "pf_restricoes", modelo: "Ser **mensurável**, dizer **o que fazer** (e não só o que evitar) e vir com o **motivo**. Assim dá para conferir se foi cumprida, até com um pequeno programa." },
   ],
   recuperacao: [
-    { p: "O que é uma restrição num pedido?", regex: "(limite|regra|restri|nao pode|deve)", modelo: "Um limite que a resposta precisa respeitar, como tamanho.", conceito: "pf_restricoes" },
-    { p: "O que torna uma restrição boa?", regex: "(mensur|conferir|contar|medir|verific|claro)", modelo: "Ser mensurável, dá para conferir.", conceito: "pf_restricoes" },
-    { p: "Por que conferir a resposta mesmo com restrições escritas?", regex: "(confer|confir|confiar|errar|nao obedec|verific|garant)", modelo: "Porque o Claude pode não seguir; confira antes de usar.", conceito: "pf_restricoes" },
+    { p: "O que é uma restrição num pedido?", regex: "(limite|regra|condicao|nao pode|\\bdeve\\b|exigenc|imposi|obriga)", modelo: "Um limite que a resposta precisa respeitar, como tamanho.", conceito: "pf_restricoes" },
+    { p: "O que torna uma restrição boa?", regex: "(mensur|conferir|contar|medir|verific|\\bclar[ao]|especific|objetiv|numero)", modelo: "Ser mensurável, dá para conferir.", conceito: "pf_restricoes" },
+    { p: "Escrever a restrição no pedido garante que o Claude a cumpriu? Explique.", regex: "(nao|nem);;(garant|obedec|cumpr|segu|ignor|erra|falh|certeza|sempre)", naoRegex: "^\\s*sim\\b|nao precisa|dispensa", modelo: "Não garante: o Claude pode não seguir a restrição; confira antes de usar.", conceito: "pf_restricoes" },
   ],
 });
 
@@ -292,9 +305,9 @@ aulas.push({
     { tipo: "fechar", pergunta: "Sem olhar acima: como e quando pedir que o Claude pergunte o que falta?", conceito: "pf_perguntar", modelo: "Escreva no pedido: “antes de responder, faça até N perguntas de que você precisa e espere minhas respostas”. Vale para tarefas novas ou grandes. Responda sem expor dados sensíveis." },
   ],
   recuperacao: [
-    { p: "Como pedir que o Claude pergunte antes de responder?", regex: "(antes);;(pergunt)", modelo: "Escrevendo: antes de responder, faça perguntas de que precisa.", conceito: "pf_perguntar" },
-    { p: "Quando vale mais a pena pedir perguntas?", regex: "(grande|nova|complex|muitas informac|nao conhec)", modelo: "Em tarefas novas ou grandes, quando não sei o que informar.", conceito: "pf_perguntar" },
-    { p: "O Claude pede sua senha e CPF para ajudar. O que fazer?", regex: "(nao);;(senha|cpf|sensiv|dados|fictici|aproxim)", modelo: "Não informar; usar valores aproximados ou fictícios.", conceito: "pf_perguntar" },
+    { p: "Que frase você escreveria no pedido para o Claude levantar o que falta em vez de já responder?", regex: "(antes|primeiro|so depois);;(pergunt|duvida|questiona)", modelo: "Escrevendo: antes de responder, faça perguntas de que precisa.", conceito: "pf_perguntar" },
+    { p: "Quando vale mais a pena pedir perguntas?", regex: "(\\bgrande|\\bnova|\\bnovo|\\bnovas|\\bnovos|complex|muitas informac|nao conheco|nao sei (o que|como|quais|por onde))", modelo: "Em tarefas novas ou grandes, quando não sei o que informar.", conceito: "pf_perguntar" },
+    { p: "O Claude pede sua senha e CPF para ajudar. O que fazer?", regex: "((nao|nunca|jamais)( \\w+){0,3} (informar|responder|enviar|passar|dar|fornecer|compartilh\\w*|colocar|digitar|mandar|dizer|contar|revelar)|recus|negar|fictici|aproxim|inventad|nao e (preciso|necessario))", naoRegex: "nao (tem|ha) (nenhum )?problema|e necessario responder|tudo bem responder", modelo: "Não informar; usar valores aproximados ou fictícios.", conceito: "pf_perguntar" },
   ],
 });
 
@@ -311,6 +324,10 @@ aulas.push({
       "Como conferir: **contas** (refaça, ou use uma calculadora ou um programa), **fatos e datas** (procure numa fonte confiável), **citações e links** (abra e leia a fonte; quando houver busca na web, abra as fontes citadas), **código** (rode com testes). Quanto maior o risco da decisão (saúde, dinheiro, lei), mais rigorosa a conferência.",
       "Você também pode ajudar no pedido: “se não tiver certeza, diga; não invente fontes”. Isso **ajuda**, mas não substitui a conferência." ],
       termos: [["Alucinação", "quando o Claude inventa um fato, número ou fonte que parece real."], ["Fonte", "o lugar de onde a informação vem, como um site oficial."]], fonte: FONTE_ERROS },
+    { tipo: "texto", titulo: "Ferramenta nova: `abs()` e o problema dos decimais", blocos: [
+      "O computador guarda números decimais (como 19.9) de forma **aproximada**. Por isso `19.9 * 3` dá `59.699999999999996` e não exatamente `59.7`, e `19.9 * 3 == 59.7` dá `False`, mesmo a conta estando certa. A diferença é minúscula, mas o `==` não perdoa.",
+      "Há dois jeitos de comparar decimais, e eles aparecem nesta aula. **Arredondar** com `round(valor, 2)` (duas casas) antes de comparar: é o que o exercício de prever faz com a conta refeita, comparando-a com um total já escrito com duas casas. **Aceitar uma diferença pequena**: `abs(a - b) < 0.01`. A função `abs` devolve o número sem o sinal (`abs(10 - 12)` e `abs(12 - 10)` dão `2`), então a ordem da subtração não importa. Esse segundo jeito é o do exercício de escrever, porque o total dito pelo Claude vem de fora e pode ter sido arredondado de outra forma." ],
+      termos: [["`abs(número)`", "devolve o número sem o sinal, ou seja, a distância até zero."], ["`round(valor, 2)`", "arredonda o valor para 2 casas decimais."]] },
     { tipo: "prever", texto: "Preveja o que o programa mostra.", conceito: "pf_verificar", itens: [
       { codigo: `preco = 19.9
 qtd = 3
@@ -321,7 +338,7 @@ print(dito == certo)`, resposta: "False", pergunta: "O que aparece?", porque: "5
       { codigo: `print(abs(10 - 12))`, resposta: "2", pergunta: "O que aparece?", porque: "`abs` dá a diferença sem sinal: 2." }] },
     { tipo: "descobrir", texto: "Que conferência serve para cada tipo de resposta?", tabela: { cab: ["Resposta do Claude", "Como conferir"], linhas: [["Total de uma compra: R$ 59,70", "Refazer a conta (ou programa)."], ["Lei X diz que o prazo é 30 dias", "Abrir a fonte oficial e ler o trecho."], ["Função que valida e-mails", "Rodar com testes, incluindo casos de borda."], ["Livro Y, página 45, diz...", "Procurar o livro; a citação pode ser inventada."]] }, dicas: ["Para cada linha, pergunte: onde está a prova?", "Contas, fontes e código têm provas diferentes."],
       pergunta: "O que há em comum entre essas conferências?", explicacao: "Todas buscam uma **prova fora da resposta**: uma conta refeita, uma fonte oficial, um teste. Conferir é **comparar** com algo independente.", conceito: "pf_verificar" },
-    { tipo: "escrever", texto: "Escreva `confere_total(preco, qtd, total_dito)`: devolve `True` se o total dito pelo Claude é igual (diferença menor que 0.01) a `preco * qtd`, e `False` caso contrário.", arquivo: "confere_conta.py", dica: "Calcule `certo = preco * qtd` e compare `abs(certo - total_dito) < 0.01`.", conceito: "pf_verificar",
+    { tipo: "escrever", texto: "Escreva `confere_total(preco, qtd, total_dito)`: devolve `True` se o total dito pelo Claude é igual (diferença menor que 0.01, pois decimais não são exatos) a `preco * qtd`, e `False` caso contrário. Entregue a função completa; os três `print` de teste já estão no código.", arquivo: "confere_conta.py", dica: "Calcule `certo = preco * qtd` e compare `abs(certo - total_dito) < 0.01`.", conceito: "pf_verificar",
       inicial: `def confere_total(preco, qtd, total_dito):
     # refaça a conta e compare
     return False
@@ -347,8 +364,8 @@ print(confere_total(10, 4, 40))` },
   ],
   recuperacao: [
     { p: "Por que conferir uma resposta do Claude?", regex: "(errar|erro|inventa|alucin|nao e fonte|incorret|duvid)", modelo: "Porque ele pode errar ou inventar fatos.", conceito: "pf_verificar" },
-    { p: "Como conferir uma conta que o Claude fez?", regex: "(refaz|refaz|calculadora|programa|recalcul|conta)", modelo: "Refazendo a conta por fora (calculadora ou programa).", conceito: "pf_verificar" },
-    { p: "O que fazer com uma citação que você não acha na fonte?", regex: "(nao usar|nao confi|inventad|nao confirm|descart|duvid|nao use)", modelo: "Tratar como não confirmada e não usar.", conceito: "pf_verificar" },
+    { p: "Como conferir uma conta que o Claude fez?", regex: "(refaz|refac|calcul|por fora|planilha|na mao|somar de novo|conferir (na|com) )", naoRegex: "proprio claude|pergunt\\w* (ao|a) claude|pergunt\\w* se (ele )?(tem|esta|e)", modelo: "Refazendo a conta por fora (calculadora ou programa).", conceito: "pf_verificar" },
+    { p: "O que fazer com uma citação que você não acha na fonte?", regex: "(nao (usar|use|utiliz|confi|aceit|cit|copi|confirm)|descart|desconfi|suspeit|(tratar|trate|considerar|considere) (como )?(\\w+ )?(inventad|nao confirm|duvid)|duvid)", modelo: "Tratar como não confirmada e não usar.", conceito: "pf_verificar" },
   ],
 });
 
@@ -374,7 +391,7 @@ aulas.push({
     { tipo: "descobrir", texto: "Um pedido vago e sua versão completa.", tabela: { cab: ["Vago", "Completo"], linhas: [["Explique investimentos.", "Explique a diferença entre poupança e CDB (conceitos gerais, sem recomendar produto), para quem nunca investiu, em 5 frases simples, citando o que conferir em fonte oficial. Antes, faça até 3 perguntas, se precisar."]] }, dicas: ["Marque no pedido completo: objetivo, público, formato, restrição.", "Há alguma instrução de conferência?"],
       pergunta: "Quais peças do roteiro aparecem no pedido completo?", explicacao: "**Objetivo** (explicar a diferença), **público** (quem nunca investiu), **formato** (5 frases), **restrição** (sem recomendar produto), **conferência** (fonte oficial) e **perguntas** (até 3). O assunto é o mesmo; o resultado muda muito.", conceito: "pf_projeto" },
     { tipo: "aberta", tag: "sec", titulo: "Antes de enviar", texto: "Ao reescrever o pedido sobre as finanças dela, uma pessoa quer incluir a renda real, o nome do banco e as dívidas verdadeiras para a resposta ser mais precisa.", pergunta: "Isso é necessário? Que alternativa mantém a resposta útil?", modelo: "Raramente é necessário. Use **valores aproximados e fictícios** com a mesma proporção (por exemplo, “renda de 3 mil, dívida de 500”) e **não inclua** nome de banco, conta ou documentos. A Anthropic recomenda cautela com dados financeiros." },
-    { tipo: "aberta", titulo: "Mini-projeto: reescreva 5 pedidos", final: true, minutos: 15, texto: "Reescreva os 5 pedidos vagos da tabela da seção 1 (use dados fictícios). Para cada um, escreva: o **pedido completo** (objetivo, contexto/público, formato e uma restrição) e **como você conferiria a resposta**. Numere de 1 a 5.", pergunta: "Escreva os 5 pedidos reescritos e a conferência de cada um.", minimo: 300, conceito: "pf_projeto", dicas: ["Para cada pedido, responda: quem lê, em que formato e com que limite?", "Para a conferência, pense na prova: conta refeita, fonte aberta, contagem de linhas ou leitura final por você."], rotuloModelo: "Exemplo de um dos cinco", modelo: "Pedido 1 (vago: “Escreva uma descrição para meu produto”): “Escreva uma descrição de 3 frases para a vela aromática Lavanda (fictícia), para a página de produto da minha loja virtual, para clientes que buscam presente, em tom simpático, sem prometer efeitos de saúde.” Conferência: contar as frases, procurar promessas de saúde e comparar cada fato com a ficha do produto. Nos demais, repita o raciocínio: objetivo, contexto/público, formato, restrição e prova de conferência." },
+    { tipo: "aberta", titulo: "Mini-projeto: reescreva 5 pedidos", final: true, minutos: 15, texto: "Reescreva os 5 pedidos vagos da tabela “Pedido vago / Qual peça mais falta?”, na seção “A receita completa” (use dados fictícios). Para cada um, escreva: o **pedido completo** (objetivo, contexto/público, formato e uma restrição) e **como você conferiria a resposta**. Numere de 1 a 5.", pergunta: "Escreva os 5 pedidos reescritos e a conferência de cada um.", minimo: 300, conceito: "pf_projeto", dicas: ["Para cada pedido, responda: quem lê, em que formato e com que limite?", "Para a conferência, pense na prova: conta refeita, fonte aberta, contagem de linhas ou leitura final por você."], rotuloModelo: "Exemplo de um dos cinco", modelo: "Pedido 1 (vago: “Escreva uma descrição para meu produto”): “Escreva uma descrição de 3 frases para a vela aromática Lavanda (fictícia), para a página de produto da minha loja virtual, para clientes que buscam presente, em tom simpático, sem prometer efeitos de saúde.” Conferência: contar as frases, procurar promessas de saúde e comparar cada fato com a ficha do produto. Nos demais, repita o raciocínio: objetivo, contexto/público, formato, restrição e prova de conferência." },
     { tipo: "aberta", titulo: "Problema novo: pedido de estudo", transfer: true, minutos: 8, texto: "Outro contexto, o mesmo método. Pedido vago: “Me explica fotossíntese.”", pergunta: "Reescreva para um estudante de 14 anos que tem prova na sexta, e diga como confirmaria que a explicação está correta.", minimo: 80, conceito: "pf_projeto", modelo: "Exemplo: “Explique a fotossíntese para um estudante de 14 anos que tem prova na sexta, em 5 frases simples com um exemplo do dia a dia, e termine com 3 perguntas de revisão (sem as respostas).” Conferência: comparar a explicação com o livro didático da escola e resolver as 3 perguntas sem consultar a resposta do Claude." },
     { tipo: "quiz", itens: [
       { pergunta: "Todo pedido precisa de todas as peças?", opcoes: ["Sim, sempre todas", "Só de algumas, as úteis", "Nunca precisa de nada", "Apenas de exemplos"], correta: 1, porque: "Use as peças que fazem diferença para a tarefa.", conceito: "pf_projeto" },
@@ -383,9 +400,9 @@ aulas.push({
     { tipo: "fechar", pergunta: "Sem olhar acima: descreva o roteiro para transformar um pedido vago em um bom pedido.", conceito: "pf_projeto", modelo: "Ação, assunto e finalidade; contexto e público; formato; restrições mensuráveis; exemplos quando ajudam; perguntas se a tarefa for grande. Depois, **conferir** a resposta com uma prova." },
   ],
   recuperacao: [
-    { p: "Cite três peças de um bom pedido.", regex: "(objetivo|contexto|publico|formato|restric|exemplo)", modelo: "Objetivo, contexto e formato.", conceito: "pf_projeto" },
+    { p: "Cite três peças de um bom pedido.", regex: "\\b(objetivo|contexto|publico|tom|formato|exemplos?|restric\\w*|pergunt\\w*|confer\\w*|verific\\w*)\\b.*?\\b(?!\\1\\b)(objetivo|contexto|publico|tom|formato|exemplos?|restric\\w*|pergunt\\w*|confer\\w*|verific\\w*)\\b.*?\\b(?!\\1\\b|\\2\\b)(objetivo|contexto|publico|tom|formato|exemplos?|restric\\w*|pergunt\\w*|confer\\w*|verific\\w*)\\b", modelo: "Objetivo, contexto e formato.", conceito: "pf_projeto" },
     { p: "O que fazer depois de receber uma resposta importante?", regex: "(conferir|verific|checar|prova|fonte|refaz)", modelo: "Conferir com uma prova externa.", conceito: "pf_projeto" },
-    { p: "Por que usar valores fictícios ao reescrever pedidos sobre dinheiro?", regex: "(fictici|sensiv|privacidade|expor|seguranca|dados reais|aproxim)", modelo: "Para não expor dados financeiros reais.", conceito: "pf_projeto" },
+    { p: "Ao reescrever um pedido sobre as suas finanças, por que não colocar a renda, o banco e as dívidas verdadeiros?", regex: "(sensiv|privacidade|\\bexpo|\\bvaz|seguranca|confidenc|perig|risco|protec|proteg)", modelo: "Para não expor dados financeiros reais.", conceito: "pf_projeto" },
   ],
 });
 

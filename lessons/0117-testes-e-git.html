@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 15 · Claude Code · Aula 7</div>
   <h1>Rodar os testes e guardar no Git, em passos pequenos</h1>
   <p>Mudança sem teste é palpite, e mudança sem commit é difícil de desfazer. Hoje você pede os testes ao Claude, lê a saída e guarda cada passo num commit pequeno.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 45 minutos</span><span class="chip">Precisa do Claude Code (aula 0111) e do Git</span><span class="chip">Python aqui na página</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Pedir ao Claude para rodar os testes e ler a evidência.</li>
@@ -375,8 +375,35 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 2 -->
 <section class="card">
-  <h2><span class="num">2</span>Veja funcionando <span class="mins">3 min</span></h2>
-  <p>Logs reais têm linhas ruins. O <code>try/except</code> trata o erro sem derrubar o programa. Clique em cada linha.</p>
+  <h2><span class="num">2</span>Git em 10 minutos (base para o futuro módulo de Git) <span class="mins">4 min</span></h2>
+  <p>Até aqui o Git apareceu só por conversa com o Claude. Esta é a versão <b>manual</b>, para você entender e conferir o que ele faz. É uma <b>base para o futuro módulo de Git</b> do curso, que vai aprofundar; aqui está só o essencial. Para saber se o Git está instalado, rode <code>git --version</code>; se não aparecer uma versão, instale pela página oficial (git-scm.com/install, com Windows, macOS e Linux).</p>
+  <p><b>Uma vez só, diga ao Git quem você é.</b> Cada commit guarda um nome e um e-mail, gravados nele: <code>git config --global user.name "Seu Nome"</code> e <code>git config --global user.email "voce@exemplo.com"</code>. O <code>--global</code> vale para todos os seus projetos. Pense no e-mail que você aceita deixar gravado nos commits.</p>
+  <p><b>Começar:</b> dentro da pasta do projeto, <code>git init</code> cria o repositório (uma pasta oculta <code>.git</code>; nada é guardado ainda). O ciclo de cada passo é: <code>git status</code> (o que mudou) → <code>git diff</code> (as mudanças, linha a linha) → <code>git add arquivo</code> (escolhe o que entra no próximo commit) → <code>git commit -m "mensagem"</code> (guarda) → <code>git log --oneline</code> (lista os commits, um por linha). Para o primeiro commit do projeto: <code>git add .</code> (tudo da pasta; confira antes com <code>git status</code> que não há segredos nem dados reais) e <code>git commit -m "primeiro commit"</code>.</p>
+  <p><b>Voltar ao ponto em que tudo funcionava:</b> se você editou um arquivo e quer <b>jogar fora as edições</b> que ainda não preparou, <code>git restore analisador.py</code> devolve o arquivo ao estado guardado (se você não usou <code>git add</code> nele, é o do último commit). <b>As edições descartadas não voltam</b>: veja antes com <code>git diff</code>. Se você já usou <code>git add</code> no arquivo, <code>git restore --source=HEAD --staged --worktree analisador.py</code> volta o arquivo ao último commit. Por isso um commit antes de cada pedido arriscado é o seu ponto de retorno.</p>
+  <table>
+    <tr><th>Comando</th><th>O que faz</th></tr>
+    <tr><td><code>git init</code></td><td>cria o repositório na pasta do projeto</td></tr>
+    <tr><td><code>git status</code></td><td>mostra o que mudou e o que já está preparado (<code>git status -s</code> é a versão curta)</td></tr>
+    <tr><td><code>git diff</code></td><td>mostra as mudanças ainda não preparadas</td></tr>
+    <tr><td><code>git add arquivo</code></td><td>prepara o conteúdo atual do arquivo para o próximo commit</td></tr>
+    <tr><td><code>git diff --staged</code></td><td>mostra o que já foi preparado para o commit</td></tr>
+    <tr><td><code>git commit -m "mensagem"</code></td><td>guarda o que foi preparado, com a mensagem</td></tr>
+    <tr><td><code>git log --oneline</code></td><td>lista os commits, um por linha</td></tr>
+    <tr><td><code>git restore arquivo</code></td><td>descarta as edições ainda não preparadas (sem volta)</td></tr>
+  </table>
+  <div class="callout term"><span class="tag">Palavras novas</span>
+    <dl>
+      <dt>Repositório</dt><dd>a pasta do projeto junto com o histórico que o Git guarda dela.</dd>
+      <dt>Área de preparo (índice)</dt><dd>a lista do que vai entrar no próximo commit; o <code>git add</code> coloca coisas nela.</dd>
+    </dl>
+  </div>
+  <p class="fonte">Fonte: Pro Git (git-scm.com/book/en/v2): capítulos Getting Started e Git Basics; manual do comando em git-scm.com/docs/git-restore. Conferido em 2026-10-25; a saída exata de cada comando varia com a versão do Git.</p>
+</section>
+
+<!-- 3 -->
+<section class="card">
+  <h2><span class="num">3</span>Veja funcionando <span class="mins">3 min</span></h2>
+  <p>Logs reais têm linhas ruins. O <code>try/except</code> trata o erro sem derrubar o programa; é o mesmo <code>try/except</code> da <b>aula 0088</b> (Módulo 11), com o mesmo cuidado: tratar o erro <b>não é escondê-lo</b>, então depois vamos <b>contar</b> as linhas ruins. Clique em cada linha.</p>
   <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>ler_valor.py</span></div>
 <pre class="annot" data-key="k2"><span class="ln" data-note="Lê o valor de uma linha do log.">def ler_valor(linha):</span><span class="ln" data-note="Tenta fazer isto; se der um dos erros listados, vai para o &lt;code&gt;except&lt;/code&gt;.">    try:</span><span class="ln" data-note="Corta a linha em “valor=” e pega o que vem depois. Sem “valor=”, dá &lt;code&gt;IndexError&lt;/code&gt;.">        trecho = linha.split("valor=")[1]</span><span class="ln" data-note="Converte para número. Com “abc”, dá &lt;code&gt;ValueError&lt;/code&gt;.">        return float(trecho)</span><span class="ln" data-note="Captura &lt;b&gt;só&lt;/b&gt; esses dois erros esperados.">    except (IndexError, ValueError):</span><span class="ln" data-note="Linha ruim: devolve &lt;code&gt;None&lt;/code&gt; (nada) em vez de travar.">        return None</span><span class="ln" data-note="Mostra &lt;code&gt;59.9&lt;/code&gt;.">print(ler_valor("2026-03-01 09:00:01 INFO pedido=1001 valor=59.90"))</span><span class="ln" data-note="Mostra &lt;code&gt;None&lt;/code&gt;: não há valor.">print(ler_valor("2026-03-01 09:00:07 WARNING pedido=1002 estoque baixo"))</span><span class="ln" data-note="Mostra &lt;code&gt;None&lt;/code&gt;: valor inválido.">print(ler_valor("2026-03-01 09:00:09 INFO pedido=1005 valor=abc"))</span></pre>
     <div class="annot-note"><em>Clique numa linha acima.</em></div>
@@ -390,10 +417,10 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 3 -->
+<!-- 4 -->
 <section class="card">
-  <h2><span class="num">3</span>Rode você mesmo <span class="mins">4 min</span></h2>
-  <p>Rode e depois troque o último <code>print</code> por uma linha com <code>valor=</code> vazio (<code>valor=</code>). O que acontece?</p>
+  <h2><span class="num">4</span>Rode você mesmo <span class="mins">4 min</span></h2>
+  <p>Rode: aparecem <code>10.5</code> e <code>None</code>. Depois troque o último <code>print</code> por <code>print(ler_valor("INFO pedido=3 valor="))</code> e rode de novo: aparece <code>None</code>, porque <code>float("")</code> dá <code>ValueError</code> e o <code>except</code> o captura.</p>
   <div class="runner" data-key="k3">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>ler_valor.py (pode editar)</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">def ler_valor(linha):
@@ -427,9 +454,9 @@ print(x)</pre></div>
   </div>
 </section>
 
-<!-- 4 -->
+<!-- 5 -->
 <section class="card">
-  <h2><span class="num">4</span>Que linhas o programa aceita? <span class="mins">5 min</span></h2>
+  <h2><span class="num">5</span>Que linhas o programa aceita? <span class="mins">5 min</span></h2>
   <p>A função <code>ler_valor</code> recebe linhas diferentes.</p>
   <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>ler_valor.py</span></div>
 <pre class="hl">def ler_valor(linha):
@@ -457,13 +484,13 @@ print(ler_valor(linha))</pre></div>
     </div>
     <button class="reg">Registrar e ver a explicação</button>
     <div class="fb"></div>
-    <div class="callout model"><span class="tag">Explicação</span>Uma linha quebrada não deve derrubar a análise das outras 9.999. Mas capturar <b>tudo</b> esconde defeitos de verdade (um erro de digitação no código seria “tratado” em silêncio). Por isso o <code>except</code> lista <b>só os erros esperados</b>: <code>IndexError</code> e <code>ValueError</code>.</div>
+    <div class="callout model"><span class="tag">Explicação</span>Uma linha quebrada não deve derrubar a análise das outras 9.999. Mas capturar <b>tudo</b> esconde defeitos de verdade (um erro de digitação no código seria “tratado” em silêncio). Por isso o <code>except</code> lista <b>só os erros esperados</b>: <code>IndexError</code> e <code>ValueError</code>. E, como na aula 0088, <b>tratar não é esconder</b>: quem trata a linha ruim deve <b>contá-la</b>, para você saber se o resultado merece confiança (é o que o próximo exercício faz).</div>
   </div>
 </section>
 
-<!-- 5 -->
+<!-- 6 -->
 <section class="card">
-  <h2><span class="num">5</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
+  <h2><span class="num">6</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
   <p>Responda “sim” ou “não”.</p>
   <div class="quest" data-key="k6" data-concept="cc_testes_git" data-level="exec" data-ok="Tudo certo. Você aplicou a regra em casos novos.">
     <div class="pred"><span>“ajustes” é uma boa mensagem de commit? (sim ou não)</span><input class="q" data-answer="não|nao" data-label="Item 1" data-why="Não diz o que mudou nem por quê; prefira uma frase descritiva." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
@@ -473,9 +500,9 @@ print(ler_valor(linha))</pre></div>
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>Conserte o erro <span class="mins">4 min</span></h2>
+  <h2><span class="num">7</span>Conserte o erro <span class="mins">4 min</span></h2>
   <p>A função só trata <code>IndexError</code>, então <code>valor=abc</code> derruba o programa com <code>ValueError</code>. Conserte <b>uma linha</b> para mostrar <code>10.5</code>, <code>None</code> e <code>None</code>.</p>
   <div class="runner" data-key="k7" data-spec="{&quot;esperado&quot;:[&quot;10.5&quot;,&quot;None&quot;,&quot;None&quot;]}" data-dica="O `except` aceita uma lista de erros entre parênteses: `except (IndexError, ValueError):`." data-concept="cc_testes_git" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>com_defeito.py</span></div>
@@ -493,11 +520,11 @@ print(ler_valor("WARNING pedido=3"))</textarea></div>
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">7</span>Escreva o seu <span class="mins">5 min</span></h2>
-  <p>Escreva <code>total_info(linhas)</code>: soma o valor (<code>valor=...</code>) das linhas de nível <b>INFO</b>, ignorando linhas ruins (vazias, quebradas, sem valor ou com valor inválido) sem travar. Os <code>assert</code> já estão no código; com o log de exemplo deve aparecer <code>65.5</code>.</p>
-  <div class="runner" data-key="k8" data-spec="{&quot;esperado&quot;:[&quot;65.5&quot;],&quot;testes&quot;:[[&quot;total_info(['d h INFO p=1 valor=2.5', 'd h ERROR p=2 valor=9'])&quot;,&quot;2.5&quot;],[&quot;total_info(['d h INFO p=1 valor=abc'])&quot;,&quot;0.0&quot;]]}" data-dica="Em cada volta: `partes = linha.split()`; se `partes[2]` não for &quot;INFO&quot;, use `continue`; senão some `float(partes[4].split(&quot;=&quot;)[1])`. Tudo dentro de um `try`, com `except (IndexError, ValueError): pass`. No fim, `return round(total, 2)`." data-concept="cc_testes_git" data-level="exec">
+  <h2><span class="num">8</span>Escreva o seu <span class="mins">5 min</span></h2>
+  <p>Escreva <code>total_info(linhas)</code>: soma o valor (<code>valor=...</code>) das linhas de nível <b>INFO</b>. Linhas ruins (vazias, quebradas, sem valor ou com valor inválido) não podem travar o programa <b>nem passar em silêncio</b> (aula 0088): conte-as. A função <b>devolve uma tupla</b> <code>(total, valores_invalidos)</code>: <code>total</code> é a soma, com <code>round(total, 2)</code>, e <code>valores_invalidos</code> é quantas linhas deram erro ao ler. Linhas WARNING e ERROR <b>não</b> contam como inválidas: são apenas puladas. Os <code>assert</code> já estão no código; com o log de exemplo deve aparecer <code>(65.5, 3)</code>.</p>
+  <div class="runner" data-key="k8" data-spec="{&quot;esperado&quot;:[&quot;(65.5, 3)&quot;],&quot;testes&quot;:[[&quot;total_info(['d h INFO p=1 valor=2.5', 'd h ERROR p=2 valor=9'])&quot;,&quot;(2.5, 0)&quot;],[&quot;total_info(['d h INFO p=1 valor=abc'])&quot;,&quot;(0.0, 1)&quot;],[&quot;total_info(['d h WARNING p=1 estoque baixo'])&quot;,&quot;(0.0, 0)&quot;]]}" data-dica="Comece com `total = 0.0` e `valores_invalidos = 0`. Em cada volta, dentro de um `try`: `partes = linha.split()`; se `partes[2]` não for &quot;INFO&quot;, use `continue`; senão some `float(partes[4].split(&quot;=&quot;)[1])`. No `except (IndexError, ValueError):` some 1 em `valores_invalidos` (não use `pass`: o erro deve ser contado). No fim, `return round(total, 2), valores_invalidos`." data-concept="cc_testes_git" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>meu_programa.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">def total_info(linhas):
     # some os valores das linhas INFO; use try/except para linhas ruins
@@ -511,20 +538,20 @@ log = [
     "linha quebrada",
     "2026-03-03 11:02:00 INFO pedido=3004 valor=25.50",
 ]
-assert total_info([]) == 0
-assert total_info(["d h INFO pedido=1 valor=10"]) == 10
-assert total_info(["lixo", ""]) == 0
+assert total_info([]) == (0, 0)
+assert total_info(["d h INFO pedido=1 valor=10"]) == (10, 0)
+assert total_info(["lixo", ""]) == (0, 2)
 print(total_info(log))</textarea></div>
     <button class="run">Executar e conferir</button>
     <div class="out">O resultado aparece aqui.</div><div class="fb"></div>
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">8</span>Faça isto no seu terminal <span class="mins">3 min</span></h2>
+  <h2><span class="num">9</span>Faça isto no seu terminal <span class="mins">3 min</span></h2>
   <p>Roteiro: com o <code>analisador-pedidos</code> no Git, peça: “acrescente a função total_info em analisador.py e um teste em teste_analisador.py; rode os testes e mostre a saída completa”. Leia a saída. Se passar, veja <code>/diff</code>, e só então peça: “crie um commit com a mensagem: soma o valor das linhas INFO”.</p>
-  <p><strong>Escreva a sequência de 3 commits pequenos que você faria para o analisador (por exemplo, contar níveis, ignorar linhas ruins, somar valores), cada um com mensagem e com o que você confere antes de guardar.</strong></p>
+  <p><strong>Escreva 3 linhas, uma por commit pequeno do analisador (por exemplo, contar níveis, ignorar linhas ruins, somar valores), no formato “mensagem — o que confiro antes de guardar”.</strong></p>
   <div class="open" data-key="k9" data-min="90" data-concept="cc_testes_git" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar e comparar</button>
@@ -533,9 +560,9 @@ print(total_info(log))</textarea></div>
   </div>
 </section>
 
-<!-- 9 -->
+<!-- 10 -->
 <section class="card">
-  <h2><span class="num">9</span>O commit que levou o segredo <span class="mins">3 min</span></h2>
+  <h2><span class="num">10</span>O commit que levou o segredo <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Você pede “faça commit de tudo”. Entre os arquivos está um <code>.env</code> com a chave de acesso de uma API e o <code>pedidos.log</code> real da loja, com nomes de clientes. O Claude cria o commit e você aprova o push.</div>
   <p><strong>O que deveria ter acontecido antes do commit? E se o segredo já foi enviado?</strong></p>
   <div class="open" data-key="k10" data-min="25">
@@ -546,9 +573,9 @@ print(total_info(log))</textarea></div>
   </div>
 </section>
 
-<!-- 10 -->
+<!-- 11 -->
 <section class="card">
-  <h2><span class="num">10</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">11</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k11" data-correta="0" data-concept="cc_testes_git" data-level="exec">
     <p class="mcq-q">O que pedir para provar que a correção funciona?</p>
@@ -576,9 +603,9 @@ print(total_info(log))</textarea></div>
   </div>
 </section>
 
-<!-- 11 -->
+<!-- 12 -->
 <section class="card">
-  <h2><span class="num">11</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">12</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: como usar o Claude Code para testar e guardar uma mudança com segurança?</strong></p>
   <div class="open" data-key="k14" data-min="25" data-concept="cc_testes_git" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -586,7 +613,7 @@ print(total_info(log))</textarea></div>
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Pedir que rode os testes e mostre a saída completa, ler o diff, e só então pedir um commit pequeno com mensagem clara. Nunca commitar segredos nem dados reais. Linhas ruins no log se tratam com <code>try/except</code> de erros específicos.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) O que pedir ao Claude para provar que a mudança funciona? (2) Para que serve o <code>try/except</code> ao ler um log? (3) O que nunca se deve colocar num commit? <a href="recuperacao-0117.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Rodar os testes e guardar no Git, em passos pequenos”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0117.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -782,7 +809,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -974,7 +1001,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -1055,13 +1093,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1314,7 +1346,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

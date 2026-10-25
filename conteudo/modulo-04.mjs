@@ -75,8 +75,8 @@ cartao()` },
     { tipo: "fechar", pergunta: "Sem olhar acima: qual a diferença entre definir e chamar uma função?", conceito: "funcao_def", modelo: "**Definir** (com `def`) só guarda a função com um nome, sem executar nada. **Chamar** (nome com parênteses) executa o corpo da função, quantas vezes for preciso." },
   ],
   recuperacao: [
-    { p: "Qual a diferença entre definir e chamar uma função?", regex: "(defin|def );;(guard|nao executa|nao roda|receita)", modelo: "Definir guarda a função sem executar; chamar (com parênteses) executa o corpo.", conceito: "funcao_def" },
-    { p: "Como se chama uma função de nome `servir`?", regex: "(servir\\(\\)|parentes)", modelo: "Com `servir()`: o nome seguido de parênteses.", conceito: "funcao_def" },
+    { p: "Qual a diferença entre definir e chamar uma função?", regex: "(defin|\\bdef\\b);;(chama|chamar|chamad);;(guard|nao (executa|roda|faz)|receita|cria|escrev|declar|apenas|somente|\\bso\\b);;(executa|roda|rodar|usa|aciona|faz|dispara|ativa)", naoRegex: "defin\\w*( a funcao| a receita)? (e |que )?(executa|roda|faz rodar|chama)|chama\\w*( a funcao)? (e |que )?(guarda|cria)", modelo: "Definir guarda a função sem executar; chamar (com parênteses) executa o corpo.", conceito: "funcao_def" },
+    { p: "Escreva a linha de código que **chama** a função `servir` (e não a que a define).", regex: "(servir\\(\\)|parentes)", naoRegex: "^\\s*def\\s+servir", modelo: "`servir()`: o nome seguido de parênteses.", conceito: "funcao_def" },
     { p: "Por que uma função ajuda a corrigir um problema de segurança?", regex: "(um (so )?lugar|so um lugar|unico lugar|todos os lugares|centraliz|uma vez|copias)", modelo: "Porque o conserto é feito em um só lugar e vale para todas as chamadas.", conceito: "funcao_def" },
   ],
 });
@@ -142,9 +142,9 @@ area(5, 2)` },
     { tipo: "fechar", pergunta: "Sem olhar acima: o que são parâmetros e argumentos e por que a ordem importa?", conceito: "funcao_parametros", modelo: "Parâmetros são os nomes que a função usa para receber informações; argumentos são os valores passados na chamada. Eles se ligam **pela posição**, então trocar a ordem troca o significado (como em `troco(20, 13.5)` e `troco(13.5, 20)`)." },
   ],
   recuperacao: [
-    { p: "Qual a diferença entre parâmetro e argumento?", regex: "(parametro);;(argumento);;(chamada|definicao|valor|nome)", modelo: "Parâmetro é o nome na definição da função; argumento é o valor passado na chamada.", conceito: "funcao_parametros" },
+    { p: "Em `def saudar(nome):` chamada com `saudar(\"Lia\")`: qual é o **parâmetro** e qual é o **argumento**?", regex: "(\\bnome\\b[`\"'“”]*[ :=\\-]{0,3}((e|eh|sao|seria) )?((o|um|a) )?parametro|parametro[`\"'“”]*[ :=\\-]{0,3}((e|eh|sao|seria) )?((o|um|a) )?((valor|texto|palavra) )?[`\"'“”]*(nome|definicao|funcao));;([`\"'“”]*lia[`\"'“”]*[ :=\\-]{0,3}((e|eh|sao|seria) )?((o|um|a) )?argumento|argumento[`\"'“”]*[ :=\\-]{0,3}((e|eh|sao|seria) )?((o|um|a) )?((valor|texto|palavra) )?[`\"'“”]*(lia|valor|chamada|passad|entregue))", modelo: "`nome` é o parâmetro (o nome na definição) e `\"Lia\"` é o argumento (o valor passado na chamada).", conceito: "funcao_parametros" },
     { p: "Como o Python liga os argumentos aos parâmetros?", regex: "(ordem|posicao|sequencia)", modelo: "Pela ordem (posição): o primeiro argumento vai para o primeiro parâmetro.", conceito: "funcao_parametros" },
-    { p: "Por que passar só o necessário para uma função?", regex: "(minimo|necessari|menos dados|vaz|exposic|precisa)", modelo: "Para reduzir o acesso a dados desnecessários e o estrago caso algo vaze ou erre.", conceito: "funcao_parametros" },
+    { p: "Por que é arriscado entregar a uma função o cadastro inteiro do cliente quando ela só usa o primeiro nome?", regex: "(vaz|expo|acesso|nao precisa|desnecessari|minimo|estrago|registr|privacidade|sensiv)", modelo: "Para reduzir o acesso a dados desnecessários e o estrago caso algo vaze ou erre.", conceito: "funcao_parametros" },
   ],
 });
 
@@ -218,9 +218,9 @@ print("Troco:", troco(20, 13.5))` },
     { tipo: "fechar", pergunta: "Sem olhar acima: qual a diferença entre `print` e `return` dentro de uma função?", conceito: "funcao_return", modelo: "`print` **mostra** um valor na tela e não o entrega a ninguém (a função devolve `None`). `return` **devolve** o valor a quem chamou, que pode guardá-lo ou usá-lo em outras contas, e encerra a função." },
   ],
   recuperacao: [
-    { p: "O que o `return` faz?", regex: "(devolve|entrega|retorna|valor);;(chamou|funcao|encerra|termina|resultado)", modelo: "Devolve um valor a quem chamou a função e encerra a função.", conceito: "funcao_return" },
+    { p: "O que o `return` faz?", regex: "(devolv|entreg|retorn|envia de volta|manda de volta);;(chamou|chamada|quem chama|funcao|encerr|termin|resultado|valor)", modelo: "Devolve um valor a quem chamou a função e encerra a função.", conceito: "funcao_return" },
     { p: "O que uma função sem `return` devolve?", regex: "(none|nada|nenhum)", modelo: "`None`, o valor “nada”.", conceito: "funcao_return" },
-    { p: "Qual a diferença entre `print` e `return`?", regex: "(print|mostra|tela);;(return|devolve|entrega|usar|guardar)", modelo: "`print` mostra na tela; `return` devolve o valor para ser usado e guardado.", conceito: "funcao_return" },
+    { p: "Qual a diferença entre `print` e `return`?", regex: "(print|mostr|exib|imprim|tela);;(devolv|entreg|retorn|guard|usar|\\busa\\b|variavel|outras contas|\\bnone\\b)", naoRegex: "return (mostra|exibe|imprime|escreve)|print (devolve|entrega|retorna)", modelo: "`print` mostra na tela; `return` devolve o valor para ser usado e guardado.", conceito: "funcao_return" },
   ],
 });
 
@@ -284,9 +284,9 @@ print(total(2))` },
     { tipo: "fechar", pergunta: "Sem olhar acima: para que servem valores padrão e argumentos nomeados?", conceito: "funcao_padrao", modelo: "Valores padrão fazem um parâmetro assumir um valor quando a chamada não informa nenhum, deixando a função mais fácil de usar. Argumentos nomeados (`nome=valor`) deixam a chamada clara e permitem qualquer ordem." },
   ],
   recuperacao: [
-    { p: "O que é o valor padrão de um parâmetro?", regex: "(quando|se );;(nao informa|nao passa|nao for dado|faltar|sem valor|nao dado)", modelo: "O valor que o parâmetro assume quando a chamada não informa nenhum.", conceito: "funcao_padrao" },
-    { p: "Como se escreve um argumento nomeado?", regex: "(nome ?= ?valor|nome=|com o nome|igual)", modelo: "Como `nome=valor` na chamada, por exemplo `total(qtd=2)`.", conceito: "funcao_padrao" },
-    { p: "Por que o valor padrão de um acesso deve ser o mais restrito?", regex: "(restrit|minimo|seguro|esquec|sem querer|acesso total)", modelo: "Para que esquecer de informar não dê acesso total sem querer: privilégio mínimo.", conceito: "funcao_padrao" },
+    { p: "O que é o valor padrão de um parâmetro?", regex: "(quando|\\bse\\b|\\bcaso\\b|na falta|\\bsem );;(nao (informa|passa|da|envia|fornece|especifica|mand)|nao (for|foi|seja|e|eh|esta|estiver) (informad|passad|dad|fornecid|enviad|especificad|mandad)|nao informad|falt|omit|sem (valor|argumento|informar|passar))", modelo: "O valor que o parâmetro assume quando a chamada não informa nenhum.", conceito: "funcao_padrao" },
+    { p: "Como se escreve um argumento nomeado?", regex: "([a-z_][a-z0-9_]*\\s?=(?!=)\\s?[\"'a-z0-9_]|com o nome|pelo nome|nome do parametro|nome (e |mais |, |com )?igual)", modelo: "Como `nome=valor` na chamada, por exemplo `total(qtd=2)`.", conceito: "funcao_padrao" },
+    { p: "Por que o valor padrão de um acesso deve ser o mais restrito?", regex: "(minimo|seguro|esquec|sem querer|acesso total|privilegio|por engano|sem permissao|permiss)", modelo: "Para que esquecer de informar não dê acesso total sem querer: privilégio mínimo.", conceito: "funcao_padrao" },
   ],
 });
 
@@ -359,8 +359,8 @@ else:
     { tipo: "fechar", pergunta: "Sem olhar acima: como uma função de checagem deixa o programa melhor?", conceito: "funcao_bool", modelo: "Ela devolve `True` ou `False` e dá nome à pergunta, deixando o `if` curto e claro. A regra fica em um único lugar, o que facilita mudar, testar e revisar (inclusive a parte de segurança)." },
   ],
   recuperacao: [
-    { p: "O que devolve uma função de checagem?", regex: "(true|verdadeir);;(false|fals)", modelo: "`True` ou `False`.", conceito: "funcao_bool" },
-    { p: "Por que dar à função um nome de pergunta, como `maior_de_idade`?", regex: "(claro|legivel|entend|le |pergunta|facil)", modelo: "Porque o `if` fica claro: `if maior_de_idade(idade):` se lê como uma frase.", conceito: "funcao_bool" },
+    { p: "O que devolve uma função de checagem?", regex: "(true|verdadeir).*(false|fals)|(false|fals).*(true|verdadeir)|sim ou nao|sim/nao|\\bbool", modelo: "`True` ou `False` (um valor booleano: sim ou não).", conceito: "funcao_bool" },
+    { p: "Por que dar à função um nome de pergunta, como `maior_de_idade`?", regex: "(claro|legivel|entend|\\ble\\b|se le\\b|facil|frase|natural|autoexplic|compreen)", modelo: "Porque o `if` fica claro: `if maior_de_idade(idade):` se lê como uma frase.", conceito: "funcao_bool" },
     { p: "Por que centralizar a regra de acesso numa função ajuda a segurança?", regex: "(um (so )?lugar|so um lugar|unico lugar|esquec|revisar|testar|todas as telas|todos os lugares)", modelo: "Porque a regra fica em um só lugar, fácil de revisar e testar, e nenhuma tela é esquecida.", conceito: "funcao_bool" },
   ],
 });
@@ -394,11 +394,20 @@ print(valor)`,
       execucoes: [{ rotulo: "o programa acima", saida: ["1", "99"] }],
       pergunta: "Por que o `valor` de fora continuou 99 mesmo depois de a função criar um `valor = 1`? O que a função teve de fazer para o 1 sair dela?", dicas: ["Há duas variáveis chamadas `valor`. Em qual “espaço” cada uma vive?", "Como o número 1 chegou até o `print(f())`?"],
       explicacao: "São **duas variáveis diferentes** com o mesmo nome: a local (dentro de `f`) e a de fora. A função não mexe na de fora. O 1 só saiu porque a função o **devolveu** com `return`, e a chamada `f()` passou a valer 1.", conceito: "escopo" },
+    { tipo: "texto", titulo: "Ler é permitido; mudar por dentro, não", blocos: [
+      "Uma função consegue **ler** uma variável de fora: se o nome não existe dentro dela, o Python procura fora. Por exemplo, com `taxa = 2` fora, a função `def dobrar(valor): return valor * taxa` funciona e `dobrar(5)` devolve 10, porque ela só **lê** `taxa`.",
+      "O problema começa quando a função tenta **mudar** a variável de fora. Se ela faz uma atribuição a um nome (como `n = n + 1`), o Python trata esse nome como **local na função inteira**. Aí o `n` do lado direito da conta é o `n` local, que ainda não recebeu valor. O erro se chama `UnboundLocalError`: “variável local usada antes de receber valor”."],
+      tabela: { cab: ["Dentro da função", "Resultado", "Por quê"], linhas: [
+        ["`return valor * taxa` (a `taxa` vem de fora)", "funciona", "Só lê: não existe `taxa` local, então vale a de fora."],
+        ["`n = n + 1` (o `n` vem de fora)", "`UnboundLocalError`", "Atribui a `n`, então `n` vira local e é lido antes de ter valor."],
+        ["`n = 5` (o `n` de fora existe)", "funciona, mas é **outra** `n`", "Cria uma variável local; a de fora não muda (como no primeiro exemplo da aula)."]] },
+      termos: [["UnboundLocalError", "erro de uma variável local lida antes de receber valor, comum quando a função tenta mudar um nome que vive fora."]] },
+    { tipo: "texto", blocos: ["**Causa:** a função tentou ler e mudar, ao mesmo tempo, uma variável que vive fora dela. **Correção:** não mudar a de fora por dentro; passe o valor como parâmetro e devolva o resultado com `return`, como em `def somar_um(n): return n + 1`, e fora da função `n = somar_um(n)`. (O Python tem a palavra `global` para forçar a mudança, mas ela deixa o programa difícil de entender e de testar; neste curso, prefira parâmetros e `return`.)"] },
     { tipo: "prever", conceito: "escopo", itens: [
       { codigo: `n = 0
 def f():
     n = n + 1
-f()`, erro: "UnboundLocalError", resposta: "UnboundLocalError", pergunta: "Tipo do erro:", porque: "Como a função atribui `n`, o Python o trata como local, mas ele é lido antes de receber valor." },
+f()`, erro: "UnboundLocalError", resposta: "UnboundLocalError", pergunta: "Tipo do erro:", porque: "Como a função atribui `n`, o Python o trata como local, mas ele é lido antes de receber valor. Correção: passar `n` como parâmetro e devolver o resultado." },
       { codigo: `x = 3
 def f():
     x = 7
@@ -412,7 +421,11 @@ print(dobrar(4))`, resposta: "8", porque: "O resultado local foi devolvido com `
 def f(nome):
     nome = "Teo"
     return nome
-print(f(nome), nome)`, resposta: "Teo Lia", porque: "A função devolve “Teo”, mas a variável de fora continua “Lia”." }] },
+print(f(nome), nome)`, resposta: "Teo Lia", porque: "A função devolve “Teo”, mas a variável de fora continua “Lia”." },
+      { codigo: `taxa = 2
+def dobrar(valor):
+    return valor * taxa
+print(dobrar(5))`, resposta: "10", porque: "A função só **lê** `taxa`, que vem de fora: não há erro." }] },
     { tipo: "corrigir", texto: "A função calcula o total, mas o `print` de fora diz que `total` não existe. Conserte fazendo a função **devolver** o resultado.", arquivo: "com_defeito.py", dica: "Devolva o valor com `return` e guarde o que ela devolve numa variável de fora.", conceito: "escopo",
       codigo: `def calcular_total(preco, qtd):
     total = preco * qtd
@@ -438,7 +451,7 @@ print("Total:", com_frete(10))` },
     { tipo: "fechar", pergunta: "Sem olhar acima: o que é uma variável local e como um valor sai de dentro de uma função?", conceito: "escopo", modelo: "Variável local é a criada dentro de uma função: só existe ali. Um valor só sai da função se ela o **devolver com `return`** e quem chamou o guardar." },
   ],
   recuperacao: [
-    { p: "O que é uma variável local?", regex: "(dentro|so existe|apenas);;(funcao)", modelo: "Uma variável criada dentro de uma função, que só existe ali.", conceito: "escopo" },
+    { p: "O que é uma variável local?", regex: "(dentro|criada|definida|nasce|nao existe fora|nao e vista fora|nao funciona fora|nao vale fora);;(funcao);;(\\bso\\b|apenas|somente|unicamente|nao (existe|e vista|aparece|funciona|vale)|limitad|restrit)", modelo: "Uma variável criada dentro de uma função, que só existe ali.", conceito: "escopo" },
     { p: "Como um valor sai de dentro da função?", regex: "(return|devolve|retorna)", modelo: "Com `return`, e quem chamou guarda o valor devolvido.", conceito: "escopo" },
     { p: "Por que manter dados sensíveis no menor escopo possível?", regex: "(menor acesso|so quem precisa|minimo|vazar|ler|registr|exposic|qualquer funcao)", modelo: "Para que só quem precisa os enxergue; assim menos partes do programa podem ler, registrar ou vazar o dado.", conceito: "escopo" },
   ],
@@ -455,6 +468,14 @@ aulas.push({
     { tipo: "exemplo", arquivo: "composicao.py", texto: "Clique em cada linha.",
       codigo: [["def desconto(valor):", "Uma função com **uma só tarefa**: aplicar a regra de desconto."], ["    if valor >= 100:", "Compras de 100 ou mais..."], ["        return valor * 0.9", "...pagam 90% (10% de desconto)."], ["    return valor", "Sem desconto: devolve o valor igual. Não precisa de `else`: se o `return` de cima rodou, a função já terminou."], ["def total_pedido(qtd, preco):", "Outra função, que **usa** a primeira."], ["    \"\"\"Calcula o total do pedido, já com desconto.\"\"\"", "Uma **docstring**: um texto entre aspas triplas logo no começo, que explica o que a função faz."], ["    return desconto(qtd * preco)", "Calcula o valor bruto e entrega para `desconto`, devolvendo o que ela devolver."], ["print(total_pedido(30, 4))", "30 × 4 = 120; com 10% de desconto: `108.0`."]],
       termos: [["Docstring", "texto entre aspas triplas no começo da função que explica o que ela faz."], ["Composição", "montar uma função usando outras."]] },
+    { tipo: "texto", titulo: "Recados dentro do código: docstring e comentário", blocos: [
+      "Uma função fica mais fácil de usar quando diz o que faz. O Python tem duas formas de deixar “recados”, para leitores diferentes:"],
+      tabela: { cab: ["", "Comentário", "Docstring"], linhas: [
+        ["Como se escreve", "`# 0.9 é 100% menos 10%`: começa com `#` e vai até o fim da linha", "`\"\"\"Devolve o total com desconto.\"\"\"`: um texto entre aspas triplas"],
+        ["Onde fica", "em qualquer linha, perto do trecho que explica", "na **primeira linha de dentro** da função, logo depois do `def`"],
+        ["O que explica", "o **porquê** de um passo ou de um número", "**o que a função faz** (e, se couber, o que recebe e devolve)"],
+        ["Quem aproveita", "só quem lê o código", "quem lê o código e o próprio Python, que guarda o texto dentro da função (`print(desconto.__doc__)` mostra)"]] } },
+    { tipo: "texto", blocos: ["Na prática: a docstring `\"\"\"Calcula o total do pedido, já com desconto.\"\"\"` diz **o que** `total_pedido` faz, sem ninguém precisar ler as contas. Já um comentário como `# 0.9 é 100% menos 10%` explica **por que** aquele número aparece na conta. A docstring não executa nada: é só texto guardado na função."] },
     { tipo: "executar", texto: "Rode e mude a quantidade para ficar abaixo de 100.", arquivo: "composicao.py (pode editar)", codigo: `def desconto(valor):
     if valor >= 100:
         return valor * 0.9
@@ -529,13 +550,13 @@ def total_final(valor):
     { tipo: "quiz", itens: [
       { pergunta: "O que é uma docstring?", opcoes: ["Um erro dentro da função", "Um valor padrão do parâmetro", "Uma descrição da função", "Um nome de variável longo"], correta: 2, porque: "É um texto entre aspas triplas que explica o que a função faz.", conceito: "funcao_composicao" },
       { pergunta: "Por que dividir em funções pequenas?", opcoes: ["Para o programa rodar mais rápido", "Para facilitar entender e testar", "Para gastar menos memória", "Para evitar o uso de variáveis"], correta: 1, porque: "Cada peça tem um objetivo, é fácil de testar e de reaproveitar.", conceito: "funcao_composicao" },
-      { pergunta: "Se `total_pedido` chama `desconto`, qual roda primeiro?", opcoes: ["desconto, que é chamada de dentro", "total_pedido, e só termina depois", "Nenhuma das duas, por conflito", "As duas ao mesmo tempo, em paralelo"], correta: 0, porque: "`desconto` é chamada dentro de `total_pedido` e termina antes de ela devolver o resultado.", conceito: "funcao_composicao" }] },
+      { pergunta: "Se `total_pedido` chama `desconto`, qual das duas termina primeiro?", opcoes: ["desconto, pois a outra espera", "total_pedido, pois começou antes", "Nenhuma das duas, por conflito", "As duas juntas, ao mesmo tempo"], correta: 0, porque: "`desconto` é chamada dentro de `total_pedido` e devolve o valor antes: só então `total_pedido` pode terminar e devolver o resultado dela.", conceito: "funcao_composicao" }] },
     { tipo: "fechar", pergunta: "Sem olhar acima: por que dividir um problema em funções pequenas que chamam umas às outras?", conceito: "funcao_composicao", modelo: "Cada função fica com um objetivo só: mais fácil de entender, testar, reaproveitar e revisar (inclusive em segurança). Se uma regra mudar, só uma função muda." },
   ],
   recuperacao: [
     { p: "O que é uma docstring?", regex: "(texto|descricao|explic|comentario|documenta);;(funcao|aspas)", modelo: "Um texto entre aspas triplas no começo da função que explica o que ela faz.", conceito: "funcao_composicao" },
-    { p: "O que acontece depois que um `return` roda?", regex: "(encerra|termina|para|acaba|nao roda|ignora)", modelo: "A função termina na hora: as linhas seguintes não rodam.", conceito: "funcao_composicao" },
-    { p: "Por que funções pequenas são melhores para a segurança?", regex: "(revis|audit|test|isolad|entender|ler|clar|pequen)", modelo: "Porque são fáceis de ler, testar e auditar, e falhas não se escondem no meio de um código enorme.", conceito: "funcao_composicao" },
+    { p: "O que acontece depois que um `return` roda?", regex: "(encerr|termin|\\bacaba|nao (roda|executa|continua)|ignor|sai da funcao|\\bpara de\\b|funcao para\\b|\\bpara na hora|\\bpara ali)", modelo: "A função termina na hora: as linhas seguintes não rodam.", conceito: "funcao_composicao" },
+    { p: "Por que funções pequenas são melhores para a segurança?", regex: "(revis|audit|test|isolad|entend|\\bler\\b|\\blid[ao]s?\\b|legivel|\\bclar[ao]s?\\b|escond|um (so )?objetivo|uma (so )?tarefa)", modelo: "Porque são fáceis de ler, testar e auditar, e falhas não se escondem no meio de um código enorme.", conceito: "funcao_composicao" },
   ],
 });
 
@@ -547,20 +568,22 @@ aulas.push({
   objetivos: ["Dividir um problema em funções com `return`.", "Resolver o exercício final sem usar a dica.", "Reaproveitar o raciocínio num problema novo (estoque)."],
   conceitos: [],
   secoes: [
-    { tipo: "aquecimento", titulo: "Planeje as peças", pergunta: "Para o caixa da cafeteria, quais funções você criaria? Pense: uma para o preço de cada item, uma para o desconto e o que mais? Quais receberiam parâmetros e quais devolveriam valores?", minimo: 40, modelo: "Uma boa divisão: `preco_item(nome)` devolve o preço (e 0.0 se o item não existe), `desconto(total)` devolve o total já com o desconto, e o programa principal lê o pedido, usa as duas e mostra o resultado. Todas **devolvem** valores (não só mostram), para poderem ser combinadas e testadas." },
+    { tipo: "aquecimento", titulo: "Planeje as peças", pergunta: "Para o caixa da cafeteria, quais funções você criaria? Pense: uma para o preço de cada item, uma para o desconto e o que mais? Quais receberiam parâmetros e quais devolveriam valores?", minimo: 40, modelo: "Uma boa divisão: `preco_item(nome)` devolve o preço (e `None` se o item não existe), `desconto(total)` devolve o total já com o desconto, e o programa principal lê o pedido, usa as duas e mostra o resultado. Todas **devolvem** valores (não só mostram), para poderem ser combinadas e testadas." },
     { tipo: "exemplo", titulo: "Um esqueleto de referência", arquivo: "esqueleto.py", entradas: ["suco", "2"], texto: "Mesma estrutura (funções que devolvem, programa principal que usa), com outro tema.",
-      codigo: [["def preco(nome):", "Devolve o preço de um item."], ["    if nome == \"suco\":", "Decide pelo nome."], ["        return 6.0", "Devolve o preço do suco."], ["    return 0.0", "Qualquer outro item: 0.0 (desconhecido)."], ["item = input(\"Item: \")", "O programa principal lê o item."], ["qtd = int(input(\"Quantidade: \"))", "E a quantidade."], ["print(f\"Total: R$ {preco(item) * qtd:.2f}\")", "Usa a função e mostra formatado."]] },
-    { tipo: "escrever", titulo: "Exercício final (sem dica)", final: true, minutos: 12, texto: "Defina `preco_item(nome)` (café `\"cafe\"` custa 4.5, pão `\"pao\"` custa 3.0, qualquer outro devolve 0.0) e `desconto(total)` (10% de desconto a partir de 20; senão, o mesmo total). Depois peça `Item: ` e `Quantidade: ` e mostre `Total: R$ X.XX`; se o item for desconhecido, mostre `Item desconhecido`.", arquivo: "caixa.py",
+      codigo: [["def preco(nome):", "Devolve o preço de um item."], ["    if nome == \"suco\":", "Decide pelo nome."], ["        return 6.0", "Devolve o preço do suco."], ["    return None", "Qualquer outro item: `None` (“não sei o preço”)."], ["item = input(\"Item: \")", "O programa principal lê o item."], ["qtd = int(input(\"Quantidade: \"))", "E a quantidade."], ["valor = preco(item)", "Guarda o que a função devolveu."], ["if valor is None:", "`is None` pergunta se a função devolveu `None` (item desconhecido)."], ["    print(\"Item desconhecido\")", "Avisa, sem calcular nada."], ["else:", "Senão, o item existe..."], ["    print(f\"Total: R$ {valor * qtd:.2f}\")", "...e o total é mostrado formatado."]],
+      termos: [["is None", "pergunta se um valor é exatamente `None` (e `is not None` pergunta o contrário)."]] },
+    { tipo: "texto", titulo: "Por que None e não 0.0 para “item desconhecido”", blocos: ["Devolver `0.0` para um item que não existe mistura duas coisas: “custa zero” (um brinde, por exemplo) e “não sei o preço”. Quem chama não consegue separar as duas. O valor `None`, que você viu na aula do `return`, diz só “sem resposta”, então o programa pode testar `if valor is None:` e tratar o caso à parte."] },
+    { tipo: "escrever", titulo: "Exercício final (sem dica)", final: true, minutos: 12, texto: "Defina `preco_item(nome)` (café `\"cafe\"` custa 4.5, pão `\"pao\"` custa 3.0, qualquer outro devolve `None`) e `desconto(total)` (10% de desconto a partir de 20; senão, o mesmo total). Depois peça `Item: ` e `Quantidade: ` e mostre `Total: R$ X.XX`; se o item for desconhecido, mostre `Item desconhecido`.", arquivo: "caixa.py",
       inicial: `# defina preco_item e desconto, depois leia o pedido e mostre o total
-`, testes: [["preco_item('cafe')", "4.5"], ["preco_item('pao')", "3.0"], ["preco_item('suco')", "0.0"], ["desconto(10)", "10"], ["desconto(20)", "18.0"], ["desconto(30)", "27.0"]],
+`, testes: [["preco_item('cafe')", "4.5"], ["preco_item('pao')", "3.0"], ["preco_item('suco')", "None"], ["desconto(10)", "10"], ["desconto(20)", "18.0"], ["desconto(30)", "27.0"]],
       cenarios: [{ entradas: ["cafe", "2"], esperado: ["Item: cafe", "Quantidade: 2", "Total: R$ 9.00"] }, { entradas: ["pao", "10"], esperado: ["Item: pao", "Quantidade: 10", "Total: R$ 27.00"] }, { entradas: ["suco", "1"], esperado: ["Item: suco", "Quantidade: 1", "Item desconhecido"] }],
-      dica: "As duas funções devolvem valores. No programa principal: `preco = preco_item(item)`; se `preco == 0.0`, avise; senão mostre `desconto(preco * qtd)` com `:.2f`.", conceito: ["funcao_def", "funcao_parametros", "funcao_return", "funcao_composicao"],
+      dica: "As duas funções devolvem valores. No programa principal: `preco = preco_item(item)`; se `preco is None`, avise; senão mostre `desconto(preco * qtd)` com `:.2f`.", conceito: ["funcao_def", "funcao_parametros", "funcao_return", "funcao_composicao"],
       solucao: `def preco_item(nome):
     if nome == "cafe":
         return 4.5
     elif nome == "pao":
         return 3.0
-    return 0.0
+    return None
 
 def desconto(total):
     if total >= 20:
@@ -570,7 +593,7 @@ def desconto(total):
 item = input("Item: ")
 qtd = int(input("Quantidade: "))
 preco = preco_item(item)
-if preco == 0.0:
+if preco is None:
     print("Item desconhecido")
 else:
     print(f"Total: R$ {desconto(preco * qtd):.2f}")` },
@@ -594,7 +617,7 @@ else:
     { tipo: "aberta", tag: "sec", titulo: "Funções que mexem em dinheiro", texto: "As funções `desconto` e `preco_item` decidem quanto o cliente paga. Se alguém alterar o código delas, o preço muda para todos os pedidos.", pergunta: "Que cuidados de segurança e qualidade você teria com funções que calculam dinheiro?", modelo: "**Testá-las** (como os testes do exercício, incluindo as bordas), restringir **quem pode alterar** o código (revisão por outra pessoa antes de publicar), e **registrar** mudanças. Funções pequenas e testáveis tornam fácil perceber quando um preço foi alterado por engano ou má-fé." },
     { tipo: "quiz", itens: [
       { pergunta: "Por que as funções do caixa devem usar `return`?", opcoes: ["Para poderem ser combinadas", "Para escreverem na tela", "Para rodarem mais rápido", "Para evitar parâmetros"], correta: 0, porque: "Um valor devolvido pode ser usado em outras contas e funções.", conceito: "funcao_return" },
-      { pergunta: "O que `preco_item(\"suco\")` devolve no exercício?", opcoes: ["4.5, o preço do café", "3.0, o preço do pão", "0.0, item desconhecido", "None, sem retorno algum"], correta: 2, porque: "Qualquer item que não seja café ou pão devolve 0.0.", conceito: "funcao_return" },
+      { pergunta: "O que `preco_item(\"suco\")` devolve no exercício?", opcoes: ["4.5, o preço do café", "3.0, o preço do pão", "None, item desconhecido", "0.0, um preço zerado"], correta: 2, porque: "Qualquer item que não seja café ou pão devolve `None`: “sem preço”, diferente de um preço 0.0.", conceito: "funcao_return" },
       { pergunta: "Qual é a vantagem de testar cada função separada?", opcoes: ["Achar o erro mais fácil", "Escrever menos linhas", "Usar menos variáveis", "Não precisar de parâmetros"], correta: 0, porque: "Quando um teste falha, você sabe em qual peça está o problema.", conceito: "funcao_composicao" }] },
     { tipo: "fechar", pergunta: "Sem olhar acima: como você dividiu o caixa em funções e por que cada uma devolve um valor?", conceito: "funcao_composicao", modelo: "Uma função devolve o preço de cada item, outra devolve o total com desconto e o programa principal lê o pedido, usa as duas e mostra o resultado. Todas devolvem valores para serem combinadas e testadas separadamente." },
   ],

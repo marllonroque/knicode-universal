@@ -323,11 +323,11 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <header class="hero"><div class="hero-in">
   <div class="crumb">Módulo 16 · Skills, MCP e conectores · Aula 8</div>
   <h1>Mini-projeto: criar uma skill e avaliar uma conexão</h1>
-  <p>Você escreve uma skill válida (o texto do SKILL.md, conferido por código) e avalia os riscos de uma conexão fictícia com um checklist de pontos. Depois, aplica negar por padrão num caso novo.</p>
-  <div class="chips"><span class="chip">50 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <p>Você escreve o texto de uma skill e um programa em Python o confere (uma simulação: não instala nada); avalia os riscos de uma conexão fictícia com um checklist de pontos; e aplica negar por padrão num caso novo. No fim, se quiser, cria a skill de verdade no Claude Code.</p>
+  <div class="chips"><span class="chip">cerca de 65 minutos</span><span class="chip">Sem instalar nada (o passo real é opcional)</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
-      <li>Escrever um SKILL.md que passa na validação.</li>
+      <li>Escrever o texto de um SKILL.md que passa na validação simulada.</li>
       <li>Avaliar uma conexão com um checklist de risco pontuado.</li>
       <li>Decidir entre aprovar, revisar ou recusar, com justificativa.</li>
     </ul>
@@ -420,7 +420,7 @@ print(avaliar_conexao(mista))</textarea></div>
 <section class="card">
   <h2><span class="num">5</span>A sua decisão sobre a conexão fictícia <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>A conexão <code>avaliacoes-loja</code> pontuou 10: é de terceiro, busca avaliações na web, vê nomes de clientes e pode responder e apagar avaliações. O dono da loja insiste: “é só ligar e usar, todo mundo usa”.</div>
-  <p><strong>Escreva a sua decisão (aprovar, revisar ou recusar) e, se não for “recusar para sempre”, <b>três condições</b> para reavaliar: o que precisaria mudar na conexão e nas permissões.</strong></p>
+  <p><strong>Escreva, em poucas linhas: a sua decisão (aprovar, revisar ou recusar) e, se não for “recusar para sempre”, <b>três condições</b> para reavaliar, ou seja, o que precisaria mudar na conexão e nas permissões.</strong></p>
   <div class="open" data-key="k5" data-min="90" data-concept="mcp_projeto" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar e comparar</button>
@@ -431,14 +431,14 @@ print(avaliar_conexao(mista))</textarea></div>
 
 <!-- 6 -->
 <section class="card">
-  <h2><span class="num">6</span>Exercício final: a sua skill, validada por código <span class="mins">20 min</span></h2>
-  <p>Escreva, dentro de <code>skill = """..."""</code>, o texto de um <code>SKILL.md</code> <b>válido</b> para conferir pedidos de uma loja online (dados fictícios): frontmatter com <code>name</code> (minúsculas e hifens, sem “claude” nem “anthropic”) e <code>description</code> (o que faz e <b>“Use quando ...”</b>), seguido de um título e passos numerados (comece com <code>1.</code>), incluindo algo que a skill <b>nunca</b> faz. A função <code>validar_skill</code> já está pronta e deve devolver <code>[]</code>.</p>
-  <div class="runner" data-key="k6" data-spec="{&quot;esperado&quot;:[&quot;[]&quot;],&quot;testes&quot;:[[&quot;'Use quando' in skill&quot;,&quot;True&quot;],[&quot;'1.' in skill&quot;,&quot;True&quot;],[&quot;len(skill.splitlines()) &lt; 500&quot;,&quot;True&quot;]]}" data-dica="Comece o texto com a linha `---`, depois `name: conferir-pedido`, depois `description: ... Use quando ...`, depois outra linha `---`. Abaixo: `# Conferir pedido` e os passos `1.`, `2.`... A description precisa ter menos de 1024 caracteres e estar numa linha só." data-concept="sk_estrutura,sk_frontmatter,sk_escrever,mcp_projeto" data-level="exec" data-module-final="m16">
-    <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>SKILL.md (no Python)</span></div>
+  <h2><span class="num">6</span>Exercício final: o texto da sua skill, conferido por código (simulação) <span class="mins">20 min</span></h2>
+  <p><b>Isto é uma simulação:</b> o Python confere o texto; ele <b>não</b> cria a pasta, não salva o arquivo e não instala a skill (o passo real vem logo depois, e é opcional). Escreva, dentro de <code>skill = """..."""</code>, o texto de um <code>SKILL.md</code> <b>válido</b> para conferir pedidos de uma loja online (dados fictícios): frontmatter entre duas linhas <code>---</code> com <code>name</code> (minúsculas e hifens, sem “claude” nem “anthropic”) e <code>description</code> (o que faz e <b>“Use quando ...”</b>), seguido de um título e passos numerados (comece com <code>1.</code>), incluindo, num dos passos, algo que a skill <b>nunca</b> faz (use a palavra “nunca”). A função <code>validar_skill</code> já está pronta (é o validador simplificado da aula 0123) e deve devolver <code>[]</code>.</p>
+  <div class="runner" data-key="k6" data-spec="{&quot;esperado&quot;:[&quot;[]&quot;],&quot;testes&quot;:[[&quot;'Use quando' in skill&quot;,&quot;True&quot;],[&quot;'1.' in skill&quot;,&quot;True&quot;],[&quot;len(skill.splitlines()) &lt; 500&quot;,&quot;True&quot;],[&quot;'nunca' in skill.lower()&quot;,&quot;True&quot;]]}" data-dica="Comece o texto com a linha `---`, depois `name: conferir-pedido`, depois `description: ... Use quando ...`, depois outra linha `---`. Abaixo: `# Conferir pedido` e os passos `1.`, `2.`... (um deles com a palavra “nunca”, como em “Nunca peça dados de cartão”). A description precisa ter menos de 1024 caracteres e estar numa linha só." data-concept="sk_estrutura,sk_frontmatter,sk_escrever,mcp_projeto" data-level="exec" data-module-final="m16">
+    <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>simulacao_skill.py (confere o texto; não instala)</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">def validar_skill(texto):
     erros = []
     linhas = texto.splitlines()
-    if not linhas or linhas[0] != "---":
+    if not linhas or linhas[0] != "---" or "---" not in linhas[1:]:
         return ["sem frontmatter"]
     campos = {}
     for linha in linhas[1:]:
@@ -446,7 +446,7 @@ print(avaliar_conexao(mista))</textarea></div>
             break
         if ":" in linha:
             chave, valor = linha.split(":", 1)
-            campos[chave.strip()] = valor.strip()
+            campos[chave.strip()] = valor.strip().strip('"').strip("'")
     nome = campos.get("name", "")
     descricao = campos.get("description", "")
     if not nome:
@@ -473,7 +473,16 @@ print(erros)</textarea></div>
 
 <!-- 7 -->
 <section class="card">
-  <h2><span class="num">7</span>Problema novo: conector da planilha de finanças <span class="mins">15 min</span></h2>
+  <h2><span class="num">7</span>Faça de verdade (opcional): a skill no Claude Code <span class="mins">4 min</span></h2>
+  <p>Se você tem o Claude Code instalado (aula 0111), transforme o texto que você escreveu numa skill de verdade. É opcional. Use só dados <b>fictícios</b> no arquivo.</p>
+  <p><b>Passo a passo (confirmado na documentação):</b> 1) numa pasta de projeto de treino, crie <code>.claude/skills/conferir-pedido/SKILL.md</code> e cole o texto; 2) abra o <code>claude</code> nessa pasta e rode <code>/skills</code> para ver se ela aparece na lista (se não aparecer, confira o caminho e o nome da pasta, e confira na documentação oficial como a lista é atualizada); 3) chame a skill diretamente com <code>/conferir-pedido</code>.</p>
+  <p><b>Três pedidos de teste:</b> (a) <b>deve acionar:</b> “Confira este pedido: 2 canecas a R$ 20 e 1 camiseta a R$ 50; total informado: R$ 100.”; (b) <b>não deve acionar:</b> “Explique o que é um dicionário em Python.”; (c) <b>limítrofe:</b> “Quanto custa o frete do pedido 1234?”. O Claude escolhe pela <code>description</code>, então o pedido (c) pode ir para qualquer lado; se a skill não for escolhida quando você queria, reescreva a description com as palavras que você usou. Lembre: o validador em Python acima é uma simulação; é o <code>/skills</code> que mostra se a skill existe de verdade.</p>
+  <p class="fonte">Fonte: https://code.claude.com/docs/en/skills. Ferramentas mudam: reconfira na documentação oficial.</p>
+</section>
+
+<!-- 8 -->
+<section class="card">
+  <h2><span class="num">8</span>Problema novo: conector da planilha de finanças <span class="mins">15 min</span></h2>
   <p>Outro contexto, a mesma disciplina. Um conector de planilha de finanças pessoais tem <b>perfis</b>: <code>consulta</code> só lê; <code>edicao</code> lê e edita linhas. Escreva <code>permitido(perfis, perfil, acao)</code>: <code>True</code> só se a ação está na lista do perfil; perfil desconhecido ou ação não listada é <code>False</code> (negar por padrão). Com o exemplo deve aparecer <code>True</code>, <code>False</code> e <code>False</code>.</p>
   <div class="runner" data-key="k7" data-spec="{&quot;esperado&quot;:[&quot;True&quot;,&quot;False&quot;,&quot;False&quot;],&quot;testes&quot;:[[&quot;permitido(perfis, 'edicao', 'editar_linha')&quot;,&quot;True&quot;],[&quot;permitido(perfis, 'edicao', 'apagar_planilha')&quot;,&quot;False&quot;],[&quot;permitido({}, 'edicao', 'ler_planilha')&quot;,&quot;False&quot;]]}" data-dica="Pegue o conjunto do perfil com `perfis.get(perfil, set())` (vazio se o perfil não existe) e responda `acao in` esse conjunto." data-concept="mcp_projeto,mcp_riscos" data-level="exec" data-transfer="m16">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>planilha.py</span></div>
@@ -493,9 +502,9 @@ print(permitido(perfis, "visitante", "ler_planilha"))</textarea></div>
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">8</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">9</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k8" data-correta="0" data-concept="mcp_projeto" data-level="exec">
     <p class="mcq-q">Sem resposta sobre um risco, o checklist deve:</p>
@@ -523,9 +532,9 @@ print(permitido(perfis, "visitante", "ler_planilha"))</textarea></div>
   </div>
 </section>
 
-<!-- 9 -->
+<!-- 10 -->
 <section class="card">
-  <h2><span class="num">9</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">10</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: descreva o seu método para criar uma skill e avaliar uma conexão antes de aprovar.</strong></p>
   <div class="open" data-key="k11" data-min="25" data-concept="mcp_projeto" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -533,7 +542,7 @@ print(permitido(perfis, "visitante", "ler_planilha"))</textarea></div>
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Skill: uma tarefa, name em minúsculas e hifens, description com o que faz e quando usar, passos curtos e o que nunca fazer, conferida por um validador. Conexão: perguntar se escreve, vê dados sensíveis, busca conteúdo externo e se é de terceiro; pontuar (sem resposta = risco); decidir aprovar, revisar ou recusar; dar o mínimo e negar por padrão.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Que perguntas do checklist avaliam uma conexão? (2) Como tratar uma pergunta do checklist que você não sabe responder? (3) O que um SKILL.md válido precisa ter no frontmatter? <a href="recuperacao-0128.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Mini-projeto: criar uma skill e avaliar uma conexão”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0128.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -729,7 +738,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -921,7 +930,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -1002,13 +1022,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1261,7 +1275,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

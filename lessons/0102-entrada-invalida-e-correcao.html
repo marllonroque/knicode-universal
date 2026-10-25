@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 13 · Claude Artifacts · Aula 6</div>
   <h1>Entradas inválidas: o que a ferramenta faz com “abc”?</h1>
   <p>Quem usa uma calculadora digita de tudo: vírgula, texto, espaço, vazio. Hoje você vê como tratar isso com try/except e como pedir a correção ao Claude.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 40 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Tratar uma entrada digitada com try/except ValueError.</li>
@@ -353,7 +353,8 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <section class="card">
   <h2><span class="num">1</span>Texto digitado é só texto <span class="mins">4 min</span></h2>
   <p>Tudo o que a pessoa digita chega como <b>texto</b>. Antes de calcular, é preciso <b>converter</b> com <code>float(...)</code>. Se o texto não for um número, o Python levanta <code>ValueError</code>.</p>
-  <p>Com <code>try</code> e <code>except ValueError</code>, o programa <b>tenta</b> converter e, se falhar, faz outra coisa (como avisar). É a versão em Python do <code>isNaN</code> que aparece em JavaScript.</p>
+  <p>Com <code>try</code> e <code>except ValueError</code>, o programa <b>tenta</b> converter e, se falhar, faz outra coisa (como avisar). É a versão em Python do <code>isNaN</code> do JavaScript (<code>isNaN(x)</code> pergunta “x não é um número?”; <code>NaN</code> vem de “not a number”).</p>
+  <p>Cuidado: o JavaScript de um artifact <b>não age como o Python daqui</b>. <code>campo.value</code> é o texto digitado num campo da página e <code>Number(...)</code> converte esse texto em número, mas <code>Number("")</code> dá <code>0</code> (o campo vazio <b>vira zero</b>, sem aviso) e <code>Number("12,50")</code> dá <code>NaN</code> (a vírgula não é entendida). Também não há erro em <code>100 / 0</code>: dá <code>Infinity</code>. O que a pessoa <b>vê</b> na tela, ao escrever o resultado com <code>textContent</code>, é <code>NaN</code>, <code>Infinity</code> ou <code>0</code>, e não uma mensagem. Por isso o pedido ao Claude deve dizer o que fazer com campo vazio, vírgula e taxa zero.</p>
   <p>Atenção a surpresas: <code>float("nan")</code> e <code>float("inf")</code> são aceitos, mas não são valores úteis. Um caso de teste esquisito como esse é o que mostra o defeito.</p>
   <p>Para pedir a correção ao Claude, descreva: <b>o que você digitou</b>, <b>o que esperava</b> e <b>o que apareceu</b>. A documentação cita “Try fixing with Claude” para erros, sem garantia: confira o resultado depois. Ferramentas mudam: reconfira na documentação oficial.</p>
   <div class="callout term"><span class="tag">Palavras novas</span>
@@ -585,7 +586,7 @@ print(ler_valor("12,50"))</textarea></div>
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Converter o texto digitado, tratar o erro com <code>try</code>/<code>except ValueError</code>, aceitar a vírgula, recusar texto, negativo e <code>nan</code>, e avisar sem calcular. Para pedir correção, descrever <b>o que digitou, o que esperava e o que apareceu</b>.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Que erro o Python levanta ao converter “abc” em número com <code>float</code>? (2) Para que serve o <code>try</code>/<code>except</code>? (3) O que dizer ao Claude ao pedir a correção de um defeito? <a href="recuperacao-0102.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Entradas inválidas: o que a ferramenta faz com “abc”?”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0102.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -781,7 +782,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -973,7 +974,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -1054,13 +1066,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1313,7 +1319,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

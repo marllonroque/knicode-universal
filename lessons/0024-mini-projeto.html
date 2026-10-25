@@ -324,12 +324,12 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 3 · Repetições: fazer de novo sem copiar · Aula 8</div>
   <h1>Mini-projeto: organizando a semana</h1>
   <p>Juntar tudo: repetir, somar, contar e achar o maior. Você organiza as horas de estudo da semana e, depois, o caixa de uma cafeteria.</p>
-  <div class="chips"><span class="chip">40 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 45 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Combinar <code>for</code>, acumuladores e padrões de laço num programa só.</li>
       <li>Resolver o exercício final sem usar a dica.</li>
-      <li>Aplicar o mesmo raciocínio com um <code>while</code> num problema novo (o caixa).</li>
+      <li>Aplicar o mesmo raciocínio com um <code>while</code> num problema novo (o caixa), validando cada entrada.</li>
     </ul>
   </div>
   <p class="meta-rec">Antes de começar, tente a <a href="recuperacao-0023.html">recuperação da aula anterior</a>, sem consultar.</p>
@@ -361,9 +361,16 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 2 -->
 <section class="card">
-  <h2><span class="num">2</span>Exercício final (sem dica) <span class="mins">12 min</span></h2>
-  <p>Peça <code>Quantos dias? </code> e depois <code>Dia 1: </code>, <code>Dia 2: </code>... (horas, inteiros). Mostre <code>Total de horas: X</code>, <code>Média por dia: Y</code> (com <b>1 casa decimal</b>), <code>Dias com mais de 3 horas: Z</code> e <code>Maior dia: M</code>.</p>
-  <div class="runner" data-key="k3" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;3&quot;,&quot;2&quot;,&quot;4&quot;,&quot;1&quot;],&quot;esperado&quot;:[&quot;Quantos dias? 3&quot;,&quot;Dia 1: 2&quot;,&quot;Dia 2: 4&quot;,&quot;Dia 3: 1&quot;,&quot;Total de horas: 7&quot;,&quot;Média por dia: 2.3&quot;,&quot;Dias com mais de 3 horas: 1&quot;,&quot;Maior dia: 4&quot;]},{&quot;entradas&quot;:[&quot;2&quot;,&quot;5&quot;,&quot;5&quot;],&quot;esperado&quot;:[&quot;Quantos dias? 2&quot;,&quot;Dia 1: 5&quot;,&quot;Dia 2: 5&quot;,&quot;Total de horas: 10&quot;,&quot;Média por dia: 5.0&quot;,&quot;Dias com mais de 3 horas: 2&quot;,&quot;Maior dia: 5&quot;]},{&quot;entradas&quot;:[&quot;1&quot;,&quot;0&quot;],&quot;esperado&quot;:[&quot;Quantos dias? 1&quot;,&quot;Dia 1: 0&quot;,&quot;Total de horas: 0&quot;,&quot;Média por dia: 0.0&quot;,&quot;Dias com mais de 3 horas: 0&quot;,&quot;Maior dia: 0&quot;]}]}" data-dica="Crie `total`, `dias_longos` e `maior` antes do `for i in range(n):`. Depois do laço, `media = total / n` e `f&quot;{media:.1f}&quot;`." data-concept="for_range,acumulador,padroes_lacos" data-level="exec" data-module-final="m03">
+  <h2><span class="num">2</span>Antes de dividir: e se não houver nenhum dia? <span class="mins">4 min</span></h2>
+  <p>A média é <code>total / n</code>. Se <code>n</code> for 0 (nenhum dia), o Python para com <code>ZeroDivisionError</code>: não existe média de nada. A regra é <b>testar antes de dividir</b>: <code>if n == 0:</code> mostra uma mensagem e o <code>else:</code> calcula a média. Isso vale para toda divisão cujo divisor vem de quem digita.</p>
+  <p>No exercício final, o caso “nenhum dia” tem a sua própria resposta, dita no enunciado.</p>
+</section>
+
+<!-- 3 -->
+<section class="card">
+  <h2><span class="num">3</span>Exercício final (sem dica) <span class="mins">12 min</span></h2>
+  <p>Peça <code>Quantos dias? </code> e depois <code>Dia 1: </code>, <code>Dia 2: </code>... (horas, inteiros). Mostre <code>Total de horas: X</code>, <code>Média por dia: Y</code> (com <b>1 casa decimal</b>), <code>Dias com mais de 3 horas: Z</code> e <code>Maior dia: M</code>. Se <code>Quantos dias?</code> for 0, não há média: mostre apenas <code>Nenhum dia informado</code> depois da pergunta, sem os quatro resultados.</p>
+  <div class="runner" data-key="k3" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;3&quot;,&quot;2&quot;,&quot;4&quot;,&quot;1&quot;],&quot;esperado&quot;:[&quot;Quantos dias? 3&quot;,&quot;Dia 1: 2&quot;,&quot;Dia 2: 4&quot;,&quot;Dia 3: 1&quot;,&quot;Total de horas: 7&quot;,&quot;Média por dia: 2.3&quot;,&quot;Dias com mais de 3 horas: 1&quot;,&quot;Maior dia: 4&quot;]},{&quot;entradas&quot;:[&quot;2&quot;,&quot;5&quot;,&quot;5&quot;],&quot;esperado&quot;:[&quot;Quantos dias? 2&quot;,&quot;Dia 1: 5&quot;,&quot;Dia 2: 5&quot;,&quot;Total de horas: 10&quot;,&quot;Média por dia: 5.0&quot;,&quot;Dias com mais de 3 horas: 2&quot;,&quot;Maior dia: 5&quot;]},{&quot;entradas&quot;:[&quot;1&quot;,&quot;0&quot;],&quot;esperado&quot;:[&quot;Quantos dias? 1&quot;,&quot;Dia 1: 0&quot;,&quot;Total de horas: 0&quot;,&quot;Média por dia: 0.0&quot;,&quot;Dias com mais de 3 horas: 0&quot;,&quot;Maior dia: 0&quot;]},{&quot;entradas&quot;:[&quot;0&quot;],&quot;esperado&quot;:[&quot;Quantos dias? 0&quot;,&quot;Nenhum dia informado&quot;]}]}" data-dica="Crie `total`, `dias_longos` e `maior` antes do `for i in range(n):`. Depois do laço, `if n == 0:` mostra o aviso; senão, `media = total / n` e `f&quot;{media:.1f}&quot;`." data-concept="for_range,acumulador,padroes_lacos" data-level="exec" data-module-final="m03">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>semana.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off"># Planeje: variáveis antes do laço, leitura e decisões dentro, resultados depois
 </textarea></div>
@@ -372,11 +379,31 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 3 -->
+<!-- 4 -->
 <section class="card">
-  <h2><span class="num">3</span>Problema novo: o caixa da cafeteria <span class="mins">10 min</span></h2>
-  <p>Outro contexto, agora com <code>while</code>. Peça <code>Item: </code> (o preço, número com ponto) <b>até a pessoa digitar <code>fim</code></b>. Mostre <code>Itens: N</code> e <code>Total: R$ X.XX</code> (duas casas decimais).</p>
-  <div class="runner" data-key="k4" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;4.5&quot;,&quot;3&quot;,&quot;fim&quot;],&quot;esperado&quot;:[&quot;Item: 4.5&quot;,&quot;Item: 3&quot;,&quot;Item: fim&quot;,&quot;Itens: 2&quot;,&quot;Total: R$ 7.50&quot;]},{&quot;entradas&quot;:[&quot;fim&quot;],&quot;esperado&quot;:[&quot;Item: fim&quot;,&quot;Itens: 0&quot;,&quot;Total: R$ 0.00&quot;]},{&quot;entradas&quot;:[&quot;10&quot;,&quot;fim&quot;],&quot;esperado&quot;:[&quot;Item: 10&quot;,&quot;Item: fim&quot;,&quot;Itens: 1&quot;,&quot;Total: R$ 10.00&quot;]}]}" data-dica="Leia antes do laço e de novo dentro. `while item != &quot;fim&quot;:` com `float(item)`." data-concept="while_laco,acumulador,laco_validacao" data-level="exec" data-transfer="m03">
+  <h2><span class="num">4</span>Antes do caixa: entrada que não é número <span class="mins">4 min</span></h2>
+  <p>No caixa, cada preço chega como <b>texto</b>. Se o programa fizer <code>float("abc")</code>, ele para com erro, então a conferência vem <b>antes</b> da conversão, como no laço de validação. Só que preços têm ponto (<code>4.5</code>), e <code>.isdigit()</code> sozinho recusaria o ponto. O truque: tirar o primeiro ponto com <code>.replace(".", "", 1)</code> e só então perguntar <code>.isdigit()</code>.</p>
+  <p>Junte isso ao <code>and</code>: em <code>item.replace(".", "", 1).isdigit() and float(item) &gt; 0</code>, o <code>float</code> só roda quando o texto já passou no teste (o <code>and</code> para na primeira parte falsa), e o <code>&gt; 0</code> recusa o 0, que não é preço.</p>
+  <table>
+    <tr><th>Texto digitado</th><th><code>replace(...).isdigit()</code></th><th>Serve como preço?</th></tr>
+    <tr><td><code>4.5</code></td><td><code>True</code></td><td>Sim: depois de tirar o ponto sobram só dígitos.</td></tr>
+    <tr><td><code>abc</code></td><td><code>False</code></td><td>Não: são letras.</td></tr>
+    <tr><td><code>-100</code></td><td><code>False</code></td><td>Não: o sinal de menos não é dígito.</td></tr>
+    <tr><td><code>4.5.1</code></td><td><code>False</code></td><td>Não: sobra um segundo ponto.</td></tr>
+    <tr><td><code>0</code></td><td><code>True</code></td><td>Passa no teste de dígitos, mas é recusado pelo <code>&gt; 0</code>.</td></tr>
+  </table>
+  <div class="callout term"><span class="tag">Palavras novas</span>
+    <dl>
+      <dt><code>.replace(velho, novo, 1)</code></dt><dd>troca o trecho <code>velho</code> por <code>novo</code>; o <code>1</code> manda trocar só a primeira ocorrência.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="card">
+  <h2><span class="num">5</span>Problema novo: o caixa da cafeteria <span class="mins">10 min</span></h2>
+  <p>Outro contexto, agora com <code>while</code>. Peça <code>Item: </code> (o preço, número com ponto) <b>até a pessoa digitar <code>fim</code></b>. Se o texto não for um número maior que zero (letras, negativo, 0...), mostre <code>Preço inválido</code> e peça <code>Item: </code> de novo, sem contar o item. No fim: se nenhum preço válido foi lido, mostre apenas <code>Nenhum item</code>; senão mostre <code>Itens: N</code> e <code>Total: R$ X.XX</code> (duas casas decimais).</p>
+  <div class="runner" data-key="k4" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;4.5&quot;,&quot;3&quot;,&quot;fim&quot;],&quot;esperado&quot;:[&quot;Item: 4.5&quot;,&quot;Item: 3&quot;,&quot;Item: fim&quot;,&quot;Itens: 2&quot;,&quot;Total: R$ 7.50&quot;]},{&quot;entradas&quot;:[&quot;fim&quot;],&quot;esperado&quot;:[&quot;Item: fim&quot;,&quot;Nenhum item&quot;]},{&quot;entradas&quot;:[&quot;abc&quot;,&quot;-100&quot;,&quot;0&quot;,&quot;10&quot;,&quot;fim&quot;],&quot;esperado&quot;:[&quot;Item: abc&quot;,&quot;Preço inválido&quot;,&quot;Item: -100&quot;,&quot;Preço inválido&quot;,&quot;Item: 0&quot;,&quot;Preço inválido&quot;,&quot;Item: 10&quot;,&quot;Item: fim&quot;,&quot;Itens: 1&quot;,&quot;Total: R$ 10.00&quot;]},{&quot;entradas&quot;:[&quot;abc&quot;,&quot;fim&quot;],&quot;esperado&quot;:[&quot;Item: abc&quot;,&quot;Preço inválido&quot;,&quot;Item: fim&quot;,&quot;Nenhum item&quot;]}]}" data-dica="Leia antes do laço e de novo dentro: `while item != &quot;fim&quot;:`. Dentro, `if item.replace(&quot;.&quot;, &quot;&quot;, 1).isdigit() and float(item) &gt; 0:` soma e conta; o `else:` mostra `Preço inválido`. Depois do laço, `if itens == 0:` mostra `Nenhum item`." data-concept="while_laco,acumulador,laco_validacao" data-level="exec" data-transfer="m03">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>caixa.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off"># Leia preços até a pessoa digitar fim
 </textarea></div>
@@ -385,22 +412,22 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 4 -->
+<!-- 6 -->
 <section class="card">
-  <h2><span class="num">4</span>O caixa e a confiança <span class="mins">3 min</span></h2>
-  <div class="callout sec"><span class="tag">Segurança e privacidade</span>O programa do caixa soma qualquer número digitado, inclusive negativos como -100.</div>
-  <p><strong>O que um funcionário mal-intencionado poderia fazer com um preço negativo? Que validação faltou?</strong></p>
+  <h2><span class="num">6</span>O caixa e a confiança <span class="mins">3 min</span></h2>
+  <div class="callout sec"><span class="tag">Segurança e privacidade</span>Imagine o programa do caixa sem validação, somando qualquer número digitado, inclusive negativos como -100.</div>
+  <p><strong>O que um funcionário mal-intencionado poderia fazer com um preço negativo? Que validação impede isso?</strong></p>
   <div class="open" data-key="k5" data-min="25">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar e comparar</button>
     <div class="fb"></div>
-    <div class="callout model"><span class="tag">Para comparar</span>Poderia <b>abaixar o total</b> (ou gerar crédito) digitando valores negativos. Faltou <b>validar o intervalo</b> de cada preço (por exemplo, só valores maiores que zero) e recusar o resto, como no laço de validação.</div>
+    <div class="callout model"><span class="tag">Para comparar</span>Poderia <b>abaixar o total</b> (ou gerar crédito) digitando valores negativos. A defesa é <b>validar o intervalo</b> de cada preço (só valores maiores que zero, como no exercício) e recusar o resto avisando, como no laço de validação.</div>
   </div>
 </section>
 
-<!-- 5 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">5</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">7</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k6" data-correta="1" data-concept="acumulador" data-level="exec">
     <p class="mcq-q">Onde devem ficar o total e o maior valor?</p>
@@ -428,9 +455,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">6</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">8</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: descreva em passos como o seu programa da semana funciona.</strong></p>
   <div class="open" data-key="k9" data-min="25" data-concept="for_range" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -438,7 +465,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Lê quantos dias; cria o total, o contador e o maior antes do laço; para cada dia, lê as horas, soma ao total, conta se passou de 3 e atualiza o maior; depois do laço calcula a média e mostra os quatro resultados.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Quais variáveis você cria antes do laço para somar e achar o maior? (2) Quando o <code>while</code> é melhor que o <code>for</code>? (3) Por que validar os preços digitados no caixa? <a href="recuperacao-0024.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Mini-projeto: organizando a semana”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0024.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -634,7 +661,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -826,7 +853,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -907,13 +945,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1166,7 +1198,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 16 · Skills, MCP e conectores · Aula 3</div>
   <h1>Name, description e os limites de cada lugar</h1>
   <p>O frontmatter tem regras: tamanho, caracteres e palavras reservadas. E elas não são iguais no claude.ai, na API e no Claude Code. Você vai escrever o validador.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 40 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Dizer os limites de <code>name</code> e <code>description</code> na API e no claude.ai.</li>
@@ -356,6 +356,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <p><b>No Claude Code</b>, todos os campos do frontmatter são <b>opcionais</b>: o <code>name</code> assume o nome da pasta e só a <code>description</code> é recomendada. As duas fontes <b>diferem</b>; por isso o caminho seguro é <b>sempre preencher os dois</b>, respeitando os limites mais rígidos.</p>
   <p>No claude.ai as skills são enviadas como arquivo zip (a documentação cita <b>Settings &gt; Features</b>, nos planos Pro, Max, Team e Enterprise com execução de código habilitada; skills personalizadas são individuais). O nome exato do menu pode ter mudado: <b>confira na tela</b> antes de seguir um tutorial. As skills <b>não sincronizam</b> entre claude.ai, API e Claude Code.</p>
   <p>A Anthropic publica skills de documentos prontas (pptx, xlsx, docx, pdf) no claude.ai e na API; <b>elas não estão disponíveis no Claude Code</b>.</p>
+  <p><b>Aviso sobre o validador:</b> o <code>validar_skill</code> desta aula é uma versão <b>simplificada do curso</b>. Ele lê linhas <code>chave: valor</code> (com ou sem aspas no valor) e confere a linha <code>---</code> que fecha o frontmatter. O <b>YAML de verdade é mais exigente</b>: por exemplo, um valor sem aspas que contenha <code>: </code> (dois-pontos e espaço) costuma quebrar a leitura. Se a sua <code>description</code> precisar disso, coloque o valor entre aspas, ou simplesmente evite.</p>
   <table>
     <tr><th>Onde</th><th>name</th><th>description</th></tr>
     <tr><td>API e claude.ai</td><td>obrigatório; até 64; minúsculas, números e hifens; sem “anthropic” nem “claude”</td><td>obrigatória; não vazia; até 1024; o que faz e quando usar</td></tr>
@@ -375,7 +376,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <h2><span class="num">2</span>Veja funcionando <span class="mins">3 min</span></h2>
   <p>Primeiro passo do validador: ler o frontmatter e guardar os campos num dicionário. Clique em cada linha.</p>
   <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>frontmatter.py</span></div>
-<pre class="annot" data-key="k2"><span class="ln" data-note="Início de um texto de várias linhas; a primeira linha é &lt;code&gt;---&lt;/code&gt;.">texto = """---</span><span class="ln" data-note="Campo &lt;code&gt;name&lt;/code&gt;.">name: resumir-extrato</span><span class="ln" data-note="Campo &lt;code&gt;description&lt;/code&gt;.">description: Resume extratos por categoria. Use quando receber um extrato.</span><span class="ln" data-note="Fim do frontmatter.">---</span><span class="ln" data-note="O corpo, que o validador não lê.">Passos da skill...</span><span class="ln" data-note="Fim do texto.">"""</span><span class="ln" data-note="Quebra o texto em linhas.">linhas = texto.splitlines()</span><span class="ln" data-note="Dicionário vazio para os campos.">campos = {}</span><span class="ln" data-note="Só continua se a primeira linha abre o frontmatter.">if linhas[0] == "---":</span><span class="ln" data-note="Percorre as linhas depois da primeira.">    for linha in linhas[1:]:</span><span class="ln" data-note="Achou a linha que fecha o frontmatter...">        if linha == "---":</span><span class="ln" data-note="...e &lt;code&gt;break&lt;/code&gt; interrompe o laço.">            break</span><span class="ln" data-note="Divide só no &lt;b&gt;primeiro&lt;/b&gt; dois-pontos (a descrição pode ter outros).">        chave, valor = linha.split(":", 1)</span><span class="ln" data-note="Guarda, tirando espaços das pontas com &lt;code&gt;strip()&lt;/code&gt;.">        campos[chave.strip()] = valor.strip()</span><span class="ln" data-note="Mostra &lt;code&gt;resumir-extrato&lt;/code&gt;.">print(campos["name"])</span><span class="ln" data-note="Mostra &lt;code&gt;['description', 'name']&lt;/code&gt;: os campos encontrados.">print(sorted(campos))</span></pre>
+<pre class="annot" data-key="k2"><span class="ln" data-note="Início de um texto de várias linhas; a primeira linha é &lt;code&gt;---&lt;/code&gt;.">texto = """---</span><span class="ln" data-note="Campo &lt;code&gt;name&lt;/code&gt;.">name: resumir-extrato</span><span class="ln" data-note="Campo &lt;code&gt;description&lt;/code&gt;.">description: Resume extratos por categoria. Use quando receber um extrato.</span><span class="ln" data-note="Fim do frontmatter.">---</span><span class="ln" data-note="O corpo, que o validador não lê.">Passos da skill...</span><span class="ln" data-note="Fim do texto.">"""</span><span class="ln" data-note="Quebra o texto em linhas.">linhas = texto.splitlines()</span><span class="ln" data-note="Dicionário vazio para os campos.">campos = {}</span><span class="ln" data-note="Só continua se a primeira linha abre o frontmatter.">if linhas[0] == "---":</span><span class="ln" data-note="Percorre as linhas depois da primeira.">    for linha in linhas[1:]:</span><span class="ln" data-note="Achou a linha que fecha o frontmatter...">        if linha == "---":</span><span class="ln" data-note="...e &lt;code&gt;break&lt;/code&gt; interrompe o laço.">            break</span><span class="ln" data-note="Divide só no &lt;b&gt;primeiro&lt;/b&gt; dois-pontos, e o valor guarda o resto da linha. (Simplificação do curso: no YAML de verdade, um &lt;code&gt;: &lt;/code&gt; solto num valor sem aspas costuma quebrar a leitura.)">        chave, valor = linha.split(":", 1)</span><span class="ln" data-note="Guarda, tirando espaços das pontas com &lt;code&gt;strip()&lt;/code&gt;.">        campos[chave.strip()] = valor.strip()</span><span class="ln" data-note="Mostra &lt;code&gt;resumir-extrato&lt;/code&gt;.">print(campos["name"])</span><span class="ln" data-note="Mostra &lt;code&gt;['description', 'name']&lt;/code&gt;: os campos encontrados.">print(sorted(campos))</span></pre>
     <div class="annot-note"><em>Clique numa linha acima.</em></div>
   </div>
   <div class="callout term"><span class="tag">Palavras novas</span>
@@ -389,7 +390,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <!-- 3 -->
 <section class="card">
   <h2><span class="num">3</span>Rode você mesmo <span class="mins">4 min</span></h2>
-  <p>Rode e depois apague a linha <code>name:</code> do texto para ver o <code>KeyError</code> que o validador precisa evitar.</p>
+  <p>Rode: aparecem o dicionário e o <code>name</code>. Depois <b>apague a linha <code>name: resumir-extrato</code></b> do texto e rode de novo: acontece um <code>KeyError</code>. <b>Causa:</b> <code>campos["name"]</code> pede uma chave que <b>não existe</b> no dicionário, e o Python para com esse erro. <b>Correção:</b> <code>campos.get("name", "")</code> devolve o segundo valor (aqui, o texto vazio) quando a chave não existe; é o que o validador faz para poder responder <code>falta name</code> em vez de quebrar. Para ver o conserto, troque a última linha por <code>print(campos.get("name", ""))</code>.</p>
   <div class="runner" data-key="k3">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>frontmatter.py (pode editar)</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">texto = """---
@@ -403,7 +404,8 @@ for linha in texto.splitlines()[1:]:
         break
     chave, valor = linha.split(":", 1)
     campos[chave.strip()] = valor.strip()
-print(campos)</textarea></div>
+print(campos)
+print(campos["name"])</textarea></div>
     <button class="run">Executar</button><button class="ghost reset">Restaurar</button>
     <div class="out">O resultado aparece aqui.</div>
   </div>
@@ -460,13 +462,13 @@ print(descricao_ok("x" * 1025))</textarea></div>
 <!-- 6 -->
 <section class="card">
   <h2><span class="num">6</span>Escreva o seu <span class="mins">5 min</span></h2>
-  <p>Complete <code>validar_skill(texto)</code>: devolve a lista de problemas (vazia se estiver tudo certo), com estes textos exatos: <code>falta name</code>, <code>name invalido</code> (mais de 64 caracteres ou caracteres fora de minúsculas, números e hifens), <code>name reservado</code> (contém “claude” ou “anthropic”), <code>falta description</code> e <code>description longa</code> (mais de 1024). A leitura do frontmatter já está pronta. Sem frontmatter, devolve <code>['sem frontmatter']</code>.</p>
-  <div class="runner" data-key="k7" data-spec="{&quot;esperado&quot;:[&quot;[]&quot;,&quot;['sem frontmatter']&quot;],&quot;testes&quot;:[[&quot;validar_skill('---\\ndescription: x\\n---')&quot;,&quot;['falta name']&quot;],[&quot;validar_skill('---\\nname: Resumir\\ndescription: x\\n---')&quot;,&quot;['name invalido']&quot;],[&quot;validar_skill('---\\nname: meu-claude\\ndescription: x\\n---')&quot;,&quot;['name reservado']&quot;],[&quot;validar_skill('---\\nname: ok\\n---')&quot;,&quot;['falta description']&quot;],[&quot;validar_skill('---\\nname: ok\\ndescription: ' + 'x' * 1025 + '\\n---')&quot;,&quot;['description longa']&quot;],[&quot;validar_skill('---\\nname: ok\\ndescription: x\\n---')&quot;,&quot;[]&quot;]]}" data-dica="Para o name: `if not nome:` falta; `elif len(nome) &gt; 64 or not set(nome) &lt;= set(&quot;abcdefghijklmnopqrstuvwxyz0123456789-&quot;):` inválido; `elif &quot;claude&quot; in nome or &quot;anthropic&quot; in nome:` reservado. Para a description: `if not descricao:` falta; `elif len(descricao) &gt; 1024:` longa. Use `erros.append(...)`." data-concept="sk_frontmatter" data-level="exec">
+  <p>Complete <code>validar_skill(texto)</code>: devolve a lista de problemas (vazia se estiver tudo certo), com estes textos exatos: <code>falta name</code>, <code>name invalido</code> (mais de 64 caracteres ou caracteres fora de minúsculas, números e hifens), <code>name reservado</code> (contém “claude” ou “anthropic”), <code>falta description</code> e <code>description longa</code> (mais de 1024). A leitura do frontmatter já está pronta e aceita valores com ou sem aspas. Sem frontmatter (ou sem a segunda linha <code>---</code>, que o fecha), devolve <code>['sem frontmatter']</code>. Lembre: é um validador simplificado do curso; o YAML real é mais exigente.</p>
+  <div class="runner" data-key="k7" data-spec="{&quot;esperado&quot;:[&quot;[]&quot;,&quot;['sem frontmatter']&quot;],&quot;testes&quot;:[[&quot;validar_skill('---\\ndescription: x\\n---')&quot;,&quot;['falta name']&quot;],[&quot;validar_skill('---\\nname: Resumir\\ndescription: x\\n---')&quot;,&quot;['name invalido']&quot;],[&quot;validar_skill('---\\nname: meu-claude\\ndescription: x\\n---')&quot;,&quot;['name reservado']&quot;],[&quot;validar_skill('---\\nname: ok\\n---')&quot;,&quot;['falta description']&quot;],[&quot;validar_skill('---\\nname: ok\\ndescription: ' + 'x' * 1025 + '\\n---')&quot;,&quot;['description longa']&quot;],[&quot;validar_skill('---\\nname: ok\\ndescription: x\\n---')&quot;,&quot;[]&quot;],[&quot;validar_skill('---\\nname: \&quot;ok\&quot;\\ndescription: \&quot;x\&quot;\\n---')&quot;,&quot;[]&quot;],[&quot;validar_skill('---\\nname: ok\\ndescription: x')&quot;,&quot;['sem frontmatter']&quot;]]}" data-dica="Para o name: `if not nome:` falta; `elif len(nome) &gt; 64 or not set(nome) &lt;= set(&quot;abcdefghijklmnopqrstuvwxyz0123456789-&quot;):` inválido; `elif &quot;claude&quot; in nome or &quot;anthropic&quot; in nome:` reservado. Para a description: `if not descricao:` falta; `elif len(descricao) &gt; 1024:` longa. Use `erros.append(...)`." data-concept="sk_frontmatter" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>validador.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">def validar_skill(texto):
     erros = []
     linhas = texto.splitlines()
-    if not linhas or linhas[0] != "---":
+    if not linhas or linhas[0] != "---" or "---" not in linhas[1:]:
         return ["sem frontmatter"]
     campos = {}
     for linha in linhas[1:]:
@@ -474,7 +476,7 @@ print(descricao_ok("x" * 1025))</textarea></div>
             break
         if ":" in linha:
             chave, valor = linha.split(":", 1)
-            campos[chave.strip()] = valor.strip()
+            campos[chave.strip()] = valor.strip().strip('"').strip("'")
     nome = campos.get("name", "")
     descricao = campos.get("description", "")
     # escreva as verificações de name e de description
@@ -558,7 +560,7 @@ print(validar_skill("sem nada"))</textarea></div>
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Na API e no claude.ai, name e description são obrigatórios: name até 64 caracteres, minúsculas, números e hifens, sem “anthropic” nem “claude”; description não vazia, até 1024, dizendo o que faz e quando usar. No Claude Code todos os campos são opcionais, mas o caminho seguro é preencher os dois.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Qual o limite de tamanho do <code>name</code> e da <code>description</code> na API? (2) Que palavras não podem aparecer no <code>name</code>? (3) O que muda no Claude Code em relação ao frontmatter? <a href="recuperacao-0123.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Name, description e os limites de cada lugar”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0123.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -754,7 +756,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -946,7 +948,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -1027,13 +1040,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1286,7 +1293,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

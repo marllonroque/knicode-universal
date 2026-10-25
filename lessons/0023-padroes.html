@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 3 · Repetições: fazer de novo sem copiar · Aula 7</div>
   <h1>Padrões de laço: maior, menor e contagem</h1>
   <p>Achar a maior venda, a menor temperatura e quantos itens passam de um valor são problemas que aparecem o tempo todo e se resolvem com o mesmo desenho.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 40 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Encontrar o maior ou o menor valor com um laço.</li>
@@ -459,9 +459,18 @@ print(maior)</pre></div>
 
 <!-- 5 -->
 <section class="card">
-  <h2><span class="num">5</span>Conserte o erro <span class="mins">4 min</span></h2>
-  <p>A menor temperatura do dia deveria ser 8, mas o programa mostra 0. Conserte <b>o valor inicial</b>.</p>
-  <div class="runner" data-key="k7" data-spec="{&quot;esperado&quot;:[&quot;Menor: 8&quot;]}" data-dica="O valor inicial do “menor” precisa ser maior que qualquer temperatura possível." data-concept="padroes_lacos" data-level="exec">
+  <h2><span class="num">5</span>Como escolher o valor inicial do maior ou do menor <span class="mins">4 min</span></h2>
+  <p>Há três jeitos de escolher o valor inicial; o primeiro é o mais seguro:</p>
+  <p><b>1) O primeiro valor.</b> Com uma lista, o primeiro item já é um candidato real. Quando os valores vêm de <code>input</code> (como as idades do próximo exercício, que não estão numa lista), leia o primeiro <b>antes</b> do laço, guarde-o em <code>maior</code> ou <code>menor</code> e deixe o laço cuidar dos que faltam. É o mesmo desenho da aula anterior: uma leitura antes do laço e outra dentro dele. Nunca dá resultado fora dos dados.</p>
+  <p><b>2) Um limite que o problema garante.</b> Idade nunca é negativa, então <code>mais_velha = 0</code> é seguro para idades. Já para números que podem ser negativos, o 0 falha: foi o que você viu com <code>[-5, -2]</code>.</p>
+  <p><b>3) Um número escolhido no chute, como <code>menor = 999</code>.</b> Funciona só enquanto nenhum valor passar de 999: se aparecer 1500, o 999 “vence” sem estar nos dados, o mesmo erro do <code>maior = 0</code>. E quem lê o código não sabe por que 999. No exercício a seguir ele serve porque a temperatura de um dia não chega nem perto disso, mas prefira os jeitos 1 e 2 quando puder.</p>
+</section>
+
+<!-- 6 -->
+<section class="card">
+  <h2><span class="num">6</span>Conserte o erro <span class="mins">4 min</span></h2>
+  <p>A menor temperatura do dia deveria ser 8, mas o programa mostra 0. Conserte <b>o valor inicial</b>: troque o <code>0</code> de <code>menor</code> por um número maior que qualquer temperatura do dia.</p>
+  <div class="runner" data-key="k7" data-spec="{&quot;esperado&quot;:[&quot;Menor: 8&quot;]}" data-dica="Nenhuma temperatura vai passar de 999, então `menor = 999` serve aqui. (Veja no texto acima por que esse truque é frágil.)" data-concept="padroes_lacos" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>com_defeito.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">menor = 0
 for t in [12, 8, 15]:
@@ -473,11 +482,11 @@ print("Menor:", menor)</textarea></div>
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>Escreva o seu <span class="mins">5 min</span></h2>
-  <p>Peça <code>Quantas idades? </code> e depois essa quantidade de <code>Idade: </code>. Mostre <code>Maiores de idade: X</code> (18 ou mais) e <code>Mais velha: Y</code>.</p>
-  <div class="runner" data-key="k8" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;3&quot;,&quot;17&quot;,&quot;18&quot;,&quot;40&quot;],&quot;esperado&quot;:[&quot;Quantas idades? 3&quot;,&quot;Idade: 17&quot;,&quot;Idade: 18&quot;,&quot;Idade: 40&quot;,&quot;Maiores de idade: 2&quot;,&quot;Mais velha: 40&quot;]},{&quot;entradas&quot;:[&quot;1&quot;,&quot;10&quot;],&quot;esperado&quot;:[&quot;Quantas idades? 1&quot;,&quot;Idade: 10&quot;,&quot;Maiores de idade: 0&quot;,&quot;Mais velha: 10&quot;]},{&quot;entradas&quot;:[&quot;4&quot;,&quot;30&quot;,&quot;25&quot;,&quot;18&quot;,&quot;18&quot;],&quot;esperado&quot;:[&quot;Quantas idades? 4&quot;,&quot;Idade: 30&quot;,&quot;Idade: 25&quot;,&quot;Idade: 18&quot;,&quot;Idade: 18&quot;,&quot;Maiores de idade: 4&quot;,&quot;Mais velha: 30&quot;]}]}" data-dica="Dois `if` dentro do `for`: um para contar `idade &gt;= 18` e outro para atualizar `mais_velha`." data-concept="padroes_lacos,acumulador" data-level="exec">
+  <h2><span class="num">7</span>Escreva o seu <span class="mins">5 min</span></h2>
+  <p>Peça <code>Quantas idades? </code> e depois essa quantidade de <code>Idade: </code> (inteiros; há pelo menos 1 idade e nenhuma é negativa). Mostre <code>Maiores de idade: X</code> (quantas têm 18 ou mais) e <code>Mais velha: Y</code> (a maior idade digitada).</p>
+  <div class="runner" data-key="k8" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;3&quot;,&quot;17&quot;,&quot;18&quot;,&quot;40&quot;],&quot;esperado&quot;:[&quot;Quantas idades? 3&quot;,&quot;Idade: 17&quot;,&quot;Idade: 18&quot;,&quot;Idade: 40&quot;,&quot;Maiores de idade: 2&quot;,&quot;Mais velha: 40&quot;]},{&quot;entradas&quot;:[&quot;1&quot;,&quot;10&quot;],&quot;esperado&quot;:[&quot;Quantas idades? 1&quot;,&quot;Idade: 10&quot;,&quot;Maiores de idade: 0&quot;,&quot;Mais velha: 10&quot;]},{&quot;entradas&quot;:[&quot;4&quot;,&quot;30&quot;,&quot;25&quot;,&quot;18&quot;,&quot;18&quot;],&quot;esperado&quot;:[&quot;Quantas idades? 4&quot;,&quot;Idade: 30&quot;,&quot;Idade: 25&quot;,&quot;Idade: 18&quot;,&quot;Idade: 18&quot;,&quot;Maiores de idade: 4&quot;,&quot;Mais velha: 30&quot;]}]}" data-dica="Dois `if` dentro do `for`: um para contar `idade &gt;= 18` e outro para atualizar `mais_velha`. Como nenhuma idade é negativa, `mais_velha = 0` serve de valor inicial (o jeito geral seria ler a primeira idade antes do laço)." data-concept="padroes_lacos,acumulador" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>meu_programa.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">n = int(input("Quantas idades? "))
 # leia as idades; conte as de 18 ou mais e ache a maior
@@ -487,9 +496,9 @@ print("Menor:", menor)</textarea></div>
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">7</span>Estatística sem expor pessoas <span class="mins">3 min</span></h2>
+  <h2><span class="num">8</span>Estatística sem expor pessoas <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>O programa de idades poderia mostrar “Mais velha: 40” ou “Mais velha: Maria Souza, CPF ..., 40 anos”.</div>
   <p><strong>Qual versão é melhor para um relatório e por quê? O que você perde com a primeira?</strong></p>
   <div class="open" data-key="k9" data-min="25">
@@ -500,9 +509,9 @@ print("Menor:", menor)</textarea></div>
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">8</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">9</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k10" data-correta="1" data-concept="padroes_lacos" data-level="exec">
     <p class="mcq-q">Para achar o maior valor, o que se faz a cada volta?</p>
@@ -530,9 +539,9 @@ print("Menor:", menor)</textarea></div>
   </div>
 </section>
 
-<!-- 9 -->
+<!-- 10 -->
 <section class="card">
-  <h2><span class="num">9</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">10</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: como você acha o menor valor de uma lista com um laço e que cuidado tem com o valor inicial?</strong></p>
   <div class="open" data-key="k13" data-min="25" data-concept="padroes_lacos" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -540,7 +549,7 @@ print("Menor:", menor)</textarea></div>
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Guarda “o menor visto até agora” e, para cada valor, atualiza se ele for menor. O valor inicial precisa ser maior que qualquer valor possível (ou o primeiro valor da lista), senão ele mesmo pode virar o resultado errado.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Como achar o maior valor de uma lista com um laço? (2) O que é um contador condicional? (3) Por que o valor inicial do “maior” pode dar resultado errado? <a href="recuperacao-0023.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Padrões de laço: maior, menor e contagem”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0023.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -736,7 +745,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -928,7 +937,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -1009,13 +1029,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1268,7 +1282,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

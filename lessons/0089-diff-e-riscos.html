@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 11 · Vibe coding com responsabilidade · Aula 7</div>
   <h1>Mudanças pequenas, revisão do diff e riscos</h1>
   <p>Peça uma mudança de cada vez, leia só o que mudou (o diff) e procure sinais de risco: segredos, dependências estranhas e código que apaga ou envia coisas.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 40 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Pedir uma mudança pequena e ler o diff.</li>
@@ -407,7 +407,21 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 5 -->
 <section class="card">
-  <h2><span class="num">5</span>Conserte o erro <span class="mins">4 min</span></h2>
+  <h2><span class="num">5</span>Ferramenta nova: lista em uma linha e valor padrão <span class="mins">4 min</span></h2>
+  <p>O código do próximo exercício usa duas coisas que ainda não apareceram. A primeira é a <b>compreensão de lista</b>: uma lista construída em uma linha só. <code>[p["id"] for p in pedidos if p["dia"] &lt; corte]</code> lê-se “a lista dos <code>p["id"]</code>, para cada <code>p</code> em <code>pedidos</code> que tenha <code>p["dia"] &lt; corte</code>”.</p>
+  <p>Ela é só um jeito curto do que você já sabe: <code>ids = []</code>, depois <code>for p in pedidos:</code>, dentro dele <code>if p["dia"] &lt; corte:</code> e, dentro do <code>if</code>, <code>ids.append(p["id"])</code>. O resultado é o mesmo. Do mesmo jeito, <code>[p for p in pedidos if p["id"] not in ids]</code> é a lista dos pedidos cujo id <b>não</b> está em <code>ids</code>. As datas no formato <code>AAAA-MM-DD</code> podem ser comparadas com <code>&lt;</code>: a menor é a mais antiga.</p>
+  <p>A segunda é o <b>valor padrão</b> de um parâmetro: em <code>def limpar(pedidos, corte, confirmar=True)</code>, o <code>confirmar=True</code> vale quando quem chama a função não informa nada. Por isso o valor padrão decide o que acontece quando alguém esquece de pedir.</p>
+  <div class="callout term"><span class="tag">Palavras novas</span>
+    <dl>
+      <dt>Compreensão de lista</dt><dd>uma lista montada em uma linha, <code>[o_que_guardar for item in lista if condição]</code>; equivale a um <code>for</code> com <code>append</code>.</dd>
+      <dt>Valor padrão</dt><dd>o valor que um parâmetro assume quando a chamada não o informa, escrito na definição como <code>confirmar=True</code>.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="card">
+  <h2><span class="num">6</span>Conserte o erro <span class="mins">4 min</span></h2>
   <p>A IA gerou uma limpeza que <b>apaga de verdade</b> por padrão (<code>confirmar=True</code>). Conserte para que, sem pedir, ela apenas <b>simule</b>.</p>
   <div class="runner" data-key="k4" data-spec="{&quot;esperado&quot;:[&quot;SIMULAÇÃO: apagaria 2 pedidos&quot;,&quot;3&quot;]}" data-dica="Troque o valor padrão do parâmetro: `confirmar=False`." data-concept="vc_riscos" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>gerado_com_defeito.py</span></div>
@@ -429,9 +443,9 @@ print(len(resultado))</textarea></div>
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>Escreva o seu <span class="mins">5 min</span></h2>
+  <h2><span class="num">7</span>Escreva o seu <span class="mins">5 min</span></h2>
   <p>Escreva <code>achar_sinais(codigo)</code>, que devolve a lista de sinais de risco (de <code>SINAIS</code>) que aparecem no texto <code>codigo</code>, em minúsculas, na ordem da lista.</p>
   <div class="runner" data-key="k5" data-spec="{&quot;testes&quot;:[[&quot;achar_sinais('import requests\\ntoken = \&quot;x\&quot;')&quot;,&quot;['requests', 'token']&quot;],[&quot;achar_sinais('print(1)')&quot;,&quot;[]&quot;],[&quot;achar_sinais('os.remove(a)')&quot;,&quot;['os.remove']&quot;]]}" data-dica="Crie uma lista `achados`, percorra `SINAIS` e, se `s in codigo.lower()`, use `achados.append(s)`." data-concept="vc_riscos" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>meu_programa.py</span></div>
@@ -446,9 +460,9 @@ def achar_sinais(codigo):
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">7</span>A chave no código <span class="mins">3 min</span></h2>
+  <h2><span class="num">8</span>A chave no código <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Para “facilitar”, a IA gerou um script com uma chave de acesso escrita direto no arquivo. Você vai enviar o arquivo para um colega e guardá-lo num repositório compartilhado.</div>
   <p><strong>Qual é o risco? Que mudança você pediria à IA?</strong></p>
   <div class="open" data-key="k6" data-min="25">
@@ -459,9 +473,9 @@ def achar_sinais(codigo):
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">8</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">9</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k7" data-correta="0" data-concept="vc_riscos" data-level="exec">
     <p class="mcq-q">Como pedir uma mudança, de preferência?</p>
@@ -489,9 +503,9 @@ def achar_sinais(codigo):
   </div>
 </section>
 
-<!-- 9 -->
+<!-- 10 -->
 <section class="card">
-  <h2><span class="num">9</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">10</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: por que pedir mudanças pequenas e quais são três riscos a procurar no código gerado?</strong></p>
   <div class="open" data-key="k10" data-min="25" data-concept="vc_riscos" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -499,7 +513,7 @@ def achar_sinais(codigo):
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Mudanças pequenas geram um <b>diff pequeno</b>, que dá para revisar. Os riscos: <b>segredos</b> escritos no código, <b>dependências</b> desconhecidas e código que <b>apaga ou envia</b> coisas (começar em modo simulação).</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Por que pedir mudanças pequenas à IA? (2) Cite pelo menos dois riscos de código gerado. (3) O que fazer antes de rodar um código que apaga arquivos ou dados? <a href="recuperacao-0089.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Mudanças pequenas, revisão do diff e riscos”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0089.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -695,7 +709,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -887,7 +901,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -968,13 +993,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1227,7 +1246,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

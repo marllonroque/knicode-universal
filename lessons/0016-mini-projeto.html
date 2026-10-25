@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 2 · Decisões: conferir antes de agir · Aula 8</div>
   <h1>Mini-projeto: o robô confere e decide</h1>
   <p>Hora de juntar as decisões: o robô confere água e café, diz o que falta e só passa o café quando tudo está certo. Depois, o mesmo raciocínio no desconto de uma loja.</p>
-  <div class="chips"><span class="chip">40 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 35 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Combinar <code>if</code>, <code>elif</code>, <code>else</code>, <code>and</code> e limites num programa só.</li>
@@ -375,8 +375,8 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <!-- 3 -->
 <section class="card">
   <h2><span class="num">3</span>Problema novo: o desconto da loja <span class="mins">10 min</span></h2>
-  <p>Outro contexto, as mesmas decisões. Peça <code>Compra: </code> (inteiro) e <code>Cliente VIP (s/n): </code>. Regras: VIP <b>e</b> compra de 100 ou mais: <code>Desconto: 15%</code>; só compra de 100 ou mais: <code>Desconto: 10%</code>; só VIP: <code>Desconto: 5%</code>; nenhum dos dois: <code>Desconto: 0%</code>.</p>
-  <div class="runner" data-key="k4" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;150&quot;,&quot;s&quot;],&quot;esperado&quot;:[&quot;Compra: 150&quot;,&quot;Cliente VIP (s/n): s&quot;,&quot;Desconto: 15%&quot;]},{&quot;entradas&quot;:[&quot;150&quot;,&quot;n&quot;],&quot;esperado&quot;:[&quot;Compra: 150&quot;,&quot;Cliente VIP (s/n): n&quot;,&quot;Desconto: 10%&quot;]},{&quot;entradas&quot;:[&quot;50&quot;,&quot;s&quot;],&quot;esperado&quot;:[&quot;Compra: 50&quot;,&quot;Cliente VIP (s/n): s&quot;,&quot;Desconto: 5%&quot;]},{&quot;entradas&quot;:[&quot;50&quot;,&quot;n&quot;],&quot;esperado&quot;:[&quot;Compra: 50&quot;,&quot;Cliente VIP (s/n): n&quot;,&quot;Desconto: 0%&quot;]},{&quot;entradas&quot;:[&quot;100&quot;,&quot;n&quot;],&quot;esperado&quot;:[&quot;Compra: 100&quot;,&quot;Cliente VIP (s/n): n&quot;,&quot;Desconto: 10%&quot;]}]}" data-dica="`vip = input(&quot;Cliente VIP (s/n): &quot;) == &quot;s&quot;` e `grande = compra &gt;= 100`; depois `if vip and grande`, `elif grande`, `elif vip`, `else`." data-concept="if_basico,elif_ordem,logica,limites" data-level="exec" data-transfer="m02">
+  <p>Outro contexto, as mesmas decisões. Peça <code>Compra: </code> (inteiro) e <code>Cliente VIP (s/n): </code>. A pessoa pode digitar <code>s</code> ou <code>S</code>, com ou sem espaços sobrando antes ou depois (use <code>.strip().lower()</code>, da aula anterior): qualquer um desses conta como VIP, e qualquer outra resposta conta como não VIP. Regras: VIP <b>e</b> compra de 100 ou mais: <code>Desconto: 15%</code>; só compra de 100 ou mais: <code>Desconto: 10%</code>; só VIP: <code>Desconto: 5%</code>; nenhum dos dois: <code>Desconto: 0%</code>.</p>
+  <div class="runner" data-key="k4" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;150&quot;,&quot;s&quot;],&quot;esperado&quot;:[&quot;Compra: 150&quot;,&quot;Cliente VIP (s/n): s&quot;,&quot;Desconto: 15%&quot;]},{&quot;entradas&quot;:[&quot;150&quot;,&quot;n&quot;],&quot;esperado&quot;:[&quot;Compra: 150&quot;,&quot;Cliente VIP (s/n): n&quot;,&quot;Desconto: 10%&quot;]},{&quot;entradas&quot;:[&quot;50&quot;,&quot;s&quot;],&quot;esperado&quot;:[&quot;Compra: 50&quot;,&quot;Cliente VIP (s/n): s&quot;,&quot;Desconto: 5%&quot;]},{&quot;entradas&quot;:[&quot;50&quot;,&quot;n&quot;],&quot;esperado&quot;:[&quot;Compra: 50&quot;,&quot;Cliente VIP (s/n): n&quot;,&quot;Desconto: 0%&quot;]},{&quot;entradas&quot;:[&quot;100&quot;,&quot;n&quot;],&quot;esperado&quot;:[&quot;Compra: 100&quot;,&quot;Cliente VIP (s/n): n&quot;,&quot;Desconto: 10%&quot;]},{&quot;entradas&quot;:[&quot;120&quot;,&quot;S&quot;],&quot;esperado&quot;:[&quot;Compra: 120&quot;,&quot;Cliente VIP (s/n): S&quot;,&quot;Desconto: 15%&quot;]},{&quot;entradas&quot;:[&quot;40&quot;,&quot; S&quot;],&quot;esperado&quot;:[&quot;Compra: 40&quot;,&quot;Cliente VIP (s/n):  S&quot;,&quot;Desconto: 5%&quot;]},{&quot;entradas&quot;:[&quot;99&quot;,&quot;s &quot;],&quot;esperado&quot;:[&quot;Compra: 99&quot;,&quot;Cliente VIP (s/n): s&quot;,&quot;Desconto: 5%&quot;]}]}" data-dica="`vip = input(&quot;Cliente VIP (s/n): &quot;).strip().lower() == &quot;s&quot;` e `grande = compra &gt;= 100`; depois `if vip and grande`, `elif grande`, `elif vip`, `else`." data-concept="if_basico,elif_ordem,logica,limites" data-level="exec" data-transfer="m02">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>loja.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off"># Leia a compra e se é VIP (s ou n), e decida o desconto
 </textarea></div>
@@ -438,7 +438,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Lê água e café; calcula se faltam; pergunta primeiro pelo caso mais restrito (faltam os dois), depois só água, depois só café, e por último o caso em que tem tudo. Os limites (150 e 15) usam <code>&lt;</code>, então 150 e 15 <b>bastam</b>.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Em que ordem escrever as condições de uma cadeia com <code>elif</code>? (2) Como exigir que duas condições sejam verdadeiras ao mesmo tempo? (3) Por que o sistema não deve confiar no campo “VIP” preenchido por quem compra? <a href="recuperacao-0016.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Mini-projeto: o robô confere e decide”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0016.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -634,7 +634,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -826,7 +826,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -907,13 +918,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1166,7 +1171,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

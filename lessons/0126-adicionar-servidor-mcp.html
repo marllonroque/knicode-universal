@@ -323,8 +323,8 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <header class="hero"><div class="hero-in">
   <div class="crumb">Módulo 16 · Skills, MCP e conectores · Aula 6</div>
   <h1>Adicionar um servidor MCP e usar conectores</h1>
-  <p>O comando <code>claude mcp add</code> liga um servidor ao Claude Code, e há os conectores do claude.ai. Você aprende a sintaxe, os escopos e quem aprova o quê. Sem instalar nada.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <p>O comando <code>claude mcp add</code> liga um servidor ao Claude Code, e há os conectores do claude.ai. Nesta aula você monta e confere o comando em Python; só <code>claude mcp list</code> e <code>/mcp</code> rodam de verdade, no seu terminal. Você aprende a sintaxe, os escopos e quem aprova o quê.</p>
+  <div class="chips"><span class="chip">cerca de 45 minutos</span><span class="chip">Precisa do Claude Code instalado (aula 0111) para os passos no terminal</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Montar o comando <code>claude mcp add</code> para servidor remoto (HTTP) e local (stdio).</li>
@@ -352,8 +352,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <!-- 1 -->
 <section class="card">
   <h2><span class="num">1</span>A sintaxe e os escopos <span class="mins">4 min</span></h2>
-  <p><b>Servidor remoto (HTTP):</b> <code>claude mcp add --transport http &lt;nome&gt; &lt;url&gt;</code>. O exemplo oficial usa o servidor do Notion. Para enviar um cabeçalho de autorização: <code>--header "Authorization: Bearer seu-token"</code> (cuidado: uma chave digitada no comando pode ficar no histórico do terminal; use sempre valores de exemplo em aulas e protocolos).</p>
-  <p><b>Servidor local (stdio):</b> as <b>opções vêm ANTES do nome</b> e o <b>comando vem DEPOIS de <code>--</code></b>. Exemplo oficial: <code>claude mcp add --env AIRTABLE_API_KEY=SUA_CHAVE --transport stdio airtable -- npx -y airtable-mcp-server</code>. No <b>Windows nativo</b>, servidores stdio que usam <code>npx</code> podem precisar de um ajuste no comando: <b>confira na página de MCP da documentação</b> ou prefira servidores HTTP remotos. O transporte <b>SSE</b> (<code>--transport sse</code>) está <b>obsoleto</b>: prefira HTTP.</p>
+  <p><b>O essencial desta aula são 3 coisas:</b> (1) o comando <code>claude mcp add --transport http &lt;nome&gt; &lt;url&gt;</code>; (2) os três escopos (<code>local</code>, <code>project</code> e <code>user</code>); (3) só aprovar servidor em que você confia. <b>O resto é consulta</b> (stdio, <code>--env</code>, <code>add-json</code>, conectores): volte aqui quando precisar, sem decorar.</p>
+  <p><b>Servidor remoto (HTTP):</b> <code>claude mcp add --transport http &lt;nome&gt; &lt;url&gt;</code>. A <b>URL</b> é o endereço do servidor na internet (começa com <code>https://</code>). O exemplo oficial usa o servidor do Notion. Para enviar um cabeçalho de autorização: <code>--header "Authorization: Bearer seu-token"</code>. Um <b>cabeçalho</b> (header) é uma informação extra enviada junto com cada pedido; <code>Authorization: Bearer ...</code> é o formato em que se manda o <b>token</b>, um código secreto que prova quem você é (tem o valor de uma senha: não compartilhe). <b>Cuidado do curso (não é da documentação):</b> uma chave escrita direto no comando pode ficar no histórico do terminal, e uma chave escrita num <code>.mcp.json</code> do escopo <code>project</code> vai para o Git junto com o projeto (como na aula 0117, segredo não entra no repositório). Em aulas e protocolos, use sempre valores de exemplo.</p>
+  <p><b>Servidor local (stdio):</b> as <b>opções vêm ANTES do nome</b> e o <b>comando vem DEPOIS de <code>--</code></b>. Exemplo oficial: <code>claude mcp add --env AIRTABLE_API_KEY=SUA_CHAVE --transport stdio airtable -- npx -y airtable-mcp-server</code>. O <code>npx</code> é um comando do Node.js que baixa e roda um programa; o <code>-y</code> responde “sim” sozinho à pergunta de confirmação. No Windows nativo, se um servidor stdio que usa <code>npx</code> não iniciar, <b>confira na página de MCP da documentação oficial</b> ou prefira servidores HTTP remotos. O transporte <b>SSE</b> (<code>--transport sse</code>) está <b>obsoleto</b>: prefira HTTP.</p>
   <p><b>Gerenciar:</b> <code>claude mcp list</code>, <code>claude mcp get &lt;nome&gt;</code>, <code>claude mcp remove &lt;nome&gt;</code> e <code>claude mcp add-json &lt;nome&gt; '&lt;json&gt;'</code>; dentro da sessão, <code>/mcp</code> lista os servidores e o status, autentica servidores remotos e liga ou desliga cada um.</p>
   <p><b>Escopos</b> (<code>--scope</code> ou <code>-s</code>): <code>local</code> (o padrão: só você, só este projeto), <code>project</code> (compartilhado com a equipe, guardado em <code>.mcp.json</code> na raiz) e <code>user</code> (todos os seus projetos). Em sessão interativa, o Claude Code <b>pede aprovação</b> antes de usar servidores de projeto vindos do <code>.mcp.json</code>.</p>
   <table>
@@ -364,6 +365,10 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </table>
   <div class="callout term"><span class="tag">Palavras novas</span>
     <dl>
+      <dt>URL</dt><dd>o endereço de um servidor na internet, como <code>https://mcp.exemplo.invalid/mcp</code> (fictício).</dd>
+      <dt>Cabeçalho (header)</dt><dd>informação extra enviada junto com o pedido; <code>Authorization: Bearer ...</code> leva o token.</dd>
+      <dt>Token</dt><dd>código secreto que prova quem você é; trate como senha.</dd>
+      <dt><code>npx -y</code></dt><dd><code>npx</code> baixa e roda um programa do Node.js; <code>-y</code> responde “sim” à confirmação.</dd>
       <dt>Escopo</dt><dd>até onde vale a conexão: este projeto, a equipe ou todos os seus projetos.</dd>
       <dt><code>--</code></dt><dd>marca o fim das opções: o que vem depois é o comando do servidor.</dd>
       <dt>Variável de ambiente</dt><dd>um valor (como uma chave) que o programa lê ao iniciar; no comando, <code>--env NOME=VALOR</code>.</dd>
@@ -489,7 +494,7 @@ print(montar_comando("stdio", "estoque", "npx -y exemplo-servidor-estoque", {"CH
 <!-- 8 -->
 <section class="card">
   <h2><span class="num">8</span>Faça isto no seu terminal <span class="mins">3 min</span></h2>
-  <p>Roteiro seguro, sem instalar servidor nenhum: 1) no terminal, rode <code>claude mcp list</code>; 2) abra <code>claude</code> e rode <code>/mcp</code>; 3) veja se aparecem conectores do claude.ai (se você fez login com essa conta); 4) rode <code>/help</code> para ver os comandos da sua versão.</p>
+  <p>Precisa do Claude Code instalado (aula 0111). Roteiro seguro, sem instalar servidor nenhum: 1) no terminal, rode <code>claude mcp list</code>; 2) abra <code>claude</code> e rode <code>/mcp</code>; 3) veja se aparecem conectores do claude.ai (se você fez login com essa conta); 4) rode <code>/help</code> para ver os comandos da sua versão.</p>
   <p><strong>Escreva o que apareceu em cada passo. Depois escreva o comando <code>claude mcp add</code> que você usaria para um servidor <b>remoto fictício</b> chamado <code>loja-ficticia</code>, e diga qual escopo escolheria e por quê.</strong></p>
   <div class="open" data-key="k8" data-min="70" data-concept="mcp_adicionar" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -501,7 +506,16 @@ print(montar_comando("stdio", "estoque", "npx -y exemplo-servidor-estoque", {"CH
 
 <!-- 9 -->
 <section class="card">
-  <h2><span class="num">9</span>O .mcp.json do repositório baixado <span class="mins">3 min</span></h2>
+  <h2><span class="num">9</span>Faça de verdade (opcional): adicionar e remover um servidor de exemplo <span class="mins">4 min</span></h2>
+  <p>Opcional, só com o Claude Code instalado. Os comandos abaixo estão na documentação, mas <b>o que cada um mostra na tela</b> não foi confirmado para este curso: leia as mensagens e, se algo for diferente, confira na página de MCP da documentação oficial.</p>
+  <p>1) <code>claude mcp add --transport http loja-ficticia https://mcp.exemplo.invalid/mcp</code> (o endereço <code>.invalid</code> é fictício e nunca existe de verdade, então <b>este servidor não vai funcionar</b>: o objetivo é só treinar a sequência). 2) <code>claude mcp list</code> para ver se ele aparece. 3) <code>claude mcp get loja-ficticia</code> para ver os detalhes. 4) <code>claude mcp remove loja-ficticia</code> para <b>tirar o servidor de exemplo</b>.</p>
+  <p>Sem <code>--scope</code>, o servidor fica no escopo <code>local</code> (padrão): só você, só neste projeto, guardado em <code>~/.claude.json</code>. <b>Não esqueça o passo 4</b>: não deixe configurações de treino na sua conta. Nunca use um servidor real ou uma chave real neste treino.</p>
+  <p class="fonte">Fonte: https://code.claude.com/docs/en/mcp. Ferramentas mudam: reconfira na documentação oficial.</p>
+</section>
+
+<!-- 10 -->
+<section class="card">
+  <h2><span class="num">10</span>O .mcp.json do repositório baixado <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Você clona um projeto de um site qualquer. Na raiz há um <code>.mcp.json</code> que liga um servidor desconhecido, e o Claude Code pergunta se você aprova usá-lo. Você está com pressa.</div>
   <p><strong>O que fazer antes de aprovar? Por que olhar só o <code>.mcp.json</code> não resolve?</strong></p>
   <div class="open" data-key="k9" data-min="25">
@@ -512,9 +526,9 @@ print(montar_comando("stdio", "estoque", "npx -y exemplo-servidor-estoque", {"CH
   </div>
 </section>
 
-<!-- 10 -->
+<!-- 11 -->
 <section class="card">
-  <h2><span class="num">10</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">11</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k10" data-correta="0" data-concept="mcp_adicionar" data-level="exec">
     <p class="mcq-q">Qual escopo é o padrão do claude mcp add?</p>
@@ -542,9 +556,9 @@ print(montar_comando("stdio", "estoque", "npx -y exemplo-servidor-estoque", {"CH
   </div>
 </section>
 
-<!-- 11 -->
+<!-- 12 -->
 <section class="card">
-  <h2><span class="num">11</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">12</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: como adicionar um servidor MCP remoto e um local, e quais são os escopos?</strong></p>
   <div class="open" data-key="k13" data-min="25" data-concept="mcp_adicionar" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -552,7 +566,7 @@ print(montar_comando("stdio", "estoque", "npx -y exemplo-servidor-estoque", {"CH
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Remoto: <code>claude mcp add --transport http NOME URL</code>. Local: opções antes do nome e o comando depois de <code>--</code> (<code>claude mcp add --env CHAVE=VALOR --transport stdio NOME -- COMANDO</code>). Escopos: local (padrão), project (<code>.mcp.json</code>, equipe) e user (todos os projetos). Conectores do claude.ai aparecem no <code>/mcp</code>.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Qual é o comando para adicionar um servidor MCP remoto por HTTP? (2) Quais são os três escopos de um servidor MCP? (3) Por que revisar só o <code>.mcp.json</code> não mostra todos os servidores? <a href="recuperacao-0126.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Adicionar um servidor MCP e usar conectores”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0126.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -748,7 +762,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -940,7 +954,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -1021,13 +1046,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1280,7 +1299,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

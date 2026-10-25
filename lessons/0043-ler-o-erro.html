@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 6 · Erros, testes e depuração · Aula 1</div>
   <h1>O erro é uma mensagem, não uma bronca</h1>
   <p>Quando o Python para, ele diz onde e por quê. Hoje você aprende a ler essa mensagem de baixo para cima.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 45 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Achar o tipo do erro, a linha e a explicação numa mensagem.</li>
@@ -367,8 +367,28 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 2 -->
 <section class="card">
-  <h2><span class="num">2</span>Rode você mesmo <span class="mins">4 min</span></h2>
-  <p>Rode e depois apague a linha final do <code>print</code> para ver que ela era o que mostrava o resultado.</p>
+  <h2><span class="num">2</span>Um erro de verdade, linha a linha <span class="mins">4 min</span></h2>
+  <p>Este é o texto <b>real</b> que o Python mostra para o programa <code>precos = [4.5, 3.0]</code> seguido de <code>print(precos[2])</code> (a lista só tem as posições 0 e 1). Leia <b>de baixo para cima</b>:</p>
+  <table>
+    <tr><th>Ordem de leitura</th><th>Linha da mensagem (na ordem em que aparece)</th><th>O que ela diz</th></tr>
+    <tr><td>5º</td><td><code>Traceback (most recent call last):</code></td><td>O título do relatório. “Most recent call last” quer dizer que o fato mais recente fica por último, por isso a leitura começa pelo fim.</td></tr>
+    <tr><td>4º</td><td><code>File "erro.py", line 2, in &lt;module&gt;</code></td><td>O lugar: o arquivo <code>erro.py</code>, linha <b>2</b>. É aí que você vai olhar.</td></tr>
+    <tr><td>3º</td><td><code>print(precos[2])</code></td><td>A linha do código que estava rodando quando o erro aconteceu.</td></tr>
+    <tr><td>2º</td><td><code>~~~~~~^^^</code> (as setas sob o código)</td><td>Aponta o pedaço exato que falhou: <code>precos[2]</code>. (Versões mais antigas do Python não desenham as setas.)</td></tr>
+    <tr><td>1º, comece aqui</td><td><code>IndexError: list index out of range</code></td><td>O tipo é <code>IndexError</code> e a explicação é “posição da lista fora do alcance”. Causa: pediu-se a posição 2, mas a lista termina na 1.</td></tr>
+  </table>
+</section>
+
+<!-- 3 -->
+<section class="card">
+  <h2><span class="num">3</span>A ideia <span class="mins">4 min</span></h2>
+  <p><b>Correção:</b> pedir uma posição que existe, como <code>precos[1]</code> (ou <code>precos[-1]</code>, o último). O mesmo método serve para qualquer erro: o tipo e a explicação (última linha) dizem <b>a causa</b>, e o número da linha diz <b>onde consertar</b>. Num <code>NameError</code>, por exemplo, a última linha é <code>NameError: name 'totl' is not defined</code>: o nome <code>totl</code> nunca foi criado, e o conserto é escrever <code>total</code>.</p>
+</section>
+
+<!-- 4 -->
+<section class="card">
+  <h2><span class="num">4</span>Rode você mesmo <span class="mins">4 min</span></h2>
+  <p>Rode como está (funciona). Depois troque <code>precos[0]</code> por <code>precos[2]</code> e rode de novo: vai aparecer um erro. Leia a última linha e conserte.</p>
   <div class="runner" data-key="k3">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>erro_leitura.py (pode editar)</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">precos = [4.5, 3.0]
@@ -389,9 +409,9 @@ print(lista[5])</pre></div>
   </div>
 </section>
 
-<!-- 3 -->
+<!-- 5 -->
 <section class="card">
-  <h2><span class="num">3</span>Descubra o padrão <span class="mins">5 min</span></h2>
+  <h2><span class="num">5</span>Descubra o padrão <span class="mins">5 min</span></h2>
   <p>Cada programa abaixo mostra algo ou falha. Observe o que muda.</p>
   <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>ordem.py</span></div>
 <pre class="hl">print(a)
@@ -415,9 +435,9 @@ a = 1</pre></div>
   </div>
 </section>
 
-<!-- 4 -->
+<!-- 6 -->
 <section class="card">
-  <h2><span class="num">4</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
+  <h2><span class="num">6</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
   <div class="quest" data-key="k6" data-concept="erro_ler" data-level="exec" data-ok="Tudo certo. Você aplicou a regra em casos novos.">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>programa.py</span></div>
 <pre class="hl">print("oi" + 1)</pre></div>
@@ -436,9 +456,9 @@ print(d["b"])</pre></div>
   </div>
 </section>
 
-<!-- 5 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">5</span>Conserte o erro <span class="mins">4 min</span></h2>
+  <h2><span class="num">7</span>Conserte o erro <span class="mins">4 min</span></h2>
   <p>O programa dá <code>NameError</code>. Conserte <b>uma linha</b>.</p>
   <div class="runner" data-key="k7" data-spec="{&quot;esperado&quot;:[&quot;10&quot;]}" data-dica="Confira a escrita do nome da variável." data-concept="erro_ler" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>com_defeito.py</span></div>
@@ -449,9 +469,9 @@ print(totl)</textarea></div>
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">6</span>Escreva o seu <span class="mins">5 min</span></h2>
+  <h2><span class="num">8</span>Escreva o seu <span class="mins">5 min</span></h2>
   <p>Escreva um programa que cria <code>lista = [1, 2, 3]</code> e mostra o <b>último</b> item (3) sem causar <code>IndexError</code>.</p>
   <div class="runner" data-key="k8" data-spec="{&quot;esperado&quot;:[&quot;3&quot;]}" data-dica="A última posição de uma lista de 3 itens é a 2 (ou -1)." data-concept="erro_ler" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>meu_programa.py</span></div>
@@ -463,9 +483,9 @@ print(totl)</textarea></div>
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">7</span>Colar o erro inteiro <span class="mins">3 min</span></h2>
+  <h2><span class="num">9</span>Colar o erro inteiro <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Para pedir ajuda, uma pessoa copia a mensagem de erro <b>inteira</b> e cola num chat público. O trecho contém o caminho da pasta dela (com o nome do usuário) e um pedaço de código com uma senha.</div>
   <p><strong>O que há de arriscado? O que revisar antes de colar?</strong></p>
   <div class="open" data-key="k9" data-min="25">
@@ -476,9 +496,9 @@ print(totl)</textarea></div>
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 10 -->
 <section class="card">
-  <h2><span class="num">8</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">10</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k10" data-correta="0" data-concept="erro_ler" data-level="exec">
     <p class="mcq-q">Por onde começar a ler uma mensagem de erro?</p>
@@ -506,9 +526,9 @@ print(totl)</textarea></div>
   </div>
 </section>
 
-<!-- 9 -->
+<!-- 11 -->
 <section class="card">
-  <h2><span class="num">9</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">11</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: como ler uma mensagem de erro do Python?</strong></p>
   <div class="open" data-key="k13" data-min="25" data-concept="erro_ler" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -516,7 +536,7 @@ print(totl)</textarea></div>
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Começando pela última linha: o tipo do erro e a explicação dizem o que houve, e o número da linha diz onde. Com isso se conserta sem chutar.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Por onde se começa a ler uma mensagem de erro? (2) O que o <code>NameError</code> quer dizer? (3) Por que não colar o erro inteiro num chat público sem revisar? <a href="recuperacao-0043.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “O erro é uma mensagem, não uma bronca”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0043.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -712,7 +732,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -904,7 +924,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -985,13 +1016,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1244,7 +1269,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

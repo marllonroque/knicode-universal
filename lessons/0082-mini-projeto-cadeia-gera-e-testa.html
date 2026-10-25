@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 10 · Engenharia de prompts avançada · Aula 8</div>
   <h1>Mini-projeto: uma cadeia que gera e testa uma função</h1>
   <p>Você junta tudo: um passo gera a função, outro extrai o código, outro testa com casos e um relatório compara as versões.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 55 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Montar a cadeia gerar, extrair, testar e relatar.</li>
@@ -353,7 +353,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <section class="card">
   <h2><span class="num">1</span>A cadeia completa <span class="mins">4 min</span></h2>
   <p>A cadeia do projeto tem quatro passos: <b>1) gerar</b>: um prompt pede a função (com objetivo, formato e restrições, como as aulas anteriores); <b>2) extrair</b>: o código vem dentro de uma tag, e o programa o separa do resto; <b>3) testar</b>: o programa roda o código com <b>casos de teste</b>, tratando erros com <code>try/except</code>; <b>4) relatar</b>: mostra quantos casos cada versão passou.</p>
+  <p>Na aula 0077 vimos duas situações. Esta cadeia (gerar, extrair, testar) é a <b>situação 1: IA como ferramenta de desenvolvimento</b>. O Claude ajuda a construir a função, e o que vai para a loja é a função <b>já testada</b>, sem o Claude dentro dela. Já a cadeia da aula 0076 (resumir, classificar, responder), quando um programa a executa sozinho a cada mensagem que chega, seria a situação 2: IA dentro da aplicação.</p>
   <p>O Claude pode gerar código errado, ou nem sintaticamente correto. Por isso o passo de testar conta <b>erro como falha</b> e não deixa o programa quebrar. Nunca rode código desconhecido sem revisar: aqui as versões são <b>textos fictícios</b> escritos para a aula.</p>
+  <p>Repare que o teste usa <code>except Exception</code>, e não um erro específico como na aula 0048 (capturar só o erro esperado). A razão: o código <b>vem de fora</b> e pode falhar de qualquer jeito (erro de sintaxe, nome inexistente, divisão por zero), e não dá para prever o tipo. A regra de <b>não esconder erros</b> continua valendo: cada erro é <b>registrado</b> (guardamos o tipo) e aparece no relatório, em vez de sumir em silêncio.</p>
   <p>Se uma versão falha, o passo seguinte da cadeia pode ser <b>pedir a correção</b> informando os casos que falharam (cadeia com revisão). Depois, teste de novo.</p>
   <div class="callout term"><span class="tag">Palavras novas</span>
     <dl>
@@ -366,7 +368,20 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 2 -->
 <section class="card">
-  <h2><span class="num">2</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
+  <h2><span class="num">2</span>Ferramenta nova: <code>except Exception as e</code> <span class="mins">4 min</span></h2>
+  <p>Com <code>except Exception as e:</code> o programa captura qualquer erro comum e guarda o erro na variável <code>e</code>. Para registrar <b>que tipo</b> de erro foi, use <code>type(e).__name__</code>: ele dá o nome do tipo, como <code>ZeroDivisionError</code> ou <code>SyntaxError</code>. Assim o erro não some: você guarda o nome numa lista e mostra no relatório.</p>
+  <p>Outra novidade: uma função pode devolver <b>três valores</b> de uma vez (<code>return acertos, total, erros</code>), e quem chama separa os três (<code>acertos, total, erros = testar(...)</code>).</p>
+  <div class="callout term"><span class="tag">Palavras novas</span>
+    <dl>
+      <dt><code>as e</code></dt><dd>dá o nome <code>e</code> ao erro capturado, para você poder usá-lo.</dd>
+      <dt><code>type(e).__name__</code></dt><dd>o nome do tipo do erro, como um texto.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="card">
+  <h2><span class="num">3</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
   <p>Preveja a saída.</p>
   <div class="quest" data-key="k2" data-concept="pa_projeto" data-level="exec" data-ok="Tudo certo. Você aplicou a regra em casos novos.">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>programa.py</span></div>
@@ -391,13 +406,19 @@ for entrada, esperado in casos:
         acertos = acertos + 1
 print(acertos, "de", len(casos))</pre></div>
     <div class="pred"><span>O que aparece?</span><input class="q" data-answer="2 de 3" data-label="Item 3" data-why="Os dois primeiros casos batem; o terceiro (5 vezes 2 é 10, não 11) falha." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
+    <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>programa.py</span></div>
+<pre class="hl">try:
+    exec("x = 1 / 0", {})
+except Exception as e:
+    print("erro:", type(e).__name__)</pre></div>
+    <div class="pred"><span>O que aparece?</span><input class="q" data-answer="erro: ZeroDivisionError" data-label="Item 4" data-why="Dividir por zero dá &lt;code&gt;ZeroDivisionError&lt;/code&gt;; o &lt;code&gt;except&lt;/code&gt; o captura e &lt;code&gt;type(e).__name__&lt;/code&gt; mostra o nome do tipo." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
     <button class="chk">Conferir</button><div class="fb"></div>
   </div>
 </section>
 
-<!-- 3 -->
+<!-- 4 -->
 <section class="card">
-  <h2><span class="num">3</span>Descubra o padrão <span class="mins">5 min</span></h2>
+  <h2><span class="num">4</span>Descubra o padrão <span class="mins">5 min</span></h2>
   <p>Resultado de uma cadeia com 3 versões geradas de <code>desconto(preco)</code> (regra: 10% de desconto) e 3 casos.</p>
   <table>
     <tr><th>Versão</th><th>Caso 100 → 90</th><th>Caso 200 → 180</th><th>Caso 0 → 0</th><th>Placar</th></tr>
@@ -419,11 +440,11 @@ print(acertos, "de", len(casos))</pre></div>
   </div>
 </section>
 
-<!-- 4 -->
+<!-- 5 -->
 <section class="card">
-  <h2><span class="num">4</span>Exercício final (a dica é opcional) <span class="mins">15 min</span></h2>
-  <p>A função <code>extrair</code> já está pronta. Escreva <code>testar(codigo, casos)</code>: executa o <code>codigo</code> (que define <code>desconto</code>), chama <code>desconto(entrada)</code> para cada <code>(entrada, esperado)</code> e devolve <code>(acertos, total)</code>. Resultado que difere de <code>esperado</code> por 0.01 ou mais, ou qualquer erro (inclusive ao executar o código), conta como falha. Depois o relatório mostra <code>nome acertos de total</code> para cada versão.</p>
-  <div class="runner" data-key="k4" data-spec="{&quot;esperado&quot;:[&quot;v1 3 de 3&quot;,&quot;v2 1 de 3&quot;,&quot;v3 0 de 3&quot;]}" data-dica="Faça `acertos = 0` e `escopo = {}`. Num `try:`, rode `exec(codigo, escopo)`; no `except Exception:`, devolva `(0, len(casos))`. Depois percorra `casos`, e para cada um use outro `try/except` para chamar `escopo[&quot;desconto&quot;](entrada)` e comparar com `abs(r - esperado) &lt; 0.01`." data-concept="pa_projeto,pa_cadeia,pa_avaliar" data-level="exec" data-module-final="m10">
+  <h2><span class="num">5</span>Exercício final (a dica é opcional) <span class="mins">15 min</span></h2>
+  <p>A função <code>extrair</code> já está pronta. Escreva <code>testar(codigo, casos)</code>: executa o <code>codigo</code> (que define <code>desconto</code>), chama <code>desconto(entrada)</code> para cada <code>(entrada, esperado)</code> e devolve três valores: <code>(acertos, total, erros)</code>. <code>acertos</code> é quantos casos bateram, <code>total</code> é quantos casos existem e <code>erros</code> é a lista com o <b>tipo</b> de cada erro que ocorreu (por exemplo <code>'SyntaxError'</code>), ou <code>[]</code> se nenhum. Resultado que difere de <code>esperado</code> por 0.01 ou mais, ou qualquer erro (inclusive ao executar o código), conta como falha; se o código nem roda, devolva <code>(0, total, [tipo do erro])</code>. Depois o relatório mostra <code>nome acertos de total</code> e, para cada erro, <code>erro em nome: tipo</code>. Entregue a função <code>testar</code> completa: os dados e o relatório já estão no código.</p>
+  <div class="runner" data-key="k4" data-spec="{&quot;esperado&quot;:[&quot;v1 3 de 3&quot;,&quot;v2 1 de 3&quot;,&quot;v3 0 de 3&quot;,&quot;erro em v3: SyntaxError&quot;],&quot;testes&quot;:[[&quot;testar('def desconto(p):\\n    return p - 10', [(100, 90.0), (200, 180.0)])&quot;,&quot;(1, 2, [])&quot;],[&quot;testar('def desconto(p)\\n    return p', [(1, 1.0)])&quot;,&quot;(0, 1, ['SyntaxError'])&quot;],[&quot;testar('def desconto(p):\\n    return p / 0', [(1, 1.0), (2, 2.0)])&quot;,&quot;(0, 2, ['ZeroDivisionError', 'ZeroDivisionError'])&quot;],[&quot;testar('x = 1', [(1, 1.0)])&quot;,&quot;(0, 1, ['KeyError'])&quot;]]}" data-dica="Faça `acertos = 0`, `erros = []` e `escopo = {}`. Num `try:`, rode `exec(codigo, escopo)`; no `except Exception as e:`, guarde `type(e).__name__` em `erros` e devolva `(0, len(casos), erros)`. Depois percorra `casos`, e para cada um use outro `try/except Exception as e` para chamar `escopo[&quot;desconto&quot;](entrada)`, comparar com `abs(r - esperado) &lt; 0.01` e, se der erro, guardar o tipo em `erros`." data-concept="pa_projeto,pa_cadeia,pa_avaliar" data-level="exec" data-module-final="m10">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>cadeia_final.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">def extrair(texto, tag):
     abre = "&lt;" + tag + "&gt;"
@@ -433,8 +454,8 @@ print(acertos, "de", len(casos))</pre></div>
     return texto.split(abre)[1].split(fecha)[0]
 
 def testar(codigo, casos):
-    # rode o código e conte os acertos; erros contam como falha
-    return 0, len(casos)
+    # rode o código e conte os acertos; todo erro conta como falha E é registrado em erros
+    return 0, len(casos), []
 
 casos = [(100, 90.0), (200, 180.0), (0, 0.0)]
 respostas = {
@@ -443,16 +464,18 @@ respostas = {
     "v3": "&lt;codigo&gt;\ndef desconto(preco)\n    return preco\n&lt;/codigo&gt;",
 }
 for nome, texto in respostas.items():
-    acertos, total = testar(extrair(texto, "codigo"), casos)
-    print(nome, acertos, "de", total)</textarea></div>
+    acertos, total, erros = testar(extrair(texto, "codigo"), casos)
+    print(nome, acertos, "de", total)
+    for tipo in erros:
+        print("erro em", nome + ":", tipo)</textarea></div>
     <button class="run">Executar e conferir</button>
     <div class="out">O resultado aparece aqui.</div><div class="fb"></div>
   </div>
 </section>
 
-<!-- 5 -->
+<!-- 6 -->
 <section class="card">
-  <h2><span class="num">5</span>Problema novo: outra função <span class="mins">10 min</span></h2>
+  <h2><span class="num">6</span>Problema novo: outra função <span class="mins">10 min</span></h2>
   <p>Outro contexto, a mesma cadeia. Função: <code>frete(peso_kg)</code>, que devolve 15.0 até 1 kg e soma 5.0 por kg adicional (arredondado para cima).</p>
   <p><strong>Descreva os 4 passos da cadeia (gerar, extrair, testar, relatar): escreva o prompt do passo 1, liste 4 casos de teste (um de borda) com a resposta esperada e diga o que fazer se uma versão falhar.</strong></p>
   <div class="open" data-key="k5" data-min="120" data-concept="pa_projeto,pa_cadeia,pa_avaliar" data-level="comp" data-transfer="m10">
@@ -463,9 +486,9 @@ for nome, texto in respostas.items():
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>Rodar código desconhecido <span class="mins">3 min</span></h2>
+  <h2><span class="num">7</span>Rodar código desconhecido <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Alguém recebe uma função de um chat ou de um fórum e usa <code>exec</code> para rodá-la no computador onde ficam as senhas e os arquivos da loja, sem ler.</div>
   <p><strong>Qual é o risco? Que cuidados tomar?</strong></p>
   <div class="open" data-key="k6" data-min="25">
@@ -476,9 +499,9 @@ for nome, texto in respostas.items():
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">7</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">8</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k7" data-correta="0" data-concept="pa_projeto" data-level="exec">
     <p class="mcq-q">Qual é a ordem da cadeia do projeto?</p>
@@ -506,17 +529,17 @@ for nome, texto in respostas.items():
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">8</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">9</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: descreva a cadeia que gera e testa uma função e como ela trata os erros.</strong></p>
   <div class="open" data-key="k10" data-min="25" data-concept="pa_projeto" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar</button>
     <div class="fb"></div>
-    <div class="callout model"><span class="tag">Resposta de referência</span><b>Gerar</b> (prompt claro com formato), <b>extrair</b> o código da tag, <b>testar</b> com vários casos (inclusive de borda), contando erro como falha com <code>try/except</code>, e <b>relatar</b> o placar de cada versão. Código desconhecido deve ser revisado antes de rodar.</div>
+    <div class="callout model"><span class="tag">Resposta de referência</span><b>Gerar</b> (prompt claro com formato), <b>extrair</b> o código da tag, <b>testar</b> com vários casos (inclusive de borda), contando erro como falha com <code>try/except</code> (e registrando o tipo do erro), e <b>relatar</b> o placar de cada versão. Código desconhecido deve ser revisado antes de rodar.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Quais são os passos da cadeia do projeto? (2) Como o teste trata um código que dá erro? (3) Que cuidado ter antes de rodar código gerado ou vindo de fora? <a href="recuperacao-0082.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Mini-projeto: uma cadeia que gera e testa uma função”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0082.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -712,7 +735,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -904,7 +927,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -985,13 +1019,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1244,7 +1272,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

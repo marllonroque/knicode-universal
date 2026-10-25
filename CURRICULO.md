@@ -44,7 +44,7 @@ Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar
 
 ### Módulo 05: Listas e dicionários
 
-Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.
+Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.
 
 - **Tempo:** 10 aulas de ~30 min + 1 h
 - **Exercício:** Um carrinho de e-commerce com total e desconto.

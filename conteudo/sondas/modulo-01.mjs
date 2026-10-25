@@ -1,0 +1,28 @@
+// Sondas da recuperação do Módulo 1 (a aula 0001 é escrita à mão e não passa por aqui; seus padrões estão em fonte/recuperacao-0001.html).
+// passa: respostas certas, ditas com outras palavras. falha: respostas erradas ou vagas, que a correção não pode aceitar.
+export default [
+  { aula: "0003", q: 2,
+    passa: ["int é número inteiro e str é texto", "o int guarda número e o str guarda texto", "str é texto entre aspas; int é um número inteiro, com o qual dá para fazer contas", "texto é str, número é int", "int serve para contas e str é uma palavra entre aspas", "int é número, não texto"],
+    falha: ["int é texto e str é número", "o int é uma palavra e o str é um número inteiro", "str é número inteiro e int é string", "são iguais", "não sei"] },
+  { aula: "0003", q: 3,
+    passa: ["int(\"12\")", "com a função int", "usando float(\"12\")", "int()", "converto com int e depois somo"],
+    falha: ["print", "print(\"12\")", "uso o inteiro", "str(12)", "somo direto com o sinal de mais"] },
+  { aula: "0005", q: 1,
+    passa: ["Pergunta algo à pessoa e espera ela digitar", "pede um dado ao usuário", "lê o que a pessoa digita", "recebe o que foi digitado", "mostra uma pergunta e espera a resposta"],
+    falha: ["ele mostra uma mensagem na tela", "ele imprime", "calcula o resultado", "faz uma soma"] },
+  { aula: "0005", q: 2,
+    passa: ["texto, sempre", "devolve texto (str) mesmo se a pessoa digitar um número", "string", "str", "sempre texto, nunca número", "ele não devolve número, devolve texto"],
+    falha: ["Devolve um número, não texto", "um número inteiro", "retorna o inteiro digitado", "ele mostra o que a pessoa escreveu", "int"] },
+  { aula: "0005", q: 3,
+    passa: ["int(input())", "converto cada resposta com int antes de somar", "usando float", "com int(...)"],
+    falha: ["print(a + b)", "somo direto", "uso o print", "com o sinal de mais", "inteiro"] },
+  { aula: "0006", q: 3,
+    passa: ["As chaves aparecem do jeito que estão: Olá, {nome}", "mostra literalmente {nome}", "aparece {nome} como texto comum", "as chaves ficam no texto, igual ao que escrevi", "não substitui nada, só mostra as chaves"],
+    falha: ["dá erro no texto", "dá erro", "mostra o nome da Lia", "o nome é substituído pelo valor", "aparece Olá, Lia", "as chaves não aparecem"] },
+  { aula: "0008", q: 1,
+    passa: ["Pergunta, converte para número, calcula e mostra", "primeiro pergunta, depois transforma em número, depois calcula e exibe", "pede os dados, converte com int, faz a conta e imprime", "lê, converte, soma e mostra o total"],
+    falha: ["pergunta, calcula, print", "mostra, pergunta, calcula e converte", "calcula e depois pergunta", "pergunta e mostra", "converte, pergunta, calcula e mostra"] },
+  { aula: "0008", q: 2,
+    passa: ["porque o input devolve texto", "o input dá uma string e não dá para multiplicar", "é um texto, então precisa virar número"],
+    falha: ["porque sim", "porque fica mais rápido", "para o programa ficar bonito"] },
+];

@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 16 · Skills, MCP e conectores · Aula 4</div>
   <h1>Escrever uma boa skill</h1>
   <p>Uma boa skill faz uma coisa, tem uma descrição que diz quando entrar em ação, instruções curtas em passos e travas para o que tem efeito colateral.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 30 minutos</span><span class="chip">Sem instalar nada (o passo real é opcional)</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Escrever uma <code>description</code> que diga o que faz e quando usar.</li>
@@ -412,7 +412,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <section class="card">
   <h2><span class="num">4</span>Escreva o SKILL.md completo <span class="mins">3 min</span></h2>
   <p>Escolha uma tarefa repetitiva sua: conferir um pedido, resumir gastos, preparar um estudo.</p>
-  <p><strong>Escreva o texto inteiro do SKILL.md: frontmatter com <code>name</code> e <code>description</code> (o que faz e quando usar) e 4 passos numerados, incluindo <b>uma coisa que a skill nunca deve fazer</b>.</strong></p>
+  <p><strong>Escreva o texto inteiro do SKILL.md: frontmatter com <code>name</code> e <code>description</code> (o que faz e quando usar) e 4 passos numerados, incluindo <b>uma coisa que a skill nunca deve fazer</b>. Cole o texto completo na caixa de resposta (é só texto: nesta etapa nada é instalado).</strong></p>
   <div class="open" data-key="k4" data-min="120" data-concept="sk_escrever" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar e comparar</button>
@@ -423,7 +423,17 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 5 -->
 <section class="card">
-  <h2><span class="num">5</span>A skill que envia sozinha <span class="mins">3 min</span></h2>
+  <h2><span class="num">5</span>Faça de verdade (opcional) <span class="mins">4 min</span></h2>
+  <p>Se você já tem o Claude Code instalado (aula 0111), dá para criar uma skill de verdade. É opcional: o curso segue sem isto. Use a skill <code>resumir-extrato</code> da aula 0121 (com dados <b>fictícios</b>).</p>
+  <p><b>Passo a passo (confirmado na documentação):</b> 1) na pasta de um projeto de treino, crie <code>.claude/skills/resumir-extrato/SKILL.md</code> com o frontmatter (<code>name</code> e <code>description</code>) e os passos; 2) abra o <code>claude</code> nessa pasta e rode <code>/skills</code> para ver se ela aparece na lista; 3) chame a skill diretamente com <code>/resumir-extrato</code>. Se ela não aparecer no <code>/skills</code>, confira o caminho e o nome da pasta, e confira na documentação oficial como a lista é atualizada.</p>
+  <p><b>Três pedidos de teste</b>, para ver se o Claude escolhe a skill pela <code>description</code>: (a) <b>deve acionar:</b> “Anexei o extrato de setembro (fictício); resuma por categoria.”; (b) <b>não deve acionar:</b> “Qual é a capital da França?”; (c) <b>limítrofe:</b> “Quanto eu gastei com mercado neste mês?”, sem anexar nada. O Claude <b>decide</b> comparando o pedido com a description, então o resultado do pedido (c) pode variar: se ele não escolher a skill quando você queria, reescreva a description com as palavras que você usou. Chamar com <code>/resumir-extrato</code> funciona sempre que a skill está na lista.</p>
+  <p>Cuidado: a pasta <code>.claude/skills/</code> do projeto é compartilhada pelo Git, então nunca coloque dados reais dentro dela (veja a pergunta de segurança da aula 0123).</p>
+  <p class="fonte">Fonte: https://code.claude.com/docs/en/skills. Ferramentas mudam: reconfira na documentação oficial.</p>
+</section>
+
+<!-- 6 -->
+<section class="card">
+  <h2><span class="num">6</span>A skill que envia sozinha <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Uma skill chamada <code>enviar-relatorio</code> monta o relatório semanal e <b>envia por e-mail</b> para a lista de clientes. A description diz: “Envia o relatório semanal. Use quando falarem em relatório”.</div>
   <p><strong>Qual é o perigo da forma como foi escrita e o que mudar?</strong></p>
   <div class="open" data-key="k5" data-min="25">
@@ -434,9 +444,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">7</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k6" data-correta="0" data-concept="sk_escrever" data-level="exec">
     <p class="mcq-q">O que a description deve dizer?</p>
@@ -464,9 +474,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">7</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">8</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: o que faz uma skill ser boa?</strong></p>
   <div class="open" data-key="k9" data-min="25" data-concept="sk_escrever" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -474,7 +484,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Faz uma tarefa só; tem uma description que diz o que faz e quando usar; corpo curto em passos, com o que nunca fazer; e usa <code>disable-model-invocation: true</code> quando tem efeito colateral. Testa-se pedindo a tarefa com as próprias palavras e chamando com <code>/nome</code>.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) O que uma boa description deve dizer? (2) Para que serve <code>disable-model-invocation: true</code>? (3) Por que skills com efeito colateral precisam de cuidado extra? <a href="recuperacao-0124.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Escrever uma boa skill”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0124.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -670,7 +680,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -862,7 +872,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -943,13 +964,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1202,7 +1217,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

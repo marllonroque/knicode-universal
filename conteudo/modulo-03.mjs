@@ -59,9 +59,9 @@ for i in range(n):
     { tipo: "fechar", pergunta: "Sem olhar acima: o que faz `for i in range(n)` e quais valores `i` assume?", conceito: "for_range", modelo: "Repete o bloco indentado `n` vezes. A variável `i` assume 0, 1, 2... até n-1. Com `n = 0` o bloco não roda." },
   ],
   recuperacao: [
-    { p: "Quantas vezes roda o bloco de `for i in range(4)`?", regex: "(4|quatro)", modelo: "4 vezes, com `i` valendo 0, 1, 2 e 3.", conceito: "for_range" },
-    { p: "A partir de qual número o `range` começa a contar por padrão?", regex: "(0|zero)", modelo: "Do 0.", conceito: "for_range" },
-    { p: "Por que não imprimir dados pessoais dentro de um laço?", regex: "(multipl|muitos|todos|vaza|log|registro|cada cliente)", modelo: "Porque o laço repete a exposição para todos os clientes; mostre só o necessário.", conceito: "for_range" },
+    { p: "Quantas vezes roda o bloco de `for i in range(4)`? (responda com o número de voltas)", regex: "\\b(4|quatro)\\b", naoRegex: "\\b(5|cinco|6|seis)\\s*(vezes|voltas|x)\\b|\\b0 a 4\\b|\\bate (o )?(4|quatro)\\b|zero a quatro", modelo: "4 vezes, com `i` valendo 0, 1, 2 e 3.", conceito: "for_range" },
+    { p: "A partir de qual número o `range` começa a contar por padrão (quando só se informa o fim)?", regex: "\\b(0|zero)\\b", naoRegex: "\\bnao (comeca|inicia|parte|e|eh|vai|conta)\\b[^,.;]*\\b(0|zero)\\b", modelo: "Do 0.", conceito: "for_range" },
+    { p: "Por que não imprimir dados pessoais dentro de um laço?", regex: "(expo|vaz|revel|mostr|imprim|divulg|multipl);;(cada|todos|todas|muit|\\bmil\\b|varias|repet|multipl|volta|clientes|pessoas)", modelo: "Porque o laço repete a exposição para todos os clientes; mostre só o necessário.", conceito: "for_range" },
   ],
 });
 
@@ -122,7 +122,7 @@ print("Pronto!")` },
   ],
   recuperacao: [
     { p: "O valor final de um `range` entra na contagem?", regex: "(nao entra|nao inclui|nunca entra|fica de fora|nao e incluido|nao conta|antes do)", modelo: "Não: o `range` para antes do valor final.", conceito: "range_passos" },
-    { p: "Como contar de 5 até 1?", regex: "(5, ?0, ?-1|passo negativo|-1)", modelo: "`range(5, 0, -1)`: passo negativo.", conceito: "range_passos" },
+    { p: "Escreva o `range` que conta de 5 até 1 (5, 4, 3, 2, 1). Diga início, fim e passo.", regex: "5, ?0, ?-1|(fim|ate|termina|para)[^0-9]{0,25}\\b(0|zero)\\b.{0,40}(passo|-1|negativ)|(passo|-1|negativ).{0,40}(fim|ate|termina|para)[^0-9]{0,25}\\b(0|zero)\\b", modelo: "`range(5, 0, -1)`: início 5, fim 0 (que não entra) e passo -1.", conceito: "range_passos" },
     { p: "Por que numerar pedidos 1, 2, 3 pode ser arriscado num site?", regex: "(adivinh|previs|trocar|outro pedido|outras pessoas|acesso|nao pertenc)", modelo: "Alguém pode adivinhar números e ver pedidos de outras pessoas; é preciso conferir o dono do pedido.", conceito: "range_passos" },
   ],
 });
@@ -197,8 +197,8 @@ print("Total:", total)` },
   ],
   recuperacao: [
     { p: "Para que serve um acumulador?", regex: "(total|soma|junt|acumul|resultado);;(volta|laco|a cada|repet)", modelo: "Para juntar um resultado (como um total) a cada volta do laço.", conceito: "acumulador" },
-    { p: "Por que a soma começa em 0 e não em outro número?", regex: "(neutro|nao altera|nao muda|comeca do zero|nada somado|falsea)", modelo: "Porque o 0 não altera a soma; outro valor deturparia o total.", conceito: "acumulador" },
-    { p: "Por que o acumulador não pode ser criado dentro do laço?", regex: "(zera|reinicia|volta a zero|toda volta|cada volta|perde)", modelo: "Porque seria zerado a cada volta e perderia o total anterior.", conceito: "acumulador" },
+    { p: "Por que a soma começa em 0 e não em outro número?", regex: "(neutro|nao (altera|muda|interfere|afeta)|nada somado|falsea|deturp|total (fica|ficaria) errad|resultado (fica|ficaria) errad)", modelo: "Porque o 0 não altera a soma; outro valor deturparia o total.", conceito: "acumulador" },
+    { p: "Por que o acumulador não pode ser criado dentro do laço?", regex: "(zera|reinici|volta(ria)? a (0|zero)|recomec|perde|apaga|sobrescrev|comeca (de novo|do zero|a zero|em 0))", modelo: "Porque seria zerado a cada volta e perderia o total anterior.", conceito: "acumulador" },
   ],
 });
 
@@ -211,11 +211,11 @@ aulas.push({
   secoes: [
     { tipo: "aquecimento", pergunta: "O robô precisa esperar a água ferver, mas não sabe quanto tempo leva. O `for` repete um número conhecido de vezes. Como você diria “repita até que a água esteja quente”?", modelo: "“**Enquanto** a água não estiver quente, continue esquentando.” A repetição depende de uma **condição**, não de uma contagem. Em Python, isso é o `while`." },
     { tipo: "exemplo", arquivo: "esquentar.py", texto: "Clique em cada linha.",
-      codigo: [["temperatura = 20", "A água começa em 20 graus."], ["while temperatura < 90:", "**`while`** significa “enquanto”. O bloco repete **enquanto** a condição for verdadeira, e a condição é conferida **antes de cada volta**."], ["    temperatura = temperatura + 30", "**Atenção:** algo dentro do bloco precisa mudar a condição. Se a temperatura nunca mudasse, o laço nunca terminaria."], ["    print(\"Esquentando:\", temperatura)", "Mostra 50, 80 e 110."], ["print(\"Pronta!\")", "Depois que a condição fica falsa (110 não é menor que 90), o programa segue."]],
+      codigo: [["temperatura = 20", "A água começa em 20 graus."], ["while temperatura < 100:", "**`while`** significa “enquanto”. O bloco repete **enquanto** a condição for verdadeira, e a condição é conferida **antes de cada volta**."], ["    temperatura = temperatura + 20", "**Atenção:** algo dentro do bloco precisa mudar a condição. Se a temperatura nunca mudasse, o laço nunca terminaria."], ["    print(\"Esquentando:\", temperatura)", "Mostra 40, 60, 80 e 100."], ["print(\"Pronta!\")", "Depois que a condição fica falsa (100 não é menor que 100), o programa segue: a água chegou aos 100 graus."]],
       termos: [["while", "repete o bloco enquanto a condição for verdadeira."], ["Laço sem fim", "um `while` cuja condição nunca fica falsa: o programa nunca termina."]] },
-    { tipo: "executar", texto: "Rode e depois troque o 30 por 40.", arquivo: "esquentar.py (pode editar)", codigo: `temperatura = 20
-while temperatura < 90:
-    temperatura = temperatura + 30
+    { tipo: "executar", texto: "Rode e depois troque o passo `+ 20` por `+ 10` e veja o laço dar mais voltas.", arquivo: "esquentar.py (pode editar)", codigo: `temperatura = 20
+while temperatura < 100:
+    temperatura = temperatura + 20
     print("Esquentando:", temperatura)
 print("Pronta!")`,
       prever: { enunciado: "Antes de testar, o que aparece como **última linha**?", conceito: "while_laco", itens: [{ codigo: `n = 1
@@ -275,8 +275,8 @@ while n <= 100:
   ],
   recuperacao: [
     { p: "Quando o `while` para?", regex: "(condicao|enquanto);;(falsa|false|deixa de|nao for mais)", modelo: "Quando a condição fica falsa.", conceito: "while_laco" },
-    { p: "O que é um laço sem fim e o que o causa?", regex: "(nunca|sempre|para sempre|infinit|eterno);;(condicao|muda|atualiza)", modelo: "Um `while` que nunca termina porque nada dentro dele muda a condição.", conceito: "while_laco" },
-    { p: "Por que um laço de leitura de mensagens precisa de um limite?", regex: "(nunca|trava|recurso|negacao|atacante|infinit|preso)", modelo: "Se a condição de parada nunca chegar, o laço prende o sistema e gasta recursos; um limite protege.", conceito: "while_laco" },
+    { p: "O que é um laço sem fim e o que o causa?", regex: "(nunca (termin|acab|chega|para)|infinit|eterno|sem fim|(pra|para) sempre|sempre (verdadeir|roda|repete));;(condicao|muda|atualiza|altera)", naoRegex: "nunca (roda|executa|entra)|nao (roda|executa) (nenhuma|nem)", modelo: "Um `while` que nunca termina porque nada dentro dele muda a condição.", conceito: "while_laco" },
+    { p: "Por que um laço de leitura de mensagens precisa de um limite?", regex: "(nunca (termin|acab|chega|envia|para)|(pra|para) sempre|trava|prende|preso|infinit|sem fim|eterno);;(recurso|negacao|atacante|servidor|sistema|clientes|memoria|cpu|sobrecarreg|derrub|disponib|fora do ar|programa|conexao)", modelo: "Se a condição de parada nunca chegar, o laço prende o sistema e gasta recursos; um limite protege.", conceito: "while_laco" },
   ],
 });
 
@@ -335,10 +335,18 @@ print(n)`, resposta: "2", porque: "O laço parou com `n` valendo 2, e a variáve
     if n == 3:
         continue
     print(n)` },
-    { tipo: "escrever", texto: "Peça `Início: ` (inteiro) e procure o **primeiro múltiplo de 7** de `Início` até 50. Mostre `Achei: N` e pare; se não houver nenhum, mostre `Não achei`.", arquivo: "meu_programa.py",
+    { tipo: "texto", titulo: "Antes do exercício: achei ou não achei?", blocos: [
+      "Procurar com `break` tem uma pegadinha: quando o laço termina, o programa não sabe **por quê** terminou. Foi porque achou e deu `break`? Ou porque chegou ao fim sem achar nada? Para distinguir, usa-se uma variável-sinalizador (uma “flag”): `achou`, que guarda `True` ou `False`.",
+      "O padrão tem três passos (aqui com outro tema: o primeiro número de 1 a 10 que seja maior que `alvo`):"],
+      tabela: { cab: ["Passo", "Código do exemplo", "O que faz"], linhas: [
+        ["1. Antes do laço", "`achou = False`", "Começa dizendo “ainda não achei”."],
+        ["2. Dentro do laço, no `if` que encontra", "`print(\"Achei:\", n)`, depois `achou = True` e `break`", "Mostra o que achou, anota que achou e sai do laço."],
+        ["3. Depois do laço (sem indentação)", "`if not achou:` e, dentro, `print(\"Não achei\")`", "Só roda se o laço terminou sem achar nada."]] } },
+    { tipo: "texto", blocos: ["O `print(\"Não achei\")` fica **fora** do laço porque só dá para concluir que nada serve depois de olhar todos os candidatos. E o caso “não achei” precisa de resposta própria: se nenhum valor servir, o `if` de dentro nunca roda e `achou` continua `False`. (`not achou` quer dizer “achou é falso”.)"] },
+    { tipo: "escrever", texto: "Peça `Início: ` (inteiro) e procure o **primeiro múltiplo de 7** entre `Início` e 50 (o 50 também vale). Se achar, mostre `Achei: N` (só o primeiro) e pare. Se nenhum número de `Início` a 50 for múltiplo de 7, mostre `Não achei`. Use o padrão do texto acima.", arquivo: "meu_programa.py",
       inicial: `inicio = int(input("Início: "))
 # procure o primeiro múltiplo de 7 entre inicio e 50
-`, cenarios: [{ entradas: ["20"], esperado: ["Início: 20", "Achei: 21"] }, { entradas: ["30"], esperado: ["Início: 30", "Achei: 35"] }, { entradas: ["44"], esperado: ["Início: 44", "Achei: 49"] }, { entradas: ["50"], esperado: ["Início: 50", "Não achei"] }], dica: "Use um `for n in range(inicio, 51):`, um `if n % 7 == 0:` com `break`, e uma variável `achou` que começa `False`.", conceito: "break_continue",
+`, cenarios: [{ entradas: ["20"], esperado: ["Início: 20", "Achei: 21"] }, { entradas: ["30"], esperado: ["Início: 30", "Achei: 35"] }, { entradas: ["44"], esperado: ["Início: 44", "Achei: 49"] }, { entradas: ["50"], esperado: ["Início: 50", "Não achei"] }, { entradas: ["7"], esperado: ["Início: 7", "Achei: 7"] }], dica: "Use um `for n in range(inicio, 51):`, um `if n % 7 == 0:` com `break`, e uma variável `achou` que começa `False`.", conceito: "break_continue",
       solucao: `inicio = int(input("Início: "))
 achou = False
 for n in range(inicio, 51):
@@ -356,9 +364,9 @@ if not achou:
     { tipo: "fechar", pergunta: "Sem olhar acima: qual a diferença entre `break` e `continue`?", conceito: "break_continue", modelo: "`break` encerra o laço de vez; `continue` só pula o resto da volta atual e segue para a próxima volta." },
   ],
   recuperacao: [
-    { p: "O que o `break` faz?", regex: "(para|encerra|sai|interrompe|termina);;(laco|repeticao|loop)?", modelo: "Encerra o laço imediatamente.", conceito: "break_continue" },
-    { p: "O que o `continue` faz?", regex: "(pula|ignora|vai para a proxima|proxima volta|resto da volta)", modelo: "Pula o resto da volta atual e vai para a próxima.", conceito: "break_continue" },
-    { p: "Por que não pular itens inválidos em silêncio?", regex: "(fraude|erro|registr|log|avis|esconde|ninguem|saber)", modelo: "Porque erros ou fraudes passam despercebidos; é melhor registrar o que foi pulado.", conceito: "break_continue" },
+    { p: "O que o `break` faz com o laço?", regex: "(encerr|\\bsai\\b|\\bsair\\b|interromp|termin|\\bacaba|abandona|quebra|\\bpara (o |todo o |de )?(laco|repeticao|loop|repetir|vez)|\\bparar (o )?(laco|repeticao|loop));;(laco|repeticao|loop|de vez|imediat|na hora|agora)", modelo: "Encerra o laço imediatamente.", conceito: "break_continue" },
+    { p: "O que o `continue` faz?", regex: "(\\bpula|\\bpular|\\bignora|\\bsalta|volta direto|vai (direto )?para|passa para|\\bsegue);;(proxima|resto|volta|iteracao|restante)", naoRegex: "(pula|pular|ignora|salta)\\s+(o\\s+|todo\\s+o\\s+)?(laco|repeticao|loop)\\b", modelo: "Pula o resto da volta atual e vai para a próxima.", conceito: "break_continue" },
+    { p: "Por que não pular itens inválidos em silêncio?", regex: "(fraude|erro|registr|\\blogs?\\b|avis|esconde|ninguem|saber)", modelo: "Porque erros ou fraudes passam despercebidos; é melhor registrar o que foi pulado.", conceito: "break_continue" },
   ],
 });
 
@@ -370,7 +378,7 @@ aulas.push({
   conceitos: [["laco_validacao", "Perguntar até a entrada ser válida"]],
   secoes: [
     { tipo: "aquecimento", pergunta: "Na aula de validação, o programa conferia a resposta uma vez e avisava. Como ele poderia insistir até a pessoa digitar certo? O que precisa se repetir?", modelo: "Precisa **repetir a pergunta** enquanto a resposta for inválida. Isso junta o que você já sabe: um `while` cuja condição é “a resposta ainda não serve”." },
-    { tipo: "exemplo", arquivo: "insistir.py", entradas: ["abc", "0", "3"], texto: "Clique em cada linha. O `len(texto)` que você verá em outro exemplo conta quantos caracteres o texto tem.",
+    { tipo: "exemplo", arquivo: "insistir.py", entradas: ["abc", "0", "3"], texto: "Clique em cada linha.",
       codigo: [["qtd_texto = input(\"Quantos cafés (1 a 10)? \")", "A **primeira** leitura: precisa existir antes de o `while` conferir pela primeira vez."], ["while not qtd_texto.isdigit() or int(qtd_texto) < 1 or int(qtd_texto) > 10:", "Enquanto a resposta for inválida: não é número, **ou** é menor que 1, **ou** maior que 10. O `or` para na primeira verdadeira, então o `int` só roda com texto numérico."], ["    print(\"Valor inválido\")", "Avisa."], ["    qtd_texto = input(\"Quantos cafés (1 a 10)? \")", "A **leitura dentro do laço**: pergunta de novo. Sem ela, a condição nunca mudaria."], ["print(\"Anotado:\", int(qtd_texto))", "Só chega aqui com uma resposta válida."]],
       termos: [["Laço de validação", "um `while` que repete a pergunta enquanto a resposta for inválida."]] },
     { tipo: "executar", texto: "Rode com as entradas da caixa (`abc`, `0`, `3`) e depois mude a ordem ou os valores.", arquivo: "insistir.py (pode editar)", entradas: ["abc", "0", "3"], codigo: `qtd_texto = input("Quantos cafés (1 a 10)? ")
@@ -387,6 +395,16 @@ while not qtd_texto.isdigit() or int(qtd_texto) < 1 or int(qtd_texto) > 10:
     print("Valor inválido")
     qtd_texto = input("Quantos cafés (1 a 10)? ")
 print("Anotado:", int(qtd_texto))`, entradas: ["0", "11", "10"], resposta: "Anotado: 10", porque: "0 e 11 estão fora de 1 a 10; o 10 está na borda e vale." }] } },
+    { tipo: "texto", titulo: "Uma ferramenta nova: contar caracteres com len()", blocos: [
+      "Nos próximos exercícios aparece o `len(texto)`. Ele é uma função pronta do Python (no Módulo 4 você aprende a criar as suas) que **devolve quantos caracteres** o texto tem. Caracteres são as letras, os números, os espaços e os símbolos. O resultado é um número inteiro, então dá para comparar com `<`, `>=` e companhia.",
+      "Veja o que ele devolve em quatro casos:"],
+      tabela: { cab: ["Código", "Devolve", "Por quê"], linhas: [
+        ["`len(\"café\")`", "`4`", "c, a, f, é: quatro caracteres (o acento não conta a mais)."],
+        ["`len(\"oi tudo\")`", "`7`", "O espaço também é um caractere."],
+        ["`len(\"123456\")`", "`6`", "Dígitos dentro de aspas são texto, e cada um conta um."],
+        ["`len(\"\")`", "`0`", "Texto vazio: nenhum caractere."]] },
+      termos: [["len(texto)", "devolve o número de caracteres do texto."]] },
+    { tipo: "texto", blocos: ["Na validação ele serve para conferir o **tamanho**. Por exemplo, `while len(senha) < 6:` repete a pergunta enquanto a senha tiver menos de 6 caracteres, e `len(pin) == 4` confere que o PIN tem exatamente 4."] },
     { tipo: "descobrir", texto: "O programa repete até a pessoa digitar `ok`.", arquivo: "esperar_ok.py", codigo: `n = input()
 while n != "ok":
     print("de novo")
@@ -438,8 +456,8 @@ print("PIN aceito")` },
   ],
   recuperacao: [
     { p: "Por que a leitura (`input`) aparece antes do laço e dentro dele?", regex: "(primeira|inicial|antes);;(dentro|atualiz|de novo|muda)", modelo: "A de fora dá o valor para a primeira conferência; a de dentro atualiza a resposta a cada volta.", conceito: "laco_validacao" },
-    { p: "O laço de validação repete enquanto a resposta for válida ou inválida?", regex: "(invalid)", modelo: "Enquanto for inválida.", conceito: "laco_validacao" },
-    { p: "Como limitar as tentativas de um PIN?", regex: "(contador|conta as|numero de tentativas|limite);;(bloque|break|para|sai|encerr)?", modelo: "Com um contador de tentativas e um bloqueio ou `break` depois de poucos erros.", conceito: "laco_validacao" },
+    { p: "Em que situação o laço de validação repete a pergunta? Responda com uma frase começando por “enquanto...”.", regex: "invalid|nao (for|esta|estiver|e|foi|eh|seja|passar|passa|bate|serve|atende)\\b[^.;]{0,25}(valid|correct|certa|aceit|adequad|serve)|ainda nao (serve|e valid|esta valid|foi aceit|esta certa)|errad|incorret|nao serve|nao (for|seja) aceit", naoRegex: "valida ou invalida|invalida ou valida", modelo: "Enquanto a resposta for inválida (ainda não serve).", conceito: "laco_validacao" },
+    { p: "Como limitar as tentativas de um PIN?", regex: "(contad|contar|contando|conta |contagem|limit|maximo|\\b[0-9]+ (erros|tentativas)|tres (erros|tentativas)|depois de);;(bloque|break|\\bpara(r|ndo)?\\b|\\bsai(r|ndo)?\\b|encerr|interromp|trava|desativ|limite|maximo|[0-9]|tres|cinco)", modelo: "Com um contador de tentativas e um bloqueio ou `break` depois de poucos erros.", conceito: "laco_validacao" },
   ],
 });
 
@@ -492,7 +510,12 @@ for n in [-5, -2, -9]:
     if n > maior:
         maior = n
 print(maior)`, resposta: "-2", porque: "Com um valor inicial muito baixo, o maior dos negativos aparece certo." }] },
-    { tipo: "corrigir", texto: "A menor temperatura do dia deveria ser 8, mas o programa mostra 0. Conserte **o valor inicial**.", arquivo: "com_defeito.py", dica: "O valor inicial do “menor” precisa ser maior que qualquer temperatura possível.", conceito: "padroes_lacos",
+    { tipo: "texto", titulo: "Como escolher o valor inicial do maior ou do menor", blocos: [
+      "Há três jeitos de escolher o valor inicial; o primeiro é o mais seguro:",
+      "**1) O primeiro valor.** Com uma lista, o primeiro item já é um candidato real. Quando os valores vêm de `input` (como as idades do próximo exercício, que não estão numa lista), leia o primeiro **antes** do laço, guarde-o em `maior` ou `menor` e deixe o laço cuidar dos que faltam. É o mesmo desenho da aula anterior: uma leitura antes do laço e outra dentro dele. Nunca dá resultado fora dos dados.",
+      "**2) Um limite que o problema garante.** Idade nunca é negativa, então `mais_velha = 0` é seguro para idades. Já para números que podem ser negativos, o 0 falha: foi o que você viu com `[-5, -2]`.",
+      "**3) Um número escolhido no chute, como `menor = 999`.** Funciona só enquanto nenhum valor passar de 999: se aparecer 1500, o 999 “vence” sem estar nos dados, o mesmo erro do `maior = 0`. E quem lê o código não sabe por que 999. No exercício a seguir ele serve porque a temperatura de um dia não chega nem perto disso, mas prefira os jeitos 1 e 2 quando puder."] },
+    { tipo: "corrigir", texto: "A menor temperatura do dia deveria ser 8, mas o programa mostra 0. Conserte **o valor inicial**: troque o `0` de `menor` por um número maior que qualquer temperatura do dia.", arquivo: "com_defeito.py", dica: "Nenhuma temperatura vai passar de 999, então `menor = 999` serve aqui. (Veja no texto acima por que esse truque é frágil.)", conceito: "padroes_lacos",
       codigo: `menor = 0
 for t in [12, 8, 15]:
     if t < menor:
@@ -503,10 +526,10 @@ for t in [12, 8, 15]:
     if t < menor:
         menor = t
 print("Menor:", menor)` },
-    { tipo: "escrever", texto: "Peça `Quantas idades? ` e depois essa quantidade de `Idade: `. Mostre `Maiores de idade: X` (18 ou mais) e `Mais velha: Y`.", arquivo: "meu_programa.py",
+    { tipo: "escrever", texto: "Peça `Quantas idades? ` e depois essa quantidade de `Idade: ` (inteiros; há pelo menos 1 idade e nenhuma é negativa). Mostre `Maiores de idade: X` (quantas têm 18 ou mais) e `Mais velha: Y` (a maior idade digitada).", arquivo: "meu_programa.py",
       inicial: `n = int(input("Quantas idades? "))
 # leia as idades; conte as de 18 ou mais e ache a maior
-`, cenarios: [{ entradas: ["3", "17", "18", "40"], esperado: ["Quantas idades? 3", "Idade: 17", "Idade: 18", "Idade: 40", "Maiores de idade: 2", "Mais velha: 40"] }, { entradas: ["1", "10"], esperado: ["Quantas idades? 1", "Idade: 10", "Maiores de idade: 0", "Mais velha: 10"] }, { entradas: ["4", "30", "25", "18", "18"], esperado: ["Quantas idades? 4", "Idade: 30", "Idade: 25", "Idade: 18", "Idade: 18", "Maiores de idade: 4", "Mais velha: 30"] }], dica: "Dois `if` dentro do `for`: um para contar `idade >= 18` e outro para atualizar `mais_velha`.", conceito: ["padroes_lacos", "acumulador"],
+`, cenarios: [{ entradas: ["3", "17", "18", "40"], esperado: ["Quantas idades? 3", "Idade: 17", "Idade: 18", "Idade: 40", "Maiores de idade: 2", "Mais velha: 40"] }, { entradas: ["1", "10"], esperado: ["Quantas idades? 1", "Idade: 10", "Maiores de idade: 0", "Mais velha: 10"] }, { entradas: ["4", "30", "25", "18", "18"], esperado: ["Quantas idades? 4", "Idade: 30", "Idade: 25", "Idade: 18", "Idade: 18", "Maiores de idade: 4", "Mais velha: 30"] }], dica: "Dois `if` dentro do `for`: um para contar `idade >= 18` e outro para atualizar `mais_velha`. Como nenhuma idade é negativa, `mais_velha = 0` serve de valor inicial (o jeito geral seria ler a primeira idade antes do laço).", conceito: ["padroes_lacos", "acumulador"],
       solucao: `n = int(input("Quantas idades? "))
 maiores = 0
 mais_velha = 0
@@ -527,8 +550,8 @@ print("Mais velha:", mais_velha)` },
   ],
   recuperacao: [
     { p: "Como achar o maior valor de uma lista com um laço?", regex: "(maior|guarda);;(troca|atualiz|compara|substitu)", modelo: "Guarda o maior visto e, a cada valor, atualiza se o novo for maior.", conceito: "padroes_lacos" },
-    { p: "O que é um contador condicional?", regex: "(so soma|so conta|somente|apenas|quando);;(condicao|if|se )", modelo: "Um contador que só soma 1 quando uma condição é verdadeira.", conceito: "padroes_lacos" },
-    { p: "Por que o valor inicial do “maior” pode dar resultado errado?", regex: "(negativ|nenhum|vence|inicial|nao esta na lista|zero)", modelo: "Porque, se nenhum valor superar o inicial (por exemplo, só negativos), o próprio inicial vira o resultado.", conceito: "padroes_lacos" },
+    { p: "O que é um contador condicional?", regex: "\\b(so|somente|apenas|unicamente|quando)\\b;;(\\bse\\b|\\bif\\b|condicao|for verdadeir|verdade|atende|satisfaz);;(soma|\\bconta\\b|\\bcontar\\b|\\bcontam\\b|aument|increment|cresce|acrescent|mais um|\\+ ?1)", modelo: "Um contador que só soma 1 quando uma condição é verdadeira.", conceito: "padroes_lacos" },
+    { p: "Por que o valor inicial do “maior” pode dar resultado errado?", regex: "(negativ|nenhum|ninguem|todos|menor|inicial|zero|\\b0\\b);;(vence|ganha|vira|vai ser|fica (como |sendo )?(o )?(resultado|maior)|continua|permanece|nao esta(ndo)? na lista|sem estar na lista|supera|passa|maior que)", modelo: "Porque, se nenhum valor superar o inicial (por exemplo, só negativos), o próprio inicial vira o resultado.", conceito: "padroes_lacos" },
   ],
 });
 
@@ -537,16 +560,19 @@ aulas.push({
   id: "0024", modulo: 3, n: 8, slug: "mini-projeto", titulo: "Mini-projeto: organizando a semana",
   resumo: "Juntar tudo: repetir, somar, contar e achar o maior. Você organiza as horas de estudo da semana e, depois, o caixa de uma cafeteria.",
   minutos: 40,
-  objetivos: ["Combinar `for`, acumuladores e padrões de laço num programa só.", "Resolver o exercício final sem usar a dica.", "Aplicar o mesmo raciocínio com um `while` num problema novo (o caixa)."],
+  objetivos: ["Combinar `for`, acumuladores e padrões de laço num programa só.", "Resolver o exercício final sem usar a dica.", "Aplicar o mesmo raciocínio com um `while` num problema novo (o caixa), validando cada entrada."],
   conceitos: [],
   secoes: [
     { tipo: "aquecimento", titulo: "Planeje antes de escrever", pergunta: "Para organizar as horas de estudo da semana, o programa deve perguntar quantos dias, ler as horas de cada dia e mostrar total, média, dias com mais de 3 horas e o maior dia. Que variáveis você precisa criar **antes** do laço?", minimo: 40, modelo: "Antes do laço: um **acumulador** para o total (0), um **contador** para os dias com mais de 3 horas (0) e uma variável para o maior dia (0). Dentro do laço, para cada dia: ler, somar, contar se passou de 3 e atualizar o maior. Depois do laço: calcular a média e mostrar." },
     { tipo: "exemplo", titulo: "Um esqueleto de referência", arquivo: "esqueleto.py", entradas: ["2", "5", "7"], texto: "Mesma estrutura, com outro tema (gastos em vez de horas). Use como mapa.",
       codigo: [["n = int(input(\"Quantos gastos? \"))", "Lê quantas voltas serão."], ["total = 0", "O acumulador, antes do laço."], ["maior = 0", "O maior valor visto."], ["for i in range(n):", "Uma volta por gasto."], ["    g = int(input(f\"Gasto {i + 1}: \"))", "Lê e converte."], ["    total = total + g", "Acumula."], ["    if g > maior:", "Atualiza o maior..."], ["        maior = g", "...quando achar um maior."], ["print(\"Total:\", total)", "Mostra o total."]] },
-    { tipo: "escrever", titulo: "Exercício final (sem dica)", final: true, minutos: 12, texto: "Peça `Quantos dias? ` e depois `Dia 1: `, `Dia 2: `... (horas, inteiros). Mostre `Total de horas: X`, `Média por dia: Y` (com **1 casa decimal**), `Dias com mais de 3 horas: Z` e `Maior dia: M`.", arquivo: "semana.py",
+    { tipo: "texto", titulo: "Antes de dividir: e se não houver nenhum dia?", blocos: [
+      "A média é `total / n`. Se `n` for 0 (nenhum dia), o Python para com `ZeroDivisionError`: não existe média de nada. A regra é **testar antes de dividir**: `if n == 0:` mostra uma mensagem e o `else:` calcula a média. Isso vale para toda divisão cujo divisor vem de quem digita.",
+      "No exercício final, o caso “nenhum dia” tem a sua própria resposta, dita no enunciado."] },
+    { tipo: "escrever", titulo: "Exercício final (sem dica)", final: true, minutos: 12, texto: "Peça `Quantos dias? ` e depois `Dia 1: `, `Dia 2: `... (horas, inteiros). Mostre `Total de horas: X`, `Média por dia: Y` (com **1 casa decimal**), `Dias com mais de 3 horas: Z` e `Maior dia: M`. Se `Quantos dias?` for 0, não há média: mostre apenas `Nenhum dia informado` depois da pergunta, sem os quatro resultados.", arquivo: "semana.py",
       inicial: `# Planeje: variáveis antes do laço, leitura e decisões dentro, resultados depois
-`, cenarios: [{ entradas: ["3", "2", "4", "1"], esperado: ["Quantos dias? 3", "Dia 1: 2", "Dia 2: 4", "Dia 3: 1", "Total de horas: 7", "Média por dia: 2.3", "Dias com mais de 3 horas: 1", "Maior dia: 4"] }, { entradas: ["2", "5", "5"], esperado: ["Quantos dias? 2", "Dia 1: 5", "Dia 2: 5", "Total de horas: 10", "Média por dia: 5.0", "Dias com mais de 3 horas: 2", "Maior dia: 5"] }, { entradas: ["1", "0"], esperado: ["Quantos dias? 1", "Dia 1: 0", "Total de horas: 0", "Média por dia: 0.0", "Dias com mais de 3 horas: 0", "Maior dia: 0"] }],
-      dica: "Crie `total`, `dias_longos` e `maior` antes do `for i in range(n):`. Depois do laço, `media = total / n` e `f\"{media:.1f}\"`.", conceito: ["for_range", "acumulador", "padroes_lacos"],
+`, cenarios: [{ entradas: ["3", "2", "4", "1"], esperado: ["Quantos dias? 3", "Dia 1: 2", "Dia 2: 4", "Dia 3: 1", "Total de horas: 7", "Média por dia: 2.3", "Dias com mais de 3 horas: 1", "Maior dia: 4"] }, { entradas: ["2", "5", "5"], esperado: ["Quantos dias? 2", "Dia 1: 5", "Dia 2: 5", "Total de horas: 10", "Média por dia: 5.0", "Dias com mais de 3 horas: 2", "Maior dia: 5"] }, { entradas: ["1", "0"], esperado: ["Quantos dias? 1", "Dia 1: 0", "Total de horas: 0", "Média por dia: 0.0", "Dias com mais de 3 horas: 0", "Maior dia: 0"] }, { entradas: ["0"], esperado: ["Quantos dias? 0", "Nenhum dia informado"] }],
+      dica: "Crie `total`, `dias_longos` e `maior` antes do `for i in range(n):`. Depois do laço, `if n == 0:` mostra o aviso; senão, `media = total / n` e `f\"{media:.1f}\"`.", conceito: ["for_range", "acumulador", "padroes_lacos"],
       solucao: `n = int(input("Quantos dias? "))
 total = 0
 dias_longos = 0
@@ -558,24 +584,43 @@ for i in range(n):
         dias_longos = dias_longos + 1
     if h > maior:
         maior = h
-media = total / n
-print("Total de horas:", total)
-print(f"Média por dia: {media:.1f}")
-print("Dias com mais de 3 horas:", dias_longos)
-print("Maior dia:", maior)` },
-    { tipo: "escrever", titulo: "Problema novo: o caixa da cafeteria", transfer: true, minutos: 10, texto: "Outro contexto, agora com `while`. Peça `Item: ` (o preço, número com ponto) **até a pessoa digitar `fim`**. Mostre `Itens: N` e `Total: R$ X.XX` (duas casas decimais).", arquivo: "caixa.py",
+if n == 0:
+    print("Nenhum dia informado")
+else:
+    media = total / n
+    print("Total de horas:", total)
+    print(f"Média por dia: {media:.1f}")
+    print("Dias com mais de 3 horas:", dias_longos)
+    print("Maior dia:", maior)` },
+    { tipo: "texto", titulo: "Antes do caixa: entrada que não é número", blocos: [
+      "No caixa, cada preço chega como **texto**. Se o programa fizer `float(\"abc\")`, ele para com erro, então a conferência vem **antes** da conversão, como no laço de validação. Só que preços têm ponto (`4.5`), e `.isdigit()` sozinho recusaria o ponto. O truque: tirar o primeiro ponto com `.replace(\".\", \"\", 1)` e só então perguntar `.isdigit()`.",
+      "Junte isso ao `and`: em `item.replace(\".\", \"\", 1).isdigit() and float(item) > 0`, o `float` só roda quando o texto já passou no teste (o `and` para na primeira parte falsa), e o `> 0` recusa o 0, que não é preço."],
+      tabela: { cab: ["Texto digitado", "`replace(...).isdigit()`", "Serve como preço?"], linhas: [
+        ["`4.5`", "`True`", "Sim: depois de tirar o ponto sobram só dígitos."],
+        ["`abc`", "`False`", "Não: são letras."],
+        ["`-100`", "`False`", "Não: o sinal de menos não é dígito."],
+        ["`4.5.1`", "`False`", "Não: sobra um segundo ponto."],
+        ["`0`", "`True`", "Passa no teste de dígitos, mas é recusado pelo `> 0`."]] },
+      termos: [["`.replace(velho, novo, 1)`", "troca o trecho `velho` por `novo`; o `1` manda trocar só a primeira ocorrência."]] },
+    { tipo: "escrever", titulo: "Problema novo: o caixa da cafeteria", transfer: true, minutos: 10, texto: "Outro contexto, agora com `while`. Peça `Item: ` (o preço, número com ponto) **até a pessoa digitar `fim`**. Se o texto não for um número maior que zero (letras, negativo, 0...), mostre `Preço inválido` e peça `Item: ` de novo, sem contar o item. No fim: se nenhum preço válido foi lido, mostre apenas `Nenhum item`; senão mostre `Itens: N` e `Total: R$ X.XX` (duas casas decimais).", arquivo: "caixa.py",
       inicial: `# Leia preços até a pessoa digitar fim
-`, cenarios: [{ entradas: ["4.5", "3", "fim"], esperado: ["Item: 4.5", "Item: 3", "Item: fim", "Itens: 2", "Total: R$ 7.50"] }, { entradas: ["fim"], esperado: ["Item: fim", "Itens: 0", "Total: R$ 0.00"] }, { entradas: ["10", "fim"], esperado: ["Item: 10", "Item: fim", "Itens: 1", "Total: R$ 10.00"] }], dica: "Leia antes do laço e de novo dentro. `while item != \"fim\":` com `float(item)`.", conceito: ["while_laco", "acumulador", "laco_validacao"],
+`, cenarios: [{ entradas: ["4.5", "3", "fim"], esperado: ["Item: 4.5", "Item: 3", "Item: fim", "Itens: 2", "Total: R$ 7.50"] }, { entradas: ["fim"], esperado: ["Item: fim", "Nenhum item"] }, { entradas: ["abc", "-100", "0", "10", "fim"], esperado: ["Item: abc", "Preço inválido", "Item: -100", "Preço inválido", "Item: 0", "Preço inválido", "Item: 10", "Item: fim", "Itens: 1", "Total: R$ 10.00"] }, { entradas: ["abc", "fim"], esperado: ["Item: abc", "Preço inválido", "Item: fim", "Nenhum item"] }], dica: "Leia antes do laço e de novo dentro: `while item != \"fim\":`. Dentro, `if item.replace(\".\", \"\", 1).isdigit() and float(item) > 0:` soma e conta; o `else:` mostra `Preço inválido`. Depois do laço, `if itens == 0:` mostra `Nenhum item`.", conceito: ["while_laco", "acumulador", "laco_validacao"],
       solucao: `total = 0
 itens = 0
 item = input("Item: ")
 while item != "fim":
-    total = total + float(item)
-    itens = itens + 1
+    if item.replace(".", "", 1).isdigit() and float(item) > 0:
+        total = total + float(item)
+        itens = itens + 1
+    else:
+        print("Preço inválido")
     item = input("Item: ")
-print("Itens:", itens)
-print(f"Total: R$ {total:.2f}")` },
-    { tipo: "aberta", tag: "sec", titulo: "O caixa e a confiança", texto: "O programa do caixa soma qualquer número digitado, inclusive negativos como -100.", pergunta: "O que um funcionário mal-intencionado poderia fazer com um preço negativo? Que validação faltou?", modelo: "Poderia **abaixar o total** (ou gerar crédito) digitando valores negativos. Faltou **validar o intervalo** de cada preço (por exemplo, só valores maiores que zero) e recusar o resto, como no laço de validação." },
+if itens == 0:
+    print("Nenhum item")
+else:
+    print("Itens:", itens)
+    print(f"Total: R$ {total:.2f}")` },
+    { tipo: "aberta", tag: "sec", titulo: "O caixa e a confiança", texto: "Imagine o programa do caixa sem validação, somando qualquer número digitado, inclusive negativos como -100.", pergunta: "O que um funcionário mal-intencionado poderia fazer com um preço negativo? Que validação impede isso?", modelo: "Poderia **abaixar o total** (ou gerar crédito) digitando valores negativos. A defesa é **validar o intervalo** de cada preço (só valores maiores que zero, como no exercício) e recusar o resto avisando, como no laço de validação." },
     { tipo: "quiz", itens: [
       { pergunta: "Onde devem ficar o total e o maior valor?", opcoes: ["Dentro do laço, a cada volta", "Antes do laço, uma só vez", "Depois do laço, no final", "Em qualquer lugar, tanto faz"], correta: 1, porque: "Criados antes do laço, sobrevivem a todas as voltas.", conceito: "acumulador" },
       { pergunta: "Quando usar `while` em vez de `for` no caixa?", opcoes: ["Quando o número de itens é desconhecido", "Quando o número de itens é conhecido", "Quando os preços são inteiros", "Quando o total é calculado antes"], correta: 0, porque: "O caixa para quando a pessoa digita “fim”, não depois de um número fixo de voltas.", conceito: "while_laco" },

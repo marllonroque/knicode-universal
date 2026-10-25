@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 15 · Claude Code · Aula 2</div>
   <h1>Modos e permissões: o que ele pode fazer sem perguntar</h1>
   <p>O modo de permissão decide o que o Claude faz sozinho e o que precisa do seu ok. Atenção: o modo inicial que você vê hoje pode não ser o Manual.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 45 minutos</span><span class="chip">Precisa do Claude Code instalado (aula 0111)</span><span class="chip">Parte no terminal, parte aqui na página</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Nomear os modos de permissão e dizer o que cada um faz sem perguntar.</li>
@@ -378,7 +378,16 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 2 -->
 <section class="card">
-  <h2><span class="num">2</span>Veja funcionando <span class="mins">3 min</span></h2>
+  <h2><span class="num">2</span>Faça no seu terminal: ver o modo e trocar (3 minutos) <span class="mins">4 min</span></h2>
+  <p>1) No terminal, entre na pasta <code>loja-teste</code> (aula 0111) e digite <code>claude</code>. 2) <b>Olhe a barra de status</b>, na parte de baixo: ela mostra o modo atual (por exemplo “auto mode on” ou “manual mode on”). 3) Aperte <b>Shift+Tab</b> uma vez e olhe a barra de novo; repita e anote a ordem dos modos que aparecem. 4) Pare em <b>“manual mode on”</b> (o modo Manual).</p>
+  <p><b>As aulas 0112, 0116 e 0119 supõem o modo Manual</b>, que mostra os pedidos de aprovação. Se você abriu em <code>auto</code> ou em outro modo, chegue ao Manual apertando Shift+Tab até a barra dizer “manual mode on”; o ciclo pode passar por <code>default</code> (Manual), <code>acceptEdits</code> e <code>plan</code>. Os rótulos podem mudar: confira na sua tela.</p>
+  <p>5) Já no Manual, peça: “crie um arquivo notas.txt com a palavra olá”. Ele mostra a mudança e <b>pergunta</b>: você pode aprovar ou recusar (a tela exata varia). 6) Troque para <b>“accept edits on”</b> com Shift+Tab e peça “crie um arquivo notas2.txt com a palavra olá”: agora a edição de arquivo não pergunta. 7) Saia com <code>/exit</code>. <b>O que anotar:</b> o modo em que você abriu e o que mudou entre o passo 5 e o 6.</p>
+  <p class="fonte">Fonte: https://code.claude.com/docs/en/permission-modes · https://code.claude.com/docs/en/quickstart. Ferramentas mudam: reconfira na documentação oficial.</p>
+</section>
+
+<!-- 3 -->
+<section class="card">
+  <h2><span class="num">3</span>Veja funcionando <span class="mins">3 min</span></h2>
   <p>Um modelo simplificado em Python (só os modos <code>default</code> e <code>acceptEdits</code>; as regras de <code>/permissions</code> podem liberar mais coisas na vida real). Clique em cada linha.</p>
   <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>permissoes.py</span></div>
 <pre class="annot" data-key="k2"><span class="ln" data-note="Um dicionário: para cada modo, o conjunto de ações liberadas.">SEM_PERGUNTAR = {</span><span class="ln" data-note="No Manual, só leitura passa sem perguntar.">    "default": {"ler"},</span><span class="ln" data-note="No acceptEdits entram edições e comandos comuns de arquivo.">    "acceptEdits": {"ler", "editar", "mkdir"},</span><span class="ln" data-note="Fim do dicionário.">}</span><span class="ln" data-note="Responde: esta ação precisa do seu ok?">def pede_confirmacao(modo, acao):</span><span class="ln" data-note="&lt;code&gt;.get(modo, set())&lt;/code&gt;: modo desconhecido vira conjunto vazio, então &lt;b&gt;tudo pergunta&lt;/b&gt;. Perguntar é o padrão seguro.">    return acao not in SEM_PERGUNTAR.get(modo, set())</span><span class="ln" data-note="Mostra &lt;code&gt;True&lt;/code&gt;: editar no Manual pergunta.">print(pede_confirmacao("default", "editar"))</span><span class="ln" data-note="Mostra &lt;code&gt;False&lt;/code&gt;: já está liberado.">print(pede_confirmacao("acceptEdits", "editar"))</span><span class="ln" data-note="Mostra &lt;code&gt;True&lt;/code&gt;: rede não está na lista, então pergunta.">print(pede_confirmacao("acceptEdits", "rede"))</span></pre>
@@ -392,10 +401,10 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 3 -->
+<!-- 4 -->
 <section class="card">
-  <h2><span class="num">3</span>Rode você mesmo <span class="mins">4 min</span></h2>
-  <p>Rode e depois acrescente <code>"rodar_teste"</code> ao <code>acceptEdits</code> para ver a resposta mudar.</p>
+  <h2><span class="num">4</span>Rode você mesmo <span class="mins">4 min</span></h2>
+  <p>Rode: aparecem <code>False</code> e <code>False</code>. Depois acrescente no fim a linha <code>print(pede_confirmacao("acceptEdits", "rodar_teste"))</code>: aparece <code>True</code> (ação desconhecida pergunta). Por fim, acrescente <code>"rodar_teste"</code> ao conjunto do <code>acceptEdits</code> e rode de novo: agora aparece <code>False</code>.</p>
   <div class="runner" data-key="k3">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>permissoes.py (pode editar)</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">SEM_PERGUNTAR = {
@@ -423,9 +432,9 @@ print(pede_confirmacao("acceptEdits", "mkdir"))</textarea></div>
   </div>
 </section>
 
-<!-- 4 -->
+<!-- 5 -->
 <section class="card">
-  <h2><span class="num">4</span>Descubra o padrão <span class="mins">5 min</span></h2>
+  <h2><span class="num">5</span>Descubra o padrão <span class="mins">5 min</span></h2>
   <p>A função decide se pergunta. Observe o que ela devolve.</p>
   <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>decide.py</span></div>
 <pre class="hl">SEM_PERGUNTAR = {
@@ -458,9 +467,9 @@ print(pede_confirmacao(modo, acao))</pre></div>
   </div>
 </section>
 
-<!-- 5 -->
+<!-- 6 -->
 <section class="card">
-  <h2><span class="num">5</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
+  <h2><span class="num">6</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
   <div class="quest" data-key="k6" data-concept="cc_permissoes" data-level="exec" data-ok="Tudo certo. Você aplicou a regra em casos novos.">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>programa.py</span></div>
 <pre class="hl">SEM = {"default": {"ler"}, "acceptEdits": {"ler", "editar"}}
@@ -479,15 +488,15 @@ print(pede("acceptEdits", "editar"))</pre></div>
 def pede(modo, acao):
     return acao not in SEM.get(modo, set())
 print(pede("plan", "ler"))</pre></div>
-    <div class="pred"><span>O que aparece na tela?</span><input class="q" data-answer="True" data-label="Item 3" data-why="O modo “plan” não está neste dicionário simplificado, então tudo pergunta (o modo real é outra história)." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
+    <div class="pred"><span>Neste dicionário simplificado do exemplo (não é o modo plano real), o que aparece na tela?</span><input class="q" data-answer="True" data-label="Item 3" data-why="É uma &lt;b&gt;simplificação&lt;/b&gt;: o dicionário só conhece &lt;code&gt;default&lt;/code&gt; e &lt;code&gt;acceptEdits&lt;/code&gt;, então “plan” é um modo desconhecido e tudo pergunta. No modo plano &lt;b&gt;real&lt;/b&gt; o Claude lê arquivos e propõe um plano sem editar nada; o código aqui não modela isso." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
     <button class="chk">Conferir</button><div class="fb"></div>
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>Conserte o erro <span class="mins">4 min</span></h2>
-  <p>O programa deveria perguntar ao editar no Manual, mas responde o contrário. Conserte <b>uma linha</b> para mostrar <code>True</code> e depois <code>False</code>.</p>
+  <h2><span class="num">7</span>Conserte o erro <span class="mins">4 min</span></h2>
+  <p>O programa deveria perguntar ao editar no Manual, mas responde o contrário. Conserte <b>uma linha</b> para o programa mostrar <code>True</code> e depois <code>False</code>.</p>
   <div class="runner" data-key="k7" data-spec="{&quot;esperado&quot;:[&quot;True&quot;,&quot;False&quot;]}" data-dica="A função devolve se a ação está liberada; ela deveria devolver se **precisa** perguntar. Falta uma palavra." data-concept="cc_permissoes" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>com_defeito.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">SEM_PERGUNTAR = {
@@ -505,10 +514,10 @@ print(pede_confirmacao("acceptEdits", "editar"))</textarea></div>
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">7</span>Escreva o seu <span class="mins">5 min</span></h2>
-  <p>Escreva <code>quantas_perguntas(modo, acoes)</code>: quantas ações da lista exigem confirmação naquele modo. A função <code>pede_confirmacao</code> já está pronta. Com os pedidos de exemplo no <code>default</code>, devem aparecer <b>2 perguntas</b>.</p>
+  <h2><span class="num">8</span>Escreva o seu <span class="mins">5 min</span></h2>
+  <p>Escreva <code>quantas_perguntas(modo, acoes)</code>: quantas ações da lista exigem confirmação naquele modo. A função <code>pede_confirmacao</code> já está pronta. A função <b>devolve</b> (<code>return</code>) o número, sem imprimir. Com os pedidos de exemplo no <code>default</code>, o <code>print</code> do final deve mostrar <b>2</b>.</p>
   <div class="runner" data-key="k8" data-spec="{&quot;esperado&quot;:[&quot;2&quot;],&quot;testes&quot;:[[&quot;quantas_perguntas('acceptEdits', ['ler', 'editar', 'rede'])&quot;,&quot;1&quot;],[&quot;quantas_perguntas('default', [])&quot;,&quot;0&quot;],[&quot;quantas_perguntas('desconhecido', ['ler', 'ler'])&quot;,&quot;2&quot;]]}" data-dica="Comece com `total = 0`, percorra as ações com `for acao in acoes:` e some 1 quando `pede_confirmacao(modo, acao)` for verdadeiro." data-concept="cc_permissoes" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>meu_programa.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">SEM_PERGUNTAR = {
@@ -530,11 +539,11 @@ print(quantas_perguntas("default", pedidos))</textarea></div>
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">8</span>Escolha o modo certo <span class="mins">3 min</span></h2>
+  <h2><span class="num">9</span>Escolha o modo certo <span class="mins">3 min</span></h2>
   <p>Três situações do projeto da loja: (a) entender uma pasta desconhecida <b>sem mudar nada</b>; (b) muitas edições pequenas que você vai conferir depois no diff; (c) uma tarefa automática que roda de madrugada, sem ninguém na frente da tela.</p>
-  <p><strong>Para cada situação, escolha um modo (plan, acceptEdits, dontAsk, default...) e justifique em uma frase.</strong></p>
+  <p><strong>Escreva 3 linhas, uma por situação, no formato “(a) modo — motivo em uma frase”. Escolha entre plan, acceptEdits, dontAsk, default...</strong></p>
   <div class="open" data-key="k9" data-min="60" data-concept="cc_permissoes" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar e comparar</button>
@@ -543,9 +552,9 @@ print(quantas_perguntas("default", pedidos))</textarea></div>
   </div>
 </section>
 
-<!-- 9 -->
+<!-- 10 -->
 <section class="card">
-  <h2><span class="num">9</span>“Liga o bypass e para de clicar” <span class="mins">3 min</span></h2>
+  <h2><span class="num">10</span>“Liga o bypass e para de clicar” <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Um colega diz: “Para não ficar clicando em ‘Yes’ o tempo todo, inicie com o bypassPermissions no seu notebook”. O notebook tem as suas planilhas de gastos e contas logadas.</div>
   <p><strong>O que esse modo faz e por que a sugestão é ruim?</strong></p>
   <div class="open" data-key="k10" data-min="25">
@@ -556,9 +565,9 @@ print(quantas_perguntas("default", pedidos))</textarea></div>
   </div>
 </section>
 
-<!-- 10 -->
+<!-- 11 -->
 <section class="card">
-  <h2><span class="num">10</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">11</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k11" data-correta="0" data-concept="cc_permissoes" data-level="exec">
     <p class="mcq-q">No modo Manual, o que passa sem perguntar?</p>
@@ -586,9 +595,9 @@ print(quantas_perguntas("default", pedidos))</textarea></div>
   </div>
 </section>
 
-<!-- 11 -->
+<!-- 12 -->
 <section class="card">
-  <h2><span class="num">11</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">12</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: o que é um modo de permissão, qual a armadilha do modo inicial e como trocar de modo?</strong></p>
   <div class="open" data-key="k14" data-min="25" data-concept="cc_permissoes" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -596,7 +605,7 @@ print(quantas_perguntas("default", pedidos))</textarea></div>
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>É a configuração que decide o que o Claude faz sem perguntar (Manual: só leitura; acceptEdits: também edições; plan: só planeja). Desde a v2.1.283 o modo inicial pode ser o <code>auto</code>, então olhe a barra de status. Troca-se com Shift+Tab.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) O que faz o modo Manual (<code>default</code>) sem perguntar? (2) Qual a armadilha sobre o modo inicial e como ver em que modo você está? (3) Em código de permissões, o que fazer com uma ação que ninguém cadastrou? <a href="recuperacao-0112.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Modos e permissões: o que ele pode fazer sem perguntar”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0112.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -792,7 +801,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -984,7 +993,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -1065,13 +1085,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1324,7 +1338,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

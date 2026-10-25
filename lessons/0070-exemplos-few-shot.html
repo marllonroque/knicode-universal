@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 9 · Engenharia de prompts: fundamentos · Aula 4</div>
   <h1>Mostre exemplos: o poder de mostrar em vez de explicar</h1>
   <p>Dois ou três exemplos de entrada e saída ensinam o padrão melhor do que um parágrafo de explicação.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 35 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Explicar o que é pedir com exemplos (few-shot).</li>
@@ -367,7 +367,20 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 2 -->
 <section class="card">
-  <h2><span class="num">2</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
+  <h2><span class="num">2</span>Ferramenta nova: lista de pares e <code>.join()</code> <span class="mins">4 min</span></h2>
+  <p>Uma <b>lista de pares</b> é uma lista em que cada item tem dois valores entre parênteses: <code>exemplos = [("Chegou rápido", "positivo"), ("Veio quebrado", "negativo")]</code>. Cada <code>(entrada, saida)</code> é um <b>par</b>. No laço <code>for entrada, saida in exemplos:</code>, a cada volta o Python separa o par nas duas variáveis, como no <code>for item, qtd in estoque.items()</code> que você já usou.</p>
+  <p><code>"\n".join(linhas)</code> faz o contrário de <code>.split()</code>: junta uma lista de textos num texto só, colocando uma quebra de linha (<code>\n</code>) entre eles. <code>"\n".join(["a", "b"])</code> vira duas linhas: <code>a</code> e <code>b</code>. E o <code>.append</code> (da aula de listas) acrescenta um item no fim de uma lista.</p>
+  <div class="callout term"><span class="tag">Palavras novas</span>
+    <dl>
+      <dt>Par</dt><dd>dois valores juntos entre parênteses, como <code>("Veio quebrado", "negativo")</code>.</dd>
+      <dt><code>.join(lista)</code></dt><dd>junta os textos da lista num só, com o texto antes do ponto entre eles.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="card">
+  <h2><span class="num">3</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
   <p>Preveja a saída.</p>
   <div class="quest" data-key="k2" data-concept="pf_exemplos" data-level="exec" data-ok="Tudo certo. Você aplicou a regra em casos novos.">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>programa.py</span></div>
@@ -383,9 +396,9 @@ print(len(exemplos))</pre></div>
   </div>
 </section>
 
-<!-- 3 -->
+<!-- 4 -->
 <section class="card">
-  <h2><span class="num">3</span>Descubra o padrão <span class="mins">5 min</span></h2>
+  <h2><span class="num">4</span>Descubra o padrão <span class="mins">5 min</span></h2>
   <p>Dois pedidos para classificar a mesma avaliação.</p>
   <table>
     <tr><th>Pedido</th><th>Resposta esperada</th></tr>
@@ -409,9 +422,9 @@ Avaliação: “Produto ok.”</td><td>Uma palavra só: neutro.</td></tr>
   </div>
 </section>
 
-<!-- 4 -->
+<!-- 5 -->
 <section class="card">
-  <h2><span class="num">4</span>Escreva o seu <span class="mins">5 min</span></h2>
+  <h2><span class="num">5</span>Escreva o seu <span class="mins">5 min</span></h2>
   <p>Escreva <code>montar_few_shot(exemplos, novo)</code>: devolve um texto com, para cada exemplo, as linhas <code>Entrada: ...</code> e <code>Saída: ...</code> e, no fim, <code>Entrada: &lt;novo&gt;</code> e <code>Saída:</code> (sem nada depois).</p>
   <div class="runner" data-key="k4" data-spec="{&quot;esperado&quot;:[&quot;Entrada: Chegou rápido, adorei&quot;,&quot;Saída: positivo&quot;,&quot;Entrada: Veio quebrado&quot;,&quot;Saída: negativo&quot;,&quot;Entrada: Produto ok&quot;,&quot;Saída:&quot;]}" data-dica="Crie uma lista `linhas`, use `for entrada, saida in exemplos` para adicionar as duas linhas de cada par, adicione as duas finais e devolva `&quot;\n&quot;.join(linhas)`." data-concept="pf_exemplos" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>few_shot.py</span></div>
@@ -426,9 +439,9 @@ print(montar_few_shot(exemplos, "Produto ok"))</textarea></div>
   </div>
 </section>
 
-<!-- 5 -->
+<!-- 6 -->
 <section class="card">
-  <h2><span class="num">5</span>Escolha os exemplos <span class="mins">3 min</span></h2>
+  <h2><span class="num">6</span>Escolha os exemplos <span class="mins">3 min</span></h2>
   <p>Você quer que o Claude classifique mensagens de clientes de uma loja virtual em: dúvida, reclamação ou elogio.</p>
   <p><strong>Escreva um pedido com 3 exemplos variados (um de cada categoria) e a mensagem nova no final.</strong></p>
   <div class="open" data-key="k5" data-min="80" data-concept="pf_exemplos" data-level="comp">
@@ -439,9 +452,9 @@ print(montar_few_shot(exemplos, "Produto ok"))</textarea></div>
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>Exemplos com dados reais <span class="mins">3 min</span></h2>
+  <h2><span class="num">7</span>Exemplos com dados reais <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Para montar os exemplos, alguém copia 3 mensagens reais de clientes, com nome e telefone, e cola no pedido.</div>
   <p><strong>Qual é o risco? Como criar bons exemplos sem usar dados reais?</strong></p>
   <div class="open" data-key="k6" data-min="25">
@@ -452,9 +465,9 @@ print(montar_few_shot(exemplos, "Produto ok"))</textarea></div>
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">7</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">8</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k7" data-correta="1" data-concept="pf_exemplos" data-level="exec">
     <p class="mcq-q">O que é pedir com exemplos (few-shot)?</p>
@@ -482,9 +495,9 @@ print(montar_few_shot(exemplos, "Produto ok"))</textarea></div>
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">8</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">9</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: o que é pedir com exemplos e o que fazer para escolhê-los bem?</strong></p>
   <div class="open" data-key="k10" data-min="25" data-concept="pf_exemplos" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -492,7 +505,7 @@ print(montar_few_shot(exemplos, "Produto ok"))</textarea></div>
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>É incluir no pedido pares de entrada e saída para o Claude copiar o padrão. Escolha exemplos <b>corretos, variados</b> (com um caso de borda) e <b>parecidos com o uso real</b>, separados por marcas como <code>&lt;example&gt;</code>.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) O que é pedir com exemplos (few-shot)? (2) Como devem ser os exemplos que você escolhe? (3) Como criar exemplos sem expor clientes reais? <a href="recuperacao-0070.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Mostre exemplos: o poder de mostrar em vez de explicar”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0070.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -688,7 +701,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -880,7 +893,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -961,13 +985,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1220,7 +1238,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

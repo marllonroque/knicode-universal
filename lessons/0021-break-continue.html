@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 3 · Repetições: fazer de novo sem copiar · Aula 5</div>
   <h1>Parar e pular: break e continue</h1>
   <p>Às vezes o robô precisa abandonar o laço assim que acha o que procura, ou pular uma volta sem parar tudo. Hoje você conhece as duas ferramentas.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 45 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Usar <code>break</code> para sair de um laço.</li>
@@ -472,9 +472,28 @@ print(n)</pre></div>
 
 <!-- 6 -->
 <section class="card">
-  <h2><span class="num">6</span>Escreva o seu <span class="mins">5 min</span></h2>
-  <p>Peça <code>Início: </code> (inteiro) e procure o <b>primeiro múltiplo de 7</b> de <code>Início</code> até 50. Mostre <code>Achei: N</code> e pare; se não houver nenhum, mostre <code>Não achei</code>.</p>
-  <div class="runner" data-key="k8" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;20&quot;],&quot;esperado&quot;:[&quot;Início: 20&quot;,&quot;Achei: 21&quot;]},{&quot;entradas&quot;:[&quot;30&quot;],&quot;esperado&quot;:[&quot;Início: 30&quot;,&quot;Achei: 35&quot;]},{&quot;entradas&quot;:[&quot;44&quot;],&quot;esperado&quot;:[&quot;Início: 44&quot;,&quot;Achei: 49&quot;]},{&quot;entradas&quot;:[&quot;50&quot;],&quot;esperado&quot;:[&quot;Início: 50&quot;,&quot;Não achei&quot;]}]}" data-dica="Use um `for n in range(inicio, 51):`, um `if n % 7 == 0:` com `break`, e uma variável `achou` que começa `False`." data-concept="break_continue" data-level="exec">
+  <h2><span class="num">6</span>Antes do exercício: achei ou não achei? <span class="mins">4 min</span></h2>
+  <p>Procurar com <code>break</code> tem uma pegadinha: quando o laço termina, o programa não sabe <b>por quê</b> terminou. Foi porque achou e deu <code>break</code>? Ou porque chegou ao fim sem achar nada? Para distinguir, usa-se uma variável-sinalizador (uma “flag”): <code>achou</code>, que guarda <code>True</code> ou <code>False</code>.</p>
+  <p>O padrão tem três passos (aqui com outro tema: o primeiro número de 1 a 10 que seja maior que <code>alvo</code>):</p>
+  <table>
+    <tr><th>Passo</th><th>Código do exemplo</th><th>O que faz</th></tr>
+    <tr><td>1. Antes do laço</td><td><code>achou = False</code></td><td>Começa dizendo “ainda não achei”.</td></tr>
+    <tr><td>2. Dentro do laço, no <code>if</code> que encontra</td><td><code>print("Achei:", n)</code>, depois <code>achou = True</code> e <code>break</code></td><td>Mostra o que achou, anota que achou e sai do laço.</td></tr>
+    <tr><td>3. Depois do laço (sem indentação)</td><td><code>if not achou:</code> e, dentro, <code>print("Não achei")</code></td><td>Só roda se o laço terminou sem achar nada.</td></tr>
+  </table>
+</section>
+
+<!-- 7 -->
+<section class="card">
+  <h2><span class="num">7</span>A ideia <span class="mins">4 min</span></h2>
+  <p>O <code>print("Não achei")</code> fica <b>fora</b> do laço porque só dá para concluir que nada serve depois de olhar todos os candidatos. E o caso “não achei” precisa de resposta própria: se nenhum valor servir, o <code>if</code> de dentro nunca roda e <code>achou</code> continua <code>False</code>. (<code>not achou</code> quer dizer “achou é falso”.)</p>
+</section>
+
+<!-- 8 -->
+<section class="card">
+  <h2><span class="num">8</span>Escreva o seu <span class="mins">5 min</span></h2>
+  <p>Peça <code>Início: </code> (inteiro) e procure o <b>primeiro múltiplo de 7</b> entre <code>Início</code> e 50 (o 50 também vale). Se achar, mostre <code>Achei: N</code> (só o primeiro) e pare. Se nenhum número de <code>Início</code> a 50 for múltiplo de 7, mostre <code>Não achei</code>. Use o padrão do texto acima.</p>
+  <div class="runner" data-key="k8" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;20&quot;],&quot;esperado&quot;:[&quot;Início: 20&quot;,&quot;Achei: 21&quot;]},{&quot;entradas&quot;:[&quot;30&quot;],&quot;esperado&quot;:[&quot;Início: 30&quot;,&quot;Achei: 35&quot;]},{&quot;entradas&quot;:[&quot;44&quot;],&quot;esperado&quot;:[&quot;Início: 44&quot;,&quot;Achei: 49&quot;]},{&quot;entradas&quot;:[&quot;50&quot;],&quot;esperado&quot;:[&quot;Início: 50&quot;,&quot;Não achei&quot;]},{&quot;entradas&quot;:[&quot;7&quot;],&quot;esperado&quot;:[&quot;Início: 7&quot;,&quot;Achei: 7&quot;]}]}" data-dica="Use um `for n in range(inicio, 51):`, um `if n % 7 == 0:` com `break`, e uma variável `achou` que começa `False`." data-concept="break_continue" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>meu_programa.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">inicio = int(input("Início: "))
 # procure o primeiro múltiplo de 7 entre inicio e 50
@@ -484,9 +503,9 @@ print(n)</pre></div>
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">7</span>Pular sem deixar rastro <span class="mins">3 min</span></h2>
+  <h2><span class="num">9</span>Pular sem deixar rastro <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Um processamento em lote usa <code>continue</code> para pular pedidos inválidos e seguir com os outros, sem registrar nada.</div>
   <p><strong>Qual é o risco de pular em silêncio? O que seria melhor?</strong></p>
   <div class="open" data-key="k9" data-min="25">
@@ -497,9 +516,9 @@ print(n)</pre></div>
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 10 -->
 <section class="card">
-  <h2><span class="num">8</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">10</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k10" data-correta="1" data-concept="break_continue" data-level="exec">
     <p class="mcq-q">O que o <code>break</code> faz?</p>
@@ -527,9 +546,9 @@ print(n)</pre></div>
   </div>
 </section>
 
-<!-- 9 -->
+<!-- 11 -->
 <section class="card">
-  <h2><span class="num">9</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">11</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: qual a diferença entre <code>break</code> e <code>continue</code>?</strong></p>
   <div class="open" data-key="k13" data-min="25" data-concept="break_continue" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -537,7 +556,7 @@ print(n)</pre></div>
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span><code>break</code> encerra o laço de vez; <code>continue</code> só pula o resto da volta atual e segue para a próxima volta.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) O que o <code>break</code> faz? (2) O que o <code>continue</code> faz? (3) Por que não pular itens inválidos em silêncio? <a href="recuperacao-0021.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Parar e pular: break e continue”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0021.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -733,7 +752,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -925,7 +944,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -1006,13 +1036,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1265,7 +1289,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

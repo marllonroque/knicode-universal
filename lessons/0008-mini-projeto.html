@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 1 · Primeiros passos: algoritmos e Python · Aula 8</div>
   <h1>Mini-projeto: o robô anota o pedido</h1>
   <p>Hora de juntar tudo: o robô pergunta, calcula e mostra o pedido de café e pão, sem receita pronta. Depois, o mesmo raciocínio num problema novo.</p>
-  <div class="chips"><span class="chip">40 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 35 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Combinar variáveis, tipos, <code>input()</code>, operadores e f-strings num programa só.</li>
@@ -362,10 +362,12 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <!-- 2 -->
 <section class="card">
   <h2><span class="num">2</span>Exercício final (sem dica) <span class="mins">12 min</span></h2>
-  <p>Escreva o programa. Ele deve perguntar <code>Nome: </code>, <code>Cafés: </code> e <code>Pães: </code> (exatamente assim). O café custa 4.5 e o pão custa 3. Com as entradas Lia, 2 e 1, a saída deve ser exatamente:
+  <p>Escreva o programa. Ele deve perguntar <code>Nome: </code>, <code>Cafés: </code> e <code>Pães: </code> (exatamente assim). O café custa 4.5 e o pão custa 3. Com as entradas Lia, 2 e 1, a saída deve ser exatamente, uma por linha:
 
-<code>Nome: Lia</code> · <code>Cafés: 2</code> · <code>Pães: 1</code> · <code>Pedido de Lia</code> · <code>Cafés: R$ 9.00</code> · <code>Pães: R$ 3.00</code> · <code>Total: R$ 12.00</code>.</p>
-  <div class="runner" data-key="k3" data-spec="{&quot;esperado&quot;:[&quot;Nome: Lia&quot;,&quot;Cafés: 2&quot;,&quot;Pães: 1&quot;,&quot;Pedido de Lia&quot;,&quot;Cafés: R$ 9.00&quot;,&quot;Pães: R$ 3.00&quot;,&quot;Total: R$ 12.00&quot;]}" data-entradas="[&quot;Lia&quot;,&quot;2&quot;,&quot;1&quot;]" data-dica="Três `input`, dois deles com `int(...)`. Calcule `cafes * 4.5` e `paes * 3`, some, e mostre cada linha com f-string e `:.2f`." data-concept="variaveis,tipos,entrada,operadores,formatacao" data-level="exec" data-module-final="m01">
+<code>Nome: Lia</code> · <code>Cafés: 2</code> · <code>Pães: 1</code> · <code>Pedido de Lia</code> · <code>Cafés: R$ 9.00</code> · <code>Pães: R$ 3.00</code> · <code>Total: R$ 12.00</code>.
+
+O mesmo programa será testado também com outros clientes e quantidades (inclusive zero), sempre nesse formato: valores em reais com ponto e duas casas.</p>
+  <div class="runner" data-key="k3" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;Lia&quot;,&quot;2&quot;,&quot;1&quot;],&quot;esperado&quot;:[&quot;Nome: Lia&quot;,&quot;Cafés: 2&quot;,&quot;Pães: 1&quot;,&quot;Pedido de Lia&quot;,&quot;Cafés: R$ 9.00&quot;,&quot;Pães: R$ 3.00&quot;,&quot;Total: R$ 12.00&quot;]},{&quot;entradas&quot;:[&quot;Teo&quot;,&quot;3&quot;,&quot;0&quot;],&quot;esperado&quot;:[&quot;Nome: Teo&quot;,&quot;Cafés: 3&quot;,&quot;Pães: 0&quot;,&quot;Pedido de Teo&quot;,&quot;Cafés: R$ 13.50&quot;,&quot;Pães: R$ 0.00&quot;,&quot;Total: R$ 13.50&quot;]},{&quot;entradas&quot;:[&quot;Ana&quot;,&quot;0&quot;,&quot;2&quot;],&quot;esperado&quot;:[&quot;Nome: Ana&quot;,&quot;Cafés: 0&quot;,&quot;Pães: 2&quot;,&quot;Pedido de Ana&quot;,&quot;Cafés: R$ 0.00&quot;,&quot;Pães: R$ 6.00&quot;,&quot;Total: R$ 6.00&quot;]}]}" data-dica="Três `input`, dois deles com `int(...)`. Calcule `cafes * 4.5` e `paes * 3`, some, e mostre cada linha com f-string e `:.2f`." data-concept="variaveis,tipos,entrada,operadores,formatacao" data-level="exec" data-module-final="m01">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>pedido.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off"># Planeje: perguntar, converter, calcular, mostrar
 </textarea></div>
@@ -377,8 +379,8 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <!-- 3 -->
 <section class="card">
   <h2><span class="num">3</span>Problema novo: as horas de estudo da semana <span class="mins">10 min</span></h2>
-  <p>Agora outro contexto, mesmos conceitos. Peça <code>Segunda: </code>, <code>Terça: </code> e <code>Quarta: </code> (horas estudadas, números inteiros). Com as entradas 2, 3 e 1, mostre <code>Total de horas: 6</code> e <code>Média por dia: 2.0</code>.</p>
-  <div class="runner" data-key="k4" data-spec="{&quot;esperado&quot;:[&quot;Segunda: 2&quot;,&quot;Terça: 3&quot;,&quot;Quarta: 1&quot;,&quot;Total de horas: 6&quot;,&quot;Média por dia: 2.0&quot;]}" data-entradas="[&quot;2&quot;,&quot;3&quot;,&quot;1&quot;]" data-dica="Três `int(input(...))`, a soma e a média (soma dividida por 3 com `/`)." data-concept="variaveis,entrada,operadores" data-level="exec" data-transfer="m01">
+  <p>Agora outro contexto, mesmos conceitos. Peça <code>Segunda: </code>, <code>Terça: </code> e <code>Quarta: </code> (horas estudadas, números inteiros). Depois das três perguntas, mostre duas linhas no formato <code>Total de horas: N</code> e <code>Média por dia: M</code>, em que M é o total dividido por 3 com <code>/</code> (por isso aparece com decimal: com as entradas 2, 3 e 1, o resultado é <code>Total de horas: 6</code> e <code>Média por dia: 2.0</code>). A página testa com <b>três conjuntos de entradas diferentes</b>.</p>
+  <div class="runner" data-key="k4" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;2&quot;,&quot;3&quot;,&quot;1&quot;],&quot;esperado&quot;:[&quot;Segunda: 2&quot;,&quot;Terça: 3&quot;,&quot;Quarta: 1&quot;,&quot;Total de horas: 6&quot;,&quot;Média por dia: 2.0&quot;]},{&quot;entradas&quot;:[&quot;5&quot;,&quot;4&quot;,&quot;3&quot;],&quot;esperado&quot;:[&quot;Segunda: 5&quot;,&quot;Terça: 4&quot;,&quot;Quarta: 3&quot;,&quot;Total de horas: 12&quot;,&quot;Média por dia: 4.0&quot;]},{&quot;entradas&quot;:[&quot;0&quot;,&quot;0&quot;,&quot;3&quot;],&quot;esperado&quot;:[&quot;Segunda: 0&quot;,&quot;Terça: 0&quot;,&quot;Quarta: 3&quot;,&quot;Total de horas: 3&quot;,&quot;Média por dia: 1.0&quot;]}]}" data-dica="Três `int(input(...))`, a soma e a média (soma dividida por 3 com `/`)." data-concept="variaveis,entrada,operadores" data-level="exec" data-transfer="m01">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>semana.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off"># Pergunte as horas de cada dia, some e calcule a média
 </textarea></div>
@@ -440,7 +442,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Pergunta o nome, os cafés e os pães; converte as quantidades em números; calcula o valor de cada item e o total; mostra tudo formatado. É um algoritmo: passos exatos, em ordem.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Em que ordem fica um programa que pergunta quantidades e calcula um total? (2) Por que a quantidade lida com <code>input()</code> precisa de <code>int()</code> antes da conta? (3) Qual formato mostra um valor em reais com duas casas decimais? <a href="recuperacao-0008.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Mini-projeto: o robô anota o pedido”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0008.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -636,7 +638,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -828,7 +830,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -909,13 +922,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1168,7 +1175,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

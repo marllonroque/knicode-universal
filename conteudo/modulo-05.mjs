@@ -56,9 +56,9 @@ print("Quantidade:", len(precos))` },
     { tipo: "fechar", pergunta: "Sem olhar acima: o que é uma lista e como se lê um item dela?", conceito: "lista_basica", modelo: "Uma lista guarda vários valores em ordem numa só variável, entre colchetes. Lê-se um item pela posição entre colchetes (`lista[0]` é o primeiro); posições negativas contam do fim; `len` diz quantos itens há." },
   ],
   recuperacao: [
-    { p: "Qual é a posição do primeiro item de uma lista?", regex: "(0|zero)", naoRegex: "(posicao 1|primeira posicao e 1)", modelo: "A posição 0.", conceito: "lista_basica" },
-    { p: "O que `lista[-1]` devolve?", regex: "(ultimo)", modelo: "O último item da lista.", conceito: "lista_basica" },
-    { p: "Por que não enviar a lista inteira de CPFs quando só um é pedido?", regex: "(so o necessario|apenas o necessario|todos os cpf|expoe|vaz|minimo|inspecion|necessario)", modelo: "Porque expõe todos os CPFs; deve-se enviar só o item necessário.", conceito: "lista_basica" },
+    { p: "Qual é a posição do primeiro item de uma lista?", regex: "\\b(0|zero)\\b", naoRegex: "(primeira|comeca|inicio)[^,.;]{0,25}\\b(e|em|no|pelo|na posicao|a posicao) (o |a )?(1|um)\\b|\\b(nunca|jamais|nao)( e| eh| em| no| pelo)? (o )?(0|zero)\\b", modelo: "A posição 0.", conceito: "lista_basica" },
+    { p: "O que `lista[-1]` devolve?", regex: "\\bultimo\\b", naoRegex: "\\bnao (e |eh )?(o )?ultimo\\b", modelo: "O último item da lista.", conceito: "lista_basica" },
+    { p: "Por que não enviar a lista inteira de CPFs quando só um é pedido?", regex: "(expoe|exposi|expor|exposto|\\bvaz|inspecion|todos os cpf|cpfs? de todos|dados de todos|de todos os clientes|outros clientes|outras pessoas|qualquer um|privacid|sigilo|sensiv|desnecessari|mais do que (o )?(precis|necessari)|\\b(so|apenas|somente) (o|um|enviar|mandar)\\b|enviar (so|apenas|somente)|minimo)", modelo: "Porque expõe todos os CPFs; deve-se enviar só o item necessário.", conceito: "lista_basica" },
   ],
 });
 
@@ -73,6 +73,9 @@ aulas.push({
     { tipo: "exemplo", arquivo: "fila_muda.py", texto: "Clique em cada linha.",
       codigo: [["fila = [\"cafe\", \"pao\"]", "A fila começa com dois pedidos."], ["fila.append(\"suco\")", "**`append`** acrescenta no **fim**: a fila agora é cafe, pao, suco."], ["fila.remove(\"pao\")", "**`remove`** tira o primeiro item igual ao informado: sobram cafe e suco."], ["atendido = fila.pop(0)", "**`pop(0)`** tira o item da posição 0 **e o devolve**: `atendido` vale `cafe`."], ["print(atendido)", "Mostra `cafe`."], ["print(len(fila))", "Sobrou 1 item: `1`."], ["print(\"pao\" in fila)", "**`in`** pergunta se o valor está na lista: `False`."]],
       termos: [["append", "acrescenta um item no fim da lista."], ["remove / pop", "`remove(valor)` tira um valor; `pop(posição)` tira pela posição e devolve o item."], ["in", "pergunta se um valor está na lista (`True` ou `False`)."]] },
+    { tipo: "texto", titulo: "Mais três ferramentas da lista", blocos: [
+      "O exemplo acima mostrou `pop(0)`. Antes dos exercícios, três detalhes que vão aparecer: **`pop()` sem número** tira o **último** item (e o devolve); **trocar um item** é atribuir à posição, como `f[0] = \"z\"` (o item que estava lá some e o novo ocupa o lugar); e `remove` com um valor que **não está** na lista para o programa com `ValueError`.",
+    ], tabela: { cab: ["Comando (com `f = [\"a\", \"b\", \"c\"]`)", "O que faz", "Como fica `f`"], linhas: [["`x = f.pop()`", "tira o último item e o devolve: `x` vale `c`", "`[\"a\", \"b\"]`"], ["`f[0] = \"z\"`", "troca o item da posição 0 por `z`", "`[\"z\", \"b\", \"c\"]`"], ["`f.remove(\"x\")`", "`x` não está na lista: erro `ValueError`", "não muda (o programa para)"]] } },
     { tipo: "executar", texto: "Rode e depois acrescente mais pedidos.", arquivo: "fila_muda.py (pode editar)", codigo: `fila = ["cafe", "pao"]
 fila.append("suco")
 print(len(fila))
@@ -125,7 +128,7 @@ print("Na fila:", len(fila))` },
   ],
   recuperacao: [
     { p: "Qual a diferença entre `remove` e `pop`?", regex: "(remove);;(pop);;(posicao|valor|devolve)", modelo: "`remove(valor)` tira um valor; `pop(posição)` tira pela posição e devolve o item.", conceito: "lista_metodos" },
-    { p: "Como saber se “pao” está na lista `fila`?", regex: "(in|operador in|\"pao\" in)", modelo: "Com `\"pao\" in fila`, que dá `True` ou `False`.", conceito: "lista_metodos" },
+    { p: "Como saber se “pao” está na lista `fila`?", regex: "(\\bin\\b|percorr|\\bfor\\b)", modelo: "Com `\"pao\" in fila`, que dá `True` ou `False`.", conceito: "lista_metodos" },
     { p: "Por que não mostrar o nome completo de quem está sendo atendido num telão?", regex: "(privacid|exposic|quem esta|publico|identific|senha|numero)", modelo: "Porque expõe quem está sendo atendido; use senha ou número.", conceito: "lista_metodos" },
   ],
 });
@@ -141,6 +144,7 @@ aulas.push({
     { tipo: "exemplo", arquivo: "percorrer.py", texto: "Clique em cada linha.",
       codigo: [["precos = [4.5, 3.0, 6.0]", "A lista de preços."], ["total = 0", "O acumulador, antes do laço."], ["for p in precos:", "A cada volta, `p` recebe **o próximo item** da lista."], ["    total = total + p", "Acumula."], ["print(total)", "`13.5`."], ["for i in range(len(precos)):", "Se você precisa da **posição**, percorra as posições: `range(len(precos))` gera 0, 1, 2."], ["    print(i, precos[i])", "Mostra a posição e o item: `0 4.5`, `1 3.0`, `2 6.0`."]],
       termos: [["for item in lista", "percorre os itens, um por volta."], ["range(len(lista))", "gera as posições de 0 até o fim da lista."]] },
+    { tipo: "texto", titulo: "Um método de texto: .upper()", blocos: ["Os itens de uma lista também podem ser textos. Um texto tem ferramentas próprias: **`.upper()`** devolve o texto em **letras maiúsculas** e não muda o original. Por exemplo, `\"ana\".upper()` é `ANA`. Ele aparece no próximo exercício."] },
     { tipo: "executar", texto: "Rode e depois troque os itens.", arquivo: "percorrer.py (pode editar)", codigo: `for n in [1, 2, 3]:
     print(n * n)`,
       prever: { enunciado: "Antes de testar, qual é a **última linha**?", conceito: "lista_percorrer", itens: [{ codigo: `nomes = ["ana", "beto"]
@@ -215,6 +219,11 @@ aulas.push({
     { tipo: "exemplo", arquivo: "ranking.py", texto: "Clique em cada linha.",
       codigo: [["vendas = [30, 10, 50, 20]", "Os valores vendidos."], ["print(sorted(vendas))", "**`sorted`** devolve uma lista **nova** em ordem crescente: `[10, 20, 30, 50]`. A original não muda."], ["print(max(vendas), min(vendas), sum(vendas))", "O maior, o menor e a soma: `50 10 110`."], ["print(vendas[:2])", "Uma **fatia**: `[:2]` pega do começo até a posição 2 (sem incluí-la): `[30, 10]`."], ["print(sorted(vendas, reverse=True)[:3])", "`reverse=True` ordena do maior para o menor, e `[:3]` pega os 3 primeiros: `[50, 30, 20]`."]],
       termos: [["sorted", "devolve uma cópia ordenada da lista."], ["Fatia", "um pedaço da lista: `lista[início:fim]` (o fim não entra)."]] },
+    { tipo: "texto", titulo: "Três detalhes antes dos exercícios", blocos: [
+      "**Textos também se ordenam**, mas letra a letra, pela tabela de caracteres do computador, e não pelo alfabeto de um dicionário: **todas as maiúsculas vêm antes de todas as minúsculas**. Por isso `sorted([\"ana\", \"Beto\", \"caio\"])` dá `['Beto', 'ana', 'caio']`: o “B” maiúsculo vem antes do “a” minúsculo. Com todos os textos em minúsculas (como `\"cafe\"`, `\"pao\"`, `\"suco\"`), a ordem é a do alfabeto.",
+      "**`.sort()`** também ordena, mas de outro jeito: **muda a própria lista** e não devolve nada (o resultado é `None`). Depois de `v = [30, 10, 20]` e `v.sort()`, a lista `v` passa a ser `[10, 20, 30]`. Já `sorted(v)` deixa `v` como está e devolve uma lista nova.",
+      "**Várias atribuições numa linha**: `a, b = 1, 3` é um atalho para `a = 1` e `b = 3`. O primeiro nome recebe o primeiro valor, o segundo recebe o segundo. A tabela da seção “Descubra o padrão” usa esse atalho.",
+    ] },
     { tipo: "executar", texto: "Rode e troque os valores e as fatias.", arquivo: "ranking.py (pode editar)", codigo: `vendas = [30, 10, 50, 20]
 print(sorted(vendas))
 print(max(vendas), min(vendas), sum(vendas))`,
@@ -225,7 +234,7 @@ print(v[1:3])`, resposta: "[2, 3]", porque: "Da posição 1 até a 3, **sem** in
       pergunta: "O item da posição `b` entra na fatia? Isso lembra qual outra ferramenta que você já viu?", dicas: ["Com `a, b = 1, 3`, quais posições aparecem? A posição 3 (o 40) está lá?", "Pense no `range(início, fim)`."],
       explicacao: "A posição `b` **não entra**: a fatia vai de `a` até `b - 1`. É a mesma regra do `range(início, fim)`: o fim fica de fora.", conceito: "lista_ordenar" },
     { tipo: "prever", conceito: "lista_ordenar", itens: [
-      { codigo: 'print(sorted(["pao", "cafe", "suco"]))', resposta: "['cafe', 'pao', 'suco']", porque: "Textos são ordenados em ordem alfabética." },
+      { codigo: 'print(sorted(["pao", "cafe", "suco"]))', resposta: "['cafe', 'pao', 'suco']", porque: "Textos são ordenados letra a letra; como estes estão todos em minúsculas, a ordem é a do alfabeto (com maiúsculas, as maiúsculas viriam primeiro)." },
       { codigo: "print(sorted([3, 1, 2], reverse=True))", resposta: "[3, 2, 1]", porque: "Do maior para o menor." },
       { codigo: `v = [5, 3, 8]
 v.sort()
@@ -254,7 +263,7 @@ print("Média:", sum(notas) / len(notas))` },
     { tipo: "fechar", pergunta: "Sem olhar acima: como obter as 3 maiores vendas de uma lista?", conceito: "lista_ordenar", modelo: "Ordenando do maior para o menor, `sorted(vendas, reverse=True)`, e pegando os 3 primeiros com uma fatia, `[:3]`." },
   ],
   recuperacao: [
-    { p: "O que `sorted` faz e o que acontece com a lista original?", regex: "(ordena|ordem|cresc);;(original|mesma|nao muda|copia|nova|igual)", modelo: "Devolve uma cópia ordenada; a original não muda.", conceito: "lista_ordenar" },
+    { p: "O que `sorted` faz e o que acontece com a lista original?", regex: "(ordena|ordem|cresc);;(copia|\\bnova\\b|outra lista|nao (a )?(muda|altera|modifica|mexe|ordena)|continua (igual|na mesma|como estava|intacta)|fica (igual|intacta|como estava|inalterada)|inalterad|permanece|intacta|sem (mudar|alterar|modificar|mexer))", naoRegex: "(tambem|e) (muda|altera|modifica|ordena) (a )?(lista )?original", modelo: "Devolve uma cópia ordenada; a original não muda.", conceito: "lista_ordenar" },
     { p: "O item da posição final de uma fatia `lista[a:b]` entra?", regex: "(fora|anterior|nao entra|nao inclui|sem incluir)", modelo: "Não: a fatia vai até a posição anterior à `b`.", conceito: "lista_ordenar" },
     { p: "Por que não publicar um ranking com nomes e valores gastos?", regex: "(privacid|exposic|identific|golpe|invasiv|dados pessoais|consentimento)", modelo: "Porque expõe o comportamento de pessoas identificáveis; prefira apelidos, faixas ou dados agregados.", conceito: "lista_ordenar" },
   ],
@@ -307,9 +316,9 @@ print(usuario["nome"], "é", usuario["perfil"])` },
     { tipo: "fechar", pergunta: "Sem olhar acima: o que é um dicionário e como se lê um valor dele?", conceito: "dict_basico", modelo: "Um dicionário guarda pares chave-valor entre chaves `{ }`. Lê-se um valor pedindo pela chave entre colchetes: `pedido[\"cliente\"]`. Uma chave que não existe causa `KeyError`." },
   ],
   recuperacao: [
-    { p: "O que é uma chave de um dicionário?", regex: "(rotulo|nome do campo|identific|etiqueta|nome|campo)", modelo: "O rótulo de uma informação: o nome pelo qual se pede o valor.", conceito: "dict_basico" },
-    { p: "O que acontece ao pedir uma chave que não existe?", regex: "(keyerror|erro|nao existe|falha)", modelo: "Dá `KeyError`.", conceito: "dict_basico" },
-    { p: "Por que não guardar a senha como o usuário digitou?", regex: "(hash|le a senha|vaz|expoe|reutiliz|criptograf|outros sites|texto puro|claro)", modelo: "Porque quem acessar os dados lê a senha; guarda-se um hash, que permite conferir sem recuperar a original.", conceito: "dict_basico" },
+    { p: "O que é uma chave de um dicionário?", regex: "(rotulo|etiqueta|identific|\\bcampo\\b|nome (do|de|da|pelo|para) [a-z ]{0,25}(campo|informacao|valor|dado|pede|pedir|acessar|ler))", modelo: "O rótulo de uma informação: o nome pelo qual se pede o valor.", conceito: "dict_basico" },
+    { p: "O que acontece ao pedir uma chave que não existe?", regex: "(keyerror|key error|\\berro\\b|travar|trava|quebra|para o programa|excecao)", naoRegex: "(index|type|value|name|zerodivision|attribute)error|erro de (indice|tipo|valor|nome)", modelo: "Dá `KeyError`.", conceito: "dict_basico" },
+    { p: "Por que não guardar a senha como o usuário digitou?", regex: "(hash|\\bl(e|er) (a )?senha|\\bvaz|expoe|exposi|expor|exposta|reutiliz|outros sites|texto (puro|claro)|em claro|roub|invad|enxerg)", modelo: "Porque quem acessar os dados lê a senha; guarda-se um hash, que permite conferir sem recuperar a original.", conceito: "dict_basico" },
   ],
 });
 
@@ -407,7 +416,7 @@ print(sum(d.values()))`, resposta: "3", porque: "1 + 2." }] } },
       execucoes: [{ prefixo: 'd = {"cafe": 5, "pao": 0, "suco": 3}', saida: ["cafe", "suco"] }, { prefixo: 'd = {"pao": 0}', saida: [] }, { prefixo: 'd = {"leite": 1}', saida: ["leite"] }], colunas: ["Dicionário", "O que aparece"],
       pergunta: "O que `k` e `v` recebem a cada volta? Por que o “pao” não aparece?", dicas: ["Quantos pares existem em `d`? Quantas voltas o laço dá?", "Qual é o valor de “pao” e o que o `if` pergunta?"],
       explicacao: "A cada volta, `k` recebe a **chave** e `v` o **valor** do par. O “pao” tem valor 0, e o `if v > 0` é falso, então o `print` não roda para ele.", conceito: "dict_percorrer" },
-    { tipo: "prever", conceito: "dict_percorrer", itens: [
+    { tipo: "prever", texto: "Lembrete: o `for` percorre o dicionário **na ordem em que as chaves foram escritas** nele (a primeira chave escrita vem primeiro, a última vem por último).", conceito: "dict_percorrer", itens: [
       { codigo: `estoque = {"cafe": 5, "pao": 0}
 c = 0
 for k, v in estoque.items():
@@ -452,7 +461,7 @@ print("Esgotados:", esgotados)` },
     { tipo: "fechar", pergunta: "Sem olhar acima: como percorrer um dicionário para usar chave e valor?", conceito: "dict_percorrer", modelo: "Com `for chave, valor in dicionario.items():`. Sem `.items()`, o `for` entrega só as chaves; `.values()` entrega só os valores." },
   ],
   recuperacao: [
-    { p: "O que o `for` entrega ao percorrer um dicionário?", regex: "(chave)", modelo: "As chaves.", conceito: "dict_percorrer" },
+    { p: "Num `for k in d:` (sem `.items()` nem `.values()`), o que `k` recebe a cada volta?", regex: "\\bchaves?\\b", naoRegex: "\\bnao (as |a |so as |so a )?chaves?\\b|\\bchaves? (e|mais) (o |os |seus )?(valor|valores)\\b|\\bvalores?, nao\\b|\\bvalores? e nao\\b", modelo: "A chave de cada par (uma por volta).", conceito: "dict_percorrer" },
     { p: "Para que serve o `.items()`?", regex: "(pares|cada par|chave e valor|chave e o valor|chave.valor|os dois|chave, valor)", modelo: "Entrega cada par chave-valor ao `for`.", conceito: "dict_percorrer" },
     { p: "Por que não imprimir todos os campos de cada usuário?", regex: "(hash|senha|sensiv|privad|publico|expo|escolher|campos)", modelo: "Porque campos como o hash da senha não devem sair; mostram-se só os campos públicos.", conceito: "dict_percorrer" },
   ],
@@ -538,7 +547,7 @@ print(f"Total: R$ {total:.2f}")` },
     { tipo: "fechar", pergunta: "Sem olhar acima: como representar e percorrer um carrinho com vários itens?", conceito: "lista_dicts", modelo: "Como uma lista de dicionários, um por item (`nome`, `preco`, `qtd`). Percorre-se com `for item in carrinho:` e lêem-se os campos de cada `item` pelas chaves, acumulando totais." },
   ],
   recuperacao: [
-    { p: "Como representar vários itens, cada um com vários campos?", regex: "(lista);;(dicionario)", modelo: "Com uma lista de dicionários: um dicionário por item.", conceito: "lista_dicts" },
+    { p: "Como representar vários itens, cada um com vários campos?", regex: "(lista de dicionarios|listas? (de|com|contendo) (varios |muitos )?dicionarios|lista (cujos|onde|em que|na qual)[^.]{0,40}dicionario|dicionarios? (dentro d[ea]|em|numa|na) (uma |a )?lista|cada (item|registro|produto)[^.]{0,30}dicionario|dicionario (por|para cada|em cada) (item|registro|produto))", modelo: "Com uma lista de dicionários: um dicionário por item.", conceito: "lista_dicts" },
     { p: "Como ler o preço do segundo item de uma lista `c` de dicionários?", regex: "(c\\[1\\]|posicao 1|segundo);;(preco)", modelo: "`c[1][\"preco\"]`.", conceito: "lista_dicts" },
     { p: "Por que o servidor não deve usar o preço enviado pelo cliente?", regex: "(altera|fraude|falso|adulter|manipul|propria tabela|controla|nao confi)", modelo: "Porque o cliente pode alterar o preço; o servidor consulta a própria tabela de preços.", conceito: "lista_dicts" },
   ],
@@ -555,6 +564,10 @@ aulas.push({
     { tipo: "exemplo", arquivo: "filtrar.py", texto: "Clique em cada linha.",
       codigo: [["pedidos = [4.5, 12.0, 9.0, 15.5]", "Os valores do dia."], ["grandes = []", "Uma lista **vazia** que vai receber os escolhidos."], ["for p in pedidos:", "Percorre cada pedido."], ["    if p > 10:", "O **filtro**."], ["        grandes.append(p)", "Só os que passam entram na lista nova."], ["print(len(grandes))", "Quantos passaram: `2`."], ["print(sum(grandes) / len(grandes))", "A média dos escolhidos: `13.75`. (Dividir por `len(grandes)` só funciona se a lista não estiver vazia.)"]],
       termos: [["Filtrar", "criar uma lista nova só com os itens que passam numa condição."], ["Resumir", "reduzir os dados a um número (total, média, contagem)."]] },
+    { tipo: "texto", titulo: "Dois recursos que aparecem a seguir", blocos: [
+      "**A primeira letra de um texto**: texto também tem posições, como uma lista, e a primeira é a **0**. Então `n[0]` é a primeira letra de `n`: com `n = \"Ana\"`, `n[0]` é `\"A\"`. Esse recurso aparece nos exercícios de previsão.",
+      "**Lista vazia vale “falso” num `if`**: escrever `if grandes:` é o mesmo que perguntar “a lista `grandes` tem algum item?”. Com itens, a condição é verdadeira; com a lista vazia (`[]`), é falsa e o bloco não roda. É a forma curta de checar se existe algo para calcular.",
+    ] },
     { tipo: "executar", texto: "Rode e depois mude o limite de 10 para 5.", arquivo: "filtrar.py (pode editar)", codigo: `pedidos = [4.5, 12.0, 9.0, 15.5]
 grandes = []
 for p in pedidos:
@@ -629,7 +642,7 @@ print("Soma:", sum(grandes))` },
   ],
   recuperacao: [
     { p: "Como filtrar uma lista?", regex: "(vazia|nova lista);;(append|acrescent|adiciona);;(if|condicao)", modelo: "Cria-se uma lista vazia e acrescenta-se com `append` só os itens que passam no `if`.", conceito: "filtrar_resumir" },
-    { p: "O que dá `sum(v) / len(v)` quando `v` é vazia?", regex: "(zero|erro|zerodivision|divis)", modelo: "Erro de divisão por zero (`ZeroDivisionError`).", conceito: "filtrar_resumir" },
+    { p: "O que dá `sum(v) / len(v)` quando `v` é vazia?", regex: "(\\berro\\b|zerodivision|divis\\w* (por|pelo) (0|zero)|divide por (0|zero)|dividir por (0|zero)|dividindo por (0|zero))", naoRegex: "\\bnao (da|ha|tem|causa|gera|ocorre) erro|\\bda (0|zero)\\b|resulta em (0|zero)|\\be (0|zero)\\b|\\bvale (0|zero)\\b|resultado (e )?(0|zero)\\b", modelo: "Erro de divisão por zero (`ZeroDivisionError`).", conceito: "filtrar_resumir" },
     { p: "Tirar um cliente de uma lista elimina os dados dele de verdade?", regex: "(nao);;(backup|copia|todos os lugares|outros|arquivo)", modelo: "Não: cópias podem existir em backups, arquivos e relatórios; é preciso remover de todos os lugares.", conceito: "filtrar_resumir" },
   ],
 });
@@ -645,6 +658,10 @@ aulas.push({
     { tipo: "aquecimento", titulo: "Planeje os dados", pergunta: "O caixa tem um catálogo de preços (café, pão, suco) e vai ler itens até a pessoa digitar `fim`. Que estruturas você criaria (listas, dicionários) e para quê? O que o programa faz com um item que não existe no catálogo?", minimo: 40, modelo: "Um **dicionário** para o catálogo (`nome: preço`), uma **lista** para o carrinho (e cada item pode ser um dicionário com `nome` e `preco`). Para um item desconhecido, o programa avisa (`Item desconhecido`) e **não o coloca** no carrinho. No fim: contar, somar, achar o mais caro e aplicar o desconto se couber." },
     { tipo: "exemplo", titulo: "Um esqueleto de referência", arquivo: "esqueleto.py", entradas: ["suco", "fim"], texto: "Mesma estrutura (catálogo, laço até “fim”, carrinho, resumo), com um tema menor. Use como mapa.",
       codigo: [["catalogo = {\"suco\": 5.5}", "O catálogo: um dicionário de preços."], ["carrinho = []", "A lista de itens escolhidos."], ["item = input(\"Item: \")", "A primeira leitura."], ["while item != \"fim\":", "Repete até “fim”."], ["    if item in catalogo:", "Confere se existe no catálogo."], ["        carrinho.append({\"nome\": item, \"preco\": catalogo[item]})", "Guarda um registro com nome e preço."], ["    else:", "Item que não existe."], ["        print(\"Item desconhecido:\", item)", "Avisa."], ["    item = input(\"Item: \")", "Lê o próximo, dentro do laço."], ["print(\"Itens:\", len(carrinho))", "Resume."]] },
+    { tipo: "texto", titulo: "Guardar “ainda nada”: None", blocos: [
+      "Para achar o item mais caro, o programa precisa de uma variável que comece **sem nenhum valor**. Em Python esse “nada” se escreve **`None`**: `mais_caro = None` quer dizer “ainda não escolhi ninguém”. Para perguntar se alguém já foi escolhido, usa-se `is not None` (“não é `None`”): `if mais_caro is not None:` só roda se `mais_caro` já recebeu um nome. O contrário é `is None`.",
+      "Outra forma de decidir se há itens é a que você viu na aula anterior: `if carrinho:` (lista com itens é verdadeira, lista vazia é falsa). Use a que preferir no exercício.",
+    ] },
     { tipo: "escrever", titulo: "Exercício final (sem dica)", final: true, minutos: 15, texto: "O catálogo é `{\"cafe\": 4.5, \"pao\": 3.0, \"suco\": 5.5}`. Leia `Item: ` até `fim`. Para item existente, guarde no carrinho (lista de dicionários com `nome` e `preco`); senão mostre `Item desconhecido: NOME`. No fim mostre `Itens: N`, `Total: R$ X.XX` e, se houver itens, `Mais caro: NOME`. Se o total for **20 ou mais**, mostre `Desconto: R$ D.DD` (10%) e `A pagar: R$ P.PP`; senão, só `A pagar: R$ P.PP`.", arquivo: "carrinho.py",
       inicial: `catalogo = {"cafe": 4.5, "pao": 3.0, "suco": 5.5}
 # leia os itens até "fim" e mostre o resumo
@@ -704,7 +721,7 @@ else:
   recuperacao: [
     { p: "Que estruturas o carrinho com catálogo usa?", regex: "(dicionario);;(lista)", modelo: "Um dicionário para o catálogo e uma lista de dicionários para o carrinho.", conceito: "lista_dicts" },
     { p: "Por que conferir se o item existe no catálogo antes de ler o preço?", regex: "(keyerror|erro|nao existe|travar|quebr)", modelo: "Para evitar `KeyError` com itens que não existem.", conceito: "dict_mudar" },
-    { p: "Por que a lista de ações permitidas é mais segura que a de proibidas?", regex: "(negar|padrao|esquec|novo|nova acao|liberad|seguro)", modelo: "Porque o que não foi liberado é negado; com a lista de proibidas, uma ação nova ou esquecida ficaria liberada.", conceito: "dict_basico" },
+    { p: "Por que a lista de ações permitidas é mais segura que a de proibidas?", regex: "(negad|negar|bloquead|bloquear|barrad|barrar|nao (foi|esta|ha) (liberad|permitid|autorizad)|(esquecid|nov[ao])\\w*[^.;]*(liberad|permitid)|liberad[ao]s? (por engano|sem querer|por esquecimento))", naoRegex: "proibid\\w*[^.,;]{0,20}\\b(e|eh|seria) (a )?mais segur", modelo: "Porque o que não foi liberado é negado; com a lista de proibidas, uma ação nova ou esquecida ficaria liberada.", conceito: "dict_basico" },
   ],
 });
 

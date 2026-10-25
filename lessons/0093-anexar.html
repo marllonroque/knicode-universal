@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 12 · Claude Chat · Aula 3</div>
   <h1>Anexar arquivos e imagens</h1>
   <p>Mostrar o documento ou a foto poupa explicação, mas cada tipo de arquivo tem regras do que o chat consegue ler.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 30 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Anexar um arquivo ou imagem numa conversa.</li>
@@ -375,7 +375,15 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <!-- 2 -->
 <section class="card">
   <h2><span class="num">2</span>Roteiro: faça isto agora no Claude <span class="mins">4 min</span></h2>
-  <p><b>Passo 1.</b> Prepare um arquivo <b>fictício</b> (por exemplo, um CSV de 10 despesas inventadas). <b>Passo 2.</b> Anexe pelo <b>+</b> (ou arrastando) e escreva o que quer: “resuma as despesas por categoria em uma tabela”. <b>Passo 3.</b> Confira dois números da tabela contra o arquivo, à mão. <b>Passo 4.</b> Volte aqui.</p>
+  <p><b>Passo 1.</b> Prepare um arquivo <b>fictício</b> de 10 despesas inventadas. <b>Passo 2.</b> Anexe pelo <b>+</b> (ou arrastando) e escreva o que quer: “resuma as despesas por categoria em uma tabela”. <b>Passo 3.</b> Confira dois números da tabela contra o arquivo, à mão. <b>Passo 4.</b> Volte aqui.</p>
+  <p><b>Como fazer o arquivo do Passo 1 (no computador).</b> Abra o Bloco de Notas ou outro editor de texto simples. Na primeira linha escreva os nomes das colunas; depois, <b>uma linha por despesa</b>, com data, categoria e valor separados por vírgula, e com ponto (e não vírgula) nos centavos. Veja o formato abaixo e faça 10 linhas assim, com dados inventados. Para salvar, use <b>Salvar como</b>, escolha o tipo “Todos os arquivos” (se o editor oferecer) e dê um nome terminado em <code>.csv</code>, por exemplo <code>despesas.csv</code>.</p>
+  <table>
+    <tr><th>Linha do arquivo</th><th>O que é</th></tr>
+    <tr><td><code>data,categoria,valor</code></td><td>a primeira linha: os nomes das colunas</td></tr>
+    <tr><td><code>2026-03-01,mercado,45.90</code></td><td>uma despesa: data, categoria e valor</td></tr>
+    <tr><td><code>2026-03-02,transporte,8.50</code></td><td>outra despesa, na linha seguinte</td></tr>
+    <tr><td><code>2026-03-03,lazer,30.00</code></td><td>mais uma; continue até chegar a 10</td></tr>
+  </table>
 </section>
 
 <!-- 3 -->
@@ -481,7 +489,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Pelo <b>+</b> (Add files or photos), arrastando ou colando imagem. Em DOCX e outros que não são PDF, só o <b>texto</b> é lido; em PDF longo, as páginas além de 100 só têm texto lido. Antes, <b>removo dados pessoais</b> e reconfiro os limites na documentação.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Cite duas formas de anexar um arquivo ou imagem. (2) O que o chat lê de um DOCX com um gráfico dentro? (3) O que fazer com dados pessoais de um arquivo antes de anexar? <a href="recuperacao-0093.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Anexar arquivos e imagens”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0093.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -677,7 +685,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -869,7 +877,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -950,13 +969,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1209,7 +1222,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

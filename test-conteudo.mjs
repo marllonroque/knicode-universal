@@ -1,13 +1,15 @@
 // Teste do conteúdo das aulas: EXECUTA o Python de todos os exercícios com o mesmo código de verificação que roda no navegador.
 // Uso: npm install   (uma vez, instala o Pyodide só para testes)   e depois   node test-conteudo.mjs
 import { createRequire } from "node:module";
+import { readdirSync, readFileSync } from "node:fs";
+import { renderAula } from "./conteudo/modelo.mjs";
 import { AULAS, META } from "./conteudo/index.mjs";
 
 let loadPyodide;
 try { ({ loadPyodide } = await import("pyodide")); } catch { console.error("Pyodide não instalado. Rode: npm install"); process.exit(2); }
 const require = createRequire(import.meta.url);
 const V = require("./assets/verifica.js");
-const { CURRICULO } = require("./assets/curso.js");
+const { CURRICULO, conferirResposta } = require("./assets/curso.js");
 const py = await loadPyodide();
 
 let falhas = 0, verificacoes = 0;
@@ -96,11 +98,41 @@ for (const a of AULAS) {
   }
 
   // recuperação: o gabarito deve passar na própria correção; uma resposta vazia ou aleatória não pode passar
-  const confere = (q, resp) => { const n = norm(resp); if (!n) return false; const partes = q.regex.split(";;").filter(Boolean); if (!partes.every((r) => new RegExp(r, "i").test(n))) return false; return !(q.naoRegex && new RegExp(q.naoRegex, "i").test(n)); };
+  const confere = (q, resp) => conferirResposta(resp, q);   // o mesmo corretor da página (assets/curso.js)
   for (const [j, q] of a.recuperacao.entries()) {
     checa(q.p && q.regex && q.modelo && q.conceito, `${rot}, recuperação ${j + 1}: campos faltando`);
+    const padroes = q.regex + ";;" + (q.naoRegex || "");
+    checa(!/\(\?<[=!]/.test(padroes), `${rot}, recuperação ${j + 1}: o padrão usa lookbehind, que não funciona em iPhones antigos`);
+    checa(!/[\x00-\x08\x0b-\x1f]/.test(padroes), `${rot}, recuperação ${j + 1}: caractere de controle no padrão (provável \\b escrito com uma barra só)`);
+    checa(!/[áàâãéêíóôõúçÁÀÂÃÉÊÍÓÔÕÚÇ]/.test(padroes), `${rot}, recuperação ${j + 1}: o padrão não deve ter acento (a resposta é comparada sem acento)`);
     checa(confere(q, q.modelo), `${rot}, recuperação ${j + 1}: o próprio gabarito não passa na correção`);
     checa(!confere(q, "não sei") && !confere(q, "banana azul"), `${rot}, recuperação ${j + 1}: a correção aceita qualquer resposta`);
+  }
+}
+
+// sondas da recuperação (conteudo/sondas/modulo-NN.mjs): respostas certas, com outras palavras, devem passar; respostas erradas ou vagas devem falhar.
+// Cada sonda: { aula: "0118", q: 2 (pergunta, a partir de 1), passa: [...], falha: [...] }.
+let nSondas = 0;
+{
+  const dir = new URL("./conteudo/sondas/", import.meta.url);
+  let arquivos = []; try { arquivos = readdirSync(dir).filter((n) => n.endsWith(".mjs")).sort(); } catch { /* sem sondas ainda */ }
+  for (const f of arquivos) for (const s of (await import(new URL(f, dir))).default) {
+    const q = AULAS.find((a) => a.id === s.aula)?.recuperacao?.[s.q - 1];
+    checa(q, `sonda ${f}: aula ${s.aula}, pergunta ${s.q} não existe`);
+    if (!q) continue;
+    for (const r of s.passa || []) { nSondas++; checa(conferirResposta(r, q), `sonda ${s.aula} pergunta ${s.q}: a resposta certa deveria passar: "${r}"`); }
+    for (const r of s.falha || []) { nSondas++; checa(!conferirResposta(r, q), `sonda ${s.aula} pergunta ${s.q}: a resposta errada ou vaga deveria FALHAR: "${r}"`); }
+  }
+}
+
+// o tempo anunciado de cada aula é a soma dos tempos das suas seções (arredondada para o múltiplo de 5); a aula 1 é escrita à mão e o vídeo opcional não entra na conta
+{
+  const somaMin = (html) => [...html.matchAll(/<h2>([\s\S]*?)<\/h2>/g)].filter((m) => !/Vídeo opcional/.test(m[1])).reduce((t, m) => t + +((m[1].match(/class="mins">(\d+) min/) || [])[1] || 0), 0);
+  const chipMin = (html) => +(html.match(/class="chip">(?:cerca de )?(\d+) minutos</) || [])[1];
+  const arred5 = (n) => Math.max(5, Math.round(n / 5) * 5);
+  for (const a of AULAS) {
+    const html = a.manual ? readFileSync(new URL("./fonte/" + a.arquivo, import.meta.url), "utf8") : renderAula(a, { modulo: CURRICULO[a.modulo - 1], anterior: null, proxima: null });
+    checa(chipMin(html) === arred5(somaMin(html)), `aula ${a.id}: o tempo anunciado (${chipMin(html)} min) deveria ser a soma dos tempos das seções (${somaMin(html)} min) arredondada para 5`);
   }
 }
 
@@ -115,6 +147,6 @@ for (const [m, n] of Object.entries(porModulo)) {
   checa(finais.some((s) => s.final) && finais.some((s) => s.transfer), `módulo ${m}: falta um exercício marcado como final e um como transferência`);
 }
 
-console.log(`\n${AULAS.filter((a) => !a.manual).length} aulas verificadas, ${verificacoes} verificações.`);
+console.log(`\n${AULAS.filter((a) => !a.manual).length} aulas verificadas, ${verificacoes} verificações${nSondas ? ` (incluindo ${nSondas} sondas da recuperação)` : ""}.`);
 console.log(falhas ? `${falhas} FALHA(S)` : "Todas as verificações passaram: respostas previstas, soluções e correções funcionam de verdade.");
 process.exit(falhas ? 1 : 0);

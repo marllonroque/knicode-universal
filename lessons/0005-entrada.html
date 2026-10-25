@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 1 · Primeiros passos: algoritmos e Python · Aula 5</div>
   <h1>Falando com o robô: perguntas com input()</h1>
   <p>Até agora os valores estavam escritos no programa. Hoje o robô pergunta à pessoa, e você descobre por que a resposta sempre chega como texto.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 35 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Usar <code>input()</code> para pedir dados.</li>
@@ -438,8 +438,8 @@ print(a + b)</pre></div>
 <!-- 5 -->
 <section class="card">
   <h2><span class="num">5</span>Conserte o erro <span class="mins">4 min</span></h2>
-  <p>O robô pergunta a quantidade, mas a conta dá erro. Conserte <b>uma linha</b>.</p>
-  <div class="runner" data-key="k7" data-spec="{&quot;esperado&quot;:[&quot;Quantos cafés? 3&quot;,&quot;Total: 13.5&quot;]}" data-entradas="[&quot;3&quot;]" data-dica="A resposta do `input()` é texto. Converta com `int(...)` antes de multiplicar." data-concept="entrada" data-level="exec">
+  <p>O robô pergunta a quantidade, mas a conta dá erro. Conserte <b>uma linha</b>. A página testa com duas quantidades diferentes.</p>
+  <div class="runner" data-key="k7" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;3&quot;],&quot;esperado&quot;:[&quot;Quantos cafés? 3&quot;,&quot;Total: 13.5&quot;]},{&quot;entradas&quot;:[&quot;2&quot;],&quot;esperado&quot;:[&quot;Quantos cafés? 2&quot;,&quot;Total: 9.0&quot;]}]}" data-dica="A resposta do `input()` é texto. Converta com `int(...)` antes de multiplicar." data-concept="entrada" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>com_defeito.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">qtd = input("Quantos cafés? ")
 total = qtd * 4.5
@@ -452,8 +452,8 @@ print("Total:", total)</textarea></div>
 <!-- 6 -->
 <section class="card">
   <h2><span class="num">6</span>Escreva o seu <span class="mins">5 min</span></h2>
-  <p>Faça o programa pedir <code>Nome: </code> e <code>Quantidade: </code> (exatamente assim, com os dois-pontos e o espaço) e mostrar <code>Lia: 2 cafés = R$ 9.0</code>. O café custa 4.5.</p>
-  <div class="runner" data-key="k8" data-spec="{&quot;esperado&quot;:[&quot;Nome: Lia&quot;,&quot;Quantidade: 2&quot;,&quot;Lia: 2 cafés = R$ 9.0&quot;]}" data-entradas="[&quot;Lia&quot;,&quot;2&quot;]" data-dica="`qtd = int(input(&quot;Quantidade: &quot;))` e depois `print(nome + &quot;:&quot;, qtd, &quot;cafés = R$&quot;, qtd * 4.5)`." data-concept="entrada" data-level="exec">
+  <p>Faça o programa pedir <code>Nome: </code> e <code>Quantidade: </code> (exatamente assim, com os dois-pontos e o espaço) e, depois das duas perguntas, mostrar uma linha no formato <code>Lia: 2 cafés = R$ 9.0</code>: o nome, dois-pontos, a quantidade, <code>cafés = R$</code> e o total (quantidade vezes o preço do café, 4.5). A página testa com <b>três clientes diferentes</b>, então use as variáveis, não texto fixo.</p>
+  <div class="runner" data-key="k8" data-spec="{&quot;cenarios&quot;:[{&quot;entradas&quot;:[&quot;Lia&quot;,&quot;2&quot;],&quot;esperado&quot;:[&quot;Nome: Lia&quot;,&quot;Quantidade: 2&quot;,&quot;Lia: 2 cafés = R$ 9.0&quot;]},{&quot;entradas&quot;:[&quot;Teo&quot;,&quot;3&quot;],&quot;esperado&quot;:[&quot;Nome: Teo&quot;,&quot;Quantidade: 3&quot;,&quot;Teo: 3 cafés = R$ 13.5&quot;]},{&quot;entradas&quot;:[&quot;Ana&quot;,&quot;4&quot;],&quot;esperado&quot;:[&quot;Nome: Ana&quot;,&quot;Quantidade: 4&quot;,&quot;Ana: 4 cafés = R$ 18.0&quot;]}]}" data-dica="`qtd = int(input(&quot;Quantidade: &quot;))` e depois `print(nome + &quot;:&quot;, qtd, &quot;cafés = R$&quot;, qtd * 4.5)`." data-concept="entrada" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>meu_programa.py</span></div>
 <textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">nome = input("Nome: ")
 # peça a quantidade, calcule e mostre
@@ -516,7 +516,7 @@ print("Total:", total)</textarea></div>
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span><code>input()</code> pergunta algo à pessoa e devolve o que ela digitou, sempre como texto. Para fazer contas com a resposta, convertemos com <code>int()</code> ou <code>float()</code>.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) O que o <code>input()</code> faz? (2) Que tipo de valor o <code>input()</code> devolve? (3) Como somar dois números lidos com <code>input()</code>? <a href="recuperacao-0005.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Falando com o robô: perguntas com input()”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0005.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -712,7 +712,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -904,7 +904,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -985,13 +996,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1244,7 +1249,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

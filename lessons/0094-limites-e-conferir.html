@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 12 · Claude Chat · Aula 4</div>
   <h1>Limites do chat: ele erra com confiança, você confere</h1>
   <p>O chat escreve bem mesmo quando erra. Conferir fontes, contas e testes é a parte do trabalho que continua sendo sua.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 40 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Explicar por que o chat pode errar mesmo soando seguro.</li>
@@ -340,7 +340,8 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <!-- 0 -->
 <section class="card">
   <h2><span class="num">0</span>Aquecimento <span class="mins">3 min</span></h2>
-  <p><strong>O chat respondeu com muita segurança: “o total com 10% de desconto é R$ 78,30”. Você tem como saber se está certo sem confiar nele? Como?</strong></p>
+  <p>Você já viu, na aula 0073 (módulo 9), como conferir contas, fatos e citações de uma resposta do Claude. Aqui o foco é outro: os <b>limites do próprio chat</b> (alucinação, informação desatualizada, fontes e busca na web) e o que cada um muda no que você precisa conferir.</p>
+  <p><strong>O chat respondeu com muita segurança: “a média das suas 4 notas (7,0; 6,5; 8,0 e 9,5) é 7,5”. Você tem como saber se está certo sem confiar nele? Como?</strong></p>
   <div class="open" data-key="k1" data-min="30">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar</button>
@@ -352,7 +353,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <!-- 1 -->
 <section class="card">
   <h2><span class="num">1</span>Por que ele erra e como conferir <span class="mins">4 min</span></h2>
-  <p>A página oficial de ajuda explica que o Claude <b>pode errar</b> (o termo usado é “alucinar”), inclusive <b>inventando citações que parecem autoritativas</b>, e que pode ter informação <b>desatualizada</b> em alguns assuntos. O conhecimento do modelo tem uma <b>data de corte</b>: a data de cada modelo, confira na documentação oficial.</p>
+  <p>A página oficial de ajuda explica que o Claude <b>pode errar</b> (o termo usado é “alucinar”), inclusive <b>inventando citações que parecem autoritativas</b>, e que pode ter informação <b>desatualizada</b> em alguns assuntos. Quando a resposta depende de algo recente (preço, regra, notícia), trate-a com mais desconfiança e confira numa fonte atual. Até que data vai o conhecimento de cada modelo, confira na documentação oficial: aqui não afirmamos nenhuma data.</p>
   <p>Orientações oficiais: <b>não tratar o Claude como única fonte de verdade</b>, examinar com rigor <b>conselhos de alto risco</b> e, quando houver busca na web, <b>abrir as fontes citadas</b>. O polegar para baixo envia feedback quando a resposta está ruim.</p>
   <p>Três formas práticas de conferir: <b>fontes</b> (abrir a página citada e ver se diz o que o chat disse), <b>contas</b> (refazer por fora) e <b>testes</b> (rodar o código ou o exemplo). Não use o chat como única base para decisões de <b>saúde, dinheiro ou direito</b>; use-o para entender e depois confirme em fonte confiável ou com um profissional. Ferramentas mudam: reconfira menus e limites na documentação oficial.</p>
   <table>
@@ -364,7 +365,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="callout term"><span class="tag">Palavras novas</span>
     <dl>
       <dt>Alucinação</dt><dd>quando o chat afirma algo que não é verdade, em tom confiante.</dd>
-      <dt>Data de corte</dt><dd>o ponto no tempo até onde vai o conhecimento do modelo; o que veio depois ele não sabe sem busca.</dd>
+      <dt>Informação desatualizada</dt><dd>algo que já mudou, mas que o chat ainda responde como se fosse atual.</dd>
       <dt>Fonte</dt><dd>o lugar de onde a informação vem e que você pode abrir e ler.</dd>
     </dl>
   </div>
@@ -373,85 +374,98 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 2 -->
 <section class="card">
-  <h2><span class="num">2</span>Veja funcionando <span class="mins">3 min</span></h2>
-  <p>O chat disse que 3 itens (29,90 + 45,50 + 12,00) com 10% de desconto dão 78,30. Vamos refazer a conta.</p>
-  <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>conferir_conta.py</span></div>
-<pre class="annot" data-key="k2"><span class="ln" data-note="Os três preços do pedido (fictícios).">itens = [29.90, 45.50, 12.00]</span><span class="ln" data-note="Soma os três: o total antes do desconto.">subtotal = sum(itens)</span><span class="ln" data-note="Tirar 10% é multiplicar por 0,9.">com_desconto = subtotal * 0.9</span><span class="ln" data-note="Mostra o subtotal com 2 casas: 87.4.">print(round(subtotal, 2))</span><span class="ln" data-note="Mostra o total com desconto: 78.66, e não 78.30.">print(round(com_desconto, 2))</span><span class="ln" data-note="A comparação com a resposta do chat dá False: ele errou.">print(round(com_desconto, 2) == 78.30)</span></pre>
-    <div class="annot-note"><em>Clique numa linha acima.</em></div>
-  </div>
+  <h2><span class="num">2</span>Busca na web e fontes: o que muda na conferência <span class="mins">4 min</span></h2>
+  <p>Segundo a página oficial sobre busca na web, as respostas que usam a busca trazem <b>citações</b>. Quando houver citações, abra as fontes e leia: o link existir não prova que a página diz o que o chat disse.</p>
+  <p>A mesma página diz que, na experiência nova do Claude, não há um botão para ligar a busca: ele busca quando julga útil. Em outras versões, o botão <b>+</b> traz a opção <b>Web search</b>. Por isso, <b>não presuma</b> que houve busca: se a resposta não mostra citações, não há fonte para abrir, e a conferência (conta, fonte externa ou teste) fica toda com você. Ferramentas mudam: reconfira menus e limites na documentação oficial.</p>
+  <table>
+    <tr><th>Situação</th><th>Risco</th><th>O que fazer</th></tr>
+    <tr><td>resposta sem citações</td><td>o chat pode estar inventando ou desatualizado</td><td>procurar a informação numa fonte atual</td></tr>
+    <tr><td>resposta com citações da busca</td><td>a citação pode não dizer o que foi afirmado</td><td>abrir cada fonte e ler o trecho</td></tr>
+    <tr><td>conta ou código</td><td>erro com tom seguro</td><td>refazer por fora ou testar</td></tr>
+  </table>
+  <p class="fonte">Fonte: support.claude.com/en/articles/10684626-enable-and-use-web-search</p>
 </section>
 
 <!-- 3 -->
 <section class="card">
-  <h2><span class="num">3</span>Rode você mesmo <span class="mins">4 min</span></h2>
-  <p>Rode e troque os preços por outros para ver o total mudar.</p>
+  <h2><span class="num">3</span>Veja funcionando <span class="mins">3 min</span></h2>
+  <p>O chat disse que a média das 4 notas (7,0; 6,5; 8,0 e 9,5) é 7,5. Vamos refazer a conta, o que vale para qualquer número que ele devolva com segurança.</p>
+  <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>conferir_media.py</span></div>
+<pre class="annot" data-key="k2"><span class="ln" data-note="As quatro notas (fictícias).">notas = [7.0, 6.5, 8.0, 9.5]</span><span class="ln" data-note="Soma as quatro: 31.0.">soma = sum(notas)</span><span class="ln" data-note="A média é a soma dividida pela quantidade de notas.">media = soma / len(notas)</span><span class="ln" data-note="Mostra a soma: 31.0.">print(soma)</span><span class="ln" data-note="Mostra a média: 7.75, e não 7.5.">print(media)</span><span class="ln" data-note="A comparação com a resposta do chat dá False: ele errou.">print(media == 7.5)</span></pre>
+    <div class="annot-note"><em>Clique numa linha acima.</em></div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="card">
+  <h2><span class="num">4</span>Rode você mesmo <span class="mins">4 min</span></h2>
+  <p>Rode e troque as notas por outras para ver a média mudar.</p>
   <div class="runner" data-key="k3">
-    <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>conferir_conta.py (pode editar)</span></div>
-<textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">itens = [29.90, 45.50, 12.00]
-subtotal = sum(itens)
-com_desconto = subtotal * 0.9
-print(round(subtotal, 2))
-print(round(com_desconto, 2))</textarea></div>
+    <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>conferir_media.py (pode editar)</span></div>
+<textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">notas = [7.0, 6.5, 8.0, 9.5]
+soma = sum(notas)
+media = soma / len(notas)
+print(soma)
+print(media)</textarea></div>
     <button class="run">Executar</button><button class="ghost reset">Restaurar</button>
     <div class="out">O resultado aparece aqui.</div>
   </div>
   <p><strong>Antes de testar:</strong></p>
   <div class="quest" data-key="k4" data-concept="ch_limites" data-level="exec" data-ok="Tudo certo. Você aplicou a regra em casos novos.">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>programa.py</span></div>
-<pre class="hl">itens = [10.0, 20.0]
-print(sum(itens) * 0.9)</pre></div>
-    <div class="pred"><span>O que aparece na tela?</span><input class="q" data-answer="27.0" data-label="Item 1" data-why="30 vezes 0,9 é 27." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
+<pre class="hl">notas = [4.0, 6.0]
+print(sum(notas) / len(notas))</pre></div>
+    <div class="pred"><span>O que aparece na tela?</span><input class="q" data-answer="5.0" data-label="Item 1" data-why="10 dividido por 2 é 5." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>programa.py</span></div>
-<pre class="hl">print(round(100 * 0.85, 2))</pre></div>
-    <div class="pred"><span>O que aparece na tela?</span><input class="q" data-answer="85.0" data-label="Item 2" data-why="Um desconto de 15% sobre 100 deixa 85." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
+<pre class="hl">print(round(10 / 4, 2))</pre></div>
+    <div class="pred"><span>O que aparece na tela?</span><input class="q" data-answer="2.5" data-label="Item 2" data-why="10 dividido por 4 é 2,5." placeholder="digite exatamente" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
     <button class="chk">Conferir</button><div class="fb"></div>
-  </div>
-</section>
-
-<!-- 4 -->
-<section class="card">
-  <h2><span class="num">4</span>Descubra o padrão <span class="mins">5 min</span></h2>
-  <p>O mesmo pedido de três itens, com descontos diferentes. O chat respondeu 78,30 para 10%.</p>
-  <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>descontos.py</span></div>
-<pre class="hl">itens = [29.90, 45.50, 12.00]
-print(round(sum(itens) * (1 - desc / 100), 2))</pre></div>
-  <table>
-    <tr><th>Desconto (%)</th><th>O que aparece</th></tr>
-    <tr><td><code>desc = 0</code></td><td><code>87.4</code></td></tr>
-    <tr><td><code>desc = 10</code></td><td><code>78.66</code></td></tr>
-    <tr><td><code>desc = 20</code></td><td><code>69.92</code></td></tr>
-  </table>
-  <p><strong>Qual linha mostra que o chat errou? O que você faria com o valor correto antes de usar a resposta?</strong></p>
-  <div class="open" data-key="k5" data-min="15" data-concept="ch_limites" data-level="comp">
-    <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
-    <div class="hints">
-      <div class="hint callout warn"><span class="tag">Dica 1</span>Procure o desconto que o chat usou (10%).</div>
-      <div class="hint callout warn"><span class="tag">Dica 2</span>A diferença entre 78,30 e o resultado é pequena, mas importa?</div>
-      <button class="ghost nexthint">Preciso de uma dica</button>
-    </div>
-    <button class="reg">Registrar e ver a explicação</button>
-    <div class="fb"></div>
-    <div class="callout model"><span class="tag">Explicação</span>A linha de <b>10%</b> dá <b>78.66</b>, e não 78,30. A diferença parece pequena, mas errar é errar: eu <b>corrigiria no meu registro</b> e, se a conta fosse importante, <b>conferiria a de novo por outro caminho</b>.</div>
   </div>
 </section>
 
 <!-- 5 -->
 <section class="card">
-  <h2><span class="num">5</span>Escreva o seu <span class="mins">5 min</span></h2>
-  <p>O chat disse: “3 itens de 29,90, 45,50 e 12,00 com 10% de desconto somam 78,30”. Escreva o programa que calcula o total com desconto (arredondado a 2 casas) e mostra <code>Total: 78.66</code>. Guarde o valor na variável <code>total</code>.</p>
-  <div class="runner" data-key="k6" data-spec="{&quot;esperado&quot;:[&quot;Total: 78.66&quot;],&quot;testes&quot;:[[&quot;total&quot;,&quot;78.66&quot;]]}" data-dica="`total = round(sum(itens) * 0.9, 2)` e depois `print(&quot;Total:&quot;, total)`." data-concept="ch_limites" data-level="exec">
+  <h2><span class="num">5</span>Descubra o padrão <span class="mins">5 min</span></h2>
+  <p>O mesmo código de média, com três listas de notas. O chat respondeu 7,5 para as 4 notas do exemplo.</p>
+  <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>medias.py</span></div>
+<pre class="hl">print(sum(notas) / len(notas))</pre></div>
+  <table>
+    <tr><th>Notas</th><th>O que aparece</th></tr>
+    <tr><td><code>notas = [7.0, 8.0]</code></td><td><code>7.5</code></td></tr>
+    <tr><td><code>notas = [7.0, 6.5, 8.0, 9.5]</code></td><td><code>7.75</code></td></tr>
+    <tr><td><code>notas = [6.0, 6.0, 6.0]</code></td><td><code>6.0</code></td></tr>
+  </table>
+  <p><strong>Com qual lista o 7,5 do chat estaria certo? O que isso mostra sobre uma resposta que “parece razoável” e o que você faria com o valor correto?</strong></p>
+  <div class="open" data-key="k5" data-min="15" data-concept="ch_limites" data-level="comp">
+    <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
+    <div class="hints">
+      <div class="hint callout warn"><span class="tag">Dica 1</span>Procure a lista cuja média é 7.5 e compare com as 4 notas do exemplo.</div>
+      <div class="hint callout warn"><span class="tag">Dica 2</span>Uma resposta parecida com a certa convence mais, e por isso é mais perigosa. Como conferir?</div>
+      <button class="ghost nexthint">Preciso de uma dica</button>
+    </div>
+    <button class="reg">Registrar e ver a explicação</button>
+    <div class="fb"></div>
+    <div class="callout model"><span class="tag">Explicação</span>O 7,5 só está certo para a lista de duas notas (7 e 8), não para as 4 notas do exemplo, cuja média é <b>7.75</b>. Um erro <b>próximo do certo</b> convence e passa; por isso eu <b>refaria a conta por fora</b> e <b>corrigiria no meu registro</b> antes de usar a resposta.</div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="card">
+  <h2><span class="num">6</span>Escreva o seu <span class="mins">5 min</span></h2>
+  <p>O chat disse: “a média das notas 7,0; 6,5; 8,0 e 9,5 é 7,5”. Escreva o programa que calcula a média (arredondada a 2 casas) e mostra <code>Média: 7.75</code>. Guarde o valor na variável <code>media</code>.</p>
+  <div class="runner" data-key="k6" data-spec="{&quot;esperado&quot;:[&quot;Média: 7.75&quot;],&quot;testes&quot;:[[&quot;media&quot;,&quot;7.75&quot;]]}" data-dica="`media = round(sum(notas) / len(notas), 2)` e depois `print(&quot;Média:&quot;, media)`." data-concept="ch_limites" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>meu_programa.py</span></div>
-<textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">itens = [29.90, 45.50, 12.00]
-# calcule o total com 10% de desconto
+<textarea spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">notas = [7.0, 6.5, 8.0, 9.5]
+# calcule a média das notas
 </textarea></div>
     <button class="run">Executar e conferir</button>
     <div class="out">O resultado aparece aqui.</div><div class="fb"></div>
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>Escolha como conferir <span class="mins">3 min</span></h2>
+  <h2><span class="num">7</span>Escolha como conferir <span class="mins">3 min</span></h2>
   <p>Três respostas do chat: (a) “a regra X foi publicada em 2019, segundo o artigo Y”; (b) “a parcela fica em R$ 150”; (c) uma função que valida CPF.</p>
   <p><strong>Para cada resposta, diga como você conferiria (fonte, conta ou teste) e o que faria se não conseguisse conferir.</strong></p>
   <div class="open" data-key="k7" data-min="80" data-concept="ch_limites" data-level="comp">
@@ -462,9 +476,9 @@ print(round(sum(itens) * (1 - desc / 100), 2))</pre></div>
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">7</span>Decidir só pela resposta <span class="mins">3 min</span></h2>
+  <h2><span class="num">8</span>Decidir só pela resposta <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Uma pessoa pergunta ao chat sobre um investimento e um contrato de aluguel. Segue o que ele disse, sem conferir, e assina.</div>
   <p><strong>O que há de arriscado? Como o chat pode ajudar sem ser a única base da decisão?</strong></p>
   <div class="open" data-key="k8" data-min="25">
@@ -475,9 +489,9 @@ print(round(sum(itens) * (1 - desc / 100), 2))</pre></div>
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">8</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">9</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k9" data-correta="0" data-concept="ch_limites" data-level="exec">
     <p class="mcq-q">O chat pode errar com confiança?</p>
@@ -505,17 +519,17 @@ print(round(sum(itens) * (1 - desc / 100), 2))</pre></div>
   </div>
 </section>
 
-<!-- 9 -->
+<!-- 10 -->
 <section class="card">
-  <h2><span class="num">9</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">10</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: por que o chat pode errar e quais são as três formas de conferir uma resposta?</strong></p>
   <div class="open" data-key="k12" data-min="25" data-concept="ch_limites" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar</button>
     <div class="fb"></div>
-    <div class="callout model"><span class="tag">Resposta de referência</span>Ele pode <b>errar com confiança</b>, inventar citações e ter informação <b>desatualizada</b> (existe data de corte). Eu confiro <b>fontes</b> (abro e leio), <b>contas</b> (refaço por fora) e <b>testes</b> (rodo com casos que eu sei). Não uso como única base em decisões de alto risco.</div>
+    <div class="callout model"><span class="tag">Resposta de referência</span>Ele pode <b>errar com confiança</b>, inventar citações e ter informação <b>desatualizada</b>. Se houver busca na web, abro as fontes citadas; se não houver, procuro eu mesmo. Eu confiro <b>fontes</b> (abro e leio), <b>contas</b> (refaço por fora) e <b>testes</b> (rodo com casos que eu sei). Não uso como única base em decisões de alto risco.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Cite uma razão pela qual o chat pode errar. (2) Quais são as três formas de conferir uma resposta? (3) O que fazer quando o chat cita uma fonte? <a href="recuperacao-0094.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Limites do chat: ele erra com confiança, você confere”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0094.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -711,7 +725,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -903,7 +917,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -984,13 +1009,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1243,7 +1262,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

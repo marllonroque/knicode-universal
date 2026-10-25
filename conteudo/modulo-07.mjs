@@ -35,13 +35,13 @@ aulas.push({
     { tipo: "quiz", itens: [
       { pergunta: "O que é o limite de trabalho em andamento?", opcoes: ["Um teto de cartões abertos", "O prazo final do projeto", "O número total de pessoas", "A quantidade já concluída"], correta: 0, porque: "Limita quantos cartões podem estar em Fazendo ao mesmo tempo.", conceito: "kanban" },
       { pergunta: "Para começar um cartão novo com Fazendo cheio:", opcoes: ["Ignoro o limite um pouco", "Termino um cartão antes", "Apago um cartão pronto", "Troco o nome da coluna"], correta: 1, porque: "Primeiro termina-se algo; depois puxa-se o próximo.", conceito: "kanban" },
-      { pergunta: "O que o quadro kanban faz com o trabalho?", opcoes: ["Esconde o que atrasou", "Calcula o lucro do mês", "Deixa o trabalho visível", "Escolhe quem trabalha"], correta: 2, porque: "O quadro torna visível o que está a fazer, em andamento e pronto.", conceito: "kanban" }] },
+      { pergunta: "O que o quadro kanban faz com o trabalho?", opcoes: ["Esconde o que atrasou", "Calcula o lucro do mês", "Deixa o trabalho visível", "Escolhe quem trabalha"], correta: 2, porque: "O quadro torna visível o que falta fazer, o que está em andamento e o que está pronto.", conceito: "kanban" }] },
     { tipo: "fechar", pergunta: "Sem olhar acima: como funciona um quadro kanban e por que limitar o que está em andamento?", conceito: "kanban", modelo: "Cartões andam por colunas (A fazer, Fazendo, Feito). Limitar o que está em Fazendo faz o trabalho ser **terminado** antes de começar mais, evita tarefas meio feitas e mostra onde o trabalho trava." },
   ],
   recuperacao: [
     { p: "Quais são as três colunas básicas de um quadro kanban?", regex: "(a fazer);;(fazendo);;(feito)", modelo: "A fazer, Fazendo e Feito.", conceito: "kanban" },
-    { p: "Para que serve o limite de trabalho em andamento?", regex: "(terminar|concluir|fluir|fluxo|meio feit|foco|travar|menos coisas)", modelo: "Para terminar o que foi começado antes de começar mais, e fazer o trabalho fluir.", conceito: "kanban" },
-    { p: "Por que não colocar o nome completo de clientes em cartões visíveis ao público?", regex: "(privacid|expoe|dados|identific|sensiv|publico|pessoas)", modelo: "Porque expõe dados de pessoas; use um identificador sem nome.", conceito: "kanban" },
+    { p: "Para que serve o limite de trabalho em andamento?", regex: "(\\btermin|\\bconclu|\\bflui|\\bfluxo|meio feit|\\bfoco|\\btrav|menos coisas)", naoRegex: "(nao|sem|nunca|nada) (\\w+ )?(termin|conclu)", modelo: "Para terminar o que foi começado antes de começar mais, e fazer o trabalho fluir.", conceito: "kanban" },
+    { p: "Por que não colocar o nome completo de clientes em cartões visíveis ao público?", regex: "(privacid|expo|identific|vaz|sensiv|\\bver\\b|\\bveem\\b|publico|visivel);;(privacid|dado|nome|pessoa|cliente|debito|contato)", modelo: "Porque expõe dados de pessoas; use um identificador sem nome.", conceito: "kanban" },
   ],
 });
 
@@ -56,10 +56,11 @@ aulas.push({
     { tipo: "aquecimento", pergunta: "Você quer criar um aplicativo de tarefas e já tem 20 ideias (lembretes, cores, login, compartilhar...). Você consegue fazer tudo ao mesmo tempo? Como decidir **por onde começar**?", modelo: "Não dá para fazer tudo de uma vez. É preciso **listar** as ideias, **ordenar** pelo que mais importa e começar pelo **topo**. Essa lista ordenada é o backlog." },
     { tipo: "texto", titulo: "Uma lista viva e ordenada", blocos: [
       "O **backlog** é a lista de tudo o que se pode querer do produto, **ordenada** por importância. O que está no **topo** será feito primeiro e deve ser **pequeno e claro**; o que está no fundo pode ser vago.",
-      "A lista **muda**: aparecem ideias novas, outras perdem importância. No Scrum, o Product Backlog é uma lista ordenada e emergente do que é necessário para melhorar o produto.",
-      "Um bom item diz **o que** a pessoa consegue fazer e **por quê**, sem dizer como programar. Em vez de “criar tabela no banco”, escreva “Quero anotar uma tarefa para não esquecer”." ],
+      "A lista **muda**: aparecem ideias novas, outras perdem importância. No **Scrum** (um jeito de organizar o trabalho de uma equipe em ciclos curtos, que você verá na aula 0055), o Product Backlog é uma lista ordenada e emergente do que é necessário para melhorar o produto.",
+      "**Quem ordena?** Quem responde pelo produto, o **dono do produto**, decide a ordem do backlog, ouvindo a equipe e as pessoas que vão usar. No Guia do Scrum, esse papel é o do Product Owner. A equipe pode sugerir, mas alguém precisa ter a palavra final, senão a lista vira briga.",
+      "Um bom item diz **o que** a pessoa consegue fazer e **por quê**, sem dizer como programar. Em vez de “criar tabela no banco de dados”, escreva “Quero anotar uma tarefa para não esquecer”." ],
       tabela: { cab: ["Posição", "Item do backlog"], linhas: [["1", "Quero anotar uma tarefa para não esquecer"], ["2", "Quero ver a lista de tarefas do dia"], ["3", "Quero marcar uma tarefa como feita"], ["4", "Quero escolher a cor do aplicativo"]] },
-      termos: [["Backlog", "lista ordenada de tudo o que o produto pode precisar."], ["Item", "uma entrada da lista, descrita pelo que a pessoa consegue fazer."], ["Topo", "o início da lista: o que será feito primeiro."]], fonte: FONTE_SCRUM },
+      termos: [["Backlog", "lista ordenada de tudo o que o produto pode precisar."], ["Item", "uma entrada da lista, descrita pelo que a pessoa consegue fazer."], ["Topo", "o início da lista: o que será feito primeiro."], ["Dono do produto", "a pessoa que decide a ordem do backlog."], ["Scrum", "um jeito de organizar o trabalho de uma equipe em ciclos curtos, descrito no Guia do Scrum."]], fonte: FONTE_SCRUM },
     { tipo: "prever", texto: "Use o backlog da tabela acima. Responda com um número.", conceito: "backlog", itens: [
       { pergunta: "Qual posição será feita primeiro?", rotulo: "Item 1", resposta: "1", porque: "O topo da lista vem primeiro." },
       { pergunta: "Depois de fazer o item 1, qual é o próximo?", rotulo: "Item 2", resposta: "2", porque: "Segue a ordem da lista." },
@@ -70,14 +71,14 @@ aulas.push({
     { tipo: "aberta", tag: "sec", titulo: "Ideias que viram dados", texto: "Um item do backlog diz: “Guardar o CPF e o endereço de todos os usuários, por via das dúvidas”.", pergunta: "O que há de errado com esse item? Como ele deveria ser reescrito?", modelo: "Coleta **mais dados do que o necessário**, “por via das dúvidas”, e cria risco sem motivo. Reescreva com a **finalidade**: só pedir um dado quando uma funcionalidade precisar dele, e dizer **para quê** (minimização)." },
     { tipo: "quiz", itens: [
       { pergunta: "O que é um backlog?", opcoes: ["Uma lista ordenada", "Uma tela do app", "Um erro do código", "Um relatório do mês"], correta: 0, porque: "É a lista ordenada do que o produto pode precisar.", conceito: "backlog" },
-      { pergunta: "Quem está no topo do backlog?", opcoes: ["O item mais bonito", "O item mais antigo", "O item mais importante", "O item mais longo"], correta: 2, porque: "A ordem é por importância.", conceito: "backlog" },
+      { pergunta: "Qual item fica no topo do backlog?", opcoes: ["O item mais bonito", "O item mais antigo", "O item mais importante", "O item mais longo"], correta: 2, porque: "A ordem é por importância.", conceito: "backlog" },
       { pergunta: "Um bom item de backlog descreve:", opcoes: ["Como programar tudo", "O que a pessoa faz", "O nome do arquivo", "O prazo da equipe"], correta: 1, porque: "Diz o que a pessoa consegue fazer e por quê.", conceito: "backlog" }] },
     { tipo: "fechar", pergunta: "Sem olhar acima: o que é um backlog e como saber o que fazer primeiro?", conceito: "backlog", modelo: "É a lista ordenada de tudo o que o produto pode precisar. Faz-se primeiro o que está no topo (mais importante), com itens pequenos e claros, e a lista muda conforme se aprende." },
   ],
   recuperacao: [
     { p: "O que é um backlog?", regex: "(lista);;(ordenad|prioridade|importan)", modelo: "Uma lista ordenada do que o produto pode precisar.", conceito: "backlog" },
     { p: "O que se faz primeiro no backlog?", regex: "(topo|primeiro|mais importante)", modelo: "O que está no topo, o mais importante.", conceito: "backlog" },
-    { p: "Por que não guardar dados “por via das dúvidas”?", regex: "(minimiz|necessari|finalidade|risco|mais dados|desnecess)", modelo: "Porque se coleta mais do que o necessário; só se pede o dado quando uma funcionalidade precisa dele.", conceito: "backlog" },
+    { p: "Por que não guardar dados “por via das dúvidas”?", regex: "(\\bdado|colet|guard|armazen|pedir|\\bcpf);;(necessari|precis|finalidad|minimiz|desnecess|sem motivo|mais do que|alem do|excess|vaz|expo|risco)", modelo: "Porque se coleta mais do que o necessário; só se pede o dado quando uma funcionalidade precisa dele.", conceito: "backlog" },
   ],
 });
 
@@ -93,6 +94,7 @@ aulas.push({
     { tipo: "texto", titulo: "Valor e esforço", blocos: [
       "Para ordenar o backlog sem brigar por opinião, dê a cada item uma nota de **valor** (quanto ajuda) e de **esforço** (quanto custa), de 1 a 3, por exemplo.",
       "Em geral, comece pelo que tem **muito valor e pouco esforço**. O que tem pouco valor e muito esforço fica por último, ou **não é feito**. Dizer “não” a um item também é uma decisão de prioridade.",
+      "Para ordenar sem dúvida, use sempre esta regra, na ordem: **1º** maior valor; **2º** se o valor empatar, menor esforço; **3º** se ainda empatar, o item que **destrava** os outros; **4º** se ainda empatar, o que foi sugerido **primeiro** (a ordem da tabela).",
       "Atenção: as notas são **estimativas**, e a equipe pode mudá-las quando aprender mais." ],
       tabela: { cab: ["Item", "Valor (1-3)", "Esforço (1-3)"], linhas: [["Anotar uma tarefa", "3", "1"], ["Lembrete por e-mail", "2", "3"], ["Marcar como feita", "3", "1"], ["Escolher cor do app", "1", "1"], ["Compartilhar com amigos", "2", "3"]] },
       termos: [["Valor", "o quanto o item ajuda quem usa o produto."], ["Esforço", "o quanto de trabalho o item custa."], ["Prioridade", "a ordem em que os itens serão feitos."]] },
@@ -100,8 +102,8 @@ aulas.push({
       { pergunta: "Qual é o esforço de “Lembrete por e-mail”?", rotulo: "Item 1", resposta: "3", porque: "Está na tabela: valor 2, esforço 3." },
       { pergunta: "Entre “Anotar uma tarefa” e “Lembrete por e-mail”, qual vem primeiro?", rotulo: "Item 2", resposta: ["anotar uma tarefa", "anotar"], porque: "Valor 3 e esforço 1 contra valor 2 e esforço 3: o primeiro rende mais com menos." },
       { pergunta: "Qual item tem valor 1 (o menor)?", rotulo: "Item 3", resposta: ["escolher cor do app", "cor", "escolher cor"], porque: "A cor do app tem valor 1, e por isso não é urgente, embora seja fácil." }] },
-    { tipo: "descobrir", texto: "Veja a ordem que saiu para os itens da tabela.", tabela: { cab: ["Ordem", "Item", "Por quê"], linhas: [["1", "Anotar uma tarefa", "Valor 3, esforço 1"], ["2", "Marcar como feita", "Valor 3, esforço 1"], ["3", "Lembrete por e-mail", "Valor 2, esforço 3"], ["4", "Escolher cor do app", "Valor 1, esforço 1"]] }, dicas: ["Os dois primeiros têm o mesmo valor e esforço; a ordem entre eles depende de quê?", "“Compartilhar com amigos” ficou de fora. Por que pode ser uma boa decisão?"],
-      pergunta: "O que a lista mostra sobre empates e sobre o que ficou de fora?", explicacao: "Em empate, decide-se pelo que **destrava** o resto (não dá para marcar como feita uma tarefa que não foi anotada). E “Compartilhar” (valor 2, esforço 3) ficou de fora **por enquanto**: priorizar também é adiar ou recusar.", conceito: "priorizar" },
+    { tipo: "descobrir", texto: "Veja a ordem que saiu da regra de desempate para os cinco itens da tabela.", tabela: { cab: ["Ordem", "Item", "Por quê"], linhas: [["1", "Anotar uma tarefa", "Valor 3, esforço 1 (empata com o 2, mas destrava)"], ["2", "Marcar como feita", "Valor 3, esforço 1"], ["3", "Lembrete por e-mail", "Valor 2, esforço 3 (empata com o 4; veio primeiro na tabela)"], ["4", "Compartilhar com amigos", "Valor 2, esforço 3"], ["5", "Escolher cor do app", "Valor 1: o menor valor fica por último"]] }, dicas: ["Os dois primeiros têm o mesmo valor e esforço; qual passo da regra decide entre eles?", "Se o tempo acabasse depois do 3º item, o que ficaria de fora? Por que pode ser uma boa decisão?"],
+      pergunta: "O que a lista mostra sobre empates e sobre o que fica de fora?", explicacao: "Em empate de valor e esforço, decide-se pelo que **destrava** o resto (não dá para marcar como feita uma tarefa que não foi anotada) e, se nem isso separar, pela ordem em que foram sugeridos. O fim da lista (“Compartilhar” e “Cor”) fica de fora **por enquanto** se faltar tempo: priorizar também é adiar ou recusar.", conceito: "priorizar" },
     { tipo: "aberta", titulo: "Priorize você", texto: "Cinco ideias para um app de tarefas: alarme sonoro, categorias coloridas, anotar tarefa, apagar tarefa, exportar para planilha.", pergunta: "Dê notas de valor e esforço (1 a 3) para as cinco, escreva a ordem em que faria e diga qual deixaria **de fora** por enquanto, com o motivo.", minimo: 80, conceito: "priorizar", modelo: "Uma boa resposta dá notas coerentes (anotar tarefa: valor 3, esforço 1), ordena começando pelo que **mais vale e menos custa** e pelo que destrava outros, e deixa de fora algo de **pouco valor e muito esforço** (como exportar para planilha), explicando." },
     { tipo: "aberta", tag: "sec", titulo: "O item que ninguém priorizou", texto: "Num backlog, “corrigir a falha que mostra a lista de tarefas de uma pessoa para outra” está na posição 30, porque tem “pouco valor” (só afeta 1% dos usuários).", pergunta: "O que há de errado com essa conta? Que critério deveria entrar na priorização?", modelo: "A falha **expõe dados de pessoas**: o dano para quem é afetado é alto mesmo que sejam poucos. Além de valor e esforço, **risco de segurança e privacidade** deve entrar na priorização, e falhas assim sobem para o topo." },
     { tipo: "quiz", itens: [
@@ -164,10 +166,11 @@ aulas.push({
     { tipo: "aquecimento", pergunta: "Planejar sozinho tudo o que fará no próximo ano costuma dar certo? E planejar só a próxima semana? Por quê?", modelo: "O plano anual **erra**, porque muita coisa muda e não dá para prever. O plano de uma semana é **mais realista**, e você ajusta o rumo semana a semana." },
     { tipo: "texto", titulo: "Planejar, fazer, mostrar, ajustar", blocos: [
       "Um **ciclo curto** tem **tempo fixo** (por exemplo, uma semana). No começo escolhe-se **quanto trabalho cabe** e, no fim, **mostra-se o que ficou pronto** e **ajusta-se** o plano.",
-      "No Scrum, esse ciclo se chama **Sprint** e tem duração fixa de **um mês ou menos**. O que importa para quem está começando é o princípio: tempo fixo e aprendizado a cada volta.",
+      "No **Scrum** (um jeito de organizar o trabalho de uma equipe em ciclos curtos), esse ciclo se chama **Sprint** e tem duração fixa de **um mês ou menos**. O que importa para quem está começando é o princípio: tempo fixo e aprendizado a cada volta.",
+      "Na sexta, esse “olhar para trás” tem nome, **retrospectiva**, e é o assunto da aula 0057. Por ora, basta saber que é a conversa de ajuste no fim do ciclo.",
       "Se o trabalho **não cabe**, o tempo **não estica**: tira-se um item do ciclo (ele volta ao backlog) e a equipe aprende a estimar melhor." ],
       tabela: { cab: ["Dia", "O que acontece"], linhas: [["Segunda", "Planejar: escolher os itens do ciclo"], ["Terça a quinta", "Fazer e ajustar no quadro"], ["Sexta", "Mostrar o que ficou pronto e olhar para trás"]] },
-      termos: [["Ciclo (Sprint)", "um período curto de tempo fixo para entregar algo que funciona."], ["Tempo fixo", "o prazo do ciclo não muda; o que cabe nele é que se ajusta."]], fonte: FONTE_SCRUM },
+      termos: [["Ciclo (Sprint)", "um período curto de tempo fixo para entregar algo que funciona."], ["Tempo fixo", "o prazo do ciclo não muda; o que cabe nele é que se ajusta."], ["Scrum", "um jeito de organizar o trabalho de uma equipe em ciclos curtos, descrito no Guia do Scrum."]], fonte: FONTE_SCRUM },
     { tipo: "prever", texto: "O ciclo é de 5 dias úteis (segunda a sexta). Responda com um número ou uma palavra.", conceito: "ciclo", itens: [
       { pergunta: "Em que dia se planeja o ciclo?", rotulo: "Item 1", resposta: ["segunda", "segunda-feira"], porque: "O planejamento acontece no começo, na segunda." },
       { pergunta: "O trabalho não coube no ciclo. O prazo estica? (sim ou não)", rotulo: "Item 2", resposta: ["não", "nao"], porque: "O tempo é fixo: o que não cabe volta ao backlog." },
@@ -184,8 +187,8 @@ aulas.push({
   ],
   recuperacao: [
     { p: "O que é fixo num ciclo curto?", regex: "(tempo|prazo|duracao)", modelo: "O tempo (o prazo) do ciclo.", conceito: "ciclo" },
-    { p: "O que fazer com um item que não coube no ciclo?", regex: "(backlog|volta|proximo ciclo|adia|deixa)", modelo: "Devolve ao backlog; o tempo não estica.", conceito: "ciclo" },
-    { p: "Que dados usar numa demonstração?", regex: "(fictici|inventad|ficticio|nao reais|exemplo)", modelo: "Dados fictícios, não os dados reais de clientes.", conceito: "ciclo" },
+    { p: "O que fazer com um item que não coube no ciclo?", regex: "(backlog|\\bvolt|\\bdevolv|proximo ciclo|ciclo seguinte|proxima semana|(adi(a|ar|e)|deixa(r)?) (o item |esse item |ele |isso |o que nao coube )?(para|pro|no) (o )?(proximo|backlog|depois))", modelo: "Devolve ao backlog; o tempo não estica.", conceito: "ciclo" },
+    { p: "Que dados usar numa demonstração?", regex: "(fictici|ficticio|inventad|falso|mentira|simulad|dados de (teste|exemplo)|exemplos? (ficti|inventad)|nao (sao )?reais|nao usar (os )?(dados )?reais|sem dados reais|anonim)", naoRegex: "(nao|sem) (sao |usar |use |dados )*(falso|ficti|inventad|de mentira|simulad)|reais,? (e )?nao (falso|ficti)", modelo: "Dados fictícios, não os dados reais de clientes.", conceito: "ciclo" },
   ],
 });
 
@@ -201,9 +204,9 @@ aulas.push({
     { tipo: "texto", titulo: "Combinar antes", blocos: [
       "A **definição de pronto** é uma lista de verificações que todo item precisa cumprir para ser considerado terminado. Ela é combinada **antes** do trabalho, e vale para **todos** os itens.",
       "Cada critério deve ser **verificável**: dá para responder sim ou não. “Está bom” não serve; “passou nos testes” serve.",
-      "Sem o pronto, o trabalho fica **quase pronto** para sempre e as dívidas se acumulam. O Guia do Scrum chama esse compromisso de Definição de Pronto (Definition of Done)." ],
+      "Sem o pronto, o trabalho fica **quase pronto** para sempre e a **dívida técnica** cresce: pendências, testes que faltam e remendos deixados para depois, que cobram caro mais adiante. O **Scrum** (um jeito de organizar o trabalho de uma equipe em ciclos curtos, visto na aula 0055) chama esse compromisso de Definição de Pronto (Definition of Done)." ],
       tabela: { cab: ["Critério de pronto", "Dá para verificar?"], linhas: [["Funciona com dados certos e errados", "Sim, testando"], ["Tem testes que passam", "Sim, rodando-os"], ["Outra pessoa revisou", "Sim, há registro"], ["Ficou legal", "Não, é opinião"]] },
-      termos: [["Definição de pronto", "lista combinada do que precisa ser verdade para um item estar terminado."], ["Verificável", "que dá para checar com sim ou não."]], fonte: FONTE_SCRUM },
+      termos: [["Definição de pronto", "lista combinada do que precisa ser verdade para um item estar terminado."], ["Verificável", "que dá para checar com sim ou não."], ["Dívida técnica", "trabalho mal-acabado deixado para depois; como uma dívida, cobra juros: cada novo trabalho fica mais difícil."]], fonte: FONTE_SCRUM },
     { tipo: "prever", texto: "Use a tabela de critérios. Responda sim ou não.", conceito: "pronto", itens: [
       { pergunta: "“Ficou legal” é um bom critério de pronto?", rotulo: "Item 1", resposta: ["não", "nao"], porque: "É opinião, e não dá para checar com sim ou não." },
       { pergunta: "“Tem testes que passam” é um critério verificável?", rotulo: "Item 2", resposta: "sim", porque: "Basta rodar os testes e ver." },
@@ -219,9 +222,9 @@ aulas.push({
     { tipo: "fechar", pergunta: "Sem olhar acima: o que é uma definição de pronto e como escrever bons critérios?", conceito: "pronto", modelo: "É a lista combinada, antes do trabalho, do que precisa ser verdade para um item estar terminado. Cada critério é verificável (sim ou não), e inclui segurança e privacidade." },
   ],
   recuperacao: [
-    { p: "O que é uma definição de pronto?", regex: "(lista|criterio|combinad);;(terminad|pronto|conclu)", modelo: "A lista combinada do que precisa ser verdade para um item estar terminado.", conceito: "pronto" },
+    { p: "O que é uma definição de pronto?", regex: "(criteri|verifica|combinad|checklist|regra|condico|exigenc|o que (precisa|tem que|deve) (ser|estar) (verdade|cumprid|feito));;(terminad|pronto|conclu|finaliz|termina|acab)", modelo: "A lista combinada do que precisa ser verdade para um item estar terminado.", conceito: "pronto" },
     { p: "O que torna um critério verificável?", regex: "(sim ou nao|medir|observ|numero|teste|checar|verificar)", modelo: "Dá para responder sim ou não, medindo ou testando.", conceito: "pronto" },
-    { p: "Que critério de segurança poderia entrar na definição de pronto?", regex: "(senha|chave|segredo|dados|privacid|minim|codigo)", modelo: "Por exemplo: sem senha ou chave escrita no código.", conceito: "pronto" },
+    { p: "Que critério de segurança poderia entrar na definição de pronto?", regex: "((senha|chave|segredo|credencial|token)s?.*(nao|sem|nunca|proteg|criptograf|cifrad|oculta|escond|variavel|hash))|((nao|sem|nunca|proteg|criptograf|cifrad|oculta|escond|variavel|hash).*(senha|chave|segredo|credencial|token))|criptograf|cifrad|minimiz|privacidade|\\b(so|apenas|somente) (os )?dados|dados (necessari|minimo|pessoais|sensiv|protegid)|\\b(so|apenas|somente) o necessario", modelo: "Por exemplo: sem senha ou chave escrita no código.", conceito: "pronto" },
   ],
 });
 
@@ -235,11 +238,11 @@ aulas.push({
   secoes: [
     { tipo: "aquecimento", pergunta: "No fim de cada semana, o que você poderia perguntar a si mesmo (ou à equipe) para trabalhar melhor na próxima? Pense em até três perguntas.", modelo: "Por exemplo: **o que deu certo?**, **o que não deu certo?** e **o que vamos mudar na próxima semana?**. O importante é terminar com **uma mudança concreta**." },
     { tipo: "texto", titulo: "Inspecionar e adaptar", blocos: [
-      "A **retrospectiva** é uma conversa curta no fim do ciclo: o que **deu certo**, o que **atrapalhou** e **o que mudar**. No Scrum, é o momento em que o time planeja formas de aumentar a qualidade e a eficácia.",
+      "A **retrospectiva** é uma conversa curta no fim do ciclo: o que **deu certo**, o que **atrapalhou** e **o que mudar**. No **Scrum** (um jeito de organizar o trabalho de uma equipe em ciclos curtos), é o momento em que o time planeja formas de aumentar a qualidade e a eficácia.",
       "Uma boa retrospectiva termina com **uma ou duas ações pequenas e concretas** (“começar a revisar o código em dupla”), com **responsável**, e não com uma lista de queixas.",
       "Isso conecta com o Manifesto Ágil, que valoriza **indivíduos e interações** mais que processos e ferramentas, **software em funcionamento** mais que documentação abrangente, **colaboração com o cliente** mais que negociação de contratos, e **responder a mudanças** mais que seguir um plano." ],
       tabela: { cab: ["Deu certo", "Atrapalhou", "Vamos mudar"], linhas: [["O quadro ficou claro", "Muitos itens ao mesmo tempo", "Limite de 2 em Fazendo (Bia)"], ["Entregamos o login", "Faltou teste de senha errada", "Todo item passa por teste (Caio)"]] },
-      termos: [["Retrospectiva", "conversa curta, ao fim do ciclo, para melhorar o jeito de trabalhar."], ["Ação concreta", "uma mudança pequena, com responsável, que dá para fazer no próximo ciclo."]], fonte: FONTE_MANIFESTO + "; " + FONTE_SCRUM },
+      termos: [["Retrospectiva", "conversa curta, ao fim do ciclo, para melhorar o jeito de trabalhar."], ["Ação concreta", "uma mudança pequena, com responsável, que dá para fazer no próximo ciclo."], ["Scrum", "um jeito de organizar o trabalho de uma equipe em ciclos curtos, descrito no Guia do Scrum."]], fonte: FONTE_MANIFESTO + "; " + FONTE_SCRUM },
     { tipo: "prever", texto: "Use a tabela da retrospectiva. Responda com uma palavra ou número.", conceito: "retro", itens: [
       { pergunta: "Quantas ações de mudança estão na tabela?", rotulo: "Item 1", resposta: "2", porque: "Há duas linhas em “Vamos mudar”." },
       { pergunta: "Quem cuida da ação “Limite de 2 em Fazendo”?", rotulo: "Item 2", resposta: ["bia", "Bia"], porque: "A responsável vem entre parênteses." },
@@ -255,7 +258,7 @@ aulas.push({
     { tipo: "fechar", pergunta: "Sem olhar acima: como fazer uma retrospectiva útil?", conceito: "retro", modelo: "Pergunta-se o que deu certo, o que atrapalhou e o que mudar; termina com uma ou duas ações concretas, com responsável, para testar no próximo ciclo, com foco no processo e não em culpados." },
   ],
   recuperacao: [
-    { p: "Que perguntas a retrospectiva faz?", regex: "(deu certo|funcion);;(atrapalh|nao deu|problema);;(mudar|melhor|proximo)", modelo: "O que deu certo, o que atrapalhou e o que mudar.", conceito: "retro" },
+    { p: "Que perguntas a retrospectiva faz?", regex: "(deu certo|funcion|foi bem|acert|deu bom);;(atrapalh|nao deu|deu errado|deu ruim|errado|problema|travou|dificuldad|falhou|pior);;(mud|melhor|proxim|ajust|diferente|acao)", modelo: "O que deu certo, o que atrapalhou e o que mudar.", conceito: "retro" },
     { p: "Como deve ser uma ação de melhoria?", regex: "(concret|especific|pequen|responsavel|prazo)", modelo: "Concreta, pequena e com responsável.", conceito: "retro" },
     { p: "Por que não culpar pessoas por erros de segurança?", regex: "(esconde|escond|medo|processo|nao relat|expor|proteg)", modelo: "Porque as pessoas passam a esconder erros; o foco deve ser o processo.", conceito: "retro" },
   ],
@@ -273,13 +276,13 @@ aulas.push({
     { tipo: "texto", titulo: "Um modelo de referência", blocos: ["Um exemplo menor, para um **leitor de livros** pessoal. Use como mapa, e não como resposta."],
       tabela: { cab: ["Ordem", "Item", "Valor", "Esforço", "No MVP?"], linhas: [["1", "Quero registrar um livro que li", "3", "1", "Sim"], ["2", "Quero ver a lista dos meus livros", "3", "1", "Sim"], ["3", "Quero dar uma nota ao livro", "2", "1", "Não, depois"], ["4", "Quero exportar a lista", "1", "3", "Não, fica de fora"]] },
       termos: [["Pronto neste exemplo", "o item funciona com dados certos e errados e tem teste que passa."]] },
-    { tipo: "prever", titulo: "Exercício final (sem dica)", final: true, minutos: 15, texto: "Veja este backlog de um gerenciador de tarefas, com valor e esforço (1 a 3): **A** Anotar tarefa (valor 3, esforço 1), **B** Lembrete por e-mail (2, 3), **C** Marcar como feita (3, 1), **D** Cores do app (1, 1), **E** Compartilhar lista (2, 3), **F** Apagar tarefa (2, 1). Responda com letras ou números.", conceito: ["backlog", "priorizar", "mvp", "pronto"], itens: [
-      { pergunta: "Quais itens têm valor 3? (duas letras, por exemplo AC, em ordem alfabética)", rotulo: "Valor 3", resposta: "AC", porque: "A e C têm valor 3." },
-      { pergunta: "Quais itens têm esforço 3? (duas letras, em ordem alfabética)", rotulo: "Esforço 3", resposta: "BE", porque: "B e E têm esforço 3." },
-      { pergunta: "Qual item entra primeiro? (uma letra; em empate, o que destrava o outro)", rotulo: "Primeiro", resposta: "A", porque: "A e C empatam em valor 3 e esforço 1, mas é preciso anotar uma tarefa antes de marcá-la como feita." },
-      { pergunta: "Quantos itens você poria no MVP, se ele deve ter só os de valor 2 ou 3 com esforço 1? (um número)", rotulo: "MVP", resposta: "3", porque: "A, C e F têm esforço 1 e valor 2 ou 3." },
-      { pergunta: "Qual item você deixaria de fora por enquanto? (uma letra: escolha um dos itens de valor 2 e esforço 3)", rotulo: "De fora", resposta: ["B", "E"], porque: "B e E têm valor 2 e esforço 3: caros para o que entregam." }] },
-    { tipo: "aberta", titulo: "Problema novo: planejar um evento", transfer: true, minutos: 12, texto: "Outro contexto, o mesmo método. Você vai organizar uma **festa de aniversário para 20 pessoas** daqui a duas semanas, com orçamento limitado.", pergunta: "Monte um backlog com 6 itens, dê valor e esforço, escolha o que entra no “MVP” da festa (o essencial para ela acontecer), planeje o primeiro ciclo de uma semana e escreva 3 critérios de “pronto” para a semana.", minimo: 100, modelo: "Uma boa resposta tem 6 itens (local, convites, comida, bebida, música, decoração), notas coerentes, um MVP com o essencial (local, convites, comida), um ciclo de uma semana com poucos itens (convites e local) e critérios **verificáveis** (“lista de convidados confirmada por 15 pessoas”, “orçamento de comida somado e dentro do limite”)." },
+    { tipo: "prever", titulo: "Exercício final (sem dica)", final: true, minutos: 15, texto: "Veja este backlog de um gerenciador de tarefas, com valor e esforço (1 a 3): **A** Anotar tarefa (valor 3, esforço 1), **B** Lembrete por e-mail (2, 3), **C** Marcar como feita (3, 1), **D** Cores do app (1, 1), **E** Compartilhar lista (2, 3), **F** Ver a lista (3, 1). Responda com letras ou números.", conceito: ["backlog", "priorizar", "mvp", "pronto"], itens: [
+      { pergunta: "Quais itens têm valor 3? (três letras juntas, em ordem alfabética, por exemplo BDE)", rotulo: "Valor 3", resposta: ["ACF", "A C F", "A, C, F", "A,C,F", "A, C e F", "A e C e F"], porque: "A, C e F têm valor 3." },
+      { pergunta: "Quais itens têm esforço 3? (duas letras, em ordem alfabética)", rotulo: "Esforço 3", resposta: ["BE", "B E", "B, E", "B,E", "B e E"], porque: "B e E têm esforço 3." },
+      { pergunta: "Qual item entra primeiro? (uma letra; A, C e F empatam, e o desempate é o item que destrava os outros)", rotulo: "Primeiro", resposta: "A", porque: "A, C e F empatam em valor 3 e esforço 1, mas é preciso anotar uma tarefa antes de marcá-la como feita ou de ver a lista." },
+      { pergunta: "Quantos itens você poria no MVP, se ele deve ter só os de valor 2 ou 3 com esforço 1? (um número)", rotulo: "MVP", resposta: "3", porque: "A, C e F (Anotar, Marcar como feita e Ver a lista) têm esforço 1 e valor 3: é o mesmo MVP da aula 0054." },
+      { pergunta: "Qual item você deixaria de fora por enquanto? (uma letra: escolha um dos itens de valor 2 e esforço 3: B ou E)", rotulo: "De fora", resposta: ["B", "E"], porque: "B e E têm valor 2 e esforço 3: caros para o que entregam." }] },
+    { tipo: "aberta", titulo: "Problema novo: planejar um evento", transfer: true, minutos: 12, texto: "Outro contexto, o mesmo método. Você vai organizar uma **festa de aniversário para 20 pessoas** daqui a duas semanas, com orçamento limitado.", pergunta: "Escreva, nesta ordem: (1) um backlog com 6 itens, cada um com nota de valor e de esforço (1 a 3); (2) o que entra no “MVP” da festa (o essencial para ela acontecer); (3) o primeiro ciclo de uma semana (quais itens e em que dias); (4) 3 critérios de “pronto” verificáveis para a semana.", minimo: 300, modelo: "Uma boa resposta tem 6 itens (local, convites, comida, bebida, música, decoração), notas coerentes, um MVP com o essencial (local, convites, comida), um ciclo de uma semana com poucos itens (convites e local) e critérios **verificáveis** (“lista de convidados confirmada por 15 pessoas”, “orçamento de comida somado e dentro do limite”)." },
     { tipo: "aberta", tag: "sec", titulo: "Lista de convidados", texto: "Para a festa, você cria uma planilha com nome, telefone e restrições alimentares (inclusive questões de saúde) de cada convidado e a compartilha num grupo aberto.", pergunta: "Que cuidado de privacidade faltou? O que seria apropriado?", modelo: "Dados de **saúde** (restrições alimentares podem revelar condições) e telefones foram **expostos a muita gente**. Compartilhe só o necessário com quem precisa (o buffet vê as restrições, sem nomes) e **peça a cada pessoa** o que ela aceita informar." },
     { tipo: "quiz", itens: [
       { pergunta: "Qual é a ordem lógica do planejamento?", opcoes: ["Backlog, ordem, MVP, ciclo", "Ciclo, MVP, ordem, backlog", "MVP, ciclo, backlog, ordem", "Ordem, ciclo, MVP, backlog"], correta: 0, porque: "Lista tudo, ordena, corta o essencial e planeja o ciclo.", conceito: "backlog" },
@@ -289,8 +292,8 @@ aulas.push({
   ],
   recuperacao: [
     { p: "Que passos formam o planejamento ágil simples?", regex: "(backlog);;(mvp|minim);;(ciclo)", modelo: "Backlog, ordenar por valor e esforço, MVP e ciclo curto.", conceito: "backlog" },
-    { p: "O que decide quem entra primeiro em caso de empate?", regex: "(destrava|depende|antes|base|precisa)", modelo: "O item que destrava os outros (do qual os outros dependem).", conceito: "priorizar" },
-    { p: "Por que cuidar da privacidade até num plano de festa?", regex: "(saude|dados|exposi|compartilh|necessario|pessoas|permiss)", modelo: "Porque dados de saúde e telefones das pessoas não devem ser expostos além do necessário.", conceito: "pronto" },
+    { p: "Dois itens têm o mesmo valor e o mesmo esforço. O que decide qual entra primeiro?", regex: "(destrav|depend|liber|habilit|pre.?requisit|alicerce|(vem|vir|ser feito|feito|e feito|ser) antes|\\bantes d(os|o|e|as) (outro|demais|restante|marcar|poder|usar)|(outro|demais)s? (item |itens |tarefa |tarefas )?(so )?(precisa|depend|nao funcion|so funcion)|base (para|dos|d[oa]s?))", modelo: "O item que destrava os outros (do qual os outros dependem).", conceito: "priorizar" },
+    { p: "Por que cuidar da privacidade até num plano de festa?", regex: "saude|restricoes? alimentar|dados (pessoais|sensiv)|((telefone|contato|convidad|lista).*(expo|vaz|compartilh|permiss|consent|autoriz|privacid|sensiv|revel|acesso|grupo|necessari))|((expo|vaz|compartilh|permiss|consent|autoriz|privacid|sensiv|revel|acesso|grupo|necessari).*(telefone|contato|convidad|lista))", modelo: "Porque dados de saúde e telefones das pessoas não devem ser expostos além do necessário.", conceito: "pronto" },
   ],
 });
 

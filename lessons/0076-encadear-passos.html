@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 10 · Engenharia de prompts avançada · Aula 2</div>
   <h1>Encadear: a saída de um passo é a entrada do próximo</h1>
   <p>Uma cadeia liga os passos como uma linha de montagem. Hoje você monta uma de verdade, em Python, com passos simulados.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 35 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Explicar o que é uma cadeia de prompts.</li>
@@ -354,7 +354,8 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <h2><span class="num">1</span>A cadeia de prompts <span class="mins">4 min</span></h2>
   <p><b>Cadeia de prompts</b> é uma sequência de pedidos em que a <b>saída de um vira a entrada do próximo</b>. Exemplo: passo 1 resume uma avaliação; passo 2 classifica o resumo; passo 3 escreve a resposta ao cliente.</p>
   <p>Na prática, você copia a saída (já conferida) do passo 1 e a cola no pedido do passo 2. Programas fazem isso automaticamente, e o esqueleto é um laço: <code>resultado = passo(resultado)</code>.</p>
-  <p>Aqui os passos serão <b>funções simuladas</b>, que fazem o papel do Claude de forma previsível, para você treinar a ideia. Cuidado com o erro mais comum: passar a <b>entrada original</b> em todos os passos, e não o resultado do anterior.</p>
+  <p>Aqui os passos serão <b>funções simuladas</b>. Atenção: <code>strip</code> (tirar espaços) e <code>upper</code> (pôr em maiúsculas) <b>não são prompts</b>. São funções comuns de Python que só <b>imitam, de forma previsível</b>, o que um passo de verdade faria (limpar, destacar, resumir). Você ainda <b>não chama o Claude</b> nesta aula: o objetivo é treinar a ideia de ligar um passo ao outro.</p>
+  <p>Cuidado com o erro mais comum: passar a <b>entrada original</b> em todos os passos, e não o resultado do anterior.</p>
   <div class="callout term"><span class="tag">Palavras novas</span>
     <dl>
       <dt>Cadeia</dt><dd>passos ligados, em que a saída de um alimenta o próximo.</dd>
@@ -366,7 +367,19 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 2 -->
 <section class="card">
-  <h2><span class="num">2</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
+  <h2><span class="num">2</span>Ferramenta nova: guardar funções numa lista <span class="mins">4 min</span></h2>
+  <p>Em Python, uma função também é um valor: dá para guardá-la numa lista. <code>[limpar, grito]</code> é uma lista com duas funções. Repare que os nomes vêm <b>sem parênteses</b>: sem parênteses, o nome é a função em si (ela ainda não rodou); com parênteses, como em <code>limpar("  oi  ")</code>, ela roda.</p>
+  <p>Por isso o laço <code>for passo in [limpar, grito]:</code> pega uma função de cada vez, e <code>passo(resultado)</code> roda a função da vez com o resultado atual. É assim que a cadeia fica numa lista: a ordem da lista é a ordem dos passos.</p>
+  <div class="callout term"><span class="tag">Palavras novas</span>
+    <dl>
+      <dt>Função na lista</dt><dd>guardar funções (sem parênteses) numa lista para rodá-las uma a uma, na ordem.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="card">
+  <h2><span class="num">3</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
   <p>Preveja a saída de cada cadeia.</p>
   <div class="quest" data-key="k2" data-concept="pa_cadeia" data-level="exec" data-ok="Tudo certo. Você aplicou a regra em casos novos.">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>programa.py</span></div>
@@ -404,9 +417,9 @@ print(n)</pre></div>
   </div>
 </section>
 
-<!-- 3 -->
+<!-- 4 -->
 <section class="card">
-  <h2><span class="num">3</span>Descubra o padrão <span class="mins">5 min</span></h2>
+  <h2><span class="num">4</span>Descubra o padrão <span class="mins">5 min</span></h2>
   <p>Uma cadeia de 3 passos sobre uma avaliação de cliente (respostas simuladas).</p>
   <table>
     <tr><th>Passo</th><th>Entrada</th><th>Saída</th></tr>
@@ -428,9 +441,9 @@ print(n)</pre></div>
   </div>
 </section>
 
-<!-- 4 -->
+<!-- 5 -->
 <section class="card">
-  <h2><span class="num">4</span>Conserte o erro <span class="mins">4 min</span></h2>
+  <h2><span class="num">5</span>Conserte o erro <span class="mins">4 min</span></h2>
   <p>A cadeia deveria mostrar <code>CHEGOU RAPIDO</code> (limpar, pegar a primeira frase e pôr em maiúsculas), mas o laço usa sempre a entrada original. Conserte o <code>encadear</code>.</p>
   <div class="runner" data-key="k4" data-spec="{&quot;esperado&quot;:[&quot;CHEGOU RAPIDO&quot;]}" data-dica="Dentro do laço, o passo deve receber o `resultado` atual, e não a `entrada`." data-concept="pa_cadeia" data-level="exec">
     <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>cadeia.py</span></div>
@@ -455,9 +468,9 @@ print(encadear([limpar, primeira_frase, maiusculas], "  Chegou rapido. Embalagem
   </div>
 </section>
 
-<!-- 5 -->
+<!-- 6 -->
 <section class="card">
-  <h2><span class="num">5</span>Monte a sua cadeia <span class="mins">3 min</span></h2>
+  <h2><span class="num">6</span>Monte a sua cadeia <span class="mins">3 min</span></h2>
   <p>Você recebe várias mensagens de clientes da sua loja virtual e quer, para cada uma, uma resposta educada.</p>
   <p><strong>Escreva uma cadeia de 3 passos, dizendo o pedido de cada passo e o que passa de um para o outro.</strong></p>
   <div class="open" data-key="k5" data-min="80" data-concept="pa_cadeia" data-level="comp">
@@ -468,9 +481,9 @@ print(encadear([limpar, primeira_frase, maiusculas], "  Chegou rapido. Embalagem
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>O que a cadeia carrega <span class="mins">3 min</span></h2>
+  <h2><span class="num">7</span>O que a cadeia carrega <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Na cadeia, o passo 1 recebe o e-mail completo do cliente, com nome e telefone, e sua saída é copiada para todos os passos seguintes.</div>
   <p><strong>Que risco existe? Como reduzir?</strong></p>
   <div class="open" data-key="k6" data-min="25" data-concept="pa_cadeia" data-level="comp">
@@ -481,9 +494,9 @@ print(encadear([limpar, primeira_frase, maiusculas], "  Chegou rapido. Embalagem
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">7</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">8</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k7" data-correta="0" data-concept="pa_cadeia" data-level="exec">
     <p class="mcq-q">O que é uma cadeia de prompts?</p>
@@ -511,9 +524,9 @@ print(encadear([limpar, primeira_frase, maiusculas], "  Chegou rapido. Embalagem
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 9 -->
 <section class="card">
-  <h2><span class="num">8</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">9</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: o que é uma cadeia de prompts e qual erro evitar?</strong></p>
   <div class="open" data-key="k10" data-min="25" data-concept="pa_cadeia" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -521,7 +534,7 @@ print(encadear([limpar, primeira_frase, maiusculas], "  Chegou rapido. Embalagem
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Uma cadeia é uma sequência de passos em que a <b>saída de um vira a entrada do próximo</b>. O erro a evitar é passar a <b>entrada original</b> em todos os passos. Entre os passos, confira a saída.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) O que é uma cadeia de prompts? (2) Qual é o erro comum ao montar uma cadeia em código? (3) Como proteger dados pessoais numa cadeia? <a href="recuperacao-0076.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Encadear: a saída de um passo é a entrada do próximo”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0076.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -717,7 +730,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -909,7 +922,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -990,13 +1014,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1249,7 +1267,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

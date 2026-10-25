@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 7 · Mentalidade ágil e gestão de processos · Aula 3</div>
   <h1>O que primeiro? Valor e esforço</h1>
   <p>Tudo parece urgente. Dois critérios simples ajudam a decidir com argumento: quanto vale e quanto custa.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Classificar itens por valor e esforço.</li>
@@ -354,6 +354,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <h2><span class="num">1</span>Valor e esforço <span class="mins">4 min</span></h2>
   <p>Para ordenar o backlog sem brigar por opinião, dê a cada item uma nota de <b>valor</b> (quanto ajuda) e de <b>esforço</b> (quanto custa), de 1 a 3, por exemplo.</p>
   <p>Em geral, comece pelo que tem <b>muito valor e pouco esforço</b>. O que tem pouco valor e muito esforço fica por último, ou <b>não é feito</b>. Dizer “não” a um item também é uma decisão de prioridade.</p>
+  <p>Para ordenar sem dúvida, use sempre esta regra, na ordem: <b>1º</b> maior valor; <b>2º</b> se o valor empatar, menor esforço; <b>3º</b> se ainda empatar, o item que <b>destrava</b> os outros; <b>4º</b> se ainda empatar, o que foi sugerido <b>primeiro</b> (a ordem da tabela).</p>
   <p>Atenção: as notas são <b>estimativas</b>, e a equipe pode mudá-las quando aprender mais.</p>
   <table>
     <tr><th>Item</th><th>Valor (1-3)</th><th>Esforço (1-3)</th></tr>
@@ -387,25 +388,26 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <!-- 3 -->
 <section class="card">
   <h2><span class="num">3</span>Descubra o padrão <span class="mins">5 min</span></h2>
-  <p>Veja a ordem que saiu para os itens da tabela.</p>
+  <p>Veja a ordem que saiu da regra de desempate para os cinco itens da tabela.</p>
   <table>
     <tr><th>Ordem</th><th>Item</th><th>Por quê</th></tr>
-    <tr><td>1</td><td>Anotar uma tarefa</td><td>Valor 3, esforço 1</td></tr>
+    <tr><td>1</td><td>Anotar uma tarefa</td><td>Valor 3, esforço 1 (empata com o 2, mas destrava)</td></tr>
     <tr><td>2</td><td>Marcar como feita</td><td>Valor 3, esforço 1</td></tr>
-    <tr><td>3</td><td>Lembrete por e-mail</td><td>Valor 2, esforço 3</td></tr>
-    <tr><td>4</td><td>Escolher cor do app</td><td>Valor 1, esforço 1</td></tr>
+    <tr><td>3</td><td>Lembrete por e-mail</td><td>Valor 2, esforço 3 (empata com o 4; veio primeiro na tabela)</td></tr>
+    <tr><td>4</td><td>Compartilhar com amigos</td><td>Valor 2, esforço 3</td></tr>
+    <tr><td>5</td><td>Escolher cor do app</td><td>Valor 1: o menor valor fica por último</td></tr>
   </table>
-  <p><strong>O que a lista mostra sobre empates e sobre o que ficou de fora?</strong></p>
+  <p><strong>O que a lista mostra sobre empates e sobre o que fica de fora?</strong></p>
   <div class="open" data-key="k3" data-min="15" data-concept="priorizar" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <div class="hints">
-      <div class="hint callout warn"><span class="tag">Dica 1</span>Os dois primeiros têm o mesmo valor e esforço; a ordem entre eles depende de quê?</div>
-      <div class="hint callout warn"><span class="tag">Dica 2</span>“Compartilhar com amigos” ficou de fora. Por que pode ser uma boa decisão?</div>
+      <div class="hint callout warn"><span class="tag">Dica 1</span>Os dois primeiros têm o mesmo valor e esforço; qual passo da regra decide entre eles?</div>
+      <div class="hint callout warn"><span class="tag">Dica 2</span>Se o tempo acabasse depois do 3º item, o que ficaria de fora? Por que pode ser uma boa decisão?</div>
       <button class="ghost nexthint">Preciso de uma dica</button>
     </div>
     <button class="reg">Registrar e ver a explicação</button>
     <div class="fb"></div>
-    <div class="callout model"><span class="tag">Explicação</span>Em empate, decide-se pelo que <b>destrava</b> o resto (não dá para marcar como feita uma tarefa que não foi anotada). E “Compartilhar” (valor 2, esforço 3) ficou de fora <b>por enquanto</b>: priorizar também é adiar ou recusar.</div>
+    <div class="callout model"><span class="tag">Explicação</span>Em empate de valor e esforço, decide-se pelo que <b>destrava</b> o resto (não dá para marcar como feita uma tarefa que não foi anotada) e, se nem isso separar, pela ordem em que foram sugeridos. O fim da lista (“Compartilhar” e “Cor”) fica de fora <b>por enquanto</b> se faltar tempo: priorizar também é adiar ou recusar.</div>
   </div>
 </section>
 
@@ -475,7 +477,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span>Dá-se nota de valor e de esforço a cada item e começa-se pelo que tem <b>muito valor e pouco esforço</b>. O que vale pouco e custa muito fica por último ou de fora. As notas são estimativas e riscos de segurança também entram.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Que dois critérios simples ajudam a priorizar? (2) Que tipo de item costuma vir primeiro? (3) Por que riscos de segurança e privacidade devem entrar na priorização? <a href="recuperacao-0053.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “O que primeiro? Valor e esforço”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0053.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -671,7 +673,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -863,7 +865,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -944,13 +957,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1203,7 +1210,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

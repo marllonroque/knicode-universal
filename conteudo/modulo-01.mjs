@@ -40,6 +40,7 @@ print("Água necessária (ml):", total_ml)`, resposta: "Água necessária (ml): 
       pergunta: "O que muda quando `cafe` aparece entre aspas dentro do `print`? E o que acontece quando damos um novo valor à mesma variável?",
       dicas: ["Compare as linhas 1 e 2: só as aspas mudaram. Em qual delas o `print` mostra o que está guardado?", "Na terceira, a variável recebeu dois valores em sequência. Qual deles o `print` mostra?"],
       explicacao: "Sem aspas, `cafe` é o **nome da variável** e o `print` mostra o valor guardado. Com aspas, é só o texto “cafe”. Dar um novo valor a uma variável **substitui** o antigo: o robô esquece o valor anterior.", conceito: "variaveis" },
+    { tipo: "texto", titulo: "Atualizar uma variável usando ela mesma", blocos: ["Na próxima previsão aparece `agua = agua + 50`. Leia assim: o Python **lê o valor antigo** de `agua`, **soma** 50 e **guarda de novo** o resultado no mesmo nome. Não é uma equação (nenhum número é igual a ele mesmo mais 50): o `=` continua querendo dizer “guarde”.", "Com `agua = 200`, a linha `agua = agua + 50` calcula 200 + 50 = 250 e guarda 250 em `agua`. O 200 foi substituído."], termos: [["Atualizar", "dar a uma variável um novo valor calculado a partir do valor antigo, como em `agua = agua + 50`."]] },
     { tipo: "prever", texto: "Preveja a linha exibida em cada programa.", conceito: "variaveis", itens: [
       { codigo: `agua = 200
 agua = agua + 50
@@ -90,6 +91,7 @@ aulas.push({
     { tipo: "exemplo", arquivo: "tipos.py", texto: "O `type()` mostra o tipo de um valor. Clique em cada linha.",
       codigo: [["xicaras = 3", "O 3 sem aspas é um número inteiro: tipo **`int`**."], ["preco = 4.5", "Com ponto decimal é um número fracionário: tipo **`float`**. (No Python o separador decimal é o ponto, não a vírgula.)"], ["nome = \"Lia\"", "Entre aspas é texto: tipo **`str`** (de *string*, “cadeia de caracteres”)."], ["pronto = True", "`True` ou `False`, com letra maiúscula, são valores lógicos: tipo **`bool`**."], ["print(type(xicaras), type(preco), type(nome), type(pronto))", "Mostra os quatro tipos: `<class 'int'> <class 'float'> <class 'str'> <class 'bool'>`."]],
       termos: [["int", "número inteiro (3, 10, -2)."], ["float", "número com parte decimal (4.5, 0.25)."], ["str", "texto, sempre entre aspas."], ["bool", "verdadeiro ou falso (`True` ou `False`)."]] },
+    { tipo: "texto", titulo: "O `*` com texto, e onde o `bool` vai aparecer", blocos: ["Na próxima caixa aparece `\"ha\" * 3`. Multiplicar um **texto** por um número inteiro **repete** o texto: `\"ha\" * 3` vira `hahaha`. Com dois números o `*` continua multiplicando (`2 * 3` é 6). Isso vai explicar, na aula 5, por que `\"3\" * 2` dá `33`.", "O tipo `bool` (`True` e `False`) não tem exercício hoje: ele volta no Módulo 2, a partir da aula 9, nas comparações como `5 > 3` e nos `if`, onde decide qual caminho o programa segue."] },
     { tipo: "executar", texto: "Rode e observe: o mesmo símbolo `+` (e o `*`) faz coisas diferentes com texto e com número.", arquivo: "tipos2.py (pode editar)",
       codigo: `print("3" + "4")
 print(3 + 4)
@@ -127,8 +129,8 @@ print("Total:", preco * 2)` },
   ],
   recuperacao: [
     { p: "O que `print(\"3\" + \"4\")` mostra, e por quê?", regex: "34;;(texto|aspas|junt|string|str|concaten)", modelo: "34: entre aspas são textos e o `+` junta os textos.", conceito: "tipos" },
-    { p: "Qual a diferença entre `int` e `str`?", regex: "(inteiro|numero|conta);;(texto|aspas|string|palavra)", modelo: "`int` é número inteiro (dá para fazer contas); `str` é texto, sempre entre aspas.", conceito: "tipos" },
-    { p: "Como transformar o texto \"12\" em um número para somar?", regex: "(int|float)", modelo: "Com `int(\"12\")` (ou `float`), que converte o texto em número.", conceito: "tipos" },
+    { p: "Qual a diferença entre `int` e `str`?", regex: "(inteiro|numero|conta);;(texto|aspas|string|palavra)", naoRegex: "\\bint (e|eh|sao|seria|guarda|armazena|serve para|representa|significa) (um |o |uma )?(texto|string|palavra|aspas)|\\bstr (e|eh|sao|seria|guarda|armazena|serve para|representa|significa) (um |o |uma )?(numero|inteiro|conta)", modelo: "`int` é número inteiro (dá para fazer contas); `str` é texto, sempre entre aspas.", conceito: "tipos" },
+    { p: "Qual função do Python transforma o texto \"12\" no número 12? Escreva como você a usaria.", regex: "\\b(int|float)\\b", modelo: "Com `int(\"12\")` (ou `float`), que converte o texto em número.", conceito: "tipos" },
   ],
 });
 
@@ -162,16 +164,23 @@ print("Média:", media)`, esperado: ["Média: 3.5"], dica: "A divisão acontece 
 preco_pao = 3
 media = (preco_cafe + preco_pao) / 2
 print("Média:", media)` },
-    { tipo: "escrever", texto: "O robô tem 17 xícaras e cada bandeja leva 5. Mostre `Bandejas cheias: 3` e `Sobram: 2`, usando `//` e `%`.", arquivo: "meu_programa.py",
-      inicial: `xicaras = 17
-por_bandeja = 5
+    { tipo: "texto", titulo: "Duas linhas prontas: `input()` e `int()`", blocos: [
+        "No próximo exercício, as duas primeiras linhas já vêm escritas, porque a página precisa testar **vários pares de valores** (com números fixos no código, qualquer resposta passaria). Elas usam dois comandos que você vai estudar com calma na **aula 5**; hoje basta saber o que cada um faz.",
+        "`input(\"Xícaras: \")` mostra a pergunta na tela e espera a pessoa digitar. O que ela digita chega ao programa como **texto**, mesmo que sejam só dígitos. `int(...)` transforma esse texto em **número inteiro**, e só com número dá para fazer contas como `//` e `%` (com texto, o Python dá um erro de tipo, como você viu na aula 3).",
+        "Juntos, `xicaras = int(input(\"Xícaras: \"))` quer dizer: pergunte, espere a resposta, transforme em número e guarde na variável `xicaras`. Na tela, a pergunta aparece junto com o que foi digitado (por exemplo, `Xícaras: 17`); isso é normal e já faz parte do resultado esperado.",
+      ],
+      tabela: { cab: ["Comando", "O que faz", "Se a pessoa digitar 17"], linhas: [["`input(\"Xícaras: \")`", "pergunta e devolve o que foi digitado, como texto", "`\"17\"` (texto)"], ["`int(\"17\")`", "transforma o texto em número inteiro", "`17` (número)"], ["`xicaras = int(input(\"Xícaras: \"))`", "pergunta, converte e guarda na variável", "`xicaras` vale `17`"]] },
+      termos: [["input()", "comando que mostra uma pergunta e espera a pessoa digitar; devolve o que foi digitado como texto."], ["int()", "comando que transforma um texto de dígitos em número inteiro."]] },
+    { tipo: "escrever", texto: "O robô tem uma quantidade de xícaras e cada bandeja leva um número fixo delas. As duas primeiras linhas já vêm prontas (explicadas logo acima): não mexa nelas, só use as variáveis `xicaras` e `por_bandeja`. Use `//` para as bandejas cheias e `%` para as xícaras que sobram, e mostre duas linhas no formato `Bandejas cheias: N` e `Sobram: N` (os dois-pontos, um espaço e o número). A página testa **vários pares de valores**, então calcule com as variáveis, não com números fixos.", arquivo: "meu_programa.py",
+      inicial: `xicaras = int(input("Xícaras: "))
+por_bandeja = int(input("Por bandeja: "))
 # mostre as bandejas cheias e as xícaras que sobram
-`, esperado: ["Bandejas cheias: 3", "Sobram: 2"], testes: [["xicaras // por_bandeja", "3"], ["xicaras % por_bandeja", "2"]], dica: "`xicaras // por_bandeja` para as bandejas e `xicaras % por_bandeja` para as que sobram.", conceito: "operadores",
-      solucao: `xicaras = 17
-por_bandeja = 5
+`, cenarios: [{ entradas: ["17", "5"], esperado: ["Xícaras: 17", "Por bandeja: 5", "Bandejas cheias: 3", "Sobram: 2"] }, { entradas: ["23", "4"], esperado: ["Xícaras: 23", "Por bandeja: 4", "Bandejas cheias: 5", "Sobram: 3"] }, { entradas: ["20", "5"], esperado: ["Xícaras: 20", "Por bandeja: 5", "Bandejas cheias: 4", "Sobram: 0"] }], dica: "`xicaras // por_bandeja` para as bandejas e `xicaras % por_bandeja` para as que sobram; mostre cada uma num `print`.", conceito: "operadores",
+      solucao: `xicaras = int(input("Xícaras: "))
+por_bandeja = int(input("Por bandeja: "))
 print("Bandejas cheias:", xicaras // por_bandeja)
 print("Sobram:", xicaras % por_bandeja)` },
-    { tipo: "aberta", tag: "sec", titulo: "Em quem confiar?", texto: "Num app de pedidos, o preço aparece na tela do cliente e o programa calcula o total.", pergunta: "Por que o total que será cobrado não deveria ser calculado só com o que vem da tela do cliente?", modelo: "Porque a tela do cliente pode ser alterada: alguém poderia mandar um preço falso. O cálculo importante deve ser refeito ou validado no lado do sistema, que o cliente não controla." },
+    { tipo: "aberta", tag: "sec", titulo: "Em quem confiar?", texto: "Num app de pedidos, o preço aparece na tela do cliente e o programa calcula o total. Aqui, **cliente** é o aparelho e a tela de quem compra, que essa pessoa controla; o **lado do sistema** (o servidor) é o programa da loja, que roda num computador controlado só pela loja.", pergunta: "Por que o total que será cobrado não deveria ser calculado só com o que vem da tela do cliente?", modelo: "Porque a tela do cliente pode ser alterada: alguém poderia mandar um preço falso. O cálculo importante deve ser refeito ou validado no lado do sistema, que o cliente não controla." },
     { tipo: "quiz", itens: [
       { pergunta: "Quanto vale `17 % 5`?", opcoes: ["3, quantas vezes cabe", "2, o resto da divisão", "3.4, a divisão exata", "85, a multiplicação"], correta: 1, porque: "`%` devolve o **resto**: 17 = 3 × 5 + 2.", conceito: "operadores" },
       { pergunta: "Quanto vale `2 + 3 * 4`?", opcoes: ["14, multiplica primeiro", "20, soma primeiro", "24, tudo em sequência", "9, soma tudo junto"], correta: 0, porque: "A multiplicação acontece antes da soma, a menos que haja parênteses.", conceito: "operadores" },
@@ -214,17 +223,17 @@ print(n * 2)`, entradas: ["3"], resposta: "6", porque: "`int` converte para o n�
       { codigo: `a = int(input())
 b = int(input())
 print(a + b)`, entradas: ["4", "5"], resposta: "9", porque: "Duas respostas convertidas em número: 4 + 5 = 9." }] },
-    { tipo: "corrigir", texto: "O robô pergunta a quantidade, mas a conta dá erro. Conserte **uma linha**.", arquivo: "com_defeito.py", entradas: ["3"],
+    { tipo: "corrigir", texto: "O robô pergunta a quantidade, mas a conta dá erro. Conserte **uma linha**. A página testa com duas quantidades diferentes.", arquivo: "com_defeito.py",
       codigo: `qtd = input("Quantos cafés? ")
 total = qtd * 4.5
-print("Total:", total)`, esperado: ["Quantos cafés? 3", "Total: 13.5"], dica: "A resposta do `input()` é texto. Converta com `int(...)` antes de multiplicar.", conceito: "entrada",
+print("Total:", total)`, cenarios: [{ entradas: ["3"], esperado: ["Quantos cafés? 3", "Total: 13.5"] }, { entradas: ["2"], esperado: ["Quantos cafés? 2", "Total: 9.0"] }], dica: "A resposta do `input()` é texto. Converta com `int(...)` antes de multiplicar.", conceito: "entrada",
       solucao: `qtd = int(input("Quantos cafés? "))
 total = qtd * 4.5
 print("Total:", total)` },
-    { tipo: "escrever", texto: "Faça o programa pedir `Nome: ` e `Quantidade: ` (exatamente assim, com os dois-pontos e o espaço) e mostrar `Lia: 2 cafés = R$ 9.0`. O café custa 4.5.", arquivo: "meu_programa.py", entradas: ["Lia", "2"],
+    { tipo: "escrever", texto: "Faça o programa pedir `Nome: ` e `Quantidade: ` (exatamente assim, com os dois-pontos e o espaço) e, depois das duas perguntas, mostrar uma linha no formato `Lia: 2 cafés = R$ 9.0`: o nome, dois-pontos, a quantidade, `cafés = R$` e o total (quantidade vezes o preço do café, 4.5). A página testa com **três clientes diferentes**, então use as variáveis, não texto fixo.", arquivo: "meu_programa.py",
       inicial: `nome = input("Nome: ")
 # peça a quantidade, calcule e mostre
-`, esperado: ["Nome: Lia", "Quantidade: 2", "Lia: 2 cafés = R$ 9.0"], dica: "`qtd = int(input(\"Quantidade: \"))` e depois `print(nome + \":\", qtd, \"cafés = R$\", qtd * 4.5)`.", conceito: "entrada",
+`, cenarios: [{ entradas: ["Lia", "2"], esperado: ["Nome: Lia", "Quantidade: 2", "Lia: 2 cafés = R$ 9.0"] }, { entradas: ["Teo", "3"], esperado: ["Nome: Teo", "Quantidade: 3", "Teo: 3 cafés = R$ 13.5"] }, { entradas: ["Ana", "4"], esperado: ["Nome: Ana", "Quantidade: 4", "Ana: 4 cafés = R$ 18.0"] }], dica: "`qtd = int(input(\"Quantidade: \"))` e depois `print(nome + \":\", qtd, \"cafés = R$\", qtd * 4.5)`.", conceito: "entrada",
       solucao: `nome = input("Nome: ")
 qtd = int(input("Quantidade: "))
 print(nome + ":", qtd, "cafés = R$", qtd * 4.5)` },
@@ -236,9 +245,9 @@ print(nome + ":", qtd, "cafés = R$", qtd * 4.5)` },
     { tipo: "fechar", pergunta: "Sem olhar acima: o que faz o `input()` e por que quase sempre usamos `int()` ou `float()` junto?", conceito: "entrada", modelo: "`input()` pergunta algo à pessoa e devolve o que ela digitou, sempre como texto. Para fazer contas com a resposta, convertemos com `int()` ou `float()`." },
   ],
   recuperacao: [
-    { p: "O que o `input()` faz?", regex: "(pergunt|pede|le |ler|recebe|digit|espera)", modelo: "Mostra uma pergunta, espera a pessoa digitar e devolve o que ela digitou.", conceito: "entrada" },
-    { p: "Que tipo de valor o `input()` devolve?", regex: "(texto|str|string)", modelo: "Sempre texto (str), mesmo que a pessoa digite um número.", conceito: "entrada" },
-    { p: "Como somar dois números lidos com `input()`?", regex: "(int|float)", modelo: "Convertendo cada resposta com `int(...)` (ou `float`) antes de somar.", conceito: "entrada" },
+    { p: "O que o `input()` faz?", regex: "\\b(pergunt\\w*|pede|pedir|le|ler|recebe|receber|digit\\w*|espera|esperar|solicita\\w*|obtem|captura)\\b", modelo: "Mostra uma pergunta, espera a pessoa digitar e devolve o que ela digitou.", conceito: "entrada" },
+    { p: "Que tipo de valor o `input()` devolve?", regex: "\\b(texto|str|string)\\b", naoRegex: "^(?:(?!nao |nunca |nem |jamais )[\\s\\S])*?\\b(devolve|retorna|entrega|da|e|eh) (um |o )?(numero|inteiro|int)\\b", modelo: "Sempre texto (str), mesmo que a pessoa digite um número.", conceito: "entrada" },
+    { p: "Como somar dois números lidos com `input()`?", regex: "\\b(int|float)\\b", modelo: "Convertendo cada resposta com `int(...)` (ou `float`) antes de somar.", conceito: "entrada" },
   ],
 });
 
@@ -249,7 +258,7 @@ aulas.push({
   objetivos: ["Montar frases com `f\"...\"` e chaves.", "Mostrar números com casas decimais fixas (`:.2f`).", "Evitar o erro mais comum: esquecer o `f`."],
   conceitos: [["formatacao", "f-strings e formatação de números"]],
   secoes: [
-    { tipo: "aquecimento", pergunta: "Misturar texto e valores com vírgulas no `print` funciona, mas fica estranho para dinheiro (13.5 em vez de 13,50). Como você gostaria de montar a frase `Pedido de Lia: R$ 13.50`?", modelo: "Queremos escrever a frase com “buracos” que são preenchidos com valores e controlar o formato do número. É para isso que servem as **f-strings**." },
+    { tipo: "aquecimento", pergunta: "Misturar texto e valores com vírgulas no `print` funciona, mas fica estranho para dinheiro (aparece 13.5, sem o zero final). Como você gostaria de montar a frase `Pedido de Lia: R$ 13.50`? (Atenção: o Python escreve números decimais com **ponto**, não com vírgula; por isso é `13.50`, e não `13,50`.)", modelo: "Queremos escrever a frase com “buracos” que são preenchidos com valores e controlar o formato do número. É para isso que servem as **f-strings**." },
     { tipo: "exemplo", arquivo: "cupom.py", texto: "Clique em cada linha.",
       codigo: [["nome = \"Lia\"", "Uma variável de texto."], ["total = 13.5", "Uma variável numérica."], ["print(f\"Pedido de {nome}: R$ {total:.2f}\")", "O **f** antes das aspas liga o modo especial: tudo entre `{ }` é calculado e entra na frase. `:.2f` mostra o número com 2 casas decimais: `13.50`."]],
       termos: [["f-string", "texto com `f` antes das aspas, em que `{valor}` é substituído pelo valor."], ["`:.2f`", "formato que mostra um número com 2 casas decimais."]] },
@@ -273,13 +282,13 @@ print(f"R$ {preco * qtd:.2f}")`, resposta: "R$ 13.50", porque: "Dentro das chave
 print("Olá, {nome}!")`, esperado: ["Olá, Lia!"], dica: "Falta algo antes das aspas para ativar as chaves.", conceito: "formatacao",
       solucao: `nome = "Lia"
 print(f"Olá, {nome}!")` },
-    { tipo: "escrever", texto: "Com `qtd = 6` e `preco = 4.5`, use uma f-string para mostrar `Total: R$ 27.00`.", arquivo: "meu_programa.py",
-      inicial: `qtd = 6
-preco = 4.5
+    { tipo: "escrever", texto: "As duas primeiras linhas já vêm prontas: leem a quantidade (inteiro) e o preço (número com ponto, como 4.5). Depois delas, use **uma f-string** para mostrar uma linha no formato `Total: R$ 27.00`: a palavra Total, dois-pontos, `R$` e o valor quantidade vezes preço com 2 casas decimais (com ponto, não vírgula). A página testa com **três pares de valores**, então use as variáveis.", arquivo: "meu_programa.py",
+      inicial: `qtd = int(input("Quantidade: "))
+preco = float(input("Preço: "))
 # mostre o total com 2 casas decimais
-`, esperado: ["Total: R$ 27.00"], dica: "`print(f\"Total: R$ {qtd * preco:.2f}\")`", conceito: "formatacao",
-      solucao: `qtd = 6
-preco = 4.5
+`, cenarios: [{ entradas: ["6", "4.5"], esperado: ["Quantidade: 6", "Preço: 4.5", "Total: R$ 27.00"] }, { entradas: ["2", "3.25"], esperado: ["Quantidade: 2", "Preço: 3.25", "Total: R$ 6.50"] }, { entradas: ["3", "4"], esperado: ["Quantidade: 3", "Preço: 4", "Total: R$ 12.00"] }], dica: "`print(f\"Total: R$ {qtd * preco:.2f}\")`", conceito: "formatacao",
+      solucao: `qtd = int(input("Quantidade: "))
+preco = float(input("Preço: "))
 print(f"Total: R$ {qtd * preco:.2f}")` },
     { tipo: "aberta", tag: "sec", titulo: "O que vai no cupom?", texto: "O robô imprime um cupom para cada pedido, e o cupom fica na bancada.", pergunta: "Que dados do cliente você colocaria no cupom e quais evitaria? Por quê?", modelo: "Colocaria só o necessário para identificar o pedido (número, itens, valor, talvez um primeiro nome). Evitaria CPF, endereço e telefone: um cupom na bancada pode ser lido por qualquer pessoa, e dados pessoais devem aparecer o mínimo possível.", conceito: "privacidade" },
     { tipo: "quiz", itens: [
@@ -291,7 +300,7 @@ print(f"Total: R$ {qtd * preco:.2f}")` },
   recuperacao: [
     { p: "Para que serve o `f` antes das aspas de um texto?", regex: "(substitu|valor|chaves|variavel|\\{)", modelo: "Para que o que está entre chaves seja substituído pelo valor (f-string).", conceito: "formatacao" },
     { p: "O que significa `:.2f` dentro das chaves?", regex: "(2|duas);;(casa|decimal|virgula|float)", modelo: "Mostrar o número com 2 casas decimais.", conceito: "formatacao" },
-    { p: "O que aparece se esquecermos o `f` em `print(\"Olá, {nome}\")`?", regex: "(chaves|literal|do jeito|como esta|igual|texto);;", modelo: "As chaves aparecem do jeito que estão: `Olá, {nome}`.", conceito: "formatacao" },
+    { p: "O que aparece se esquecermos o `f` em `print(\"Olá, {nome}\")`?", regex: "(\\bchaves\\b|\\{|literal|do jeito|como esta|como escrit|tal qual|texto comum|texto normal|sem (substituir|trocar))", naoRegex: "(^|[^o] )(da|gera|aparece|mostra|ocorre) (um )?erro|^erro|chaves nao (aparec|sao mostr|ficam|existem)|nao (aparec|mostr)\\w* (as )?chaves|(^|[^o] )(e|sao|foi|eh) substituid", modelo: "As chaves aparecem do jeito que estão: `Olá, {nome}`.", conceito: "formatacao" },
   ],
 });
 
@@ -311,9 +320,9 @@ print(Xicaras)`,
       erroEsperado: "NameError",
       prever: { enunciado: "Qual é o **tipo** do erro? (uma palavra)", conceito: "ler_erro", itens: [{ codigo: `xicaras = 3
 print(Xicaras)`, erro: "NameError", resposta: "NameError", pergunta: "Tipo do erro:", porque: "O nome `Xicaras` (com X maiúsculo) não existe: o Python diferencia maiúsculas de minúsculas, então é outro nome." }] } },
-    { tipo: "descobrir", tabela: { cab: ["Erro", "Exemplo de causa"], linhas: [["`SyntaxError`", "aspas ou parênteses faltando"], ["`NameError`", "nome escrito diferente ou usado antes de criar"], ["`TypeError`", "misturar texto com número"]] },
+    { tipo: "descobrir", tabela: { cab: ["Erro", "Exemplo de causa"], linhas: [["`SyntaxError`", "aspas ou parênteses faltando"], ["`NameError`", "nome escrito diferente ou usado antes de criar"], ["`TypeError`", "misturar texto com número"], ["`ValueError`", "converter um texto que não parece número, como `int(\"abc\")`"]] },
       pergunta: "Se a mensagem diz `TypeError`, o que você olharia primeiro no código? E se disser `SyntaxError`?", dicas: ["O nome do erro é uma pista da **categoria** do problema.", "`TypeError` fala de tipos; `SyntaxError` fala da escrita da linha."],
-      explicacao: "`TypeError`: procurar onde se mistura texto com número (falta converter com `int()`/`str()`). `SyntaxError`: procurar a linha com aspas, parênteses ou dois-pontos faltando. O nome do erro diz **por onde começar**.", conceito: "ler_erro" },
+      explicacao: "`TypeError`: procurar onde se mistura texto com número (falta converter com `int()`/`str()`). `SyntaxError`: procurar a linha com aspas, parênteses ou dois-pontos faltando. `ValueError`: o texto não parece um número (por exemplo, `int(\"abc\")`); confira o que a pessoa digitou antes de converter. O nome do erro diz **por onde começar**.", conceito: "ler_erro" },
     { tipo: "prever", texto: "Para cada programa, diga o tipo do erro que o Python mostra (uma palavra).", conceito: "ler_erro", itens: [
       { codigo: 'print("olá)', erro: "SyntaxError", resposta: "SyntaxError", pergunta: "Tipo do erro:", porque: "A aspa de fechar está faltando: o Python não entende a linha." },
       { codigo: 'total = "3" + 4', erro: "TypeError", resposta: "TypeError", pergunta: "Tipo do erro:", porque: "Somar texto com número não tem resposta óbvia." },
@@ -327,7 +336,7 @@ print("Total:", Preco * qtd)`, esperado: ["Total: 9.0"], dica: "Compare o nome d
 preco = 4.5
 qtd = 2
 print("Total:", preco * qtd)` },
-    { tipo: "escrever", texto: "Mostre `Preço do café: 4.5` usando uma variável `preco`, e coloque **um comentário** acima da variável explicando o que ela guarda. (O comentário não aparece na tela.)", arquivo: "meu_programa.py",
+    { tipo: "escrever", texto: "Mostre `Preço do café: 4.5` usando uma variável `preco`, e coloque **um comentário** acima da variável explicando o que ela guarda. O comentário não aparece na tela, e esta página **não confere comentários**: ela só olha o que o programa mostra e o valor de `preco`. Então essa parte é por sua conta: releia o seu código e confira você mesmo que o comentário está lá.", arquivo: "meu_programa.py",
       inicial: `# escreva aqui
 `, esperado: ["Preço do café: 4.5"], testes: [["preco", "4.5"]], dica: "Uma linha `# ...`, depois `preco = 4.5` e o `print`.", conceito: "comentarios",
       solucao: `# Preço do café, em reais
@@ -358,9 +367,9 @@ aulas.push({
     { tipo: "aquecimento", titulo: "Planeje antes de escrever", pergunta: "Liste, em ordem, o que o robô precisa fazer para anotar um pedido de café e pão: o que pergunta, o que calcula e o que mostra.", minimo: 40, modelo: "Uma boa lista: (1) perguntar o nome; (2) perguntar quantos cafés; (3) perguntar quantos pães; (4) converter as respostas em números; (5) calcular o valor dos cafés, dos pães e o total; (6) mostrar tudo formatado. Planejar em passos antes de codar é o seu **algoritmo**." },
     { tipo: "exemplo", titulo: "Um esqueleto de referência", arquivo: "esqueleto.py", entradas: ["Estudar", "3"], texto: "Este esqueleto mostra a estrutura (perguntar, converter, calcular, mostrar) com outro tema. Use como mapa, não como cola.",
       codigo: [["tarefa = input(\"Tarefa: \")", "Pergunta algo e guarda como texto."], ["horas = int(input(\"Horas: \"))", "Pergunta e **converte** para número, tudo na mesma linha."], ["custo = horas * 20", "Calcula usando um operador."], ["print(f\"{tarefa}: {horas} h = R$ {custo:.2f}\")", "Mostra o resultado formatado com f-string."]] },
-    { tipo: "escrever", titulo: "Exercício final (sem dica)", final: true, texto: "Escreva o programa. Ele deve perguntar `Nome: `, `Cafés: ` e `Pães: ` (exatamente assim). O café custa 4.5 e o pão custa 3. Com as entradas Lia, 2 e 1, a saída deve ser exatamente:\n\n`Nome: Lia` · `Cafés: 2` · `Pães: 1` · `Pedido de Lia` · `Cafés: R$ 9.00` · `Pães: R$ 3.00` · `Total: R$ 12.00`.", arquivo: "pedido.py", entradas: ["Lia", "2", "1"], minutos: 12,
+    { tipo: "escrever", titulo: "Exercício final (sem dica)", final: true, texto: "Escreva o programa. Ele deve perguntar `Nome: `, `Cafés: ` e `Pães: ` (exatamente assim). O café custa 4.5 e o pão custa 3. Com as entradas Lia, 2 e 1, a saída deve ser exatamente, uma por linha:\n\n`Nome: Lia` · `Cafés: 2` · `Pães: 1` · `Pedido de Lia` · `Cafés: R$ 9.00` · `Pães: R$ 3.00` · `Total: R$ 12.00`.\n\nO mesmo programa será testado também com outros clientes e quantidades (inclusive zero), sempre nesse formato: valores em reais com ponto e duas casas.", arquivo: "pedido.py", minutos: 12,
       inicial: `# Planeje: perguntar, converter, calcular, mostrar
-`, esperado: ["Nome: Lia", "Cafés: 2", "Pães: 1", "Pedido de Lia", "Cafés: R$ 9.00", "Pães: R$ 3.00", "Total: R$ 12.00"],
+`, cenarios: [{ entradas: ["Lia", "2", "1"], esperado: ["Nome: Lia", "Cafés: 2", "Pães: 1", "Pedido de Lia", "Cafés: R$ 9.00", "Pães: R$ 3.00", "Total: R$ 12.00"] }, { entradas: ["Teo", "3", "0"], esperado: ["Nome: Teo", "Cafés: 3", "Pães: 0", "Pedido de Teo", "Cafés: R$ 13.50", "Pães: R$ 0.00", "Total: R$ 13.50"] }, { entradas: ["Ana", "0", "2"], esperado: ["Nome: Ana", "Cafés: 0", "Pães: 2", "Pedido de Ana", "Cafés: R$ 0.00", "Pães: R$ 6.00", "Total: R$ 6.00"] }],
       dica: "Três `input`, dois deles com `int(...)`. Calcule `cafes * 4.5` e `paes * 3`, some, e mostre cada linha com f-string e `:.2f`.", conceito: ["variaveis", "tipos", "entrada", "operadores", "formatacao"],
       solucao: `nome = input("Nome: ")
 cafes = int(input("Cafés: "))
@@ -372,9 +381,9 @@ print(f"Pedido de {nome}")
 print(f"Cafés: R$ {valor_cafes:.2f}")
 print(f"Pães: R$ {valor_paes:.2f}")
 print(f"Total: R$ {total:.2f}")` },
-    { tipo: "escrever", titulo: "Problema novo: as horas de estudo da semana", transfer: true, texto: "Agora outro contexto, mesmos conceitos. Peça `Segunda: `, `Terça: ` e `Quarta: ` (horas estudadas, números inteiros). Com as entradas 2, 3 e 1, mostre `Total de horas: 6` e `Média por dia: 2.0`.", arquivo: "semana.py", entradas: ["2", "3", "1"], minutos: 10,
+    { tipo: "escrever", titulo: "Problema novo: as horas de estudo da semana", transfer: true, texto: "Agora outro contexto, mesmos conceitos. Peça `Segunda: `, `Terça: ` e `Quarta: ` (horas estudadas, números inteiros). Depois das três perguntas, mostre duas linhas no formato `Total de horas: N` e `Média por dia: M`, em que M é o total dividido por 3 com `/` (por isso aparece com decimal: com as entradas 2, 3 e 1, o resultado é `Total de horas: 6` e `Média por dia: 2.0`). A página testa com **três conjuntos de entradas diferentes**.", arquivo: "semana.py", minutos: 10,
       inicial: `# Pergunte as horas de cada dia, some e calcule a média
-`, esperado: ["Segunda: 2", "Terça: 3", "Quarta: 1", "Total de horas: 6", "Média por dia: 2.0"], dica: "Três `int(input(...))`, a soma e a média (soma dividida por 3 com `/`).", conceito: ["variaveis", "entrada", "operadores"],
+`, cenarios: [{ entradas: ["2", "3", "1"], esperado: ["Segunda: 2", "Terça: 3", "Quarta: 1", "Total de horas: 6", "Média por dia: 2.0"] }, { entradas: ["5", "4", "3"], esperado: ["Segunda: 5", "Terça: 4", "Quarta: 3", "Total de horas: 12", "Média por dia: 4.0"] }, { entradas: ["0", "0", "3"], esperado: ["Segunda: 0", "Terça: 0", "Quarta: 3", "Total de horas: 3", "Média por dia: 1.0"] }], dica: "Três `int(input(...))`, a soma e a média (soma dividida por 3 com `/`).", conceito: ["variaveis", "entrada", "operadores"],
       solucao: `seg = int(input("Segunda: "))
 ter = int(input("Terça: "))
 qua = int(input("Quarta: "))
@@ -389,9 +398,9 @@ print("Média por dia:", total / 3)` },
     { tipo: "fechar", pergunta: "Sem olhar acima: descreva em passos o que o seu programa do pedido faz, do início ao fim.", conceito: "programa", modelo: "Pergunta o nome, os cafés e os pães; converte as quantidades em números; calcula o valor de cada item e o total; mostra tudo formatado. É um algoritmo: passos exatos, em ordem." },
   ],
   recuperacao: [
-    { p: "Em que ordem fica um programa que pergunta quantidades e calcula um total?", regex: "(pergunt|input|le );;(convert|int);;(calcul|conta);;(mostr|print)", modelo: "Pergunta, converte para número, calcula e mostra.", conceito: "programa" },
-    { p: "Por que a quantidade lida com `input()` precisa de `int()` antes da conta?", regex: "(texto|string|str)", modelo: "Porque o `input()` devolve texto; `int()` converte em número para a conta funcionar.", conceito: "entrada" },
-    { p: "Qual formato mostra um valor em reais com duas casas decimais?", regex: "(2f|duas casas|f-string|f\"|\\.2)", modelo: "Uma f-string com `:.2f`, por exemplo `f\"R$ {total:.2f}\"`.", conceito: "formatacao" },
+    { p: "Em que ordem fica um programa que pergunta quantidades e calcula um total?", regex: "\\b(pergunt\\w*|pede|pedir|input|le|ler|recebe|receber|solicita\\w*|digit\\w*|obtem|obter)\\b.*\\b(convert\\w*|transform\\w*|int|float|vira|virar)\\b.*\\b(calcul\\w*|conta|contas|soma\\w*|multiplic\\w*)\\b.*\\b(mostr\\w*|print\\w*|exib\\w*|imprim\\w*|apresent\\w*)\\b", modelo: "Pergunta, converte para número, calcula e mostra.", conceito: "programa" },
+    { p: "Por que a quantidade lida com `input()` precisa de `int()` antes da conta?", regex: "\\b(texto|string|str)\\b", modelo: "Porque o `input()` devolve texto; `int()` converte em número para a conta funcionar.", conceito: "entrada" },
+    { p: "Qual formato mostra um valor em reais com duas casas decimais?", regex: "(2f|duas casas|2 casas|f-string|f\"|\\.2)", modelo: "Uma f-string com `:.2f`, por exemplo `f\"R$ {total:.2f}\"`.", conceito: "formatacao" },
   ],
 });
 

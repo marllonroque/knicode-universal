@@ -324,7 +324,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
   <div class="crumb">Módulo 15 · Claude Code · Aula 3</div>
   <h1>Comandos de barra: o painel de controle da sessão</h1>
   <p>Digitar <code>/</code> abre uma lista de comandos. Hoje você aprende os que mais usará: limpar, resumir, desfazer, ver mudanças, trocar de modelo e checar o uso.</p>
-  <div class="chips"><span class="chip">25 minutos</span><span class="chip">Sem instalar nada</span><span class="chip">Você faz, o programa responde</span></div>
+  <div class="chips"><span class="chip">cerca de 30 minutos</span><span class="chip">Precisa do Claude Code instalado (aula 0111)</span><span class="chip">Roteiro curto no seu terminal</span></div>
   <div class="goal"><b>Ao final desta aula você consegue:</b>
     <ul>
       <li>Listar os comandos de barra confirmados e para que cada um serve.</li>
@@ -352,19 +352,19 @@ footer p{margin:.4rem 0;color:var(--fg)}
 <!-- 1 -->
 <section class="card">
   <h2><span class="num">1</span>Os comandos que você vai usar <span class="mins">4 min</span></h2>
-  <p>Digite <code>/</code> no prompt para ver os comandos disponíveis. Os abaixo estão na documentação oficial. Alguns têm <b>apelidos</b> (aliases): <code>/reset</code> e <code>/new</code> fazem o mesmo que <code>/clear</code>; <code>/undo</code> e <code>/checkpoint</code> fazem o mesmo que <code>/rewind</code>; <code>/cost</code> e <code>/stats</code> fazem o mesmo que <code>/usage</code>.</p>
+  <p>Digite <code>/</code> no prompt para ver os comandos disponíveis. Os abaixo estão na documentação oficial. São 14, mas <b>6 são os essenciais</b> para este módulo: <code>/clear</code>, <code>/compact</code>, <code>/diff</code>, <code>/rewind</code>, <code>/init</code> e <code>/plan</code> (marcados na tabela). Os outros você consulta quando precisar. Alguns têm <b>apelidos</b> (aliases): <code>/reset</code> e <code>/new</code> fazem o mesmo que <code>/clear</code>; <code>/undo</code> e <code>/checkpoint</code> fazem o mesmo que <code>/rewind</code>; <code>/cost</code> e <code>/stats</code> fazem o mesmo que <code>/usage</code>.</p>
   <p>Além deles, existem <code>/review</code> (uma revisão de código embutida; confira com <code>/help</code> o que ela faz na sua versão), <code>/doctor</code> (diagnóstico da configuração) e <code>/sandbox</code>. Dentro do pedido, <code>@arquivo</code> cita um arquivo, e <b>Esc</b> interrompe o Claude sem perder o contexto.</p>
   <table>
     <tr><th>Comando</th><th>Para que serve</th></tr>
     <tr><td><code>/help</code></td><td>mostra a ajuda e os comandos</td></tr>
-    <tr><td><code>/clear</code></td><td>começa uma conversa nova, com contexto vazio (a anterior volta com <code>/resume</code>)</td></tr>
-    <tr><td><code>/compact [instruções]</code></td><td>resume a conversa para liberar contexto, aceitando instruções de foco</td></tr>
+    <tr><td><code>/clear</code> (essencial)</td><td>começa uma conversa nova, com contexto vazio (a anterior volta com <code>/resume</code>)</td></tr>
+    <tr><td><code>/compact [instruções]</code> (essencial)</td><td>resume a conversa para liberar contexto, aceitando instruções de foco</td></tr>
     <tr><td><code>/context</code></td><td>mostra o uso do contexto em uma grade colorida, com sugestões</td></tr>
-    <tr><td><code>/init</code></td><td>cria um <code>CLAUDE.md</code> inicial analisando o projeto (se já existir, sugere melhorias)</td></tr>
+    <tr><td><code>/init</code> (essencial)</td><td>cria um <code>CLAUDE.md</code> inicial analisando o projeto (se já existir, sugere melhorias)</td></tr>
     <tr><td><code>/memory</code></td><td>edita os arquivos CLAUDE.md e liga ou desliga a memória automática</td></tr>
-    <tr><td><code>/plan [descrição]</code></td><td>entra no modo plano direto do prompt</td></tr>
-    <tr><td><code>/diff</code></td><td>revisa as mudanças da árvore de trabalho, inclusive as feitas pelo Claude</td></tr>
-    <tr><td><code>/rewind</code></td><td>volta a conversa e/ou o código a um ponto anterior</td></tr>
+    <tr><td><code>/plan [descrição]</code> (essencial)</td><td>entra no modo plano direto do prompt</td></tr>
+    <tr><td><code>/diff</code> (essencial)</td><td>revisa as mudanças da árvore de trabalho, inclusive as feitas pelo Claude</td></tr>
+    <tr><td><code>/rewind</code> (essencial)</td><td>volta a conversa e/ou o código a um ponto anterior</td></tr>
     <tr><td><code>/permissions</code></td><td>gerencia as regras de permitir, perguntar e negar</td></tr>
     <tr><td><code>/model</code></td><td>troca o modelo e salva como padrão para novas sessões</td></tr>
     <tr><td><code>/usage</code></td><td>mostra custo da sessão, limites do plano e estatísticas</td></tr>
@@ -382,7 +382,15 @@ footer p{margin:.4rem 0;color:var(--fg)}
 
 <!-- 2 -->
 <section class="card">
-  <h2><span class="num">2</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
+  <h2><span class="num">2</span>Faça no seu terminal: 3 minutos com 3 comandos <span class="mins">4 min</span></h2>
+  <p>Na pasta <code>loja-teste</code> (aula 0111), digite <code>claude</code>. Depois, um de cada vez: 1) <code>/help</code>: leia a lista de comandos e veja se acha <code>/clear</code> e <code>/diff</code>. 2) <code>/context</code>: veja a grade de uso do contexto (ainda quase vazia, porque a conversa acabou de começar). 3) <code>/status</code>: veja a versão, o modelo, a conta e a conectividade. Saia com <code>/exit</code>.</p>
+  <p><b>O que anotar (2 linhas):</b> a versão e o modelo que o <code>/status</code> mostrou, e quanto do contexto o <code>/context</code> mostrou ocupado. Se algum comando não existir na sua versão, o <code>/help</code> é a fonte certa: confira nele.</p>
+  <p class="fonte">Fonte: https://code.claude.com/docs/en/commands. Ferramentas mudam: reconfira na documentação oficial.</p>
+</section>
+
+<!-- 3 -->
+<section class="card">
+  <h2><span class="num">3</span>Preveja antes de rodar <span class="mins">4 min</span></h2>
   <p>Responda com o comando (com a barra).</p>
   <div class="quest" data-key="k2" data-concept="cc_comandos" data-level="exec" data-ok="Tudo certo. Você aplicou a regra em casos novos.">
     <div class="pred"><span>Qual comando começa uma conversa nova com o contexto vazio?</span><input class="q" data-answer="/clear|/reset|/new" data-label="Item 1" data-why="&lt;code&gt;/clear&lt;/code&gt; (aliases &lt;code&gt;/reset&lt;/code&gt; e &lt;code&gt;/new&lt;/code&gt;) zera o contexto; &lt;code&gt;/resume&lt;/code&gt; traz a conversa antiga de volta." placeholder="comece com /" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></div>
@@ -392,9 +400,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 3 -->
+<!-- 4 -->
 <section class="card">
-  <h2><span class="num">3</span>Situação e comando <span class="mins">5 min</span></h2>
+  <h2><span class="num">4</span>Situação e comando <span class="mins">5 min</span></h2>
   <p>Veja quatro situações e o comando que resolve cada uma.</p>
   <table>
     <tr><th>Situação</th><th>Comando</th></tr>
@@ -417,11 +425,11 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 4 -->
+<!-- 5 -->
 <section class="card">
-  <h2><span class="num">4</span>Seu cartão de bolso <span class="mins">3 min</span></h2>
+  <h2><span class="num">5</span>Seu cartão de bolso <span class="mins">3 min</span></h2>
   <p>Você vai construir o analisador de log de pedidos de uma loja ao longo do módulo.</p>
-  <p><strong>Escolha 5 comandos de barra e escreva, para cada um, em que momento do projeto você o usaria.</strong></p>
+  <p><strong>Escreva uma lista de 5 linhas, no formato “/comando: em que momento do projeto você o usaria”, com 5 comandos de barra à sua escolha.</strong></p>
   <div class="open" data-key="k4" data-min="80" data-concept="cc_comandos" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar e comparar</button>
@@ -430,22 +438,22 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 5 -->
+<!-- 6 -->
 <section class="card">
-  <h2><span class="num">5</span>Colar o arquivo inteiro <span class="mins">3 min</span></h2>
+  <h2><span class="num">6</span>Colar o arquivo inteiro <span class="mins">3 min</span></h2>
   <div class="callout sec"><span class="tag">Segurança e privacidade</span>Para explicar um erro, você cola na conversa o conteúdo completo de um arquivo <code>.env</code> com chaves de acesso e senhas, ou um extrato com dados reais.</div>
   <p><strong>Qual é o risco e como pedir ajuda sem expor isso?</strong></p>
   <div class="open" data-key="k5" data-min="25">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
     <button class="reg">Registrar e comparar</button>
     <div class="fb"></div>
-    <div class="callout model"><span class="tag">Para comparar</span>O conteúdo vai para a conversa (e pode ser lido por ferramentas e registros). <b>Não cole segredos nem dados reais.</b> Descreva o erro, cole só o trecho necessário e <b>troque os valores por exemplos fictícios</b>. Citar o arquivo com <code>@arquivo</code> também o expõe à sessão: mantenha segredos fora da pasta do projeto.</div>
+    <div class="callout model"><span class="tag">Para comparar</span>O conteúdo passa a fazer parte da conversa. <b>Cuidado do curso</b> (a documentação não detalha para onde esse texto pode ir): trate tudo o que você cola como <b>exposto</b>. <b>Não cole segredos nem dados reais.</b> Descreva o erro, cole só o trecho necessário e <b>troque os valores por exemplos fictícios</b>. Citar o arquivo com <code>@arquivo</code> também o expõe à sessão: mantenha segredos fora da pasta do projeto.</div>
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 7 -->
 <section class="card">
-  <h2><span class="num">6</span>Quiz final <span class="mins">3 min</span></h2>
+  <h2><span class="num">7</span>Quiz final <span class="mins">3 min</span></h2>
   <p>Sem voltar à aula: escolha a melhor resposta. Acertar de primeira conta como “sozinho”; errar antes conta como “com apoio”.</p>
   <div class="mcq" data-key="k6" data-correta="1" data-concept="cc_comandos" data-level="exec">
     <p class="mcq-q">O que o <code>/clear</code> faz?</p>
@@ -473,9 +481,9 @@ footer p{margin:.4rem 0;color:var(--fg)}
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="card">
-  <h2><span class="num">7</span>Para fechar <span class="mins">2 min</span></h2>
+  <h2><span class="num">8</span>Para fechar <span class="mins">2 min</span></h2>
   <p><strong>Sem olhar acima: cite quatro comandos de barra e para que servem.</strong></p>
   <div class="open" data-key="k9" data-min="25" data-concept="cc_comandos" data-level="comp">
     <textarea class="ans" placeholder="Escreva com suas palavras..." autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off"></textarea>
@@ -483,7 +491,7 @@ footer p{margin:.4rem 0;color:var(--fg)}
     <div class="fb"></div>
     <div class="callout model"><span class="tag">Resposta de referência</span><code>/clear</code> (conversa nova), <code>/compact</code> (resumir a conversa), <code>/diff</code> (ver mudanças), <code>/rewind</code> (voltar a um ponto anterior). Também: <code>/init</code> (cria o CLAUDE.md), <code>/permissions</code>, <code>/model</code>, <code>/usage</code>.</div>
   </div>
-  <div class="next"><b>Amanhã a aula começa sem consulta, com estas perguntas:</b> (1) Qual a diferença entre <code>/clear</code> e <code>/compact</code>? (2) Que comando mostra as mudanças feitas nos arquivos? (3) Por que não colar um arquivo com senhas na conversa? <a href="recuperacao-0113.html">Abrir a recuperação</a> (2 de 3 libera a próxima aula).</div>
+  <div class="next"><b>Amanhã a aula começa sem consulta:</b> 3 perguntas de memória sobre “Comandos de barra: o painel de controle da sessão”. Tente lembrar e responder sem reler a aula; as perguntas só aparecem na <a href="recuperacao-0113.html">recuperação</a> (2 de 3 libera a próxima aula).</div>
 </section>
 
 <footer>
@@ -679,7 +687,7 @@ __json.dumps(__res)
     {"parte":0,"ext":"py","titulo":"Decisões: conferir antes de agir","desc":"O robô confere se há água e se ela está quente: comparações, if, else, elif, a ordem das regras e os limites.","aulas":8,"h1":0,"exercicio":"Regras de desconto de uma loja virtual simples.","criterio":"Achar erro de ordem ou de limite numa regra e alterar a regra sozinho.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Repetições: fazer de novo sem copiar","desc":"Organizar as tarefas da semana: for, while, contadores e acumuladores.","aulas":8,"h1":1,"exercicio":"Percorrer os dias da semana e somar horas de estudo.","criterio":"Ler e escrever laços sem pular nem repetir itens por engano.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Funções: receitas com nome","desc":"Dar nome a um passo a passo, passar entradas, devolver resultados e reaproveitar código.","aulas":8,"h1":1,"exercicio":"Transformar os exercícios anteriores em funções reutilizáveis.","criterio":"Quebrar um problema em funções pequenas e ler funções escritas por outra pessoa ou pela IA.","verificar":false},
-    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados, filtrar, ordenar e ler arquivos simples.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
+    {"parte":0,"ext":"py","titulo":"Listas e dicionários","desc":"Carrinho de compras e lista de tarefas: guardar muitos dados na memória, filtrar, ordenar e resumir.","aulas":10,"h1":1,"exercicio":"Um carrinho de e-commerce com total e desconto.","criterio":"Ler um script que percorre uma lista e dizer o que sai; corrigir um laço que pula itens.","verificar":false},
     {"parte":0,"ext":"py","titulo":"Erros, testes e depuração","desc":"Ler mensagens de erro, escrever testes simples e provar que um código funciona, inclusive o que a IA escreve.","aulas":8,"h1":0,"exercicio":"Corrigir um script com defeitos plantados e escrever testes que os revelam.","criterio":"Transformar uma regra em casos de teste e usá-los para conferir código gerado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Mentalidade ágil e gestão de processos","desc":"Quadro kanban, backlog, priorização, entregas pequenas (MVP), ciclos curtos e retrospectiva.","aulas":8,"h1":0,"exercicio":"Montar e priorizar o backlog de um gerenciador de tarefas pessoal.","criterio":"Quebrar uma ideia em entregas pequenas e priorizar com critério explicado.","verificar":false},
     {"parte":1,"ext":"agil","titulo":"Do problema ao plano","desc":"Requisitos, histórias de usuário, critérios de aceite e escopo, com um app de finanças pessoais como exemplo.","aulas":8,"h1":1,"exercicio":"Escrever o plano de um app de finanças pessoais, pronto para ser construído.","criterio":"Escrever critérios de aceite que um teste consegue verificar.","verificar":false},
@@ -871,7 +879,18 @@ __json.dumps(__res)
   const MSG_CASE_RUN = "Atenção: no Python, os comandos são 'case-sensitive' (diferenciam maiúsculas de minúsculas). Você escreveu {nomes} com letra maiúscula (provavelmente o corretor do celular) e o sistema trocou para minúsculo para o código rodar. O correto é sempre minúsculo: 'print', 'input'.";
   const tolerancia = { corrigirMaiusculas, lerResposta, conferir, MSG_CASE_QUIZ, MSG_CASE_RUN };
 
-  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo };
+  /* Correção de uma resposta da recuperação por padrões. Usada pela página e pelos testes (o mesmo código nos dois).
+     A resposta é comparada sem acento, em minúsculas e com espaços simples. "regex" tem grupos separados por ";;" (todos precisam casar);
+     "naoRegex" reprova a resposta se casar. Use \b nos padrões para não casar dentro de outras palavras. */
+  function conferirResposta(valor, spec) {
+    const n = normT(valor); if (!n) return false;
+    const grupos = String((spec && spec.regex) || "").split(";;").filter(Boolean);
+    if (!grupos.every(r => new RegExp(r, "i").test(n))) return false;
+    if (spec && spec.naoRegex && new RegExp(spec.naoRegex, "i").test(n)) return false;
+    return true;
+  }
+
+  const api = { COURSE, CURRICULO, PARTES, T, createEngine, memoryStorage, browserStorage, KEY, tolerancia, rotulo, conferirResposta };
   if (typeof module !== "undefined" && module.exports) { module.exports = api; return; }
 
   /* ===== A partir daqui: interface (só no navegador) ===== */
@@ -952,13 +971,7 @@ __json.dumps(__res)
   }
 
   /* Componente de recuperação: 3 perguntas, correção por padrões + opção honesta de contestar */
-  function matchAnswer(v, ds) {
-    const n = norm(v); if (!n) return false;
-    const all = (ds.regex || "").split(";;").filter(Boolean);
-    if (!all.every(r => new RegExp(r, "i").test(n))) return false;
-    if (ds.notRegex && new RegExp(ds.notRegex, "i").test(n)) return false;
-    return true;
-  }
+  const matchAnswer = (v, ds) => conferirResposta(v, { regex: ds.regex, naoRegex: ds.notRegex });
   function recovery(box) {
     const lessonId = box.dataset.lesson, items = $$(".rq", box), out = $(".rq-result", box);
     let checked = false, final = [];
@@ -1211,7 +1224,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         evid(m,true);markDone(m.dataset.key);
       }else{
         m.dataset.hinted="1";b.classList.add("wrong");b.disabled=true;
-        fb.className="fb bad";fb.innerHTML="Ainda não. Releia a pergunta e tente outra opção.";
+        const erros=(+m.dataset.erros||0)+1;m.dataset.erros=erros;
+        /* Na segunda tentativa errada mostra a causa (a explicação da resposta certa), em vez de só mandar tentar de novo */
+        fb.className="fb bad";fb.innerHTML=erros>=2?"Ainda não. <b>Pista:</b> "+$(".porque",m).innerHTML:"Ainda não. Releia a pergunta e tente outra opção.";
       }
     });
   });

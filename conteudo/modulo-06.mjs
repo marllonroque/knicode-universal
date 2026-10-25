@@ -16,7 +16,19 @@ aulas.push({
     { tipo: "exemplo", arquivo: "erro_leitura.py", texto: "Este programa está correto. Leia as notas para ver o que o Python diria se cada linha estivesse errada.",
       codigo: [["precos = [4.5, 3.0]", "A lista tem duas posições: 0 e 1."], ["print(precos[1])", "Mostra `3.0`. Se fosse `precos[2]`, o Python pararia com `IndexError: list index out of range` (posição fora da lista)."], ["print(precos)", "Mostra a lista toda. Se estivesse escrito `preco` (sem o s), seria `NameError: name 'preco' is not defined` (nome que não existe)."], ["print(precos[0])", "Mostra `4.5`. Na mensagem de erro, a **última linha** diz o tipo e a explicação, e as linhas de cima dizem o lugar."]],
       termos: [["Traceback", "o relatório do erro: mostra o caminho percorrido e termina com o tipo e a explicação."], ["Tipo do erro", "a primeira palavra da última linha, como `NameError` ou `IndexError`."]] },
-    { tipo: "executar", texto: "Rode e depois apague a linha final do `print` para ver que ela era o que mostrava o resultado.", arquivo: "erro_leitura.py (pode editar)", codigo: `precos = [4.5, 3.0]
+    { tipo: "texto", titulo: "Um erro de verdade, linha a linha", blocos: [
+      "Este é o texto **real** que o Python mostra para o programa `precos = [4.5, 3.0]` seguido de `print(precos[2])` (a lista só tem as posições 0 e 1). Leia **de baixo para cima**:",
+    ], tabela: { cab: ["Ordem de leitura", "Linha da mensagem (na ordem em que aparece)", "O que ela diz"], linhas: [
+      ["5º", "`Traceback (most recent call last):`", "O título do relatório. “Most recent call last” quer dizer que o fato mais recente fica por último, por isso a leitura começa pelo fim."],
+      ["4º", "`File \"erro.py\", line 2, in <module>`", "O lugar: o arquivo `erro.py`, linha **2**. É aí que você vai olhar."],
+      ["3º", "`print(precos[2])`", "A linha do código que estava rodando quando o erro aconteceu."],
+      ["2º", "`~~~~~~^^^` (as setas sob o código)", "Aponta o pedaço exato que falhou: `precos[2]`. (Versões mais antigas do Python não desenham as setas.)"],
+      ["1º, comece aqui", "`IndexError: list index out of range`", "O tipo é `IndexError` e a explicação é “posição da lista fora do alcance”. Causa: pediu-se a posição 2, mas a lista termina na 1."],
+    ] } },
+    { tipo: "texto", blocos: [
+      "**Correção:** pedir uma posição que existe, como `precos[1]` (ou `precos[-1]`, o último). O mesmo método serve para qualquer erro: o tipo e a explicação (última linha) dizem **a causa**, e o número da linha diz **onde consertar**. Num `NameError`, por exemplo, a última linha é `NameError: name 'totl' is not defined`: o nome `totl` nunca foi criado, e o conserto é escrever `total`.",
+    ] },
+    { tipo: "executar", texto: "Rode como está (funciona). Depois troque `precos[0]` por `precos[2]` e rode de novo: vai aparecer um erro. Leia a última linha e conserte.", arquivo: "erro_leitura.py (pode editar)", codigo: `precos = [4.5, 3.0]
 print(precos[0])`,
       prever: { enunciado: "Antes de testar, qual é o **tipo do erro**?", conceito: "erro_ler", itens: [{ codigo: "print(preco)", erro: "NameError", resposta: "NameError", pergunta: "Tipo do erro:", porque: "O nome `preco` nunca foi criado." }, { codigo: `lista = [1, 2]
 print(lista[5])`, erro: "IndexError", resposta: "IndexError", pergunta: "Tipo do erro:", porque: "A posição 5 não existe." }] } },
@@ -49,16 +61,16 @@ print(lista[-1])` },
     { tipo: "fechar", pergunta: "Sem olhar acima: como ler uma mensagem de erro do Python?", conceito: "erro_ler", modelo: "Começando pela última linha: o tipo do erro e a explicação dizem o que houve, e o número da linha diz onde. Com isso se conserta sem chutar." },
   ],
   recuperacao: [
-    { p: "Por onde se começa a ler uma mensagem de erro?", regex: "(ultima)", modelo: "Pela última linha.", conceito: "erro_ler" },
-    { p: "O que o `NameError` quer dizer?", regex: "(nome);;(nao existe|nao foi criad|nao definid|nao existente|nao conhece)", modelo: "O nome usado não existe (não foi criado).", conceito: "erro_ler" },
-    { p: "Por que não colar o erro inteiro num chat público sem revisar?", regex: "(senha|chave|sensiv|pasta|nome|dados|revis|expoe)", modelo: "Porque pode conter senhas, nomes e caminhos internos.", conceito: "erro_ler" },
+    { p: "Por onde se começa a ler uma mensagem de erro?", regex: "(\\bultima\\b|de baixo (para|pra) cima|de tras (para|pra) frente|do (fim|final) (para|pra)|pelo (final|fim)|pela base)", naoRegex: "\\bnao (pela |e pela |na )?ultima\\b", modelo: "Pela última linha.", conceito: "erro_ler" },
+    { p: "O que o `NameError` quer dizer?", regex: "(variavel|variaveis|nome|identificador);;(nao (existe|foi (criad|defin|declar|encontrad)|esta (criad|definid)|conhec|encontr)|nunca (foi )?(criad|defin)|inexistente|desconhec|nao (a |o )?(criou|definiu)|antes de (criar|definir)|digitad\\w* errad|escrit\\w* errad|mal escrit|erro de (digitacao|escrita))", modelo: "O nome usado não existe (não foi criado).", conceito: "erro_ler" },
+    { p: "Por que não colar o erro inteiro num chat público sem revisar?", regex: "(senha|\\bchaves?\\b|segredo|token|sensiv|pessoais|privacid|expoe|exposi|expor|exposta|\\bvaz|revela|caminho|\\bpasta|nome do usuario|confidenc)", modelo: "Porque pode conter senhas, nomes e caminhos internos.", conceito: "erro_ler" },
   ],
 });
 
 // ---------- Aula 44: tipos de erro ----------
 aulas.push({
   id: "0044", modulo: 6, n: 2, slug: "tipos-de-erro", titulo: "Os erros mais comuns e o que cada um quer dizer",
-  resumo: "Seis erros aparecem 90% das vezes. Reconhecer o nome já diz onde olhar.",
+  resumo: "Alguns erros aparecem o tempo todo para quem está começando. Reconhecer o nome já diz onde olhar.",
   objetivos: ["Associar cada tipo de erro à sua causa típica.", "Distinguir erro que para o programa de erro de lógica.", "Consertar o erro mais provável a partir do nome."],
   conceitos: [["erro_tipos", "Tipos de erro comuns"]],
   secoes: [
@@ -89,7 +101,7 @@ print("Total: " + str(total))` },
 `, cenarios: [{ entradas: ["30"], esperado: ["Idade: 30", "Ano que vem: 31"] }, { entradas: ["0"], esperado: ["Idade: 0", "Ano que vem: 1"] }, { entradas: ["99"], esperado: ["Idade: 99", "Ano que vem: 100"] }], dica: "`int(idade) + 1`.", conceito: "erro_tipos",
       solucao: `idade = input("Idade: ")
 print("Ano que vem:", int(idade) + 1)` },
-    { tipo: "aberta", tag: "sec", titulo: "Esconder o erro?", texto: "Para não assustar o usuário, o programa captura **todo e qualquer erro** e mostra só “Algo deu errado”, sem registrar nada.", pergunta: "Por que isso atrapalha quem mantém o sistema? O que registrar (e o que não registrar)?", modelo: "Sem registro, ninguém sabe **o que deu errado, onde e quando**, e o defeito volta sempre. Registre o **tipo do erro, o lugar e o horário**, mas **não grave dados pessoais ou senhas** no registro." },
+    { tipo: "aberta", tag: "sec", titulo: "Esconder o erro?", texto: "Para não assustar o usuário, o programa esconde **todo e qualquer erro** (um recurso chamado `try`/`except`, que você verá na aula 48) e mostra só “Algo deu errado”, sem registrar nada.", pergunta: "Por que isso atrapalha quem mantém o sistema? O que registrar (e o que não registrar)?", modelo: "Sem registro, ninguém sabe **o que deu errado, onde e quando**, e o defeito volta sempre. Registre o **tipo do erro, o lugar e o horário**, mas **não grave dados pessoais ou senhas** no registro." },
     { tipo: "quiz", itens: [
       { pergunta: "Qual erro aparece em `\"a\" + 1`?", opcoes: ["ValueError", "TypeError", "KeyError", "IndexError"], correta: 1, porque: "Tipos diferentes que não se somam.", conceito: "erro_tipos" },
       { pergunta: "`ValueError` aparece quando:", opcoes: ["O tipo serve, o valor não", "O nome não existe mais", "Falta um parêntese ali", "A lista está vazia já"], correta: 0, porque: "Ex.: `int(\"abc\")`: aceita texto, mas esse texto não serve.", conceito: "erro_tipos" },
@@ -97,8 +109,8 @@ print("Ano que vem:", int(idade) + 1)` },
     { tipo: "fechar", pergunta: "Sem olhar acima: cite três tipos de erro e a causa típica de cada um.", conceito: "erro_tipos", modelo: "`TypeError`: misturar tipos (texto com número). `ValueError`: valor impossível, como `int(\"abc\")`. `KeyError`: chave inexistente. Também `IndexError` (posição fora da lista) e `NameError` (nome inexistente)." },
   ],
   recuperacao: [
-    { p: "Quando acontece um `TypeError`?", regex: "(tipo);;(misturar|somar|texto|diferent|errado)", modelo: "Quando se mistura tipos que não combinam, como somar texto com número.", conceito: "erro_tipos" },
-    { p: "Quando acontece um `KeyError`?", regex: "(chave);;(nao existe|inexistente|nao ha|nao encontr)", modelo: "Quando se pede uma chave que não existe no dicionário.", conceito: "erro_tipos" },
+    { p: "Quando acontece um `TypeError`?", regex: "(mistur|\\bsoma|\\bsomar|somando|juntar|juntando|concaten|texto (com|e|\\+) numero|numero (com|e|\\+) texto|tipos? (esta |e |sao )?(errad|diferent|incompativ|incorret|invalid|inadequad)|incompativ)", modelo: "Quando se mistura tipos que não combinam, como somar texto com número.", conceito: "erro_tipos" },
+    { p: "Quando acontece um `KeyError`?", regex: "(chave);;(nao (existe|ha|tem|consta|encontr|achou|foi (encontrad|criad|defin|cadastrad))|nao esta (no|na|presente|la|dentro|cadastrad|definid)|inexistente|ausente|\\bfalt|nunca (foi )?(criad|defin|inserid))", modelo: "Quando se pede uma chave que não existe no dicionário.", conceito: "erro_tipos" },
     { p: "Por que não esconder todos os erros sem registrar nada?", regex: "(registr|log|saber|descobr|manut|onde|nunca|volta)", modelo: "Porque ninguém descobre o que deu errado; registra-se o tipo e o lugar, sem dados pessoais.", conceito: "erro_tipos" },
   ],
 });
@@ -123,7 +135,7 @@ b = 3
 print(a + b)`, resposta: "5", porque: "Soma de 2 e 3." }, { codigo: `a = 2
 b = 3
 print(a * b)`, resposta: "6", porque: "Multiplicação de 2 por 3." }] } },
-    { tipo: "descobrir", texto: "O programa calcula um valor com um defeito.", arquivo: "defeito.py", codigo: `print(p + q)`,
+    { tipo: "descobrir", texto: "O programa calcula um valor com um defeito. (Nas linhas da tabela, `p, q = 2, 2` é um atalho para `p = 2` e `q = 2` numa linha só: cada nome recebe o valor que está na mesma posição.)", arquivo: "defeito.py", codigo: `print(p + q)`,
       execucoes: [{ prefixo: "p, q = 2, 2", saida: ["4"] }, { prefixo: "p, q = 2, 3", saida: ["5"] }, { prefixo: "p, q = 10, 0", saida: ["10"] }], colunas: ["Valores", "O que aparece"],
       pergunta: "Se o objetivo era o **produto** (p × q), qual valor engana, porque dá o resultado certo por coincidência? O que isso ensina sobre testar com um valor só?", dicas: ["Calcule p × q em cada linha e compare com o que apareceu.", "Em qual linha somar e multiplicar dão o mesmo resultado?"],
       explicacao: "Com `p, q = 2, 2` a soma e o produto dão **4**, e o defeito passa despercebido. Nas outras linhas o resultado está errado (5 em vez de 6; 10 em vez de 0). A lição: um **único** valor de teste pode esconder o defeito, por isso se testam **vários** valores.", conceito: "depurar_print" },
@@ -168,8 +180,8 @@ print("Total:", total)` },
   ],
   recuperacao: [
     { p: "O que é um erro de lógica?", regex: "(resultado errado|errado|sem aviso|sem erro|nao esperado)", modelo: "O programa roda, mas dá o resultado errado.", conceito: "depurar_print" },
-    { p: "Como o `print` ajuda a achar um defeito?", regex: "(valor|intermediar|meio|espi|passo)", modelo: "Mostra os valores no meio do caminho, e o primeiro errado indica o defeito.", conceito: "depurar_print" },
-    { p: "Por que não depurar com dados reais de clientes?", regex: "(fictici|vaza|expoe|sensiv|esquec|producao|registro|dados reais)", modelo: "Porque os dados podem vazar em registros ou na produção; use dados fictícios.", conceito: "depurar_print" },
+    { p: "Como o `print` ajuda a achar um defeito?", regex: "(valor|valores|resultado|variavel|variaveis);;(intermediari|\\bmeio\\b|espi|cada (passo|etapa|linha)|depois de cada|passo a passo|ao longo|durante|antes e depois|em varios (pontos|lugares))", modelo: "Mostra os valores no meio do caminho, e o primeiro errado indica o defeito.", conceito: "depurar_print" },
+    { p: "Por que não depurar com dados reais de clientes?", regex: "(fictici|\\bvaz|expoe|exposi|expor|exposta|sensiv|esquec|producao|registros|privacid|\\bcartao|\\bsenha)", modelo: "Porque os dados podem vazar em registros ou na produção; use dados fictícios.", conceito: "depurar_print" },
   ],
 });
 
@@ -238,7 +250,7 @@ print("passou")` },
     { tipo: "fechar", pergunta: "Sem olhar acima: o que é `assert` e para que serve num teste?", conceito: "assert_teste", modelo: "`assert` afirma que algo é verdadeiro; se for falso, o programa para com `AssertionError`. Serve para escrever, no código, a resposta esperada e deixar o programa conferir sozinho." },
   ],
   recuperacao: [
-    { p: "O que o `assert` faz quando a afirmação é falsa?", regex: "(para|interrompe|erro|assertionerror|falha)", modelo: "Interrompe o programa com `AssertionError`.", conceito: "assert_teste" },
+    { p: "O que o `assert` faz quando a afirmação é falsa?", regex: "(interromp|assertionerror|\\berro\\b|falha|aborta|trava|nao (continua|segue|prossegue)|(programa|ele|execucao) (para|pare)\\b|\\bpara (o programa|a execucao|na hora|ali|de rodar|de executar|tudo))", naoRegex: "nao (da|faz|gera|causa) (erro|nada)|nao acontece nada|nada acontece|ignora e (segue|continua)", modelo: "Interrompe o programa com `AssertionError`.", conceito: "assert_teste" },
     { p: "O que é um caso de teste?", regex: "(entrada);;(esperad|resposta|resultado)", modelo: "Uma entrada com a resposta esperada.", conceito: "assert_teste" },
     { p: "Por que a resposta esperada não pode vir da função testada?", regex: "(sempre passa|nao prova|nada|fora|independente|conta a mao|regra)", modelo: "Porque o teste sempre passaria, mesmo com a função errada.", conceito: "assert_teste" },
   ],
@@ -280,7 +292,10 @@ print(ok(0))`, resposta: "True", porque: "0 é maior ou igual a 0." },
 print(ok(0))`, resposta: "False", porque: "0 não é maior que 0." },
       { codigo: `def ok(n):
     return 1 <= n <= 5
-print(ok(5), ok(6))`, resposta: "True False", porque: "5 está no intervalo e 6 não." }] },
+print(ok(5), ok(6))`, resposta: "True False", porque: "5 está no intervalo e 6 não." },
+      { codigo: `def frete_gratis(total):
+    return total >= 100
+print(frete_gratis(-50), frete_gratis(99.99))`, resposta: "False False", porque: "Os dois são menores que 100. O `-50` é um valor **esquisito** (uma compra negativa não deveria existir): a regra não reclama, só responde `False`. Num programa de verdade, convém **validar** a entrada e testar esse caso." }] },
     { tipo: "corrigir", texto: "O teste de limite falha. Conserte **a função** para valer a partir de 100.", arquivo: "com_defeito.py", dica: "O limite diz “100 ou mais”.", conceito: "casos_teste",
       codigo: `def frete_gratis(total):
     return total > 100
@@ -292,9 +307,9 @@ print("regra ok")`, esperado: ["regra ok"],
 
 assert frete_gratis(100) == True
 print("regra ok")` },
-    { tipo: "escrever", texto: "A regra: desconto de 10% para compras de **200 ou mais**. Escreva `desconto(total)` (devolve o desconto em reais, ou 0) e os asserts: `desconto(200) == 20`, `desconto(199) == 0`, `desconto(0) == 0`. Mostre `passou`.", arquivo: "meu_programa.py",
+    { tipo: "escrever", texto: "A regra: desconto de 10% para compras de **200 ou mais**. Escreva `desconto(total)` (devolve o desconto em reais, ou 0) e os asserts: `desconto(200) == 20`, `desconto(199) == 0`, `desconto(0) == 0`. O corretor confere também dois casos que você não escreveu: o limite decimal `desconto(199.99)` (dá 0) e um valor esquisito, `desconto(-10)` (total negativo não ganha desconto: dá 0). Mostre `passou`.", arquivo: "meu_programa.py",
       inicial: `# escreva desconto(total) e os asserts de limite
-`, esperado: ["passou"], testes: [["desconto(500)", "50.0"], ["desconto(100)", "0"]], dica: "`if total >= 200: return total * 0.1` e senão `return 0`.", conceito: "casos_teste",
+`, esperado: ["passou"], testes: [["desconto(500)", "50.0"], ["desconto(100)", "0"], ["desconto(199.99)", "0"], ["desconto(-10)", "0"]], dica: "`if total >= 200: return total * 0.1` e senão `return 0`.", conceito: "casos_teste",
       solucao: `def desconto(total):
     if total >= 200:
         return total * 0.1
@@ -312,9 +327,9 @@ print("passou")` },
     { tipo: "fechar", pergunta: "Sem olhar acima: que tipos de caso testar numa regra e por quê?", conceito: "casos_teste", modelo: "Casos normais (acima e abaixo), casos de limite (exatamente na fronteira e ao lado) e casos inválidos. O limite é onde moram os defeitos mais comuns, como `>` no lugar de `>=`." },
   ],
   recuperacao: [
-    { p: "O que é um caso de limite?", regex: "(fronteira|limite|exatamente|borda|extremo)", modelo: "O valor exatamente na fronteira da regra (e seus vizinhos).", conceito: "casos_teste" },
+    { p: "O que é um caso de limite?", regex: "(fronteira|borda|extremo|exatamente|valor exato|ponto (em que|onde) a regra|onde a regra (muda|vira|comeca)|limite (da|de) (uma |cada |a )?(regra|condicao|faixa|intervalo)|limite exato|valor limite)", modelo: "O valor exatamente na fronteira da regra (e seus vizinhos).", conceito: "casos_teste" },
     { p: "Por que o limite revela tantos defeitos?", regex: "(>=|maior ou igual|maior que|confund|fronteira|ou mais)", modelo: "Porque é fácil trocar `>` por `>=`; o limite expõe a confusão.", conceito: "casos_teste" },
-    { p: "Por que usar dados fictícios em testes?", regex: "(fictici|vaza|expoe|privacid|real|sensiv|protecao)", modelo: "Para não expor pessoas reais; o ambiente de testes tem menos proteção.", conceito: "casos_teste" },
+    { p: "Por que usar dados fictícios em testes?", regex: "(fictici|\\bvaz|expoe|exposi|expor|exposta|privacid|pessoas reais|sensiv|protecao|proteg|anonim)", naoRegex: "reais (sao|e|seria|seriam) (mais )?(confiaveis|melhor|melhores|precis|corret|seguros)|dados reais (sao )?(melhores|mais)", modelo: "Para não expor pessoas reais; o ambiente de testes tem menos proteção.", conceito: "casos_teste" },
   ],
 });
 
@@ -325,7 +340,7 @@ aulas.push({
   objetivos: ["Usar `try` e `except` para tratar um erro esperado.", "Capturar um tipo específico (`ValueError`).", "Explicar por que não se deve capturar tudo."],
   conceitos: [["try_except", "try e except"]],
   secoes: [
-    { tipo: "aquecimento", pergunta: "O programa pede a idade e a pessoa digita `abc`. O `int(...)` dá erro e o programa para. Esse erro é um defeito do programa ou algo que **vai acontecer** de vez em quando? O que o programa deveria fazer?", modelo: "É algo que **vai acontecer**: dados vindos de pessoas são imprevisíveis. O programa deveria **tentar converter** e, se não der, **avisar** e pedir de novo, sem travar. É o `try`/`except`." },
+    { tipo: "aquecimento", pergunta: "O programa pede a idade e a pessoa digita `abc`. O `int(...)` dá erro e o programa para. Esse erro é um defeito do programa ou algo que **vai acontecer** de vez em quando? O que o programa deveria fazer?", modelo: "É algo que **vai acontecer**: dados vindos de pessoas são imprevisíveis. O programa deveria **tentar converter** e, se não der, **avisar** o problema, sem travar. É o `try`/`except`." },
     { tipo: "exemplo", arquivo: "tentar.py", entradas: ["abc"], texto: "Clique em cada linha.",
       codigo: [["texto = input(\"Idade: \")", "Lê o que a pessoa digitou."], ["try:", "**Tente** fazer o que está recuado abaixo."], ["    idade = int(texto)", "Pode dar `ValueError`."], ["    print(\"Idade:\", idade)", "Só roda se a conversão deu certo."], ["except ValueError:", "**Se** acontecer um `ValueError`, faça o que está abaixo."], ["    print(\"Digite só números\")", "Avisa, sem travar o programa."]],
       termos: [["try", "bloco que você tenta executar."], ["except", "o que fazer se aquele tipo de erro acontecer."]] },
@@ -391,11 +406,11 @@ except ValueError:
       { pergunta: "Quando o `except ValueError:` roda?", opcoes: ["Sempre, a cada execução", "Quando ocorre ValueError", "Quando não há erro algum", "Só na primeira linha"], correta: 1, porque: "Só se acontecer esse tipo de erro no `try`.", conceito: "try_except" },
       { pergunta: "O que acontece com o resto do `try` após um erro?", opcoes: ["Continua do mesmo jeito", "É repetido duas vezes", "É pulado até o except", "É apagado do arquivo"], correta: 2, porque: "O programa salta para o `except`.", conceito: "try_except" },
       { pergunta: "Por que evitar `except:` sem tipo?", opcoes: ["Esconde defeitos reais", "Deixa o código lento", "Não funciona no Python", "Dá erro de sintaxe"], correta: 0, porque: "Captura qualquer erro, inclusive defeitos importantes.", conceito: "try_except" }] },
-    { tipo: "fechar", pergunta: "Sem olhar acima: como o programa lida com um erro que já se espera, como a pessoa digitar texto no lugar de número?", conceito: "try_except", modelo: "Com `try:` (tenta converter) e `except ValueError:` (avisa e pede de novo), capturando só o tipo esperado e deixando os outros erros aparecerem." },
+    { tipo: "fechar", pergunta: "Sem olhar acima: como o programa lida com um erro que já se espera, como a pessoa digitar texto no lugar de número?", conceito: "try_except", modelo: "Com `try:` (tenta converter) e `except ValueError:` (avisa o problema em vez de travar), capturando só o tipo esperado e deixando os outros erros aparecerem." },
   ],
   recuperacao: [
-    { p: "Quando o bloco `except` roda?", regex: "(erro);;(acontece|ocorre|falha|der)", modelo: "Quando acontece o erro esperado dentro do `try`.", conceito: "try_except" },
-    { p: "O que acontece com o resto do `try` depois do erro?", regex: "(pula|pulad|salta|interrompe|nao roda|nao executa|deixa de)", modelo: "É pulado: o programa vai para o `except`.", conceito: "try_except" },
+    { p: "Quando o bloco `except` roda?", regex: "(erro|error|falh|excecao);;(acontec|ocorr|falh|dar erro|der erro|der errado|dispara)", naoRegex: "\\bsem erro\\b|\\bder certo\\b|\\bnao falh|\\bnao (da|der|ha|houver|acontec|ocorr)[^.]{0,15}erro", modelo: "Quando acontece o erro esperado dentro do `try`.", conceito: "try_except" },
+    { p: "O que acontece com o resto do `try` depois do erro?", regex: "(\\bpula|pulad|\\bsalt|interromp|deixa de|abandona|ignorad|descartad|sai do (try|bloco)|nao (e )?(executad|rodad)|nao (roda|executa|continua|chega)|(vai|segue|passa|desvia)[^.]{0,20}(para|pro|ao|direto)[^.]{0,12}except)", modelo: "É pulado: o programa vai para o `except`.", conceito: "try_except" },
     { p: "Por que evitar capturar qualquer erro sem dizer o tipo?", regex: "(esconde|escond|silencio|defeito|nao percebe|engole|real)", modelo: "Porque esconde defeitos reais.", conceito: "try_except" },
   ],
 });
@@ -407,9 +422,9 @@ aulas.push({
   objetivos: ["Escrever testes a partir da regra, antes de ver o código.", "Rodar os testes contra um código pronto.", "Decidir se o código pode ser aceito."],
   conceitos: [["conferir_ia", "Conferir código gerado"]],
   secoes: [
-    { tipo: "aquecimento", pergunta: "Você pediu a uma IA uma função de “preço com frete: grátis acima de 100”. Ela devolveu um código que parece certo. Como saber se ele **realmente** segue a regra, sem depender da sua impressão?", modelo: "Escrevendo **antes** os casos de teste a partir da **regra** (inclusive os limites) e rodando o código contra eles. Se algum falhar, o código **não é aceito**, por mais bonito que pareça." },
+    { tipo: "aquecimento", pergunta: "Você pediu a uma IA uma função de “preço com frete: **grátis para compras de 100 ou mais**” (o 100 inclusive). Ela devolveu um código que parece certo. Como saber se ele **realmente** segue a regra, sem depender da sua impressão?", modelo: "Escrevendo **antes** os casos de teste a partir da **regra** (inclusive os limites) e rodando o código contra eles. Se algum falhar, o código **não é aceito**, por mais bonito que pareça. (E se a regra dissesse só “acima de 100”, valeria **perguntar** a quem pediu se o 100 entra ou não, em vez de adivinhar.)" },
     { tipo: "exemplo", arquivo: "conferir.py", texto: "Clique em cada linha. Os testes vêm da **regra**, não do código.",
-      codigo: [["def preco_final(total):", "Este é o código “da IA” (pode ter defeito)."], ["    if total > 100:", "Defeito escondido: a regra diz “acima de 100” ou “100 ou mais”? Os testes dirão."], ["        return total", "Sem frete."], ["    return total + 15", "Com frete de 15."], ["assert preco_final(150) == 150", "Caso normal acima."], ["assert preco_final(50) == 65", "Caso normal abaixo."], ["print(\"passou\")", "Se a regra fosse “100 ou mais”, faltaria o teste do limite `preco_final(100) == 100`."]],
+      codigo: [["def preco_final(total):", "Este é o código “da IA” (pode ter defeito)."], ["    if total > 100:", "Defeito escondido: a regra é “100 ou mais”, mas o código usa `>` (só acima de 100). Os testes dirão."], ["        return total", "Sem frete."], ["    return total + 15", "Com frete de 15."], ["assert preco_final(150) == 150", "Caso normal acima."], ["assert preco_final(50) == 65", "Caso normal abaixo."], ["print(\"passou\")", "Falta o teste do limite, `preco_final(100) == 100`: sem ele o defeito passa despercebido."]],
       termos: [["Conferir", "verificar com testes que você escreveu a partir da regra."], ["Confiar", "aceitar porque parece certo; é o que se evita com código gerado."]] },
     { tipo: "executar", texto: "Rode e acrescente o teste do limite que falta.", arquivo: "conferir.py (pode editar)", codigo: `def preco_final(total):
     if total > 100:
@@ -434,7 +449,7 @@ print(f(100))`, resposta: "100", porque: "100 é “100 ou mais”: sem frete." 
     return total + 15
 print(preco_final(n))`,
       execucoes: [{ prefixo: "n = 50", saida: ["65"] }, { prefixo: "n = 150", saida: ["150"] }, { prefixo: "n = 100", saida: ["115"] }], colunas: ["Valor de n", "O que aparece"],
-      pergunta: "Se a regra é “grátis a partir de 100”, qual linha mostra o defeito? Que tipo de teste teria pego?", dicas: ["Compare o resultado para `n = 100` com o que a regra pede.", "É o caso exatamente na fronteira."],
+      pergunta: "Se a regra é “frete grátis para 100 ou mais”, qual linha mostra o defeito? Que tipo de teste teria pego?", dicas: ["Compare o resultado para `n = 100` com o que a regra pede.", "É o caso exatamente na fronteira."],
       explicacao: "Com `n = 100` a função cobrou frete (115), mas a regra pede frete grátis (100). O teste de **limite** teria pego o defeito, e por isso os testes vêm **da regra** e não do código.", conceito: "conferir_ia" },
     { tipo: "prever", conceito: "conferir_ia", itens: [
       { codigo: `def f(t):
@@ -449,7 +464,7 @@ print(media(4, 6))`, resposta: "7.0", porque: "Por precedência, `b / 2` primeir
     return (a + b) / 2
 assert media(4, 6) == 5
 print("ok")`, resposta: "ok", porque: "A versão correta passa." }] },
-    { tipo: "corrigir", texto: "O código gerado falha no teste de limite. Conserte **a função**.", arquivo: "com_defeito.py", dica: "A regra é “100 ou mais”.", conceito: "conferir_ia",
+    { tipo: "corrigir", texto: "A regra é: frete grátis para compras de **100 ou mais**. O código gerado falha no teste de limite. Conserte **a função**.", arquivo: "com_defeito.py", dica: "A regra é “100 ou mais”.", conceito: "conferir_ia",
       codigo: `def preco_final(total):
     if total > 100:
         return total
@@ -488,7 +503,7 @@ print("passou")` },
   ],
   recuperacao: [
     { p: "De onde devem vir os testes do código gerado pela IA?", regex: "(regra)", modelo: "Da regra do negócio, e não do código.", conceito: "conferir_ia" },
-    { p: "Rodar sem erro prova que o código está certo?", regex: "(nao);;(resultado|certo|errado|teste|logica)", modelo: "Não: pode rodar sem erro e dar o resultado errado; só os testes provam.", conceito: "conferir_ia" },
+    { p: "Rodar sem erro prova que o código está certo?", regex: "(nao);;(errad|incorret|logica|testes? (prova|provam|conferem|confere|mostram|garante|garantem)|so (os )?testes|(resultado|valor|conta) (errad|incorret|diferente))", naoRegex: "nao (precisa|preciso|e preciso|necessita) (de )?(test|testar)", modelo: "Não: pode rodar sem erro e dar o resultado errado; só os testes provam.", conceito: "conferir_ia" },
     { p: "O que fazer antes de colar código com dados de clientes numa IA?", regex: "(fictici|substitu|retir|anonimiz|segredo|politica|sensiv)", modelo: "Trocar por dados fictícios e retirar segredos, seguindo a política da empresa.", conceito: "conferir_ia" },
   ],
 });
@@ -538,10 +553,14 @@ assert desconto(200) == 180
 assert desconto(100) == 100
 assert troco(50, 30) == 20
 print("caixa ok")` },
-    { tipo: "escrever", titulo: "Problema novo: reajuste de preço", transfer: true, minutos: 12, texto: "Outro contexto, o mesmo método. A regra: o preço sobe **5%** para produtos de **R$ 100 ou mais** e **10%** para os de menos de 100. Escreva `reajuste(preco)` (devolve o novo preço) e os asserts que provam a regra, incluindo o limite (`reajuste(100) == 105`, `reajuste(99) == 108.9`, `reajuste(0) == 0`). Mostre `passou`.", arquivo: "reajuste.py",
+    { tipo: "texto", titulo: "Antes do problema novo: decimais e round", blocos: [
+      "Computadores guardam números com vírgula (os `float`) de forma **aproximada**. Por isso algumas contas dão um resultado com uma “sujeirinha” no fim: `0.1 + 0.2` mostra `0.30000000000000004`, e `50 * 1.1` mostra `55.00000000000001`, não `55.0`. Um `assert` ou um teste que compara com `55.0` falharia.",
+      "A saída é **arredondar** o resultado: `round(x, 2)` devolve `x` com **2 casas decimais**. `round(0.1 + 0.2, 2)` é `0.3` e `round(50 * 1.1, 2)` é `55.0`. Use `round(..., 2)` sempre que um teste comparar valores em reais calculados com decimais.",
+    ] },
+    { tipo: "escrever", titulo: "Problema novo: reajuste de preço", transfer: true, minutos: 12, texto: "Outro contexto, o mesmo método. A regra: o preço sobe **5%** para produtos de **R$ 100 ou mais** e **10%** para os de menos de 100. Escreva `reajuste(preco)` (devolve o novo preço, **arredondado para 2 casas com `round(..., 2)`**) e os asserts que provam a regra, incluindo o limite (`reajuste(100) == 105`, `reajuste(99) == 108.9`, `reajuste(0) == 0`). Mostre `passou`.", arquivo: "reajuste.py",
       inicial: `# escreva reajuste(preco) e os asserts da regra
 `, esperado: ["passou"], testes: [["reajuste(200)", "210.0"], ["reajuste(50)", "55.0"], ["reajuste(100)", "105.0"]],
-      dica: "`if preco >= 100: return preco * 1.05` e, senão, `return preco * 1.1`. Cuidado: compare números decimais com `round(..., 2)`.", conceito: ["assert_teste", "casos_teste", "conferir_ia"],
+      dica: "`if preco >= 100: return preco * 1.05` e, senão, `return preco * 1.1`. Arredonde o que a função devolve com `round(..., 2)`, senão `50 * 1.1` sai como `55.00000000000001`.", conceito: ["assert_teste", "casos_teste", "conferir_ia"],
       solucao: `def reajuste(preco):
     if preco >= 100:
         return round(preco * 1.05, 2)
